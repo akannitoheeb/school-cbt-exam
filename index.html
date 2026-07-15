@@ -271,9 +271,16 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div>
         <div class="sec-label">Section A <span>· Objectives</span></div>
         <div class="who"><strong id="obj-who-name">—</strong> · <span id="obj-who-dept">—</span></div>
-      </div>
-      <div class="timer-pill" id="obj-timer">30:00</div>
+div class="container">
+  <div id="startScreen" class="card">
+    <h2>Exam Setup</h2>
+    <p class="small">The timer will start only after you click the Start Exam button.</p>
+    <div class="controls">
+      <div><label for="timeSelect">Choose Exam Time</label><select id="timeSelect"><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option><option value="120">120 minutes</option><option value="150">150 minutes</option><option value="180">180 minutes</option></select></div>
+      <div><label>Attempt Counter</label><div class="result-box"><strong id="attemptCount">0</strong> attempt(s) on this device/browser</div></div>
+      <div><button id="startBtn">Start Exam</button></div>
     </div>
+  </div>
     <div class="progress-line"><i id="obj-progress"></i></div>
   </div>
   <div class="examgrid">
