@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School CBT Examination Portal</title>
+    <title>CBT Examination Portal</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -35,7 +35,6 @@
 
         .hidden { display: none !important; }
 
-        /* Login Screen */
         .login-screen {
             min-height: 100vh;
             display: flex;
@@ -132,7 +131,6 @@
             transform: none !important;
         }
 
-        /* Exam Screen */
         .exam-header {
             background: var(--primary);
             color: white;
@@ -300,7 +298,6 @@
             min-width: 25px;
         }
 
-        /* Theory Questions */
         .theory-textarea {
             width: 100%;
             min-height: 150px;
@@ -326,7 +323,6 @@
             margin-top: 5px;
         }
 
-        /* Navigation */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -398,7 +394,6 @@
             box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.2);
         }
 
-        /* Results Screen */
         .results-screen {
             min-height: 100vh;
             display: flex;
@@ -479,7 +474,6 @@
             color: var(--danger);
         }
 
-        /* Warning Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -512,7 +506,6 @@
             margin-bottom: 15px;
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .login-card { padding: 25px; }
             .exam-header-inner { flex-direction: column; text-align: center; }
@@ -522,7 +515,6 @@
             .question-palette { order: -1; }
         }
 
-        /* Loading */
         .loading {
             display: inline-block;
             width: 20px;
@@ -578,7 +570,6 @@
                 <label for="department">Department</label>
                 <select id="department" required>
                     <option value="">Select your department</option>
-                    <!-- Departments will be populated from questions data -->
                 </select>
             </div>
             
@@ -704,186 +695,100 @@
 
     <script>
         // ============================================
-        // CONFIGURATION - EDIT THESE VALUES
+        // YOUR GOOGLE SHEETS URL (already set!)
         // ============================================
-        
-        // Google Sheets Web App URL (you'll get this after setting up Apps Script)
-        const GOOGLE_SHEETS_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec';
         
         // Timer settings (in minutes)
-        const OBJECTIVE_TIME = 60;  // 60 minutes for objective
-        const THEORY_TIME = 45;     // 45 minutes for theory
-        
-        // Pass mark percentage
+        const OBJECTIVE_TIME = 60;
+        const THEORY_TIME = 45;
         const PASS_MARK = 40;
 
         // ============================================
-        // QUESTIONS DATABASE
+        // QUESTIONS DATABASE - SAMPLE (expand this!)
         // ============================================
-        // This is where all questions are stored. Each department has its own set.
-        // Format: { department: { course: [questions] } }
-        
         const QUESTIONS_DB = {
             "Computer Science": {
                 "CSC 101 - Introduction to Computing": {
                     objective: [
-                        {
-                            question: "What does CPU stand for?",
-                            options: ["Central Processing Unit", "Computer Personal Unit", "Central Processor Utility", "Central Process Unit"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which of the following is NOT a programming language?",
-                            options: ["Python", "Java", "HTML", "Microsoft Word"],
-                            answer: 3
-                        },
-                        {
-                            question: "What is the binary equivalent of decimal 5?",
-                            options: ["100", "101", "110", "111"],
-                            answer: 1
-                        },
-                        {
-                            question: "RAM stands for:",
-                            options: ["Random Access Memory", "Read And Modify", "Random Allocation Method", "Read Access Mode"],
-                            answer: 0
-                        },
-                        {
-                            question: "Which storage device has the fastest access time?",
-                            options: ["Hard Disk Drive", "Solid State Drive", "USB Flash Drive", "DVD"],
-                            answer: 1
-                        }
-                        // Add up to 200 questions following this format
+                        { question: "What does CPU stand for?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Processor Utility", "Central Process Unit"], answer: 0 },
+                        { question: "Which of the following is NOT a programming language?", options: ["Python", "Java", "HTML", "Microsoft Word"], answer: 3 },
+                        { question: "What is the binary equivalent of decimal 5?", options: ["100", "101", "110", "111"], answer: 1 },
+                        { question: "RAM stands for:", options: ["Random Access Memory", "Read And Modify", "Random Allocation Method", "Read Access Mode"], answer: 0 },
+                        { question: "Which storage device has the fastest access time?", options: ["Hard Disk Drive", "Solid State Drive", "USB Flash Drive", "DVD"], answer: 1 }
                     ],
                     theory: [
-                        {
-                            question: "Explain the difference between RAM and ROM, giving two examples of each.",
-                            maxWords: 150
-                        },
-                        {
-                            question: "Describe the function of the Operating System in a computer system.",
-                            maxWords: 200
-                        },
-                        {
-                            question: "What is an algorithm? Write an algorithm to find the largest of three numbers.",
-                            maxWords: 250
-                        }
-                        // Add up to 30 theory questions
+                        { question: "Explain the difference between RAM and ROM, giving two examples of each.", maxWords: 150 },
+                        { question: "Describe the function of the Operating System in a computer system.", maxWords: 200 },
+                        { question: "What is an algorithm? Write an algorithm to find the largest of three numbers.", maxWords: 250 }
                     ]
                 },
                 "CSC 201 - Data Structures": {
                     objective: [
-                        {
-                            question: "Which data structure uses LIFO?",
-                            options: ["Queue", "Stack", "Array", "Linked List"],
-                            answer: 1
-                        }
+                        { question: "Which data structure uses LIFO?", options: ["Queue", "Stack", "Array", "Linked List"], answer: 1 }
                     ],
                     theory: [
-                        {
-                            question: "Explain the concept of recursion with a suitable example.",
-                            maxWords: 200
-                        }
+                        { question: "Explain the concept of recursion with a suitable example.", maxWords: 200 }
                     ]
                 }
             },
             "Agricultural Science": {
                 "AGR 101 - Introduction to Agriculture": {
                     objective: [
-                        {
-                            question: "Which of the following is a leguminous crop?",
-                            options: ["Maize", "Rice", "Groundnut", "Yam"],
-                            answer: 2
-                        },
-                        {
-                            question: "Photosynthesis occurs in which part of the plant?",
-                            options: ["Roots", "Stem", "Leaves", "Flowers"],
-                            answer: 2
-                        },
-                        {
-                            question: "The process of making food by plants is called:",
-                            options: ["Respiration", "Photosynthesis", "Transpiration", "Fermentation"],
-                            answer: 1
-                        }
+                        { question: "Which of the following is a leguminous crop?", options: ["Maize", "Rice", "Groundnut", "Yam"], answer: 2 },
+                        { question: "Photosynthesis occurs in which part of the plant?", options: ["Roots", "Stem", "Leaves", "Flowers"], answer: 2 },
+                        { question: "The process of making food by plants is called:", options: ["Respiration", "Photosynthesis", "Transpiration", "Fermentation"], answer: 1 }
                     ],
                     theory: [
-                        {
-                            question: "Describe the process of photosynthesis and its importance to life on Earth.",
-                            maxWords: 250
-                        },
-                        {
-                            question: "List and explain five methods of pest control in crop production.",
-                            maxWords: 300
-                        }
+                        { question: "Describe the process of photosynthesis and its importance to life on Earth.", maxWords: 250 },
+                        { question: "List and explain five methods of pest control in crop production.", maxWords: 300 }
                     ]
                 }
             },
             "Mass Communication": {
                 "MAC 101 - Introduction to Mass Communication": {
                     objective: [
-                        {
-                            question: "The first newspaper in Nigeria was:",
-                            options: ["Daily Times", "Iwe Iroyin", "The Guardian", "Punch"],
-                            answer: 1
-                        }
+                        { question: "The first newspaper in Nigeria was:", options: ["Daily Times", "Iwe Iroyin", "The Guardian", "Punch"], answer: 1 }
                     ],
                     theory: [
-                        {
-                            question: "Discuss the role of mass media in democratic governance.",
-                            maxWords: 300
-                        }
+                        { question: "Discuss the role of mass media in democratic governance.", maxWords: 300 }
                     ]
                 }
             },
             "Business Administration": {
                 "BUS 101 - Principles of Management": {
                     objective: [
-                        {
-                            question: "Who is known as the father of scientific management?",
-                            options: ["Henry Fayol", "Frederick Taylor", "Peter Drucker", "Max Weber"],
-                            answer: 1
-                        }
+                        { question: "Who is known as the father of scientific management?", options: ["Henry Fayol", "Frederick Taylor", "Peter Drucker", "Max Weber"], answer: 1 }
                     ],
                     theory: [
-                        {
-                            question: "Explain Fayol's 14 principles of management.",
-                            maxWords: 400
-                        }
+                        { question: "Explain Fayol's 14 principles of management.", maxWords: 400 }
                     ]
                 }
             },
             "Electrical Engineering": {
                 "EEE 101 - Circuit Theory": {
                     objective: [
-                        {
-                            question: "Ohm's Law states that V =",
-                            options: ["I/R", "I×R", "R/I", "I+R"],
-                            answer: 1
-                        }
+                        { question: "Ohm's Law states that V =", options: ["I/R", "I×R", "R/I", "I+R"], answer: 1 }
                     ],
                     theory: [
-                        {
-                            question: "Derive the expression for total resistance in a parallel circuit.",
-                            maxWords: 250
-                        }
+                        { question: "Derive the expression for total resistance in a parallel circuit.", maxWords: 250 }
                     ]
                 }
             }
-            // Add more departments and courses as needed
         };
 
         // ============================================
         // STATE MANAGEMENT
         // ============================================
-        
         let currentState = {
             studentName: '',
             studentMatric: '',
             department: '',
             course: '',
-            currentSection: 'objective', // 'objective' or 'theory'
+            currentSection: 'objective',
             currentQuestion: 0,
-            answers: {}, // { questionIndex: optionIndex } for objective
-            theoryAnswers: {}, // { questionIndex: text } for theory
+            answers: {},
+            theoryAnswers: {},
             timeRemaining: 0,
             timerInterval: null,
             questions: [],
@@ -895,11 +800,9 @@
         // ============================================
         // INITIALIZATION
         // ============================================
-        
         function init() {
             populateDepartments();
             
-            // Check for saved progress
             const saved = localStorage.getItem('examProgress');
             if (saved) {
                 const data = JSON.parse(saved);
@@ -911,7 +814,6 @@
                 }
             }
             
-            // Setup department/course dropdowns
             document.getElementById('department').addEventListener('change', populateCourses);
         }
 
@@ -948,7 +850,6 @@
         // ============================================
         // EXAM START
         // ============================================
-        
         function startExam() {
             const name = document.getElementById('studentName').value.trim();
             const matric = document.getElementById('studentMatric').value.trim();
@@ -960,7 +861,6 @@
                 return;
             }
             
-            // Load questions for selected department/course
             const courseData = QUESTIONS_DB[dept][course];
             if (!courseData) {
                 alert('No questions available for this course yet.');
@@ -980,35 +880,24 @@
             currentState.theoryAnswers = {};
             currentState.timeRemaining = OBJECTIVE_TIME * 60;
             
-            // Enter fullscreen
             enterFullscreen();
-            
-            // Setup anti-cheat
             setupAntiCheat();
             
-            // Switch screens
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('examScreen').classList.remove('hidden');
             
-            // Update header
             document.getElementById('displayName').textContent = name;
             document.getElementById('displayDept').textContent = `${dept} | ${matric}`;
             
-            // Start timer
             startTimer();
-            
-            // Render first question
             renderQuestion();
             updatePalette();
-            
-            // Save initial state
             saveProgress();
         }
 
         // ============================================
         // TIMER
         // ============================================
-        
         function startTimer() {
             updateTimerDisplay();
             
@@ -1034,9 +923,9 @@
             const timerEl = document.getElementById('timer');
             timerEl.classList.remove('warning', 'danger');
             
-            if (currentState.timeRemaining <= 300) { // 5 minutes
+            if (currentState.timeRemaining <= 300) {
                 timerEl.classList.add('danger');
-            } else if (currentState.timeRemaining <= 600) { // 10 minutes
+            } else if (currentState.timeRemaining <= 600) {
                 timerEl.classList.add('warning');
             }
         }
@@ -1044,7 +933,6 @@
         // ============================================
         // QUESTION RENDERING
         // ============================================
-        
         function renderQuestion() {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
@@ -1064,10 +952,6 @@
             if (!q) return;
             
             const container = document.getElementById('questionsContainer');
-            
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            
             const selectedAnswer = currentState.answers[currentState.currentQuestion];
             
             let optionsHTML = '';
@@ -1083,6 +967,8 @@
                 `;
             });
             
+            const card = document.createElement('div');
+            card.className = 'question-card';
             card.innerHTML = `
                 <div class="question-text">
                     <span class="question-number">${currentState.currentQuestion + 1}</span>
@@ -1105,7 +991,6 @@
             
             const card = document.createElement('div');
             card.className = 'question-card';
-            
             card.innerHTML = `
                 <div class="question-text">
                     <span class="question-number">${currentState.currentQuestion + 1}</span>
@@ -1125,7 +1010,7 @@
         function selectOption(optionIndex) {
             currentState.answers[currentState.currentQuestion] = optionIndex;
             saveProgress();
-            renderQuestion(); // Re-render to show selection
+            renderQuestion();
             updatePalette();
         }
 
@@ -1142,7 +1027,6 @@
         // ============================================
         // NAVIGATION
         // ============================================
-        
         function nextQuestion() {
             const maxQuestions = currentState.currentSection === 'objective' 
                 ? currentState.questions.length 
@@ -1221,10 +1105,8 @@
         // ============================================
         // SECTION SUBMISSION
         // ============================================
-        
         function submitSection() {
             if (currentState.currentSection === 'objective') {
-                // Check if all questions answered
                 const answered = Object.keys(currentState.answers).length;
                 const total = currentState.questions.length;
                 
@@ -1234,17 +1116,14 @@
                     }
                 }
                 
-                // Switch to theory section
                 currentState.currentSection = 'theory';
                 currentState.currentQuestion = 0;
                 currentState.timeRemaining = THEORY_TIME * 60;
                 
-                // Update UI
                 document.getElementById('sectionLabel').textContent = 'Theory Section';
                 document.getElementById('sectionTitle').textContent = 'Theory Questions';
                 document.getElementById('sectionDesc').textContent = 'Provide detailed answers in the text boxes below';
                 
-                // Reset timer
                 clearInterval(currentState.timerInterval);
                 startTimer();
                 
@@ -1253,7 +1132,6 @@
                 saveProgress();
                 
             } else {
-                // Final submission
                 const answered = Object.keys(currentState.theoryAnswers).filter(k => 
                     currentState.theoryAnswers[k].trim().length > 0
                 ).length;
@@ -1277,11 +1155,9 @@
         // ============================================
         // EXAM FINISH & SCORING
         // ============================================
-        
         function finishExam() {
             clearInterval(currentState.timerInterval);
             
-            // Calculate objective score
             let correct = 0;
             currentState.questions.forEach((q, idx) => {
                 if (currentState.answers[idx] === q.answer) {
@@ -1293,18 +1169,13 @@
                 ? Math.round((correct / currentState.questions.length) * 100) 
                 : 0;
             
-            const totalScore = objScore; // Theory is manual grading
+            const totalScore = objScore;
             
-            // Show results
             showResults(objScore, totalScore, correct);
-            
-            // Submit to Google Sheets
             submitToSheets(objScore, totalScore);
             
-            // Clear saved progress
             localStorage.removeItem('examProgress');
             
-            // Exit fullscreen
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             }
@@ -1340,7 +1211,6 @@
         // ============================================
         // GOOGLE SHEETS INTEGRATION
         // ============================================
-        
         async function submitToSheets(objScore, totalScore) {
             const data = {
                 timestamp: new Date().toISOString(),
@@ -1360,8 +1230,7 @@
             };
             
             try {
-                // Using no-cors mode for GitHub Pages (CORS workaround)
-                // For production, use the Apps Script URL with proper CORS headers
+                // Using no-cors for GitHub Pages compatibility
                 await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1372,7 +1241,6 @@
                 });
             } catch (error) {
                 console.error('Failed to submit to sheets:', error);
-                // Save locally as backup
                 const submissions = JSON.parse(localStorage.getItem('pendingSubmissions') || '[]');
                 submissions.push(data);
                 localStorage.setItem('pendingSubmissions', JSON.stringify(submissions));
@@ -1382,21 +1250,15 @@
         // ============================================
         // ANTI-CHEAT MEASURES
         // ============================================
-        
         function setupAntiCheat() {
-            // Prevent right-click
             document.addEventListener('contextmenu', e => e.preventDefault());
-            
-            // Prevent copy/paste
             document.addEventListener('copy', e => e.preventDefault());
             document.addEventListener('paste', e => e.preventDefault());
             document.addEventListener('cut', e => e.preventDefault());
             
-            // Detect tab switch / window blur
             document.addEventListener('visibilitychange', handleVisibilityChange);
             window.addEventListener('blur', handleWindowBlur);
             
-            // Prevent F12, Ctrl+Shift+I, Ctrl+U
             document.addEventListener('keydown', e => {
                 if (e.key === 'F12' || 
                     (e.ctrlKey && e.shiftKey && e.key === 'I') ||
@@ -1404,14 +1266,11 @@
                     e.preventDefault();
                     showWarning('Developer tools are not allowed during the exam.');
                 }
-                
-                // Prevent Ctrl+A (select all)
                 if (e.ctrlKey && e.key === 'a') {
                     e.preventDefault();
                 }
             });
             
-            // Detect fullscreen exit
             document.addEventListener('fullscreenchange', handleFullscreenChange);
             document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
         }
@@ -1430,7 +1289,6 @@
 
         function handleWindowBlur() {
             if (currentState.examStarted) {
-                // Small delay to avoid false positives
                 setTimeout(() => {
                     if (!document.hasFocus() && currentState.examStarted) {
                         showWarning('Please stay focused on the exam window.');
@@ -1462,15 +1320,14 @@
         // ============================================
         // PROGRESS SAVING
         // ============================================
-        
         function saveProgress() {
             const data = {
                 ...currentState,
-                timerInterval: null // Don't save interval
+                timerInterval: null,
+                savedAt: Date.now()
             };
             localStorage.setItem('examProgress', JSON.stringify(data));
             
-            // Show autosave indicator
             const indicator = document.getElementById('autosaveIndicator');
             indicator.classList.add('show');
             setTimeout(() => indicator.classList.remove('show'), 2000);
@@ -1479,8 +1336,7 @@
         function restoreProgress(data) {
             currentState = { ...data, timerInterval: null };
             
-            // Recalculate time
-            const savedTime = new Date(data.savedAt || Date.now());
+            const savedTime = data.savedAt || Date.now();
             const elapsed = Math.floor((Date.now() - savedTime) / 1000);
             currentState.timeRemaining = Math.max(0, currentState.timeRemaining - elapsed);
             
@@ -1503,19 +1359,6 @@
             startTimer();
             renderQuestion();
             updatePalette();
-        }
-
-        // ============================================
-        // UTILITY
-        // ============================================
-        
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
         }
 
         // Initialize on load
