@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBT Examination Portal</title>
+    <title>FUADSI CBT Examination Portal</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -35,6 +35,7 @@
 
         .hidden { display: none !important; }
 
+        /* SCHOOL BRANDING ON LOGIN */
         .login-screen {
             min-height: 100vh;
             display: flex;
@@ -49,7 +50,7 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             animation: slideUp 0.5s ease;
         }
 
@@ -58,14 +59,43 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .login-card h1 {
-            color: var(--primary);
+        .school-header {
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 28px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--accent);
         }
 
-        .login-card .subtitle {
+        .school-logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .school-name {
+            color: var(--primary);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+
+        .school-location {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .portal-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subtitle {
             text-align: center;
             color: var(--text-light);
             margin-bottom: 30px;
@@ -131,6 +161,20 @@
             transform: none !important;
         }
 
+        .school-footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .school-footer strong {
+            color: var(--primary);
+        }
+
+        /* EXAM SCREEN HEADER */
         .exam-header {
             background: var(--primary);
             color: white;
@@ -153,8 +197,35 @@
             gap: 10px;
         }
 
+        .school-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .school-brand-logo {
+            font-size: 28px;
+        }
+
+        .school-brand-text {
+            line-height: 1.2;
+        }
+
+        .school-brand-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+
+        .school-brand-dept {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
         .student-info {
             font-size: 14px;
+            text-align: right;
         }
 
         .student-info strong {
@@ -394,6 +465,7 @@
             box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.2);
         }
 
+        /* RESULTS SCREEN */
         .results-screen {
             min-height: 100vh;
             display: flex;
@@ -411,6 +483,27 @@
             max-width: 500px;
             width: 100%;
             animation: slideUp 0.5s ease;
+        }
+
+        .results-school-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .results-school-name {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .results-school-location {
+            color: var(--text-light);
+            font-size: 13px;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .score-circle {
@@ -474,6 +567,21 @@
             color: var(--danger);
         }
 
+        .results-footer {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .results-footer strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* WARNING MODAL */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -506,10 +614,14 @@
             margin-bottom: 15px;
         }
 
+        /* RESPONSIVE */
         @media (max-width: 600px) {
             .login-card { padding: 25px; }
+            .school-name { font-size: 18px; }
             .exam-header-inner { flex-direction: column; text-align: center; }
-            .exam-body { margin-top: 130px; }
+            .school-brand { justify-content: center; }
+            .student-info { text-align: center; }
+            .exam-body { margin-top: 140px; }
             .question-card { padding: 18px; }
             .nav-bar { flex-direction: column; gap: 10px; }
             .question-palette { order: -1; }
@@ -553,7 +665,13 @@
     <!-- LOGIN SCREEN -->
     <div id="loginScreen" class="login-screen">
         <div class="login-card">
-            <h1>🎓 CBT Examination Portal</h1>
+            <div class="school-header">
+                <div class="school-logo">🎓</div>
+                <div class="school-name">Federal University of Agriculture and Development Studies</div>
+                <div class="school-location">Iragbiji, Osun State</div>
+            </div>
+            
+            <h2 class="portal-title">CBT Examination Portal</h2>
             <p class="subtitle">Enter your details to begin your examination</p>
             
             <div class="form-group">
@@ -584,9 +702,13 @@
                 Start Examination
             </button>
             
-            <p style="text-align: center; margin-top: 15px; font-size: 12px; color: var(--text-light);">
-                ⚠️ Do not refresh the page during the exam. Your progress auto-saves.
-            </p>
+            <div class="school-footer">
+                <strong>Federal University of Agriculture and Development Studies</strong><br>
+                Iragbiji, Osun State, Nigeria<br>
+                <span style="font-size: 11px; margin-top: 8px; display: block;">
+                    ⚠️ Do not refresh the page during the exam. Your progress auto-saves.
+                </span>
+            </div>
         </div>
     </div>
 
@@ -594,14 +716,24 @@
     <div id="examScreen" class="hidden">
         <div class="exam-header">
             <div class="exam-header-inner">
+                <div class="school-brand">
+                    <div class="school-brand-logo">🎓</div>
+                    <div class="school-brand-text">
+                        <div class="school-brand-name">FUADSI</div>
+                        <div class="school-brand-dept" id="displayDept">Department</div>
+                    </div>
+                </div>
+                
                 <div class="student-info">
                     <div><strong id="displayName">Student Name</strong></div>
-                    <div id="displayDept">Department</div>
+                    <div id="displayMatric" style="font-size: 12px; opacity: 0.8;">Matric</div>
                 </div>
+                
                 <div class="timer" id="timer">
                     <span>⏱️</span>
                     <span id="timerText">60:00</span>
                 </div>
+                
                 <div style="font-size: 14px;">
                     <span id="sectionLabel">Objective Section</span>
                 </div>
@@ -635,6 +767,11 @@
     <!-- RESULTS SCREEN -->
     <div id="resultsScreen" class="results-screen hidden">
         <div class="results-card">
+            <div class="results-school-header">
+                <div class="results-school-name">Federal University of Agriculture and Development Studies</div>
+                <div class="results-school-location">Iragbiji, Osun State</div>
+            </div>
+            
             <div class="score-circle pass" id="scoreCircle">
                 <span id="scorePercent">0%</span>
             </div>
@@ -675,9 +812,13 @@
             
             <span class="status-badge status-pass" id="statusBadge">PASSED</span>
             
-            <p style="margin-top: 20px; font-size: 13px; color: var(--text-light);">
-                A copy of your result has been sent to the examination office.
-            </p>
+            <div class="results-footer">
+                <strong>Federal University of Agriculture and Development Studies</strong>
+                Iragbiji, Osun State, Nigeria<br>
+                <span style="margin-top: 5px; display: block;">
+                    A copy of your result has been sent to the examination office.
+                </span>
+            </div>
         </div>
     </div>
 
@@ -695,7 +836,7 @@
 
     <script>
         // ============================================
-        // YOUR GOOGLE SHEETS URL (already set!)
+        // YOUR GOOGLE SHEETS URL
         // ============================================
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec';
         
@@ -887,7 +1028,8 @@
             document.getElementById('examScreen').classList.remove('hidden');
             
             document.getElementById('displayName').textContent = name;
-            document.getElementById('displayDept').textContent = `${dept} | ${matric}`;
+            document.getElementById('displayMatric').textContent = matric;
+            document.getElementById('displayDept').textContent = dept;
             
             startTimer();
             renderQuestion();
@@ -1230,7 +1372,6 @@
             };
             
             try {
-                // Using no-cors for GitHub Pages compatibility
                 await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1347,8 +1488,8 @@
             document.getElementById('examScreen').classList.remove('hidden');
             
             document.getElementById('displayName').textContent = currentState.studentName;
-            document.getElementById('displayDept').textContent = 
-                `${currentState.department} | ${currentState.studentMatric}`;
+            document.getElementById('displayMatric').textContent = currentState.studentMatric;
+            document.getElementById('displayDept').textContent = currentState.department;
             
             if (currentState.currentSection === 'theory') {
                 document.getElementById('sectionLabel').textContent = 'Theory Section';
