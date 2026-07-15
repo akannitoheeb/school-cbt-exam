@@ -1,1509 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FUADSI CBT Examination Portal</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        :root {
-            --primary: #1a237e;
-            --primary-light: #534bae;
-            --accent: #ffc107;
-            --success: #4caf50;
-            --danger: #f44336;
-            --warning: #ff9800;
-            --bg: #f5f5f5;
-            --card: #ffffff;
-            --text: #333333;
-            --text-light: #666666;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .hidden { display: none !important; }
-
-        /* SCHOOL BRANDING ON LOGIN */
-        .login-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-        }
-
-        .login-card {
-            background: var(--card);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 500px;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .school-header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid var(--accent);
-        }
-
-        .school-logo {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .school-name {
-            color: var(--primary);
-            font-size: 22px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 5px;
-        }
-
-        .school-location {
-            color: var(--text-light);
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .portal-title {
-            text-align: center;
-            color: var(--primary);
-            font-size: 20px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text);
-            font-size: 14px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.1);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(26, 35, 126, 0.3);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .school-footer {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .school-footer strong {
-            color: var(--primary);
-        }
-
-        /* EXAM SCREEN HEADER */
-        .exam-header {
-            background: var(--primary);
-            color: white;
-            padding: 15px 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .exam-header-inner {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .school-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .school-brand-logo {
-            font-size: 28px;
-        }
-
-        .school-brand-text {
-            line-height: 1.2;
-        }
-
-        .school-brand-name {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.5px;
-        }
-
-        .school-brand-dept {
-            font-size: 11px;
-            opacity: 0.9;
-        }
-
-        .student-info {
-            font-size: 14px;
-            text-align: right;
-        }
-
-        .student-info strong {
-            color: var(--accent);
-        }
-
-        .timer {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 18px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .timer.warning { background: var(--warning); color: #000; }
-        .timer.danger { background: var(--danger); animation: pulse 1s infinite; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .exam-body {
-            margin-top: 100px;
-            padding-bottom: 100px;
-        }
-
-        .section-header {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .section-header h2 {
-            color: var(--primary);
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .section-header p {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .question-card {
-            background: var(--card);
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--primary);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .question-number {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 32px;
-            font-weight: bold;
-            font-size: 14px;
-            margin-right: 12px;
-        }
-
-        .question-text {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .option:hover {
-            border-color: var(--primary-light);
-            background: #f8f9ff;
-        }
-
-        .option.selected {
-            border-color: var(--primary);
-            background: #e8eaf6;
-        }
-
-        .option input {
-            margin-right: 12px;
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
-        }
-
-        .option-label {
-            font-weight: 500;
-            color: var(--primary);
-            margin-right: 10px;
-            min-width: 25px;
-        }
-
-        .theory-textarea {
-            width: 100%;
-            min-height: 150px;
-            padding: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: inherit;
-            resize: vertical;
-            transition: all 0.3s;
-        }
-
-        .theory-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 35, 126, 0.1);
-        }
-
-        .char-count {
-            text-align: right;
-            font-size: 12px;
-            color: var(--text-light);
-            margin-top: 5px;
-        }
-
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card);
-            padding: 15px 20px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .nav-btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .nav-btn-secondary {
-            background: #e0e0e0;
-            color: var(--text);
-        }
-
-        .nav-btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .nav-btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .question-palette {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            max-width: 300px;
-            justify-content: center;
-        }
-
-        .palette-btn {
-            width: 36px;
-            height: 36px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .palette-btn.answered {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
-        }
-
-        .palette-btn.current {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.2);
-        }
-
-        /* RESULTS SCREEN */
-        .results-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .results-card {
-            background: var(--card);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-            animation: slideUp 0.5s ease;
-        }
-
-        .results-school-header {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .results-school-name {
-            color: var(--primary);
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .results-school-location {
-            color: var(--text-light);
-            font-size: 13px;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            font-weight: bold;
-            position: relative;
-        }
-
-        .score-circle.pass {
-            background: linear-gradient(135deg, var(--success), #81c784);
-            color: white;
-        }
-
-        .score-circle.fail {
-            background: linear-gradient(135deg, var(--danger), #ef5350);
-            color: white;
-        }
-
-        .result-details {
-            margin: 25px 0;
-            text-align: left;
-        }
-
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .result-row:last-child {
-            border-bottom: none;
-            font-weight: bold;
-            font-size: 18px;
-            color: var(--primary);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .status-pass {
-            background: #e8f5e9;
-            color: var(--success);
-        }
-
-        .status-fail {
-            background: #ffebee;
-            color: var(--danger);
-        }
-
-        .results-footer {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 12px;
-            color: var(--text-light);
-        }
-
-        .results-footer strong {
-            color: var(--primary);
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        /* WARNING MODAL */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-
-        .modal {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-        }
-
-        .modal h3 {
-            color: var(--danger);
-            margin-bottom: 15px;
-        }
-
-        .modal-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            .login-card { padding: 25px; }
-            .school-name { font-size: 18px; }
-            .exam-header-inner { flex-direction: column; text-align: center; }
-            .school-brand { justify-content: center; }
-            .student-info { text-align: center; }
-            .exam-body { margin-top: 140px; }
-            .question-card { padding: 18px; }
-            .nav-bar { flex-direction: column; gap: 10px; }
-            .question-palette { order: -1; }
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .autosave-indicator {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 999;
-        }
-
-        .autosave-indicator.show {
-            opacity: 1;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FUADSI CBT Examination Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#146C36; --forest-dark:#0B3D1F; --forest-tint:#E5F1E9;
+  --gold:#D6A419; --gold-tint:#FBF0D6;
+  --crimson:#A6241E; --crimson-tint:#F7E3E1;
+  --paper:#FAF8F2; --panel:#FFFFFF;
+  --ink:#1B231D; --stone:#6E7568; --line:#E1DCC9;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:'IBM Plex Sans', Arial, sans-serif; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; letter-spacing:-0.01em;}
+.mono{ font-family:'IBM Plex Mono', monospace; }
+.hidden{ display:none !important; }
+::selection{ background:var(--gold-tint); }
+
+/* ---------- Letterhead ---------- */
+.letterhead{
+  background:linear-gradient(180deg, var(--forest) 0%, var(--forest-dark) 100%);
+  color:#fff; padding:14px 20px; position:relative;
+}
+.letterhead::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:4px;
+  background:linear-gradient(90deg, var(--gold), var(--crimson) 50%, var(--gold));
+}
+.letterhead-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; gap:13px; }
+.crest{
+  width:44px; height:44px; border-radius:50%; flex-shrink:0; overflow:hidden;
+  background:var(--gold); display:flex; align-items:center; justify-content:center;
+  border:2px solid rgba(255,255,255,.55);
+}
+.crest img{ width:100%; height:100%; object-fit:cover; }
+.crest svg{ width:24px; height:24px; }
+.letterhead-text .school{ font-size:14.5px; font-weight:600; letter-spacing:.01em; line-height:1.25;}
+.letterhead-text .portal{ font-size:11px; opacity:.85; text-transform:uppercase; letter-spacing:.13em; margin-top:2px;}
+
+.wrap{ max-width:760px; margin:0 auto; padding:28px 18px 70px; }
+
+/* ---------- Cards ---------- */
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px; margin-bottom:18px; box-shadow:0 1px 2px rgba(11,61,31,.05);
+}
+.eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; font-weight:600;}
+.card h2{ font-size:23px; margin-bottom:6px; }
+.card p.lead{ color:var(--stone); font-size:14.5px; line-height:1.55; margin:0 0 20px; }
+
+/* ---------- Resume banner ---------- */
+.resume-banner{
+  border:1px solid var(--gold); background:var(--gold-tint); border-radius:12px; padding:14px 16px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap;
+}
+.resume-banner .txt{ font-size:13.5px; color:var(--forest-dark); }
+.resume-banner strong{ display:block; font-size:14.5px; margin-bottom:2px; }
+
+/* ---------- Form ---------- */
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--forest-dark); }
+.field input, .field select{
+  width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:10px;
+  font-size:15px; font-family:inherit; background:#fff; color:var(--ink);
+}
+.field select:disabled{ color:var(--stone); background:var(--paper); }
+.field input:focus, .field select:focus, button:focus-visible{ outline:2px solid var(--forest); outline-offset:2px; }
+.checkline{ display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--stone); margin:18px 0; }
+.checkline input{ margin-top:3px; }
+
+button{ font-family:'IBM Plex Sans', inherit; font-weight:600; font-size:15px; padding:13px 22px; border-radius:10px; border:none; cursor:pointer; transition:transform .12s ease, background .15s ease;}
+button.primary{ background:var(--forest); color:#fff; }
+button.primary:hover{ background:var(--forest-dark); }
+button.primary:disabled{ background:#B7C3BA; cursor:not-allowed; }
+button.ghost{ background:var(--forest-tint); color:var(--forest-dark); }
+button.ghost:hover{ background:#D9E7DB; }
+button:active{ transform:translateY(1px); }
+.btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+
+/* ---------- Instructions ---------- */
+.rules{ list-style:none; margin:0 0 22px; padding:0; display:grid; gap:12px; }
+.rules li{ display:flex; gap:12px; padding:14px; border:1px solid var(--line); border-radius:10px; background:var(--paper); font-size:14px; line-height:1.5;}
+.rules li .num{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); flex-shrink:0; }
+.section-plan{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
+.plan-box{ border:1px solid var(--line); border-radius:10px; padding:14px; background:var(--forest-tint); }
+.plan-box .k{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--forest-dark); font-weight:600; }
+.plan-box .v{ font-family:'IBM Plex Mono', monospace; font-size:19px; margin-top:4px; color:var(--forest-dark); }
+
+/* ---------- Exam top bar ---------- */
+.examtop{ position:sticky; top:0; z-index:20; background:rgba(250,248,242,.97); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:12px 18px;}
+.examtop-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+.examtop .who{ font-size:12.5px; color:var(--stone); }
+.examtop .who strong{ color:var(--ink); }
+.examtop .sec-label{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--stone); font-weight:600;}
+.examtop .sec-label span{ color:var(--forest); }
+.timer-pill{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:16px; background:var(--forest-dark); color:#fff; padding:7px 15px; border-radius:999px; display:flex; align-items:center; gap:8px;}
+.timer-pill.low{ background:var(--crimson); }
+.progress-line{ height:5px; background:var(--line); border-radius:99px; margin-top:10px; max-width:960px; margin-left:auto; margin-right:auto; overflow:hidden;}
+.progress-line i{ display:block; height:100%; width:0%; background:var(--gold); transition:width .25s; }
+
+/* ---------- Exam layout ---------- */
+.examgrid{ max-width:960px; margin:22px auto 0; padding:0 18px 70px; display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:start; }
+.navcard{ border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:16px; position:sticky; top:78px; }
+.navcard h3{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--stone); margin-bottom:10px; font-weight:700;}
+.qgrid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(32px,1fr)); gap:6px; }
+.qcell{ width:100%; aspect-ratio:1; border-radius:7px; border:1px solid var(--line); background:var(--paper); font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; color:var(--stone); display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative;}
+.qcell.answered{ background:var(--gold-tint); border-color:var(--gold); color:var(--forest-dark); }
+.qcell.current{ outline:2px solid var(--forest); outline-offset:1px; }
+.qcell.flagged::after{ content:''; position:absolute; top:-3px; right:-3px; width:8px; height:8px; border-radius:50%; background:var(--crimson); }
+.navlegend{ display:flex; flex-direction:column; gap:6px; margin-top:14px; font-size:11.5px; color:var(--stone); }
+.navlegend span{ display:flex; align-items:center; gap:7px; }
+.dot{ width:9px; height:9px; border-radius:3px; display:inline-block; }
+.dot.empty{ background:var(--paper); border:1px solid var(--line); }
+.dot.full{ background:var(--gold-tint); border:1px solid var(--gold); }
+.dot.flag{ background:var(--crimson); border-radius:50%; }
+
+.qpanel{ border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:26px; min-height:340px; display:flex; flex-direction:column;}
+.qpanel .qmeta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.qpanel .qmeta .idx{ font-family:'IBM Plex Mono', monospace; color:var(--gold); font-weight:600; font-size:13px; }
+.flagbtn{ background:none; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--stone); cursor:pointer;}
+.flagbtn.on{ background:var(--crimson-tint); border-color:var(--crimson); color:var(--crimson); }
+.qtext{ font-size:18px; line-height:1.5; font-weight:500; margin-bottom:20px; }
+.option{ display:flex; align-items:center; gap:11px; padding:13px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:10px; cursor:pointer; background:var(--paper); font-size:15px;}
+.option:hover{ border-color:var(--forest); }
+.option.selected{ border-color:var(--forest); background:var(--forest-tint); }
+.option input{ accent-color:var(--forest); width:16px; height:16px; }
+.option .letter{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); }
+.qpanel-actions{ margin-top:auto; padding-top:20px; display:flex; justify-content:space-between; gap:10px; }
+
+textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-radius:10px; padding:14px; font-family:'IBM Plex Sans', inherit; font-size:15px; line-height:1.6; resize:vertical; color:var(--ink);}
+.wordcount{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--stone); margin-top:8px; text-align:right;}
+
+/* ---------- Results ---------- */
+.result-hero{ text-align:center; padding:30px 20px 6px; }
+.result-hero .pct{ font-family:'Fraunces', serif; font-size:52px; color:var(--forest); font-weight:700; }
+.result-hero .pctlabel{ color:var(--stone); font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin-top:2px;}
+.status-badge{ display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; padding:7px 14px; border-radius:99px; margin-top:10px; letter-spacing:.04em;}
+.status-badge.pass{ background:var(--forest-tint); color:var(--forest-dark); }
+.status-badge.fail{ background:var(--crimson-tint); color:var(--crimson); }
+.stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:22px 0; }
+.stat-box{ border:1px solid var(--line); border-radius:10px; padding:16px; text-align:center; background:var(--paper);}
+.stat-box .n{ font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600; color:var(--forest-dark);}
+.stat-box .l{ font-size:11.5px; color:var(--stone); text-transform:uppercase; letter-spacing:.06em; margin-top:4px;}
+.summary-table{ width:100%; border-collapse:collapse; margin-top:6px; font-size:14px;}
+.summary-table td{ padding:9px 4px; border-bottom:1px solid var(--line); }
+.summary-table td:first-child{ color:var(--stone); width:40%; }
+.summary-table td:last-child{ font-weight:600; }
+.small-note{ font-size:12.5px; color:var(--stone); line-height:1.6; margin-top:10px; }
+
+/* ---------- Toasts / modal ---------- */
+.autosave-toast{
+  position:fixed; top:16px; right:16px; background:var(--forest-dark); color:#fff; font-size:12.5px;
+  padding:9px 15px; border-radius:9px; z-index:200; opacity:0; transition:opacity .3s; pointer-events:none;
+  display:flex; align-items:center; gap:7px;
+}
+.autosave-toast.show{ opacity:1; }
+.autosave-toast .dotpulse{ width:7px; height:7px; border-radius:50%; background:var(--gold); }
+
+.modal-overlay{ position:fixed; inset:0; background:rgba(11,61,31,.55); z-index:300; display:flex; align-items:center; justify-content:center; padding:20px;}
+.modal{ background:#fff; border-radius:16px; padding:28px; max-width:380px; width:100%; text-align:center; border:1px solid var(--line);}
+.modal .micon{ width:42px; height:42px; border-radius:50%; background:var(--crimson-tint); color:var(--crimson); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-family:'IBM Plex Mono'; font-weight:700; font-size:18px;}
+.modal h3{ font-size:18px; margin-bottom:8px; }
+.modal p{ font-size:13.5px; color:var(--stone); line-height:1.55; margin-bottom:18px; }
+
+@media (max-width:720px){
+  .examgrid{ grid-template-columns:1fr; }
+  .navcard{ position:static; order:2; }
+  .section-plan{ grid-template-columns:1fr; }
+  .stat-row{ grid-template-columns:1fr 1fr; }
+  .qtext{ font-size:16.5px; }
+}
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
-    <div id="loginScreen" class="login-screen">
-        <div class="login-card">
-            <div class="school-header">
-                <div class="school-logo">🎓</div>
-                <div class="school-name">Federal University of Agriculture and Development Studies</div>
-                <div class="school-location">Iragbiji, Osun State</div>
-            </div>
-            
-            <h2 class="portal-title">CBT Examination Portal</h2>
-            <p class="subtitle">Enter your details to begin your examination</p>
-            
-            <div class="form-group">
-                <label for="studentName">Full Name</label>
-                <input type="text" id="studentName" placeholder="e.g. John Doe" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="studentMatric">Matric Number</label>
-                <input type="text" id="studentMatric" placeholder="e.g. CSC/2019/001" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="department">Department</label>
-                <select id="department" required>
-                    <option value="">Select your department</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="course">Course</label>
-                <select id="course" required disabled>
-                    <option value="">Select department first</option>
-                </select>
-            </div>
-            
-            <button class="btn btn-primary" id="startBtn" onclick="startExam()">
-                Start Examination
-            </button>
-            
-            <div class="school-footer">
-                <strong>Federal University of Agriculture and Development Studies</strong><br>
-                Iragbiji, Osun State, Nigeria<br>
-                <span style="font-size: 11px; margin-top: 8px; display: block;">
-                    ⚠️ Do not refresh the page during the exam. Your progress auto-saves.
-                </span>
-            </div>
-        </div>
+<div class="letterhead">
+  <div class="letterhead-inner">
+    <div class="crest">
+      <!-- Replace with your official crest: put the logo file at assets/fuadsi-logo.png -->
+      <img src="assets/fuadsi-logo.png" alt="FUADSI crest" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <svg viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M12 2C9 6 4 8 4 13c0 4 3.5 7 8 7s8-3 8-7c0-5-5-7-8-11Z" fill="#fff"/><path d="M12 22V11" stroke="#146C36" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <div class="letterhead-text">
+      <div class="school">FEDERAL UNIVERSITY OF AGRICULTURE AND DEVELOPMENT STUDIES, IRAGBIJI</div>
+      <div class="portal">Computer-Based Test Portal</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GATE ============ -->
+<div id="screen-gate" class="wrap">
+
+  <div id="resume-banner" class="resume-banner hidden">
+    <div class="txt"><strong>You have a session in progress.</strong>Pick up where you left off, or start over.</div>
+    <div style="display:flex; gap:8px;">
+      <button class="primary" id="btn-resume" style="padding:9px 16px; font-size:13.5px;">Resume</button>
+      <button class="ghost" id="btn-discard" style="padding:9px 16px; font-size:13.5px;">Discard</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Student Verification</div>
+    <h2>Begin your CBT session</h2>
+    <p class="lead">Enter your details exactly as registered. Your department decides which courses and questions you can see — you won't be able to change it once the test begins.</p>
+
+    <div class="field">
+      <label for="in-name">Full Name</label>
+      <input id="in-name" type="text" placeholder="e.g. Akanni Toheeb Olamilekan" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="in-reg">Matric / Registration Number</label>
+      <input id="in-reg" type="text" placeholder="e.g. FUADSI/2023/0451" class="mono">
+    </div>
+    <div class="field">
+      <label for="in-dept">Department</label>
+      <select id="in-dept"><option value="">Select your department</option></select>
+    </div>
+    <div class="field">
+      <label for="in-course">Course</label>
+      <select id="in-course" disabled><option value="">Select department first</option></select>
     </div>
 
-    <!-- EXAM SCREEN -->
-    <div id="examScreen" class="hidden">
-        <div class="exam-header">
-            <div class="exam-header-inner">
-                <div class="school-brand">
-                    <div class="school-brand-logo">🎓</div>
-                    <div class="school-brand-text">
-                        <div class="school-brand-name">FUADSI</div>
-                        <div class="school-brand-dept" id="displayDept">Department</div>
-                    </div>
-                </div>
-                
-                <div class="student-info">
-                    <div><strong id="displayName">Student Name</strong></div>
-                    <div id="displayMatric" style="font-size: 12px; opacity: 0.8;">Matric</div>
-                </div>
-                
-                <div class="timer" id="timer">
-                    <span>⏱️</span>
-                    <span id="timerText">60:00</span>
-                </div>
-                
-                <div style="font-size: 14px;">
-                    <span id="sectionLabel">Objective Section</span>
-                </div>
-            </div>
-        </div>
+    <label class="checkline">
+      <input type="checkbox" id="in-agree">
+      <span>I confirm the details above are correct. I understand this session is monitored — leaving the tab, exiting fullscreen, or attempting to copy questions may flag my attempt for review.</span>
+    </label>
 
-        <div class="autosave-indicator" id="autosaveIndicator">💾 Auto-saved</div>
+    <div class="btn-row"><button class="primary" id="btn-to-instructions" disabled>Continue to Instructions</button></div>
+  </div>
+</div>
 
-        <div class="exam-body container">
-            <div class="section-header">
-                <h2 id="sectionTitle">Objective Questions</h2>
-                <p id="sectionDesc">Select the correct answer for each question</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
-                </div>
-            </div>
-
-            <div id="questionsContainer"></div>
-        </div>
-
-        <div class="nav-bar">
-            <button class="nav-btn nav-btn-secondary" id="prevBtn" onclick="prevQuestion()">← Previous</button>
-            
-            <div class="question-palette" id="questionPalette"></div>
-            
-            <button class="nav-btn nav-btn-primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
-            <button class="nav-btn nav-btn-success hidden" id="submitBtn" onclick="submitSection()">Submit Section</button>
-        </div>
+<!-- ============ INSTRUCTIONS ============ -->
+<div id="screen-instructions" class="wrap hidden">
+  <div class="card">
+    <div class="eyebrow">Before You Begin</div>
+    <h2 id="instr-course-title">—</h2>
+    <p class="lead" id="instr-student-line">—</p>
+    <div class="section-plan">
+      <div class="plan-box"><div class="k">Section A · Objectives</div><div class="v" id="plan-obj-count">—</div></div>
+      <div class="plan-box"><div class="k">Section B · Theory</div><div class="v" id="plan-theory-count">—</div></div>
     </div>
-
-    <!-- RESULTS SCREEN -->
-    <div id="resultsScreen" class="results-screen hidden">
-        <div class="results-card">
-            <div class="results-school-header">
-                <div class="results-school-name">Federal University of Agriculture and Development Studies</div>
-                <div class="results-school-location">Iragbiji, Osun State</div>
-            </div>
-            
-            <div class="score-circle pass" id="scoreCircle">
-                <span id="scorePercent">0%</span>
-            </div>
-            
-            <h2 id="resultTitle">Examination Completed!</h2>
-            <p id="resultMessage">Your results have been recorded.</p>
-            
-            <div class="result-details">
-                <div class="result-row">
-                    <span>Name:</span>
-                    <strong id="resultName">-</strong>
-                </div>
-                <div class="result-row">
-                    <span>Matric No:</span>
-                    <strong id="resultMatric">-</strong>
-                </div>
-                <div class="result-row">
-                    <span>Department:</span>
-                    <strong id="resultDept">-</strong>
-                </div>
-                <div class="result-row">
-                    <span>Course:</span>
-                    <strong id="resultCourse">-</strong>
-                </div>
-                <div class="result-row">
-                    <span>Objective Score:</span>
-                    <strong id="resultObjScore">-</strong>
-                </div>
-                <div class="result-row">
-                    <span>Theory Status:</span>
-                    <strong id="resultTheoryStatus">Submitted</strong>
-                </div>
-                <div class="result-row">
-                    <span>Total Score:</span>
-                    <strong id="resultTotal">-</strong>
-                </div>
-            </div>
-            
-            <span class="status-badge status-pass" id="statusBadge">PASSED</span>
-            
-            <div class="results-footer">
-                <strong>Federal University of Agriculture and Development Studies</strong>
-                Iragbiji, Osun State, Nigeria<br>
-                <span style="margin-top: 5px; display: block;">
-                    A copy of your result has been sent to the examination office.
-                </span>
-            </div>
-        </div>
+    <ul class="rules">
+      <li><span class="num">01</span><span>Section A and Section B each run on their own timer. Time does not carry over between sections.</span></li>
+      <li><span class="num">02</span><span>When a section's timer reaches zero, your answers for that section are submitted automatically.</span></li>
+      <li><span class="num">03</span><span>The exam runs in fullscreen. Exiting fullscreen or switching tabs is logged; three warnings ends your session.</span></li>
+      <li><span class="num">04</span><span>Copy, paste, and right-click are disabled during the test. Use the numbered grid to move between questions.</span></li>
+      <li><span class="num">05</span><span>Objective questions are graded instantly. Theory answers are typed and reviewed manually by your lecturer.</span></li>
+      <li><span class="num">06</span><span>Your progress auto-saves as you go, so a dropped connection won't cost your answers.</span></li>
+    </ul>
+    <div class="btn-row">
+      <button class="ghost" id="btn-back-to-gate">Back</button>
+      <button class="primary" id="btn-start-objectives">Start Section A — Objectives</button>
     </div>
+  </div>
+</div>
 
-    <!-- WARNING MODAL -->
-    <div id="warningModal" class="modal-overlay hidden">
-        <div class="modal">
-            <div class="modal-icon">⚠️</div>
-            <h3 id="warningTitle">Warning</h3>
-            <p id="warningMessage">Please return to fullscreen mode to continue.</p>
-            <button class="btn btn-primary" style="margin-top: 20px;" onclick="enterFullscreen()">
-                Return to Exam
-            </button>
-        </div>
+<!-- ============ OBJECTIVES ============ -->
+<div id="screen-objectives" class="hidden" style="display:none;">
+  <div class="examtop">
+    <div class="examtop-inner">
+      <div>
+        <div class="sec-label">Section A <span>· Objectives</span></div>
+        <div class="who"><strong id="obj-who-name">—</strong> · <span id="obj-who-dept">—</span></div>
+      </div>
+      <div class="timer-pill" id="obj-timer">30:00</div>
     </div>
+    <div class="progress-line"><i id="obj-progress"></i></div>
+  </div>
+  <div class="examgrid">
+    <div class="navcard">
+      <h3>Questions</h3>
+      <div class="qgrid" id="obj-navgrid"></div>
+      <div class="navlegend">
+        <span><i class="dot empty"></i> Not answered</span>
+        <span><i class="dot full"></i> Answered</span>
+        <span><i class="dot flag"></i> Flagged</span>
+      </div>
+      <div class="btn-row" style="margin-top:16px;"><button class="primary" id="btn-submit-objectives" style="width:100%;">Submit Section A</button></div>
+    </div>
+    <div class="qpanel">
+      <div class="qmeta"><span class="idx" id="obj-qindex">Question 1 of —</span><button class="flagbtn" id="obj-flagbtn">Flag for review</button></div>
+      <div class="qtext" id="obj-qtext">—</div>
+      <div id="obj-options"></div>
+      <div class="qpanel-actions"><button class="ghost" id="obj-prev">← Previous</button><button class="ghost" id="obj-next">Next →</button></div>
+    </div>
+  </div>
+</div>
 
-    <script>
-        // ============================================
-        // YOUR GOOGLE SHEETS URL
-        // ============================================
-        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec';
-        
-        // Timer settings (in minutes)
-        const OBJECTIVE_TIME = 60;
-        const THEORY_TIME = 45;
-        const PASS_MARK = 40;
+<!-- ============ TRANSITION ============ -->
+<div id="screen-transition" class="wrap hidden">
+  <div class="card" style="text-align:center;">
+    <div class="eyebrow">Section A Complete</div>
+    <h2>Nice work. Section B is next.</h2>
+    <p class="lead">Section A has been recorded. Once you continue, Section B's timer starts immediately and you won't be able to return to Section A.</p>
+    <div class="btn-row" style="justify-content:center;"><button class="primary" id="btn-start-theory">Start Section B — Theory</button></div>
+  </div>
+</div>
 
-        // ============================================
-        // QUESTIONS DATABASE - SAMPLE (expand this!)
-        // ============================================
-        const QUESTIONS_DB = {
-            "Computer Science": {
-                "CSC 101 - Introduction to Computing": {
-                    objective: [
-                        { question: "What does CPU stand for?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Processor Utility", "Central Process Unit"], answer: 0 },
-                        { question: "Which of the following is NOT a programming language?", options: ["Python", "Java", "HTML", "Microsoft Word"], answer: 3 },
-                        { question: "What is the binary equivalent of decimal 5?", options: ["100", "101", "110", "111"], answer: 1 },
-                        { question: "RAM stands for:", options: ["Random Access Memory", "Read And Modify", "Random Allocation Method", "Read Access Mode"], answer: 0 },
-                        { question: "Which storage device has the fastest access time?", options: ["Hard Disk Drive", "Solid State Drive", "USB Flash Drive", "DVD"], answer: 1 }
-                    ],
-                    theory: [
-                        { question: "Explain the difference between RAM and ROM, giving two examples of each.", maxWords: 150 },
-                        { question: "Describe the function of the Operating System in a computer system.", maxWords: 200 },
-                        { question: "What is an algorithm? Write an algorithm to find the largest of three numbers.", maxWords: 250 }
-                    ]
-                },
-                "CSC 201 - Data Structures": {
-                    objective: [
-                        { question: "Which data structure uses LIFO?", options: ["Queue", "Stack", "Array", "Linked List"], answer: 1 }
-                    ],
-                    theory: [
-                        { question: "Explain the concept of recursion with a suitable example.", maxWords: 200 }
-                    ]
-                }
-            },
-            "Agricultural Science": {
-                "AGR 101 - Introduction to Agriculture": {
-                    objective: [
-                        { question: "Which of the following is a leguminous crop?", options: ["Maize", "Rice", "Groundnut", "Yam"], answer: 2 },
-                        { question: "Photosynthesis occurs in which part of the plant?", options: ["Roots", "Stem", "Leaves", "Flowers"], answer: 2 },
-                        { question: "The process of making food by plants is called:", options: ["Respiration", "Photosynthesis", "Transpiration", "Fermentation"], answer: 1 }
-                    ],
-                    theory: [
-                        { question: "Describe the process of photosynthesis and its importance to life on Earth.", maxWords: 250 },
-                        { question: "List and explain five methods of pest control in crop production.", maxWords: 300 }
-                    ]
-                }
-            },
-            "Mass Communication": {
-                "MAC 101 - Introduction to Mass Communication": {
-                    objective: [
-                        { question: "The first newspaper in Nigeria was:", options: ["Daily Times", "Iwe Iroyin", "The Guardian", "Punch"], answer: 1 }
-                    ],
-                    theory: [
-                        { question: "Discuss the role of mass media in democratic governance.", maxWords: 300 }
-                    ]
-                }
-            },
-            "Business Administration": {
-                "BUS 101 - Principles of Management": {
-                    objective: [
-                        { question: "Who is known as the father of scientific management?", options: ["Henry Fayol", "Frederick Taylor", "Peter Drucker", "Max Weber"], answer: 1 }
-                    ],
-                    theory: [
-                        { question: "Explain Fayol's 14 principles of management.", maxWords: 400 }
-                    ]
-                }
-            },
-            "Electrical Engineering": {
-                "EEE 101 - Circuit Theory": {
-                    objective: [
-                        { question: "Ohm's Law states that V =", options: ["I/R", "I×R", "R/I", "I+R"], answer: 1 }
-                    ],
-                    theory: [
-                        { question: "Derive the expression for total resistance in a parallel circuit.", maxWords: 250 }
-                    ]
-                }
-            }
-        };
+<!-- ============ THEORY ============ -->
+<div id="screen-theory" class="hidden" style="display:none;">
+  <div class="examtop">
+    <div class="examtop-inner">
+      <div>
+        <div class="sec-label">Section B <span>· Theory</span></div>
+        <div class="who"><strong id="theory-who-name">—</strong> · <span id="theory-who-dept">—</span></div>
+      </div>
+      <div class="timer-pill" id="theory-timer">45:00</div>
+    </div>
+    <div class="progress-line"><i id="theory-progress"></i></div>
+  </div>
+  <div class="examgrid">
+    <div class="navcard">
+      <h3>Questions</h3>
+      <div class="qgrid" id="theory-navgrid"></div>
+      <div class="navlegend"><span><i class="dot empty"></i> Not started</span><span><i class="dot full"></i> Has an answer</span></div>
+      <div class="btn-row" style="margin-top:16px;"><button class="primary" id="btn-submit-theory" style="width:100%;">Submit Exam</button></div>
+    </div>
+    <div class="qpanel">
+      <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span></div>
+      <div class="qtext" id="theory-qtext">—</div>
+      <textarea id="theory-answer" placeholder="Type your answer here..."></textarea>
+      <div class="wordcount"><span id="theory-wordcount">0</span> words</div>
+      <div class="qpanel-actions"><button class="ghost" id="theory-prev">← Previous</button><button class="ghost" id="theory-next">Next →</button></div>
+    </div>
+  </div>
+</div>
 
-        // ============================================
-        // STATE MANAGEMENT
-        // ============================================
-        let currentState = {
-            studentName: '',
-            studentMatric: '',
-            department: '',
-            course: '',
-            currentSection: 'objective',
-            currentQuestion: 0,
-            answers: {},
-            theoryAnswers: {},
-            timeRemaining: 0,
-            timerInterval: null,
-            questions: [],
-            theoryQuestions: [],
-            examStarted: false,
-            warningCount: 0
-        };
+<!-- ============ RESULTS ============ -->
+<div id="screen-results" class="wrap hidden">
+  <div class="card">
+    <div class="result-hero">
+      <div class="pct" id="res-pct">—%</div>
+      <div class="pctlabel">Section A score (auto-graded)</div>
+      <div class="status-badge" id="res-badge">—</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="n" id="res-correct">0</div><div class="l">Correct</div></div>
+      <div class="stat-box"><div class="n" id="res-wrong">0</div><div class="l">Wrong</div></div>
+      <div class="stat-box"><div class="n" id="res-unanswered">0</div><div class="l">Unanswered</div></div>
+    </div>
+    <table class="summary-table">
+      <tr><td>Name</td><td id="res-name">—</td></tr>
+      <tr><td>Registration No.</td><td id="res-reg">—</td></tr>
+      <tr><td>Department</td><td id="res-dept">—</td></tr>
+      <tr><td>Course</td><td id="res-course">—</td></tr>
+      <tr><td>Section B (Theory)</td><td>Submitted — pending manual grading</td></tr>
+    </table>
+    <p class="small-note" id="sync-note">Sending your results to the department record sheet…</p>
+  </div>
+</div>
 
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        function init() {
-            populateDepartments();
-            
-            const saved = localStorage.getItem('examProgress');
-            if (saved) {
-                const data = JSON.parse(saved);
-                if (data.examStarted && !data.submitted) {
-                    if (confirm('You have an unfinished exam. Would you like to continue?')) {
-                        restoreProgress(data);
-                        return;
-                    }
-                }
-            }
-            
-            document.getElementById('department').addEventListener('change', populateCourses);
-        }
+<div class="autosave-toast" id="autosave-toast"><span class="dotpulse"></span><span id="autosave-toast-text">Progress saved</span></div>
 
-        function populateDepartments() {
-            const select = document.getElementById('department');
-            const departments = Object.keys(QUESTIONS_DB);
-            
-            departments.forEach(dept => {
-                const option = document.createElement('option');
-                option.value = dept;
-                option.textContent = dept;
-                select.appendChild(option);
-            });
-        }
+<div id="warning-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="micon">!</div>
+    <h3 id="warning-title">Warning</h3>
+    <p id="warning-message">Please return to fullscreen to continue your exam.</p>
+    <button class="primary" id="warning-return" style="width:100%;">Return to Exam</button>
+  </div>
+</div>
 
-        function populateCourses() {
-            const dept = document.getElementById('department').value;
-            const courseSelect = document.getElementById('course');
-            
-            courseSelect.innerHTML = '<option value="">Select a course</option>';
-            courseSelect.disabled = !dept;
-            
-            if (dept && QUESTIONS_DB[dept]) {
-                const courses = Object.keys(QUESTIONS_DB[dept]);
-                courses.forEach(course => {
-                    const option = document.createElement('option');
-                    option.value = course;
-                    option.textContent = course;
-                    courseSelect.appendChild(option);
-                });
-            }
-        }
+<script>
+/* =====================================================
+   CONFIG — swap sample questions for real material here.
+   Your Google Sheets webhook is preserved from your build.
+   ===================================================== */
+const CONFIG = {
+  objectiveMinutes: 30,
+  theoryMinutes: 45,
+  passMark: 40,
+  sheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec'
+};
 
-        // ============================================
-        // EXAM START
-        // ============================================
-        function startExam() {
-            const name = document.getElementById('studentName').value.trim();
-            const matric = document.getElementById('studentMatric').value.trim();
-            const dept = document.getElementById('department').value;
-            const course = document.getElementById('course').value;
-            
-            if (!name || !matric || !dept || !course) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            const courseData = QUESTIONS_DB[dept][course];
-            if (!courseData) {
-                alert('No questions available for this course yet.');
-                return;
-            }
-            
-            currentState.studentName = name;
-            currentState.studentMatric = matric;
-            currentState.department = dept;
-            currentState.course = course;
-            currentState.questions = courseData.objective || [];
-            currentState.theoryQuestions = courseData.theory || [];
-            currentState.examStarted = true;
-            currentState.currentSection = 'objective';
-            currentState.currentQuestion = 0;
-            currentState.answers = {};
-            currentState.theoryAnswers = {};
-            currentState.timeRemaining = OBJECTIVE_TIME * 60;
-            
-            enterFullscreen();
-            setupAntiCheat();
-            
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('examScreen').classList.remove('hidden');
-            
-            document.getElementById('displayName').textContent = name;
-            document.getElementById('displayMatric').textContent = matric;
-            document.getElementById('displayDept').textContent = dept;
-            
-            startTimer();
-            renderQuestion();
-            updatePalette();
-            saveProgress();
-        }
+/* department -> course -> { objective:[{q,options,answer(letter)}], theory:[{q}] } */
+const QUESTIONS_DB = {
+  "Water Resources Management": {
+    "WRM 101 — Introduction to Water Resources": {
+      objective: [
+        {q:"Which of these is a renewable source of freshwater?", options:["Fossil groundwater","Rainfall","Seawater","Glacial ice sheets"], answer:"B"},
+        {q:"The process by which water vapour rises from oceans into the atmosphere is called:", options:["Infiltration","Percolation","Evaporation","Condensation"], answer:"C"},
+        {q:"A watershed is best defined as:", options:["A man-made canal","An area of land that drains to a common point","A type of dam","A unit of rainfall measurement"], answer:"B"},
+        {q:"Which instrument is used to measure rainfall?", options:["Anemometer","Rain gauge","Barometer","Hygrometer"], answer:"B"},
+        {q:"Surface runoff increases when:", options:["Soil infiltration capacity is high","The ground is impermeable or saturated","Vegetation cover is dense","Rainfall intensity is very low"], answer:"B"}
+      ],
+      theory: [
+        {q:"Describe the hydrological cycle and explain the role of vegetation in it."},
+        {q:"Discuss two major causes of water scarcity in Nigeria and one sustainable solution for each."}
+      ]
+    }
+  },
+  "Agrometeorology": {
+    "AGM 101 — Principles of Agricultural Meteorology": {
+      objective: [
+        {q:"Which weather element most directly affects the rate of transpiration in crops?", options:["Wind speed","Soil pH","Humidity","Rock type"], answer:"C"},
+        {q:"A thermometer measures:", options:["Pressure","Humidity","Temperature","Wind direction"], answer:"C"},
+        {q:"The greenhouse effect refers to:", options:["Cooling caused by clouds","Trapping of heat by atmospheric gases","Wind formation over oceans","Soil erosion by rainfall"], answer:"B"},
+        {q:"Which of these best describes 'climate'?", options:["The day-to-day state of the atmosphere","The average weather condition over a long period","A single rainfall event","Wind speed at a point in time"], answer:"B"}
+      ],
+      theory: [
+        {q:"Explain how temperature and rainfall patterns influence crop choice in a farming community you are familiar with."},
+        {q:"Discuss the impact of climate change on agricultural productivity in Nigeria."}
+      ]
+    }
+  },
+  "Computer Science": {
+    "CSC 101 — Introduction to Computing": {
+      objective: [
+        {q:"What does CPU stand for?", options:["Central Processing Unit","Computer Personal Unit","Central Processor Utility","Central Process Unit"], answer:"A"},
+        {q:"Which of the following is NOT a programming language?", options:["Python","Java","HTML","Microsoft Word"], answer:"D"},
+        {q:"What is the binary equivalent of decimal 5?", options:["100","101","110","111"], answer:"B"},
+        {q:"RAM stands for:", options:["Random Access Memory","Read And Modify","Random Allocation Method","Read Access Mode"], answer:"A"},
+        {q:"Which storage device typically has the fastest access time?", options:["Hard Disk Drive","Solid State Drive","USB Flash Drive","DVD"], answer:"B"}
+      ],
+      theory: [
+        {q:"Explain the difference between RAM and ROM, giving two examples of each."},
+        {q:"What is an algorithm? Write an algorithm to find the largest of three numbers."}
+      ]
+    }
+  },
+  "Crop Science": {
+    "CPS 101 — Introduction to Crop Production": {
+      objective: [
+        {q:"Which of the following is a leguminous crop?", options:["Maize","Rice","Groundnut","Yam"], answer:"C"},
+        {q:"Photosynthesis occurs mainly in which part of the plant?", options:["Roots","Stem","Leaves","Flowers"], answer:"C"},
+        {q:"The process of making food by plants using sunlight is called:", options:["Respiration","Photosynthesis","Transpiration","Fermentation"], answer:"B"}
+      ],
+      theory: [
+        {q:"Describe the process of photosynthesis and its importance to crop growth."},
+        {q:"List and explain three methods of pest control in crop production."}
+      ]
+    }
+  }
+};
 
-        // ============================================
-        // TIMER
-        // ============================================
-        function startTimer() {
-            updateTimerDisplay();
-            
-            currentState.timerInterval = setInterval(() => {
-                currentState.timeRemaining--;
-                updateTimerDisplay();
-                saveProgress();
-                
-                if (currentState.timeRemaining <= 0) {
-                    clearInterval(currentState.timerInterval);
-                    autoSubmit();
-                }
-            }, 1000);
-        }
+/* ===================== STATE ===================== */
+let state = {
+  studentName:'', studentReg:'', department:'', course:'',
+  section:'objective', // 'objective' | 'theory'
+  objAnswers:{}, objFlags:{}, objIndex:0,
+  theoryAnswers:{}, theoryIndex:0,
+  objTimeLeft:0, theoryTimeLeft:0,
+  examStarted:false, warningCount:0
+};
+let objInterval, theoryInterval;
+let activeObjectives = [], activeTheory = [];
 
-        function updateTimerDisplay() {
-            const mins = Math.floor(currentState.timeRemaining / 60);
-            const secs = currentState.timeRemaining % 60;
-            const text = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            
-            document.getElementById('timerText').textContent = text;
-            
-            const timerEl = document.getElementById('timer');
-            timerEl.classList.remove('warning', 'danger');
-            
-            if (currentState.timeRemaining <= 300) {
-                timerEl.classList.add('danger');
-            } else if (currentState.timeRemaining <= 600) {
-                timerEl.classList.add('warning');
-            }
-        }
+/* ===================== HELPERS ===================== */
+const $ = id => document.getElementById(id);
+const show = id => { $(id).classList.remove('hidden'); };
+const hide = id => { $(id).classList.add('hidden'); };
+function fmtTime(s){ s=Math.max(0,s); const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-        // ============================================
-        // QUESTION RENDERING
-        // ============================================
-        function renderQuestion() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
-            
-            if (currentState.currentSection === 'objective') {
-                renderObjectiveQuestion();
-            } else {
-                renderTheoryQuestion();
-            }
-            
-            updateProgress();
-            updateNavButtons();
-        }
+/* ===================== DEPARTMENT / COURSE SETUP ===================== */
+function populateDepartments(){
+  const sel = $('in-dept');
+  Object.keys(QUESTIONS_DB).forEach(dep => {
+    const opt = document.createElement('option'); opt.value = dep; opt.textContent = dep; sel.appendChild(opt);
+  });
+}
+$('in-dept').addEventListener('change', () => {
+  const dep = $('in-dept').value;
+  const courseSel = $('in-course');
+  courseSel.innerHTML = '';
+  if(!dep){ courseSel.disabled = true; courseSel.innerHTML = '<option value="">Select department first</option>'; validateGate(); return; }
+  courseSel.disabled = false;
+  courseSel.innerHTML = '<option value="">Select a course</option>';
+  Object.keys(QUESTIONS_DB[dep]).forEach(c => {
+    const opt = document.createElement('option'); opt.value = c; opt.textContent = c; courseSel.appendChild(opt);
+  });
+  validateGate();
+});
+$('in-course').addEventListener('change', validateGate);
 
-        function renderObjectiveQuestion() {
-            const q = currentState.questions[currentState.currentQuestion];
-            if (!q) return;
-            
-            const container = document.getElementById('questionsContainer');
-            const selectedAnswer = currentState.answers[currentState.currentQuestion];
-            
-            let optionsHTML = '';
-            q.options.forEach((opt, idx) => {
-                const isSelected = selectedAnswer === idx;
-                optionsHTML += `
-                    <label class="option ${isSelected ? 'selected' : ''}" onclick="selectOption(${idx})">
-                        <input type="radio" name="q${currentState.currentQuestion}" 
-                               ${isSelected ? 'checked' : ''}>
-                        <span class="option-label">${String.fromCharCode(65 + idx)}.</span>
-                        <span>${opt}</span>
-                    </label>
-                `;
-            });
-            
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.innerHTML = `
-                <div class="question-text">
-                    <span class="question-number">${currentState.currentQuestion + 1}</span>
-                    ${q.question}
-                </div>
-                <div class="options">
-                    ${optionsHTML}
-                </div>
-            `;
-            
-            container.appendChild(card);
-        }
+/* ===================== GATE ===================== */
+function validateGate(){
+  const ok = $('in-name').value.trim() && $('in-reg').value.trim() && $('in-dept').value && $('in-course').value && $('in-agree').checked;
+  $('btn-to-instructions').disabled = !ok;
+}
+['in-name','in-reg','in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
 
-        function renderTheoryQuestion() {
-            const q = currentState.theoryQuestions[currentState.currentQuestion];
-            if (!q) return;
-            
-            const container = document.getElementById('questionsContainer');
-            const savedAnswer = currentState.theoryAnswers[currentState.currentQuestion] || '';
-            
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.innerHTML = `
-                <div class="question-text">
-                    <span class="question-number">${currentState.currentQuestion + 1}</span>
-                    ${q.question}
-                </div>
-                <textarea class="theory-textarea" 
-                          id="theoryAnswer" 
-                          placeholder="Type your answer here..."
-                          oninput="saveTheoryAnswer(this.value); updateCharCount(this)"
-                          maxlength="2000">${savedAnswer}</textarea>
-                <div class="char-count" id="charCount">${savedAnswer.length} characters</div>
-            `;
-            
-            container.appendChild(card);
-        }
+$('btn-to-instructions').addEventListener('click', () => {
+  state.studentName = $('in-name').value.trim();
+  state.studentReg = $('in-reg').value.trim();
+  state.department = $('in-dept').value;
+  state.course = $('in-course').value;
 
-        function selectOption(optionIndex) {
-            currentState.answers[currentState.currentQuestion] = optionIndex;
-            saveProgress();
-            renderQuestion();
-            updatePalette();
-        }
+  const bank = QUESTIONS_DB[state.department][state.course];
+  activeObjectives = bank.objective;
+  activeTheory = bank.theory;
 
-        function saveTheoryAnswer(value) {
-            currentState.theoryAnswers[currentState.currentQuestion] = value;
-            saveProgress();
-            updatePalette();
-        }
+  $('instr-course-title').textContent = state.course;
+  $('instr-student-line').textContent = `${state.studentName} · ${state.studentReg} · ${state.department}`;
+  $('plan-obj-count').textContent = `${activeObjectives.length} questions · ${CONFIG.objectiveMinutes} min`;
+  $('plan-theory-count').textContent = `${activeTheory.length} questions · ${CONFIG.theoryMinutes} min`;
 
-        function updateCharCount(textarea) {
-            document.getElementById('charCount').textContent = `${textarea.value.length} characters`;
-        }
+  hide('screen-gate'); show('screen-instructions'); window.scrollTo({top:0});
+});
+$('btn-back-to-gate').addEventListener('click', () => { hide('screen-instructions'); show('screen-gate'); });
 
-        // ============================================
-        // NAVIGATION
-        // ============================================
-        function nextQuestion() {
-            const maxQuestions = currentState.currentSection === 'objective' 
-                ? currentState.questions.length 
-                : currentState.theoryQuestions.length;
-            
-            if (currentState.currentQuestion < maxQuestions - 1) {
-                currentState.currentQuestion++;
-                renderQuestion();
-                updatePalette();
-            }
-        }
+/* ===================== FULLSCREEN + ANTI-CHEAT ===================== */
+function enterFullscreen(){
+  const el = document.documentElement;
+  if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+}
+function showWarning(msg){
+  $('warning-message').textContent = msg;
+  $('warning-modal').classList.remove('hidden');
+}
+$('warning-return').addEventListener('click', () => { $('warning-modal').classList.add('hidden'); enterFullscreen(); });
 
-        function prevQuestion() {
-            if (currentState.currentQuestion > 0) {
-                currentState.currentQuestion--;
-                renderQuestion();
-                updatePalette();
-            }
-        }
+function setupAntiCheat(){
+  document.addEventListener('contextmenu', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('copy', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('cut', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('paste', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('keydown', e => {
+    if(!state.examStarted) return;
+    if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) || (e.ctrlKey && e.key.toLowerCase()==='u')){
+      e.preventDefault(); showWarning('Developer tools are not allowed during the exam.');
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden && state.examStarted){
+      state.warningCount++;
+      if(state.warningCount >= 3){
+        alert('Your session has been ended after multiple tab-switch warnings. Submitting what you have so far.');
+        forceSubmitCurrentSection();
+      } else {
+        showWarning(`Warning ${state.warningCount}/3 — you left the exam tab. A third warning ends your session.`);
+      }
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if(state.examStarted && !document.fullscreenElement){
+      showWarning('Please return to fullscreen to continue your exam.');
+    }
+  });
+}
+function forceSubmitCurrentSection(){
+  if(state.section === 'objective') finishObjectives();
+  else finishTheory();
+}
 
-        function jumpToQuestion(index) {
-            currentState.currentQuestion = index;
-            renderQuestion();
-            updatePalette();
-        }
+/* ===================== AUTOSAVE / RESUME ===================== */
+function autosave(){
+  const payload = { state: {...state}, activeObjectives, activeTheory, savedAt: Date.now() };
+  try{ localStorage.setItem('fuadsi_cbt_progress', JSON.stringify(payload)); }catch(e){}
+  const toast = $('autosave-toast'); toast.classList.add('show');
+  clearTimeout(autosave._t); autosave._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+function checkForResume(){
+  let saved;
+  try{ saved = JSON.parse(localStorage.getItem('fuadsi_cbt_progress')); }catch(e){ return; }
+  if(saved && saved.state && saved.state.examStarted) show('resume-banner');
+}
+$('btn-discard').addEventListener('click', () => { localStorage.removeItem('fuadsi_cbt_progress'); hide('resume-banner'); });
+$('btn-resume').addEventListener('click', () => {
+  const saved = JSON.parse(localStorage.getItem('fuadsi_cbt_progress'));
+  state = saved.state; activeObjectives = saved.activeObjectives; activeTheory = saved.activeTheory;
+  const elapsed = Math.floor((Date.now() - saved.savedAt)/1000);
+  if(state.section === 'objective') state.objTimeLeft = Math.max(0, state.objTimeLeft - elapsed);
+  else state.theoryTimeLeft = Math.max(0, state.theoryTimeLeft - elapsed);
 
-        function updateNavButtons() {
-            const maxQuestions = currentState.currentSection === 'objective' 
-                ? currentState.questions.length 
-                : currentState.theoryQuestions.length;
-            
-            document.getElementById('prevBtn').disabled = currentState.currentQuestion === 0;
-            
-            const isLastQuestion = currentState.currentQuestion === maxQuestions - 1;
-            document.getElementById('nextBtn').classList.toggle('hidden', isLastQuestion);
-            document.getElementById('submitBtn').classList.toggle('hidden', !isLastQuestion);
-        }
+  hide('screen-gate'); enterFullscreen(); setupAntiCheat();
+  if(state.section === 'objective'){
+    show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
+    $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
+    buildObjNav(); renderObjQuestion(); resumeObjTimer();
+  } else {
+    show('screen-theory'); document.getElementById('screen-theory').style.display='block';
+    $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
+    buildTheoryNav(); renderTheoryQuestion(); resumeTheoryTimer();
+  }
+});
 
-        function updateProgress() {
-            const maxQuestions = currentState.currentSection === 'objective' 
-                ? currentState.questions.length 
-                : currentState.theoryQuestions.length;
-            
-            const progress = ((currentState.currentQuestion + 1) / maxQuestions) * 100;
-            document.getElementById('progressBar').style.width = `${progress}%`;
-        }
+/* ===================== SECTION A: OBJECTIVES ===================== */
+$('btn-start-objectives').addEventListener('click', () => {
+  hide('screen-instructions'); show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
+  state.examStarted = true; state.section='objective'; state.objTimeLeft = CONFIG.objectiveMinutes*60;
+  $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
+  enterFullscreen(); setupAntiCheat();
+  buildObjNav(); renderObjQuestion(); startObjTimer(); window.scrollTo({top:0});
+});
+function buildObjNav(){
+  const grid = $('obj-navgrid'); grid.innerHTML = '';
+  activeObjectives.forEach((_, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'qcell'; cell.textContent = i+1; cell.dataset.i = i;
+    cell.addEventListener('click', () => { state.objIndex = i; renderObjQuestion(); });
+    grid.appendChild(cell);
+  });
+}
+function refreshObjNav(){
+  document.querySelectorAll('#obj-navgrid .qcell').forEach((cell,i) => {
+    cell.classList.toggle('answered', !!state.objAnswers[i]);
+    cell.classList.toggle('current', i===state.objIndex);
+    cell.classList.toggle('flagged', !!state.objFlags[i]);
+  });
+  $('obj-progress').style.width = (Object.keys(state.objAnswers).length/activeObjectives.length*100)+'%';
+}
+function renderObjQuestion(){
+  const item = activeObjectives[state.objIndex];
+  $('obj-qindex').textContent = `Question ${state.objIndex+1} of ${activeObjectives.length}`;
+  $('obj-qtext').textContent = item.q;
+  $('obj-flagbtn').classList.toggle('on', !!state.objFlags[state.objIndex]);
+  $('obj-flagbtn').textContent = state.objFlags[state.objIndex] ? 'Flagged' : 'Flag for review';
 
-        function updatePalette() {
-            const palette = document.getElementById('questionPalette');
-            palette.innerHTML = '';
-            
-            const maxQuestions = currentState.currentSection === 'objective' 
-                ? currentState.questions.length 
-                : currentState.theoryQuestions.length;
-            
-            for (let i = 0; i < maxQuestions; i++) {
-                const btn = document.createElement('button');
-                btn.className = 'palette-btn';
-                
-                let isAnswered = false;
-                if (currentState.currentSection === 'objective') {
-                    isAnswered = currentState.answers[i] !== undefined;
-                } else {
-                    isAnswered = currentState.theoryAnswers[i] && currentState.theoryAnswers[i].trim().length > 0;
-                }
-                
-                if (isAnswered) btn.classList.add('answered');
-                if (i === currentState.currentQuestion) btn.classList.add('current');
-                
-                btn.textContent = i + 1;
-                btn.onclick = () => jumpToQuestion(i);
-                palette.appendChild(btn);
-            }
-        }
+  const letters = ['A','B','C','D'];
+  $('obj-options').innerHTML = item.options.map((opt,j) => `
+    <label class="option ${state.objAnswers[state.objIndex]===letters[j] ? 'selected':''}" data-letter="${letters[j]}">
+      <input type="radio" name="objq" ${state.objAnswers[state.objIndex]===letters[j] ? 'checked':''}>
+      <span class="letter">${letters[j]}.</span> ${escapeHtml(opt)}
+    </label>`).join('');
 
-        // ============================================
-        // SECTION SUBMISSION
-        // ============================================
-        function submitSection() {
-            if (currentState.currentSection === 'objective') {
-                const answered = Object.keys(currentState.answers).length;
-                const total = currentState.questions.length;
-                
-                if (answered < total) {
-                    if (!confirm(`You've answered ${answered} of ${total} questions. Submit anyway?`)) {
-                        return;
-                    }
-                }
-                
-                currentState.currentSection = 'theory';
-                currentState.currentQuestion = 0;
-                currentState.timeRemaining = THEORY_TIME * 60;
-                
-                document.getElementById('sectionLabel').textContent = 'Theory Section';
-                document.getElementById('sectionTitle').textContent = 'Theory Questions';
-                document.getElementById('sectionDesc').textContent = 'Provide detailed answers in the text boxes below';
-                
-                clearInterval(currentState.timerInterval);
-                startTimer();
-                
-                renderQuestion();
-                updatePalette();
-                saveProgress();
-                
-            } else {
-                const answered = Object.keys(currentState.theoryAnswers).filter(k => 
-                    currentState.theoryAnswers[k].trim().length > 0
-                ).length;
-                const total = currentState.theoryQuestions.length;
-                
-                if (answered < total) {
-                    if (!confirm(`You've answered ${answered} of ${total} theory questions. Submit anyway?`)) {
-                        return;
-                    }
-                }
-                
-                finishExam();
-            }
-        }
+  document.querySelectorAll('#obj-options .option').forEach(label => {
+    label.addEventListener('click', () => { state.objAnswers[state.objIndex] = label.dataset.letter; renderObjQuestion(); refreshObjNav(); autosave(); });
+  });
+  $('obj-prev').disabled = state.objIndex===0;
+  $('obj-next').textContent = state.objIndex===activeObjectives.length-1 ? 'Last question' : 'Next →';
+  refreshObjNav();
+}
+$('obj-prev').addEventListener('click', () => { if(state.objIndex>0){ state.objIndex--; renderObjQuestion(); } });
+$('obj-next').addEventListener('click', () => { if(state.objIndex<activeObjectives.length-1){ state.objIndex++; renderObjQuestion(); } });
+$('obj-flagbtn').addEventListener('click', () => { state.objFlags[state.objIndex] = !state.objFlags[state.objIndex]; renderObjQuestion(); autosave(); });
 
-        function autoSubmit() {
-            alert('Time is up! Your exam is being submitted automatically.');
-            finishExam();
-        }
+function startObjTimer(){
+  $('obj-timer').textContent = fmtTime(state.objTimeLeft);
+  runObjTicker();
+}
+function resumeObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
+function runObjTicker(){
+  clearInterval(objInterval);
+  objInterval = setInterval(() => {
+    state.objTimeLeft--;
+    $('obj-timer').textContent = fmtTime(state.objTimeLeft);
+    $('obj-timer').classList.toggle('low', state.objTimeLeft<=60);
+    if(state.objTimeLeft % 15 === 0) autosave();
+    if(state.objTimeLeft<=0){ clearInterval(objInterval); finishObjectives(); }
+  },1000);
+}
+$('btn-submit-objectives').addEventListener('click', () => {
+  if(confirm('Submit Section A now? You cannot return to it afterward.')) finishObjectives();
+});
+function finishObjectives(){
+  clearInterval(objInterval);
+  document.getElementById('screen-objectives').style.display='none';
+  state.section = 'theory'; autosave();
+  show('screen-transition'); window.scrollTo({top:0});
+}
 
-        // ============================================
-        // EXAM FINISH & SCORING
-        // ============================================
-        function finishExam() {
-            clearInterval(currentState.timerInterval);
-            
-            let correct = 0;
-            currentState.questions.forEach((q, idx) => {
-                if (currentState.answers[idx] === q.answer) {
-                    correct++;
-                }
-            });
-            
-            const objScore = currentState.questions.length > 0 
-                ? Math.round((correct / currentState.questions.length) * 100) 
-                : 0;
-            
-            const totalScore = objScore;
-            
-            showResults(objScore, totalScore, correct);
-            submitToSheets(objScore, totalScore);
-            
-            localStorage.removeItem('examProgress');
-            
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            }
-        }
+/* ===================== SECTION B: THEORY ===================== */
+$('btn-start-theory').addEventListener('click', () => {
+  hide('screen-transition'); show('screen-theory'); document.getElementById('screen-theory').style.display='block';
+  state.theoryTimeLeft = CONFIG.theoryMinutes*60;
+  $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
+  buildTheoryNav(); renderTheoryQuestion(); startTheoryTimer(); window.scrollTo({top:0});
+});
+function buildTheoryNav(){
+  const grid = $('theory-navgrid'); grid.innerHTML = '';
+  activeTheory.forEach((_,i) => {
+    const cell = document.createElement('div');
+    cell.className = 'qcell'; cell.textContent = i+1; cell.dataset.i = i;
+    cell.addEventListener('click', () => { saveTheoryDraft(); state.theoryIndex = i; renderTheoryQuestion(); });
+    grid.appendChild(cell);
+  });
+}
+function refreshTheoryNav(){
+  document.querySelectorAll('#theory-navgrid .qcell').forEach((cell,i) => {
+    cell.classList.toggle('answered', !!(state.theoryAnswers[i] && state.theoryAnswers[i].trim()));
+    cell.classList.toggle('current', i===state.theoryIndex);
+  });
+}
+function saveTheoryDraft(){ state.theoryAnswers[state.theoryIndex] = $('theory-answer').value; }
+function renderTheoryQuestion(){
+  const item = activeTheory[state.theoryIndex];
+  $('theory-qindex').textContent = `Question ${state.theoryIndex+1} of ${activeTheory.length}`;
+  $('theory-qtext').textContent = item.q;
+  $('theory-answer').value = state.theoryAnswers[state.theoryIndex] || '';
+  updateWordCount();
+  $('theory-prev').disabled = state.theoryIndex===0;
+  $('theory-next').textContent = state.theoryIndex===activeTheory.length-1 ? 'Last question' : 'Next →';
+  refreshTheoryNav();
+}
+function updateWordCount(){ const t = $('theory-answer').value.trim(); $('theory-wordcount').textContent = t ? t.split(/\s+/).length : 0; }
+$('theory-answer').addEventListener('input', () => { saveTheoryDraft(); updateWordCount(); refreshTheoryNav(); });
+$('theory-answer').addEventListener('blur', autosave);
+$('theory-prev').addEventListener('click', () => { saveTheoryDraft(); if(state.theoryIndex>0){ state.theoryIndex--; renderTheoryQuestion(); } });
+$('theory-next').addEventListener('click', () => { saveTheoryDraft(); if(state.theoryIndex<activeTheory.length-1){ state.theoryIndex++; renderTheoryQuestion(); } });
 
-        function showResults(objScore, totalScore, correctCount) {
-            document.getElementById('examScreen').classList.add('hidden');
-            document.getElementById('resultsScreen').classList.remove('hidden');
-            
-            const passed = totalScore >= PASS_MARK;
-            
-            document.getElementById('scorePercent').textContent = `${totalScore}%`;
-            document.getElementById('scoreCircle').className = `score-circle ${passed ? 'pass' : 'fail'}`;
-            document.getElementById('resultName').textContent = currentState.studentName;
-            document.getElementById('resultMatric').textContent = currentState.studentMatric;
-            document.getElementById('resultDept').textContent = currentState.department;
-            document.getElementById('resultCourse').textContent = currentState.course;
-            document.getElementById('resultObjScore').textContent = `${correctCount}/${currentState.questions.length} (${objScore}%)`;
-            document.getElementById('resultTotal').textContent = `${totalScore}%`;
-            
-            const badge = document.getElementById('statusBadge');
-            badge.className = `status-badge ${passed ? 'status-pass' : 'status-fail'}`;
-            badge.textContent = passed ? 'PASSED' : 'FAILED';
-            
-            document.getElementById('resultTitle').textContent = passed 
-                ? 'Congratulations! 🎉' 
-                : 'Examination Completed';
-            document.getElementById('resultMessage').textContent = passed
-                ? 'You have successfully passed the examination.'
-                : 'Keep studying and try again next time.';
-        }
+function startTheoryTimer(){ $('theory-timer').textContent = fmtTime(state.theoryTimeLeft); runTheoryTicker(); }
+function resumeTheoryTimer(){ $('theory-timer').textContent = fmtTime(state.theoryTimeLeft); runTheoryTicker(); }
+function runTheoryTicker(){
+  clearInterval(theoryInterval);
+  theoryInterval = setInterval(() => {
+    state.theoryTimeLeft--;
+    $('theory-timer').textContent = fmtTime(state.theoryTimeLeft);
+    $('theory-timer').classList.toggle('low', state.theoryTimeLeft<=60);
+    if(state.theoryTimeLeft % 15 === 0){ saveTheoryDraft(); autosave(); }
+    if(state.theoryTimeLeft<=0){ clearInterval(theoryInterval); finishTheory(); }
+  },1000);
+}
+$('btn-submit-theory').addEventListener('click', () => {
+  const answered = Object.values(state.theoryAnswers).filter(a=>a && a.trim()).length;
+  if(answered < activeTheory.length){
+    if(!confirm(`You've answered ${answered} of ${activeTheory.length} theory questions. Submit anyway?`)) return;
+  }
+  finishTheory();
+});
+function finishTheory(){
+  saveTheoryDraft();
+  clearInterval(theoryInterval);
+  document.getElementById('screen-theory').style.display='none';
+  state.examStarted = false;
+  if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+  localStorage.removeItem('fuadsi_cbt_progress');
+  showResults();
+}
 
-        // ============================================
-        // GOOGLE SHEETS INTEGRATION
-        // ============================================
-        async function submitToSheets(objScore, totalScore) {
-            const data = {
-                timestamp: new Date().toISOString(),
-                name: currentState.studentName,
-                matric: currentState.studentMatric,
-                department: currentState.department,
-                course: currentState.course,
-                objectiveScore: objScore,
-                totalQuestions: currentState.questions.length,
-                correctAnswers: currentState.questions.filter((q, i) => 
-                    currentState.answers[i] === q.answer
-                ).length,
-                theorySubmitted: true,
-                theoryAnswers: JSON.stringify(currentState.theoryAnswers),
-                totalScore: totalScore,
-                timeSpent: `${OBJECTIVE_TIME + THEORY_TIME - Math.floor(currentState.timeRemaining / 60)} mins`
-            };
-            
-            try {
-                await fetch(GOOGLE_SHEETS_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-            } catch (error) {
-                console.error('Failed to submit to sheets:', error);
-                const submissions = JSON.parse(localStorage.getItem('pendingSubmissions') || '[]');
-                submissions.push(data);
-                localStorage.setItem('pendingSubmissions', JSON.stringify(submissions));
-            }
-        }
+/* ===================== RESULTS + SYNC ===================== */
+function showResults(){
+  let correct=0, wrong=0, unanswered=0;
+  activeObjectives.forEach((item,i) => {
+    const sel = state.objAnswers[i];
+    if(!sel) unanswered++; else if(sel===item.answer) correct++; else wrong++;
+  });
+  const pct = Math.round((correct/activeObjectives.length)*100);
+  const passed = pct >= CONFIG.passMark;
 
-        // ============================================
-        // ANTI-CHEAT MEASURES
-        // ============================================
-        function setupAntiCheat() {
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('copy', e => e.preventDefault());
-            document.addEventListener('paste', e => e.preventDefault());
-            document.addEventListener('cut', e => e.preventDefault());
-            
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-            window.addEventListener('blur', handleWindowBlur);
-            
-            document.addEventListener('keydown', e => {
-                if (e.key === 'F12' || 
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                    (e.ctrlKey && e.key === 'u')) {
-                    e.preventDefault();
-                    showWarning('Developer tools are not allowed during the exam.');
-                }
-                if (e.ctrlKey && e.key === 'a') {
-                    e.preventDefault();
-                }
-            });
-            
-            document.addEventListener('fullscreenchange', handleFullscreenChange);
-            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-        }
+  $('res-pct').textContent = pct+'%';
+  $('res-correct').textContent = correct;
+  $('res-wrong').textContent = wrong;
+  $('res-unanswered').textContent = unanswered;
+  $('res-name').textContent = state.studentName;
+  $('res-reg').textContent = state.studentReg;
+  $('res-dept').textContent = state.department;
+  $('res-course').textContent = state.course;
+  const badge = $('res-badge');
+  badge.textContent = passed ? 'Above pass mark' : 'Below pass mark';
+  badge.className = 'status-badge ' + (passed ? 'pass' : 'fail');
 
-        function handleVisibilityChange() {
-            if (document.hidden && currentState.examStarted) {
-                currentState.warningCount++;
-                showWarning(`Warning ${currentState.warningCount}/3: You left the exam window.`);
-                
-                if (currentState.warningCount >= 3) {
-                    alert('You have been disqualified for leaving the exam window too many times.');
-                    finishExam();
-                }
-            }
-        }
+  hide('screen-gate'); hide('screen-instructions'); hide('screen-transition');
+  show('screen-results'); window.scrollTo({top:0});
 
-        function handleWindowBlur() {
-            if (currentState.examStarted) {
-                setTimeout(() => {
-                    if (!document.hasFocus() && currentState.examStarted) {
-                        showWarning('Please stay focused on the exam window.');
-                    }
-                }, 500);
-            }
-        }
+  sendResultsToSheet({
+    timestamp: new Date().toISOString(),
+    name: state.studentName, matric: state.studentReg,
+    department: state.department, course: state.course,
+    objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
+    theorySubmitted: true,
+    theoryAnswers: activeTheory.map((q,i) => ({question:q.q, answer:state.theoryAnswers[i]||''}))
+  });
+}
+async function sendResultsToSheet(payload){
+  const note = $('sync-note');
+  try{
+    await fetch(CONFIG.sheetWebhookUrl, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    note.textContent = 'Your results have been sent to the department record sheet.';
+  }catch(err){
+    note.textContent = 'Could not reach the record sheet — your results are saved on this device. Please also screenshot this page.';
+    try{
+      const pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]');
+      pending.push(payload); localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(pending));
+    }catch(e){}
+  }
+}
 
-        function handleFullscreenChange() {
-            if (currentState.examStarted && !document.fullscreenElement) {
-                showWarning('You must remain in fullscreen mode during the exam.');
-            }
-        }
-
-        function enterFullscreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            }
-        }
-
-        function showWarning(message) {
-            document.getElementById('warningMessage').textContent = message;
-            document.getElementById('warningModal').classList.remove('hidden');
-        }
-
-        // ============================================
-        // PROGRESS SAVING
-        // ============================================
-        function saveProgress() {
-            const data = {
-                ...currentState,
-                timerInterval: null,
-                savedAt: Date.now()
-            };
-            localStorage.setItem('examProgress', JSON.stringify(data));
-            
-            const indicator = document.getElementById('autosaveIndicator');
-            indicator.classList.add('show');
-            setTimeout(() => indicator.classList.remove('show'), 2000);
-        }
-
-        function restoreProgress(data) {
-            currentState = { ...data, timerInterval: null };
-            
-            const savedTime = data.savedAt || Date.now();
-            const elapsed = Math.floor((Date.now() - savedTime) / 1000);
-            currentState.timeRemaining = Math.max(0, currentState.timeRemaining - elapsed);
-            
-            enterFullscreen();
-            setupAntiCheat();
-            
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('examScreen').classList.remove('hidden');
-            
-            document.getElementById('displayName').textContent = currentState.studentName;
-            document.getElementById('displayMatric').textContent = currentState.studentMatric;
-            document.getElementById('displayDept').textContent = currentState.department;
-            
-            if (currentState.currentSection === 'theory') {
-                document.getElementById('sectionLabel').textContent = 'Theory Section';
-                document.getElementById('sectionTitle').textContent = 'Theory Questions';
-                document.getElementById('sectionDesc').textContent = 'Provide detailed answers';
-            }
-            
-            startTimer();
-            renderQuestion();
-            updatePalette();
-        }
-
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
+/* ===================== INIT ===================== */
+populateDepartments();
+checkForResume();
+</script>
 </body>
 </html>
