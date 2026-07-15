@@ -17,62 +17,39 @@
   --radius:14px;
 }
 *{box-sizing:border-box;}
-body{
-  margin:0; background:var(--paper); color:var(--ink);
-  font-family:'IBM Plex Sans', Arial, sans-serif; -webkit-font-smoothing:antialiased;
-}
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', Arial, sans-serif; -webkit-font-smoothing:antialiased;}
 h1,h2,h3{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; letter-spacing:-0.01em;}
 .mono{ font-family:'IBM Plex Mono', monospace; }
 .hidden{ display:none !important; }
-::selection{ background:var(--gold-tint); }
 
-/* ---------- Letterhead ---------- */
-.letterhead{
-  background:linear-gradient(180deg, var(--forest) 0%, var(--forest-dark) 100%);
-  color:#fff; padding:14px 20px; position:relative;
-}
-.letterhead::after{
-  content:''; position:absolute; left:0; right:0; bottom:0; height:4px;
-  background:linear-gradient(90deg, var(--gold), var(--crimson) 50%, var(--gold));
-}
+.letterhead{ background:linear-gradient(180deg, var(--forest) 0%, var(--forest-dark) 100%); color:#fff; padding:14px 20px; position:relative;}
+.letterhead::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg, var(--gold), var(--crimson) 50%, var(--gold));}
 .letterhead-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; gap:13px; }
-.crest{
-  width:44px; height:44px; border-radius:50%; flex-shrink:0; overflow:hidden;
-  background:var(--gold); display:flex; align-items:center; justify-content:center;
-  border:2px solid rgba(255,255,255,.55);
-}
+.crest{ width:44px; height:44px; border-radius:50%; flex-shrink:0; overflow:hidden; background:var(--gold); display:flex; align-items:center; justify-content:center; border:2px solid rgba(255,255,255,.55);}
 .crest img{ width:100%; height:100%; object-fit:cover; }
 .crest svg{ width:24px; height:24px; }
 .letterhead-text .school{ font-size:14.5px; font-weight:600; letter-spacing:.01em; line-height:1.25;}
 .letterhead-text .portal{ font-size:11px; opacity:.85; text-transform:uppercase; letter-spacing:.13em; margin-top:2px;}
 
 .wrap{ max-width:760px; margin:0 auto; padding:28px 18px 70px; }
-
-/* ---------- Cards ---------- */
-.card{
-  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-  padding:26px; margin-bottom:18px; box-shadow:0 1px 2px rgba(11,61,31,.05);
-}
+.card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:26px; margin-bottom:18px; box-shadow:0 1px 2px rgba(11,61,31,.05);}
 .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; font-weight:600;}
 .card h2{ font-size:23px; margin-bottom:6px; }
 .card p.lead{ color:var(--stone); font-size:14.5px; line-height:1.55; margin:0 0 20px; }
 
-/* ---------- Resume banner ---------- */
-.resume-banner{
-  border:1px solid var(--gold); background:var(--gold-tint); border-radius:12px; padding:14px 16px;
-  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap;
-}
+.resume-banner{ border:1px solid var(--gold); background:var(--gold-tint); border-radius:12px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap;}
 .resume-banner .txt{ font-size:13.5px; color:var(--forest-dark); }
 .resume-banner strong{ display:block; font-size:14.5px; margin-bottom:2px; }
 
-/* ---------- Form ---------- */
 .field{ margin-bottom:16px; }
 .field label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--forest-dark); }
-.field input, .field select{
-  width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:10px;
-  font-size:15px; font-family:inherit; background:#fff; color:var(--ink);
-}
+.field label .req{ color:var(--crimson); margin-left:2px; }
+.field input, .field select{ width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink);}
 .field select:disabled{ color:var(--stone); background:var(--paper); }
+.field input.invalid{ border-color:var(--crimson); }
+.field-error{ color:var(--crimson); font-size:12px; margin-top:6px; display:none; }
+.field-error.show{ display:block; }
+.field-hint{ color:var(--stone); font-size:12px; margin-top:6px; }
 .field input:focus, .field select:focus, button:focus-visible{ outline:2px solid var(--forest); outline-offset:2px; }
 .checkline{ display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--stone); margin:18px 0; }
 .checkline input{ margin-top:3px; }
@@ -86,16 +63,15 @@ button.ghost:hover{ background:#D9E7DB; }
 button:active{ transform:translateY(1px); }
 .btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
 
-/* ---------- Instructions ---------- */
 .rules{ list-style:none; margin:0 0 22px; padding:0; display:grid; gap:12px; }
 .rules li{ display:flex; gap:12px; padding:14px; border:1px solid var(--line); border-radius:10px; background:var(--paper); font-size:14px; line-height:1.5;}
 .rules li .num{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); flex-shrink:0; }
 .section-plan{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
 .plan-box{ border:1px solid var(--line); border-radius:10px; padding:14px; background:var(--forest-tint); }
 .plan-box .k{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--forest-dark); font-weight:600; }
-.plan-box .v{ font-family:'IBM Plex Mono', monospace; font-size:19px; margin-top:4px; color:var(--forest-dark); }
+.plan-box .v{ font-family:'IBM Plex Mono', monospace; font-size:16px; margin:4px 0 10px; color:var(--forest-dark); }
+.plan-box select{ width:100%; padding:9px 10px; border:1px solid var(--gold); border-radius:8px; font-family:'IBM Plex Mono', monospace; font-size:13.5px; background:#fff; }
 
-/* ---------- Exam top bar ---------- */
 .examtop{ position:sticky; top:0; z-index:20; background:rgba(250,248,242,.97); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:12px 18px;}
 .examtop-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
 .examtop .who{ font-size:12.5px; color:var(--stone); }
@@ -107,7 +83,6 @@ button:active{ transform:translateY(1px); }
 .progress-line{ height:5px; background:var(--line); border-radius:99px; margin-top:10px; max-width:960px; margin-left:auto; margin-right:auto; overflow:hidden;}
 .progress-line i{ display:block; height:100%; width:0%; background:var(--gold); transition:width .25s; }
 
-/* ---------- Exam layout ---------- */
 .examgrid{ max-width:960px; margin:22px auto 0; padding:0 18px 70px; display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:start; }
 .navcard{ border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:16px; position:sticky; top:78px; }
 .navcard h3{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--stone); margin-bottom:10px; font-weight:700;}
@@ -139,7 +114,6 @@ button:active{ transform:translateY(1px); }
 textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-radius:10px; padding:14px; font-family:'IBM Plex Sans', inherit; font-size:15px; line-height:1.6; resize:vertical; color:var(--ink);}
 .wordcount{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--stone); margin-top:8px; text-align:right;}
 
-/* ---------- Results ---------- */
 .result-hero{ text-align:center; padding:30px 20px 6px; }
 .result-hero .pct{ font-family:'Fraunces', serif; font-size:52px; color:var(--forest); font-weight:700; }
 .result-hero .pctlabel{ color:var(--stone); font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin-top:2px;}
@@ -156,12 +130,21 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 .summary-table td:last-child{ font-weight:600; }
 .small-note{ font-size:12.5px; color:var(--stone); line-height:1.6; margin-top:10px; }
 
-/* ---------- Toasts / modal ---------- */
-.autosave-toast{
-  position:fixed; top:16px; right:16px; background:var(--forest-dark); color:#fff; font-size:12.5px;
-  padding:9px 15px; border-radius:9px; z-index:200; opacity:0; transition:opacity .3s; pointer-events:none;
-  display:flex; align-items:center; gap:7px;
-}
+.review-item{ border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:12px; }
+.review-item .qnum{ font-family:'IBM Plex Mono', monospace; color:var(--gold); font-size:12px; font-weight:600; margin-bottom:6px;}
+.review-item .qtext-sm{ font-size:15px; font-weight:500; margin-bottom:12px; line-height:1.5;}
+.review-status{ display:inline-block; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:99px; margin-bottom:10px; text-transform:uppercase; letter-spacing:.05em;}
+.review-status.correct{ background:var(--forest-tint); color:var(--forest-dark);}
+.review-status.wrong{ background:var(--crimson-tint); color:var(--crimson);}
+.review-status.unanswered{ background:var(--paper); color:var(--stone); border:1px solid var(--line);}
+.review-opt{ font-size:13.5px; padding:9px 11px; border-radius:8px; margin-bottom:5px; border:1px solid var(--line); background:var(--paper);}
+.review-opt .letter{ font-family:'IBM Plex Mono', monospace; font-weight:700; margin-right:6px; }
+.review-opt.correct-ans{ border-color:var(--forest); background:var(--forest-tint); font-weight:600;}
+.review-opt.wrong-selected{ border-color:var(--crimson); background:var(--crimson-tint); font-weight:600;}
+.answer-box{ background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:12px; font-size:14px; line-height:1.6; white-space:pre-wrap; color:var(--ink);}
+.answer-box.empty{ color:var(--stone); font-style:italic; }
+
+.autosave-toast{ position:fixed; top:16px; right:16px; background:var(--forest-dark); color:#fff; font-size:12.5px; padding:9px 15px; border-radius:9px; z-index:200; opacity:0; transition:opacity .3s; pointer-events:none; display:flex; align-items:center; gap:7px;}
 .autosave-toast.show{ opacity:1; }
 .autosave-toast .dotpulse{ width:7px; height:7px; border-radius:50%; background:var(--gold); }
 
@@ -170,6 +153,8 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 .modal .micon{ width:42px; height:42px; border-radius:50%; background:var(--crimson-tint); color:var(--crimson); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-family:'IBM Plex Mono'; font-weight:700; font-size:18px;}
 .modal h3{ font-size:18px; margin-bottom:8px; }
 .modal p{ font-size:13.5px; color:var(--stone); line-height:1.55; margin-bottom:18px; }
+.modal .mbtns{ display:flex; gap:10px; }
+.modal .mbtns button{ flex:1; }
 
 @media (max-width:720px){
   .examgrid{ grid-template-columns:1fr; }
@@ -186,7 +171,6 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 <div class="letterhead">
   <div class="letterhead-inner">
     <div class="crest">
-      <!-- Replace with your official crest: put the logo file at assets/fuadsi-logo.png -->
       <img src="assets/fuadsi-logo.png" alt="FUADSI crest" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
       <svg viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M12 2C9 6 4 8 4 13c0 4 3.5 7 8 7s8-3 8-7c0-5-5-7-8-11Z" fill="#fff"/><path d="M12 22V11" stroke="#146C36" stroke-width="1.4" stroke-linecap="round"/></svg>
     </div>
@@ -199,7 +183,6 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 
 <!-- ============ GATE ============ -->
 <div id="screen-gate" class="wrap">
-
   <div id="resume-banner" class="resume-banner hidden">
     <div class="txt"><strong>You have a session in progress.</strong>Pick up where you left off, or start over.</div>
     <div style="display:flex; gap:8px;">
@@ -214,25 +197,27 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
     <p class="lead">Enter your details exactly as registered. Your department decides which courses and questions you can see — you won't be able to change it once the test begins.</p>
 
     <div class="field">
-      <label for="in-name">Full Name</label>
-      <input id="in-name" type="text" placeholder="e.g. Jane Doe" autocomplete="name">
+      <label for="in-name">Full Name <span class="req">*</span></label>
+      <input id="in-name" type="text" placeholder="e.g. Akanni Toheeb Olamilekan" autocomplete="name" required>
     </div>
     <div class="field">
-      <label for="in-reg">Matric / Registration Number</label>
-      <input id="in-reg" type="text" placeholder="e.g. FUADSI/2023/0451" class="mono">
+      <label for="in-reg">Matric / Registration Number <span class="req">*</span></label>
+      <input id="in-reg" type="text" inputmode="numeric" maxlength="7" placeholder="e.g. 2500255" class="mono" required>
+      <div class="field-hint">7 digits, starting with 25 — e.g. 2500255</div>
+      <div class="field-error" id="reg-error">That doesn't match the required format (25 followed by 5 digits).</div>
     </div>
     <div class="field">
-      <label for="in-dept">Department</label>
-      <select id="in-dept"><option value="">Select your department</option></select>
+      <label for="in-dept">Department <span class="req">*</span></label>
+      <select id="in-dept" required><option value="">Select your department</option></select>
     </div>
     <div class="field">
-      <label for="in-course">Course</label>
-      <select id="in-course" disabled><option value="">Select department first</option></select>
+      <label for="in-course">Course <span class="req">*</span></label>
+      <select id="in-course" disabled required><option value="">Select department first</option></select>
     </div>
 
     <label class="checkline">
       <input type="checkbox" id="in-agree">
-      <span>I confirm the details above are correct. I understand this session is monitored, leaving the tab, exiting fullscreen, or attempting to copy questions may flag my attempt for review.</span>
+      <span>I confirm the details above are correct. I understand this session is monitored — leaving the tab, exiting fullscreen, or attempting to copy questions may flag my attempt for review.</span>
     </label>
 
     <div class="btn-row"><button class="primary" id="btn-to-instructions" disabled>Continue to Instructions</button></div>
@@ -246,15 +231,32 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
     <h2 id="instr-course-title">—</h2>
     <p class="lead" id="instr-student-line">—</p>
     <div class="section-plan">
-      <div class="plan-box"><div class="k">Section A · Objectives</div><div class="v" id="plan-obj-count">—</div></div>
-      <div class="plan-box"><div class="k">Section B · Theory</div><div class="v" id="plan-theory-count">—</div></div>
+      <div class="plan-box">
+        <div class="k">Section A · Objectives</div>
+        <div class="v" id="plan-obj-count">—</div>
+        <select id="sel-obj-time">
+          <option value="15">15 minutes</option>
+          <option value="30" selected>30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">60 minutes</option>
+          <option value="90">90 minutes</option>
+          <option value="120">120 minutes</option>
+          <option value="150">150 minutes</option>
+          <option value="180">180 minutes</option>
+        </select>
+      </div>
+      <div class="plan-box">
+        <div class="k">Section B · Theory</div>
+        <div class="v" id="plan-theory-count">—</div>
+        <div class="field-hint" style="margin-top:0;">Set on the next screen, right before Section B starts.</div>
+      </div>
     </div>
     <ul class="rules">
       <li><span class="num">01</span><span>Section A and Section B each run on their own timer. Time does not carry over between sections.</span></li>
       <li><span class="num">02</span><span>When a section's timer reaches zero, your answers for that section are submitted automatically.</span></li>
-      <li><span class="num">03</span><span>The exam runs in fullscreen. Exiting fullscreen or switching tabs is logged; three warnings ends your session.</span></li>
+      <li><span class="num">03</span><span>The exam runs in fullscreen where supported. Exiting fullscreen or switching tabs is logged; three warnings ends your session.</span></li>
       <li><span class="num">04</span><span>Copy, paste, and right-click are disabled during the test. Use the numbered grid to move between questions.</span></li>
-      <li><span class="num">05</span><span>Objective questions are graded instantly. Theory answers are typed and reviewed manually by your lecturer.</span></li>
+      <li><span class="num">05</span><span>Objective questions are graded instantly and shown to you after submission. Theory answers are typed and reviewed manually by your lecturer.</span></li>
       <li><span class="num">06</span><span>Your progress auto-saves as you go, so a dropped connection won't cost your answers.</span></li>
     </ul>
     <div class="btn-row">
@@ -271,16 +273,9 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div>
         <div class="sec-label">Section A <span>· Objectives</span></div>
         <div class="who"><strong id="obj-who-name">—</strong> · <span id="obj-who-dept">—</span></div>
-div class="container">
-  <div id="startScreen" class="card">
-    <h2>Exam Setup</h2>
-    <p class="small">The timer will start only after you click the Start Exam button.</p>
-    <div class="controls">
-      <div><label for="timeSelect">Choose Exam Time</label><select id="timeSelect"><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option><option value="120">120 minutes</option><option value="150">150 minutes</option><option value="180">180 minutes</option></select></div>
-      <div><label>Attempt Counter</label><div class="result-box"><strong id="attemptCount">0</strong> attempt(s) on this device/browser</div></div>
-      <div><button id="startBtn">Start Exam</button></div>
+      </div>
+      <div class="timer-pill" id="obj-timer">30:00</div>
     </div>
-  </div>
     <div class="progress-line"><i id="obj-progress"></i></div>
   </div>
   <div class="examgrid">
@@ -309,6 +304,19 @@ div class="container">
     <div class="eyebrow">Section A Complete</div>
     <h2>Nice work. Section B is next.</h2>
     <p class="lead">Section A has been recorded. Once you continue, Section B's timer starts immediately and you won't be able to return to Section A.</p>
+    <div class="field" style="text-align:left; max-width:280px; margin:0 auto 6px;">
+      <label for="sel-theory-time">Section B Duration</label>
+      <select id="sel-theory-time">
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="45" selected>45 minutes</option>
+        <option value="60">60 minutes</option>
+        <option value="90">90 minutes</option>
+        <option value="120">120 minutes</option>
+        <option value="150">150 minutes</option>
+        <option value="180">180 minutes</option>
+      </select>
+    </div>
     <div class="btn-row" style="justify-content:center;"><button class="primary" id="btn-start-theory">Start Section B — Theory</button></div>
   </div>
 </div>
@@ -364,96 +372,220 @@ div class="container">
     </table>
     <p class="small-note" id="sync-note">Sending your results to the department record sheet…</p>
   </div>
+
+  <div class="card">
+    <div class="eyebrow">Section A — Answer Review</div>
+    <h2 style="font-size:19px; margin-bottom:16px;">What you got right and wrong</h2>
+    <div id="review-objectives"></div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Section B — Your Theory Answers</div>
+    <h2 style="font-size:19px; margin-bottom:16px;">Submitted for manual grading</h2>
+    <div id="review-theory"></div>
+  </div>
 </div>
 
-<div class="autosave-toast" id="autosave-toast"><span class="dotpulse"></span><span id="autosave-toast-text">Progress saved</span></div>
+<div class="autosave-toast" id="autosave-toast"><span class="dotpulse"></span><span>Progress saved</span></div>
 
-<div id="warning-modal" class="modal-overlay hidden">
+<div id="modal-overlay" class="modal-overlay hidden">
   <div class="modal">
-    <div class="micon">!</div>
-    <h3 id="warning-title">Warning</h3>
-    <p id="warning-message">Please return to fullscreen to continue your exam.</p>
-    <button class="primary" id="warning-return" style="width:100%;">Return to Exam</button>
+    <div class="micon" id="modal-icon">!</div>
+    <h3 id="modal-title">Warning</h3>
+    <p id="modal-message">—</p>
+    <div class="mbtns">
+      <button class="ghost hidden" id="modal-cancel">Cancel</button>
+      <button class="primary" id="modal-confirm">OK</button>
+    </div>
   </div>
 </div>
 
 <script>
 /* =====================================================
-   CONFIG — swap sample questions for real material here.
-   Your Google Sheets webhook is preserved from your build.
+   CONFIG
    ===================================================== */
 const CONFIG = {
-  objectiveMinutes: 30,
-  theoryMinutes: 45,
   passMark: 40,
   sheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec'
 };
 
-/* department -> course -> { objective:[{q,options,answer(letter)}], theory:[{q}] } */
-const QUESTIONS_DB = {
-  "Water Resources Management": {
-    "WRM 101 — Introduction to Water Resources": {
-      objective: [
-        {q:"Which of these is a renewable source of freshwater?", options:["Fossil groundwater","Rainfall","Seawater","Glacial ice sheets"], answer:"B"},
-        {q:"The process by which water vapour rises from oceans into the atmosphere is called:", options:["Infiltration","Percolation","Evaporation","Condensation"], answer:"C"},
-        {q:"A watershed is best defined as:", options:["A man-made canal","An area of land that drains to a common point","A type of dam","A unit of rainfall measurement"], answer:"B"},
-        {q:"Which instrument is used to measure rainfall?", options:["Anemometer","Rain gauge","Barometer","Hygrometer"], answer:"B"},
-        {q:"Surface runoff increases when:", options:["Soil infiltration capacity is high","The ground is impermeable or saturated","Vegetation cover is dense","Rainfall intensity is very low"], answer:"B"}
-      ],
-      theory: [
-        {q:"Describe the hydrological cycle and explain the role of vegetation in it."},
-        {q:"Discuss two major causes of water scarcity in Nigeria and one sustainable solution for each."}
-      ]
-    }
-  },
-  "Agrometeorology": {
-    "AGM 101 — Principles of Agricultural Meteorology": {
-      objective: [
-        {q:"Which weather element most directly affects the rate of transpiration in crops?", options:["Wind speed","Soil pH","Humidity","Rock type"], answer:"C"},
-        {q:"A thermometer measures:", options:["Pressure","Humidity","Temperature","Wind direction"], answer:"C"},
-        {q:"The greenhouse effect refers to:", options:["Cooling caused by clouds","Trapping of heat by atmospheric gases","Wind formation over oceans","Soil erosion by rainfall"], answer:"B"},
-        {q:"Which of these best describes 'climate'?", options:["The day-to-day state of the atmosphere","The average weather condition over a long period","A single rainfall event","Wind speed at a point in time"], answer:"B"}
-      ],
-      theory: [
-        {q:"Explain how temperature and rainfall patterns influence crop choice in a farming community you are familiar with."},
-        {q:"Discuss the impact of climate change on agricultural productivity in Nigeria."}
-      ]
-    }
-  },
-  "Computer Science": {
-    "CSC 101 — Introduction to Computing": {
-      objective: [
-        {q:"What does CPU stand for?", options:["Central Processing Unit","Computer Personal Unit","Central Processor Utility","Central Process Unit"], answer:"A"},
-        {q:"Which of the following is NOT a programming language?", options:["Python","Java","HTML","Microsoft Word"], answer:"D"},
-        {q:"What is the binary equivalent of decimal 5?", options:["100","101","110","111"], answer:"B"},
-        {q:"RAM stands for:", options:["Random Access Memory","Read And Modify","Random Allocation Method","Read Access Mode"], answer:"A"},
-        {q:"Which storage device typically has the fastest access time?", options:["Hard Disk Drive","Solid State Drive","USB Flash Drive","DVD"], answer:"B"}
-      ],
-      theory: [
-        {q:"Explain the difference between RAM and ROM, giving two examples of each."},
-        {q:"What is an algorithm? Write an algorithm to find the largest of three numbers."}
-      ]
-    }
-  },
-  "Crop Science": {
-    "CPS 101 — Introduction to Crop Production": {
-      objective: [
-        {q:"Which of the following is a leguminous crop?", options:["Maize","Rice","Groundnut","Yam"], answer:"C"},
-        {q:"Photosynthesis occurs mainly in which part of the plant?", options:["Roots","Stem","Leaves","Flowers"], answer:"C"},
-        {q:"The process of making food by plants using sunlight is called:", options:["Respiration","Photosynthesis","Transpiration","Fermentation"], answer:"B"}
-      ],
-      theory: [
-        {q:"Describe the process of photosynthesis and its importance to crop growth."},
-        {q:"List and explain three methods of pest control in crop production."}
-      ]
-    }
-  }
+/* ===================== FACULTIES / DEPARTMENTS ===================== */
+const FACULTIES = {
+  "Faculty of Agriculture and Renewable Natural Resources": [
+    "B.Sc. Food Science and Technology","B.Sc. Soil Science","B.Sc. Horticulture and Landscape Management",
+    "B.Sc. Agricultural Economics","B.Sc. Agricultural Extension","B.Sc. Agribusiness","B.Sc. Crop Science",
+    "B.Sc. Forestry and Wildlife Management","B.Sc. Family and Consumer Science",
+    "B.Sc. Water Resources Management and Agro-Meteorology","B.Sc. Fisheries and Aquaculture",
+    "B.Sc. Animal Science","B.Sc. Agriculture"
+  ],
+  "Faculty of Natural and Applied Sciences": [
+    "B.Sc. Computer Science","B.Sc. Mathematics","B.Sc. Physics with Electronics","B.Sc. Industrial Chemistry",
+    "B.Sc. Plant Science (Botany)","B.Sc. Animal and Environmental Biology (Zoology)","B.Sc. Chemistry",
+    "B.Sc. Biochemistry","B.Sc. Meteorology","B.Sc. Microbiology"
+  ]
+};
+
+/* ===================== COURSES ==========================
+   eligible: "ALL" | "FACULTY:<faculty name>" | [array of exact department names]
+   Sample questions only — swap in real material per course.
+   =========================================================== */
+const COURSES = {
+  "MTH 102": { title:"MTH 102 — General Mathematics II", eligible:"ALL",
+    objective:[
+      {q:"The derivative of x³ with respect to x is:", options:["2x²","3x²","x²","3x"], answer:"B"},
+      {q:"∫2x dx equals:", options:["x²+C","2x²+C","x+C","x²/2+C"], answer:"A"},
+      {q:"If sin θ = 0.5, θ could be:", options:["30°","45°","60°","90°"], answer:"A"}
+    ],
+    theory:[
+      {q:"Differentiate y = 3x² + 5x − 7 with respect to x, showing your working."},
+      {q:"Explain the difference between a permutation and a combination, with one example of each."}
+    ]},
+  "COS 102": { title:"COS 102 — Introduction to Problem Solving", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"A flowchart is best described as:", options:["A programming language","A pictorial representation of an algorithm","A type of computer hardware","A database query"], answer:"B"},
+      {q:"Which symbol in a flowchart represents a decision?", options:["Rectangle","Oval","Diamond","Parallelogram"], answer:"C"},
+      {q:"Pseudocode is:", options:["Actual executable code","An informal way of describing an algorithm","A type of computer virus","A hardware component"], answer:"B"}
+    ],
+    theory:[
+      {q:"Write pseudocode to determine whether a number entered by a user is even or odd."},
+      {q:"Explain, with an example, why planning an algorithm before coding saves time."}
+    ]},
+  "CHM 102": { title:"CHM 102 — General Chemistry II", eligible:"ALL",
+    objective:[
+      {q:"The pH of a neutral solution at 25°C is:", options:["0","7","14","1"], answer:"B"},
+      {q:"Which of these is an example of an exothermic reaction?", options:["Photosynthesis","Melting ice","Combustion of fuel","Evaporation of water"], answer:"C"},
+      {q:"The atomic number of an element represents the number of:", options:["Neutrons","Protons","Electrons and neutrons","Isotopes"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the difference between an acid and a base, giving one example of each."},
+      {q:"Describe, with an equation, what happens during a neutralisation reaction."}
+    ]},
+  "AGG 112": { title:"AGG 112 — Introduction to Agriculture", eligible:"FACULTY:Faculty of Agriculture and Renewable Natural Resources",
+    objective:[
+      {q:"Which of these is a primary branch of agriculture?", options:["Crop production","Banking","Tourism","Telecommunications"], answer:"A"},
+      {q:"The practice of growing different crops on the same land in successive seasons is called:", options:["Monocropping","Crop rotation","Intercropping","Fallowing"], answer:"B"},
+      {q:"Which of these is a farm input?", options:["Fertiliser","Market price","Weather forecast","Farm produce"], answer:"A"}
+    ],
+    theory:[
+      {q:"Discuss the importance of agriculture to the Nigerian economy."},
+      {q:"Explain any two challenges facing smallholder farmers in Nigeria today."}
+    ]},
+  "AGR 122": { title:"AGR 122 — Principles of Crop Production", eligible:"FACULTY:Faculty of Agriculture and Renewable Natural Resources",
+    objective:[
+      {q:"Germination is best described as:", options:["The death of a seed","The development of a seed into a seedling","The flowering stage of a plant","The harvesting of grains"], answer:"B"},
+      {q:"Which of these nutrients is required by plants in the largest quantity?", options:["Nitrogen","Zinc","Boron","Molybdenum"], answer:"A"},
+      {q:"Weeding is carried out mainly to:", options:["Increase pest population","Reduce competition for nutrients and water","Reduce soil fertility","Increase soil erosion"], answer:"B"}
+    ],
+    theory:[
+      {q:"Describe the stages involved in the production of a cereal crop from planting to harvest."},
+      {q:"Explain the role of fertiliser application in crop yield improvement."}
+    ]},
+  "PHY 102": { title:"PHY 102 — General Physics II", eligible:"ALL",
+    objective:[
+      {q:"The SI unit of electric current is the:", options:["Volt","Ohm","Ampere","Watt"], answer:"C"},
+      {q:"Ohm's Law states that V equals:", options:["I/R","I × R","R/I","I + R"], answer:"B"},
+      {q:"A concave mirror is also known as a:", options:["Diverging mirror","Converging mirror","Plane mirror","Convex mirror"], answer:"B"}
+    ],
+    theory:[
+      {q:"State Ohm's Law and use it to calculate the current flowing through a 10Ω resistor connected to a 20V source."},
+      {q:"Explain the difference between series and parallel circuits."}
+    ]},
+  "WMA 142": { title:"WMA 142 — Introduction to Water Resources and Agro-Meteorology", eligible:["B.Sc. Water Resources Management and Agro-Meteorology"],
+    objective:[
+      {q:"An instrument used to measure atmospheric pressure is called a:", options:["Rain gauge","Barometer","Anemometer","Hygrometer"], answer:"B"},
+      {q:"The main source of freshwater on Earth is:", options:["Oceans","Glaciers and groundwater","Seawater","Salt lakes"], answer:"B"},
+      {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the importance of weather forecasting to agricultural planning."},
+      {q:"Discuss two methods of irrigation commonly used in Nigerian agriculture."}
+    ]},
+  "GST 112": { title:"GST 112 — Nigerian Peoples and Culture", eligible:"ALL",
+    objective:[
+      {q:"Nigeria gained independence from Britain in:", options:["1957","1960","1963","1970"], answer:"B"},
+      {q:"Which of these is one of Nigeria's three major ethnic groups?", options:["Zulu","Yoruba","Maasai","Ashanti"], answer:"B"},
+      {q:"Nigeria operates which system of government?", options:["Monarchy","Federal republic","Unitary state","Theocracy"], answer:"B"}
+    ],
+    theory:[
+      {q:"Discuss the importance of national unity in a culturally diverse country like Nigeria."},
+      {q:"Describe any two traditional institutions found in Nigerian society and their roles."}
+    ]},
+  "LIB 102": { title:"LIB 102 — Use of Library, Study Skills and ICT", eligible:"ALL",
+    objective:[
+      {q:"The system used to classify books in most academic libraries is called:", options:["Alphabetical order only","Dewey Decimal Classification","Random shelving","Colour coding"], answer:"B"},
+      {q:"A citation is used to:", options:["Make an essay longer","Acknowledge the source of information used","Confuse the reader","Replace the reference list"], answer:"B"},
+      {q:"Which of these is good practice for effective study?", options:["Cramming the night before an exam","Spaced, regular revision","Studying without breaks for 10 hours","Avoiding note-taking"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the steps you would take to locate a book in the university library using the catalogue."},
+      {q:"Discuss the importance of avoiding plagiarism in academic writing."}
+    ]},
+  "BIO 102": { title:"BIO 102 — General Biology II", eligible:"ALL",
+    objective:[
+      {q:"The basic unit of life is the:", options:["Tissue","Cell","Organ","Organism"], answer:"B"},
+      {q:"Photosynthesis takes place mainly in the:", options:["Roots","Leaves","Stem","Flower"], answer:"B"},
+      {q:"Which of these is a function of the human circulatory system?", options:["Digestion of food","Transport of oxygen and nutrients","Production of urine","Detection of light"], answer:"B"}
+    ],
+    theory:[
+      {q:"Describe the structure and function of a typical plant cell."},
+      {q:"Explain the process of respiration in living organisms."}
+    ]},
+  "ZOO 102": { title:"ZOO 102 — Invertebrate Zoology", eligible:["B.Sc. Animal and Environmental Biology (Zoology)"],
+    objective:[
+      {q:"Invertebrates are animals that:", options:["Have a backbone","Lack a backbone","Live only in water","Cannot reproduce"], answer:"B"},
+      {q:"Which phylum do insects belong to?", options:["Mollusca","Arthropoda","Annelida","Cnidaria"], answer:"B"},
+      {q:"Earthworms belong to which phylum?", options:["Arthropoda","Annelida","Mollusca","Porifera"], answer:"B"}
+    ],
+    theory:[
+      {q:"Describe the general characteristics of the phylum Arthropoda."},
+      {q:"Explain the economic importance of invertebrates to humans."}
+    ]},
+  "COS 104": { title:"COS 104 — Introduction to Computing Practice", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"Which of these is an example of an operating system?", options:["Microsoft Word","Windows","Google Chrome","Adobe Photoshop"], answer:"B"},
+      {q:"A file with the extension .docx is most likely created by:", options:["A spreadsheet application","A word processor","A web browser","An image editor"], answer:"B"},
+      {q:"Which key combination is commonly used to save a file?", options:["Ctrl + P","Ctrl + S","Ctrl + C","Ctrl + V"], answer:"B"}
+    ],
+    theory:[
+      {q:"List and explain three basic components of a computer system."},
+      {q:"Describe the steps involved in creating and saving a folder on a computer."}
+    ]},
+  "CSC 104": { title:"CSC 104 — Computer Programming I", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"Which of these is a valid variable name in most programming languages?", options:["2value","value_2","value 2","value-2"], answer:"B"},
+      {q:"A loop is used in programming to:", options:["Store a single value","Repeat a block of code","Delete a file","Draw a shape"], answer:"B"},
+      {q:"Which symbol is commonly used to end a statement in many programming languages?", options:["Comma","Semicolon","Colon","Hyphen"], answer:"B"}
+    ],
+    theory:[
+      {q:"Write pseudocode for a program that calculates the sum of the first 10 natural numbers."},
+      {q:"Explain the difference between a 'for' loop and a 'while' loop."}
+    ]},
+  "CSC 106": { title:"CSC 106 — Computer Programming II", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"A function that calls itself is described as:", options:["Iterative","Recursive","Static","Abstract"], answer:"B"},
+      {q:"An array is best described as:", options:["A single variable","A collection of elements of the same type stored together","A type of loop","A programming error"], answer:"B"},
+      {q:"Which of these best describes debugging?", options:["Writing new code","Finding and fixing errors in code","Deleting a program","Compiling code"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the concept of recursion with a suitable example."},
+      {q:"Describe the difference between a compiler and an interpreter."}
+    ]},
+  "FAA 128": { title:"FAA 128 — Introduction to Fisheries and Aquaculture", eligible:["B.Sc. Fisheries and Aquaculture"],
+    objective:[
+      {q:"Aquaculture refers to:", options:["The study of birds","The farming of aquatic organisms","The study of soil","The farming of livestock only"], answer:"B"},
+      {q:"Which of these is a common freshwater fish farmed in Nigeria?", options:["Tilapia","Tuna","Shark","Salmon"], answer:"A"},
+      {q:"A fish pond's water quality is commonly tested for:", options:["Soil texture","Dissolved oxygen and pH","Wind speed","Air pressure"], answer:"B"}
+    ],
+    theory:[
+      {q:"Discuss the importance of aquaculture to food security in Nigeria."},
+      {q:"Describe two water quality parameters that must be monitored in fish farming and why they matter."}
+    ]}
 };
 
 /* ===================== STATE ===================== */
 let state = {
   studentName:'', studentReg:'', department:'', course:'',
-  section:'objective', // 'objective' | 'theory'
+  section:'objective',
   objAnswers:{}, objFlags:{}, objIndex:0,
   theoryAnswers:{}, theoryIndex:0,
   objTimeLeft:0, theoryTimeLeft:0,
@@ -467,14 +599,46 @@ const $ = id => document.getElementById(id);
 const show = id => { $(id).classList.remove('hidden'); };
 const hide = id => { $(id).classList.add('hidden'); };
 function fmtTime(s){ s=Math.max(0,s); const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
-function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&lt;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c)); }
+
+/* ===================== CUSTOM MODAL (replaces native confirm/alert) ===================== */
+let modalResolve = null;
+function openModal({title, message, confirmText='OK', cancelText=null}){
+  return new Promise(resolve => {
+    $('modal-title').textContent = title;
+    $('modal-message').textContent = message;
+    $('modal-confirm').textContent = confirmText;
+    if(cancelText){ $('modal-cancel').textContent = cancelText; $('modal-cancel').classList.remove('hidden'); }
+    else { $('modal-cancel').classList.add('hidden'); }
+    $('modal-overlay').classList.remove('hidden');
+    modalResolve = resolve;
+  });
+}
+$('modal-confirm').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(true); });
+$('modal-cancel').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(false); });
 
 /* ===================== DEPARTMENT / COURSE SETUP ===================== */
 function populateDepartments(){
   const sel = $('in-dept');
-  Object.keys(QUESTIONS_DB).forEach(dep => {
-    const opt = document.createElement('option'); opt.value = dep; opt.textContent = dep; sel.appendChild(opt);
+  Object.keys(FACULTIES).forEach(fac => {
+    const group = document.createElement('optgroup'); group.label = fac;
+    FACULTIES[fac].forEach(dep => {
+      const opt = document.createElement('option'); opt.value = dep; opt.textContent = dep; group.appendChild(opt);
+    });
+    sel.appendChild(group);
   });
+}
+function facultyOf(dep){
+  for(const fac in FACULTIES){ if(FACULTIES[fac].includes(dep)) return fac; }
+  return null;
+}
+function courseEligible(course, dep){
+  if(course.eligible === 'ALL') return true;
+  if(typeof course.eligible === 'string' && course.eligible.startsWith('FACULTY:')){
+    return course.eligible.slice(8) === facultyOf(dep);
+  }
+  if(Array.isArray(course.eligible)) return course.eligible.includes(dep);
+  return false;
 }
 $('in-dept').addEventListener('change', () => {
   const dep = $('in-dept').value;
@@ -483,19 +647,33 @@ $('in-dept').addEventListener('change', () => {
   if(!dep){ courseSel.disabled = true; courseSel.innerHTML = '<option value="">Select department first</option>'; validateGate(); return; }
   courseSel.disabled = false;
   courseSel.innerHTML = '<option value="">Select a course</option>';
-  Object.keys(QUESTIONS_DB[dep]).forEach(c => {
-    const opt = document.createElement('option'); opt.value = c; opt.textContent = c; courseSel.appendChild(opt);
+  Object.keys(COURSES).forEach(code => {
+    if(courseEligible(COURSES[code], dep)){
+      const opt = document.createElement('option'); opt.value = code; opt.textContent = COURSES[code].title; courseSel.appendChild(opt);
+    }
   });
   validateGate();
 });
 $('in-course').addEventListener('change', validateGate);
 
-/* ===================== GATE ===================== */
+/* ===================== GATE / VALIDATION ===================== */
+const REG_PATTERN = /^25\d{5}$/;
+function validateReg(){
+  const val = $('in-reg').value.trim();
+  const ok = REG_PATTERN.test(val);
+  $('in-reg').classList.toggle('invalid', val.length>0 && !ok);
+  $('reg-error').classList.toggle('show', val.length>0 && !ok);
+  return ok;
+}
+$('in-reg').addEventListener('input', () => {
+  $('in-reg').value = $('in-reg').value.replace(/\D/g,'').slice(0,7);
+  validateReg(); validateGate();
+});
 function validateGate(){
-  const ok = $('in-name').value.trim() && $('in-reg').value.trim() && $('in-dept').value && $('in-course').value && $('in-agree').checked;
+  const ok = $('in-name').value.trim() && validateReg() && $('in-dept').value && $('in-course').value && $('in-agree').checked;
   $('btn-to-instructions').disabled = !ok;
 }
-['in-name','in-reg','in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
+['in-name','in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
 
 $('btn-to-instructions').addEventListener('click', () => {
   state.studentName = $('in-name').value.trim();
@@ -503,32 +681,33 @@ $('btn-to-instructions').addEventListener('click', () => {
   state.department = $('in-dept').value;
   state.course = $('in-course').value;
 
-  const bank = QUESTIONS_DB[state.department][state.course];
+  const bank = COURSES[state.course];
   activeObjectives = bank.objective;
   activeTheory = bank.theory;
 
-  $('instr-course-title').textContent = state.course;
+  $('instr-course-title').textContent = bank.title;
   $('instr-student-line').textContent = `${state.studentName} · ${state.studentReg} · ${state.department}`;
-  $('plan-obj-count').textContent = `${activeObjectives.length} questions · ${CONFIG.objectiveMinutes} min`;
-  $('plan-theory-count').textContent = `${activeTheory.length} questions · ${CONFIG.theoryMinutes} min`;
+  updatePlanCounts();
 
   hide('screen-gate'); show('screen-instructions'); window.scrollTo({top:0});
 });
+function updatePlanCounts(){
+  $('plan-obj-count').textContent = `${activeObjectives.length} questions`;
+  $('plan-theory-count').textContent = `${activeTheory.length} questions`;
+}
 $('btn-back-to-gate').addEventListener('click', () => { hide('screen-instructions'); show('screen-gate'); });
 
 /* ===================== FULLSCREEN + ANTI-CHEAT ===================== */
 function enterFullscreen(){
   const el = document.documentElement;
-  if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
-  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  try{
+    if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  }catch(e){}
 }
-function showWarning(msg){
-  $('warning-message').textContent = msg;
-  $('warning-modal').classList.remove('hidden');
-}
-$('warning-return').addEventListener('click', () => { $('warning-modal').classList.add('hidden'); enterFullscreen(); });
-
 function setupAntiCheat(){
+  if(setupAntiCheat._done) return;
+  setupAntiCheat._done = true;
   document.addEventListener('contextmenu', e => { if(state.examStarted) e.preventDefault(); });
   document.addEventListener('copy', e => { if(state.examStarted) e.preventDefault(); });
   document.addEventListener('cut', e => { if(state.examStarted) e.preventDefault(); });
@@ -536,29 +715,29 @@ function setupAntiCheat(){
   document.addEventListener('keydown', e => {
     if(!state.examStarted) return;
     if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) || (e.ctrlKey && e.key.toLowerCase()==='u')){
-      e.preventDefault(); showWarning('Developer tools are not allowed during the exam.');
+      e.preventDefault(); openModal({title:'Not allowed', message:'Developer tools are not allowed during the exam.', confirmText:'OK'});
     }
   });
   document.addEventListener('visibilitychange', () => {
     if(document.hidden && state.examStarted){
       state.warningCount++;
       if(state.warningCount >= 3){
-        alert('Your session has been ended after multiple tab-switch warnings. Submitting what you have so far.');
-        forceSubmitCurrentSection();
+        openModal({title:'Session ended', message:'Your session has been ended after multiple tab-switch warnings. Submitting what you have so far.', confirmText:'Continue'})
+          .then(() => forceSubmitCurrentSection());
       } else {
-        showWarning(`Warning ${state.warningCount}/3 — you left the exam tab. A third warning ends your session.`);
+        openModal({title:'Warning '+state.warningCount+'/3', message:'You left the exam tab. A third warning ends your session.', confirmText:'Return to Exam'});
       }
     }
   });
   document.addEventListener('fullscreenchange', () => {
     if(state.examStarted && !document.fullscreenElement){
-      showWarning('Please return to fullscreen to continue your exam.');
+      openModal({title:'Stay in fullscreen', message:'Please return to fullscreen to continue your exam.', confirmText:'Return to Exam'})
+        .then(() => enterFullscreen());
     }
   });
 }
 function forceSubmitCurrentSection(){
-  if(state.section === 'objective') finishObjectives();
-  else finishTheory();
+  if(state.section === 'objective') finishObjectives(); else finishTheory();
 }
 
 /* ===================== AUTOSAVE / RESUME ===================== */
@@ -583,10 +762,12 @@ $('btn-resume').addEventListener('click', () => {
 
   hide('screen-gate'); enterFullscreen(); setupAntiCheat();
   if(state.section === 'objective'){
+    state.examStarted = true;
     show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
     $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
     buildObjNav(); renderObjQuestion(); resumeObjTimer();
   } else {
+    state.examStarted = true;
     show('screen-theory'); document.getElementById('screen-theory').style.display='block';
     $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
     buildTheoryNav(); renderTheoryQuestion(); resumeTheoryTimer();
@@ -596,7 +777,7 @@ $('btn-resume').addEventListener('click', () => {
 /* ===================== SECTION A: OBJECTIVES ===================== */
 $('btn-start-objectives').addEventListener('click', () => {
   hide('screen-instructions'); show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
-  state.examStarted = true; state.section='objective'; state.objTimeLeft = CONFIG.objectiveMinutes*60;
+  state.examStarted = true; state.section='objective'; state.objTimeLeft = parseInt($('sel-obj-time').value,10)*60;
   $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
   enterFullscreen(); setupAntiCheat();
   buildObjNav(); renderObjQuestion(); startObjTimer(); window.scrollTo({top:0});
@@ -643,10 +824,7 @@ $('obj-prev').addEventListener('click', () => { if(state.objIndex>0){ state.objI
 $('obj-next').addEventListener('click', () => { if(state.objIndex<activeObjectives.length-1){ state.objIndex++; renderObjQuestion(); } });
 $('obj-flagbtn').addEventListener('click', () => { state.objFlags[state.objIndex] = !state.objFlags[state.objIndex]; renderObjQuestion(); autosave(); });
 
-function startObjTimer(){
-  $('obj-timer').textContent = fmtTime(state.objTimeLeft);
-  runObjTicker();
-}
+function startObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
 function resumeObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
 function runObjTicker(){
   clearInterval(objInterval);
@@ -658,20 +836,24 @@ function runObjTicker(){
     if(state.objTimeLeft<=0){ clearInterval(objInterval); finishObjectives(); }
   },1000);
 }
-$('btn-submit-objectives').addEventListener('click', () => {
-  if(confirm('Submit Section A now? You cannot return to it afterward.')) finishObjectives();
+$('btn-submit-objectives').addEventListener('click', async () => {
+  const ok = await openModal({title:'Submit Section A?', message:'You cannot return to it afterward.', confirmText:'Submit', cancelText:'Keep working'});
+  if(ok) finishObjectives();
 });
 function finishObjectives(){
   clearInterval(objInterval);
   document.getElementById('screen-objectives').style.display='none';
-  state.section = 'theory'; autosave();
+  state.section = 'theory';
+  state.examStarted = false; /* pause monitoring between sections */
+  autosave();
   show('screen-transition'); window.scrollTo({top:0});
 }
 
 /* ===================== SECTION B: THEORY ===================== */
 $('btn-start-theory').addEventListener('click', () => {
   hide('screen-transition'); show('screen-theory'); document.getElementById('screen-theory').style.display='block';
-  state.theoryTimeLeft = CONFIG.theoryMinutes*60;
+  state.theoryTimeLeft = parseInt($('sel-theory-time').value,10)*60;
+  state.examStarted = true;
   $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
   buildTheoryNav(); renderTheoryQuestion(); startTheoryTimer(); window.scrollTo({top:0});
 });
@@ -719,10 +901,11 @@ function runTheoryTicker(){
     if(state.theoryTimeLeft<=0){ clearInterval(theoryInterval); finishTheory(); }
   },1000);
 }
-$('btn-submit-theory').addEventListener('click', () => {
+$('btn-submit-theory').addEventListener('click', async () => {
   const answered = Object.values(state.theoryAnswers).filter(a=>a && a.trim()).length;
   if(answered < activeTheory.length){
-    if(!confirm(`You've answered ${answered} of ${activeTheory.length} theory questions. Submit anyway?`)) return;
+    const ok = await openModal({title:'Incomplete section', message:`You've answered ${answered} of ${activeTheory.length} theory questions. Submit anyway?`, confirmText:'Submit anyway', cancelText:'Keep working'});
+    if(!ok) return;
   }
   finishTheory();
 });
@@ -736,7 +919,7 @@ function finishTheory(){
   showResults();
 }
 
-/* ===================== RESULTS + SYNC ===================== */
+/* ===================== RESULTS + REVIEW + SYNC ===================== */
 function showResults(){
   let correct=0, wrong=0, unanswered=0;
   activeObjectives.forEach((item,i) => {
@@ -753,10 +936,12 @@ function showResults(){
   $('res-name').textContent = state.studentName;
   $('res-reg').textContent = state.studentReg;
   $('res-dept').textContent = state.department;
-  $('res-course').textContent = state.course;
+  $('res-course').textContent = COURSES[state.course].title;
   const badge = $('res-badge');
   badge.textContent = passed ? 'Above pass mark' : 'Below pass mark';
   badge.className = 'status-badge ' + (passed ? 'pass' : 'fail');
+
+  renderReview();
 
   hide('screen-gate'); hide('screen-instructions'); hide('screen-transition');
   show('screen-results'); window.scrollTo({top:0});
@@ -764,12 +949,44 @@ function showResults(){
   sendResultsToSheet({
     timestamp: new Date().toISOString(),
     name: state.studentName, matric: state.studentReg,
-    department: state.department, course: state.course,
+    department: state.department, course: COURSES[state.course].title,
     objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
     theorySubmitted: true,
     theoryAnswers: activeTheory.map((q,i) => ({question:q.q, answer:state.theoryAnswers[i]||''}))
   });
 }
+
+function renderReview(){
+  const letters = ['A','B','C','D'];
+  $('review-objectives').innerHTML = activeObjectives.map((item,i) => {
+    const sel = state.objAnswers[i];
+    const status = !sel ? 'unanswered' : (sel===item.answer ? 'correct' : 'wrong');
+    const statusLabel = status==='unanswered' ? 'Unanswered' : (status==='correct' ? 'Correct' : 'Wrong');
+    const opts = item.options.map((opt,j) => {
+      const letter = letters[j];
+      let cls = 'review-opt';
+      if(letter === item.answer) cls += ' correct-ans';
+      else if(letter === sel) cls += ' wrong-selected';
+      return `<div class="${cls}"><span class="letter">${letter}.</span>${escapeHtml(opt)}</div>`;
+    }).join('');
+    return `<div class="review-item">
+      <div class="qnum">Question ${i+1}</div>
+      <div class="review-status ${status}">${statusLabel}</div>
+      <div class="qtext-sm">${escapeHtml(item.q)}</div>
+      ${opts}
+    </div>`;
+  }).join('');
+
+  $('review-theory').innerHTML = activeTheory.map((item,i) => {
+    const ans = (state.theoryAnswers[i] || '').trim();
+    return `<div class="review-item">
+      <div class="qnum">Question ${i+1}</div>
+      <div class="qtext-sm">${escapeHtml(item.q)}</div>
+      <div class="answer-box ${ans ? '' : 'empty'}">${ans ? escapeHtml(ans) : 'No answer submitted.'}</div>
+    </div>`;
+  }).join('');
+}
+
 async function sendResultsToSheet(payload){
   const note = $('sync-note');
   try{
