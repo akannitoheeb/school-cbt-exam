@@ -406,6 +406,12 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
    ===================================================== */
 const CONFIG = {
   passMark: 40,
+  /* Points to your existing Apps Script deployment, which writes to the
+     "Exam Results" tab in spreadsheet 1JDJPY9C0bKhi0rbUdVQOq7kzQYGLy_ZkII9pCrMz4yM.
+     That script is already correct — don't replace it. If you ever edit it,
+     remember: saving alone doesn't update this URL. Go to Deploy > Manage
+     deployments > edit the existing one > New version > Deploy to push changes
+     to this same /exec URL. */
   sheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec'
 };
 
@@ -594,11 +600,41 @@ let state = {
 let objInterval, theoryInterval;
 let activeObjectives = [], activeTheory = [];
 
+/* ===================== SHUFFLE (fresh order every login) ===================== */
+function shuffleArray(arr){
+  const a = [...arr];
+  for(let i=a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function shuffleObjectiveQuestion(item){
+  const letters = ['A','B','C','D'];
+  const pairs = item.options.map((opt,i) => ({opt, wasCorrect: letters[i]===item.answer}));
+  const shuffled = shuffleArray(pairs);
+  const newAnswerIndex = shuffled.findIndex(p => p.wasCorrect);
+  return { q: item.q, options: shuffled.map(p => p.opt), answer: letters[newAnswerIndex] };
+}
+function buildShuffledSet(bank){
+  return {
+    objective: shuffleArray(bank.objective.map(shuffleObjectiveQuestion)),
+    theory: shuffleArray(bank.theory)
+  };
+}
+
 /* ===================== HELPERS ===================== */
 const $ = id => document.getElementById(id);
 const show = id => { $(id).classList.remove('hidden'); };
 const hide = id => { $(id).classList.add('hidden'); };
 function fmtTime(s){ s=Math.max(0,s); const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+function fmtDuration(ms){
+  const totalSec = Math.max(0, Math.round(ms/1000));
+  const h = Math.floor(totalSec/3600), m = Math.floor((totalSec%3600)/60), s = totalSec%60;
+  if(h>0) return `${h}h ${m}m ${s}s`;
+  if(m>0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
 function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&lt;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c)); }
 
 /* ===================== CUSTOM MODAL (replaces native confirm/alert) ===================== */
@@ -682,8 +718,9 @@ $('btn-to-instructions').addEventListener('click', () => {
   state.course = $('in-course').value;
 
   const bank = COURSES[state.course];
-  activeObjectives = bank.objective;
-  activeTheory = bank.theory;
+  const shuffled = buildShuffledSet(bank);
+  activeObjectives = shuffled.objective;
+  activeTheory = shuffled.theory;
 
   $('instr-course-title').textContent = bank.title;
   $('instr-student-line').textContent = `${state.studentName} · ${state.studentReg} · ${state.department}`;
@@ -778,6 +815,7 @@ $('btn-resume').addEventListener('click', () => {
 $('btn-start-objectives').addEventListener('click', () => {
   hide('screen-instructions'); show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
   state.examStarted = true; state.section='objective'; state.objTimeLeft = parseInt($('sel-obj-time').value,10)*60;
+  state.startedAt = Date.now();
   $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
   enterFullscreen(); setupAntiCheat();
   buildObjNav(); renderObjQuestion(); startObjTimer(); window.scrollTo({top:0});
@@ -952,7 +990,9 @@ function showResults(){
     department: state.department, course: COURSES[state.course].title,
     objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
     theorySubmitted: true,
-    theoryAnswers: activeTheory.map((q,i) => ({question:q.q, answer:state.theoryAnswers[i]||''}))
+    totalScore: pct, /* theory isn't auto-graded, so total score currently mirrors the objective score */
+    timeSpent: state.startedAt ? fmtDuration(Date.now() - state.startedAt) : '',
+    theoryAnswers: JSON.stringify(activeTheory.map((q,i) => ({question:q.q, answer:state.theoryAnswers[i]||''})))
   });
 }
 
@@ -990,7 +1030,7 @@ function renderReview(){
 async function sendResultsToSheet(payload){
   const note = $('sync-note');
   try{
-    await fetch(CONFIG.sheetWebhookUrl, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    await fetch(CONFIG.sheetWebhookUrl, { method:'POST', mode:'no-cors', body: JSON.stringify(payload) });
     note.textContent = 'Your results have been sent to the department record sheet.';
   }catch(err){
     note.textContent = 'Could not reach the record sheet — your results are saved on this device. Please also screenshot this page.';
