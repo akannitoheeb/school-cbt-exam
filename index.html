@@ -1030,15 +1030,27 @@ function renderReview(){
 async function sendResultsToSheet(payload){
   const note = $('sync-note');
   try{
-    await fetch(CONFIG.sheetWebhookUrl, { method:'POST', mode:'no-cors', body: JSON.stringify(payload) });
-    note.textContent = 'Your results have been sent to the department record sheet.';
+    const res = await fetch(CONFIG.sheetWebhookUrl, { method:'POST', body: JSON.stringify(payload) });
+    const text = await res.text();
+    let parsed; try{ parsed = JSON.parse(text); }catch(e){ parsed = null; }
+    if(parsed && parsed.status === 'ok'){
+      note.textContent = 'Your results have been sent to the department record sheet.';
+    } else if(parsed && parsed.status === 'error'){
+      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device, please also screenshot this page.';
+      queuePending(payload);
+    } else {
+      note.textContent = 'Sent, but got an unexpected response from the record sheet. Please also screenshot this page.';
+    }
   }catch(err){
-    note.textContent = 'Could not reach the record sheet — your results are saved on this device. Please also screenshot this page.';
-    try{
-      const pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]');
-      pending.push(payload); localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(pending));
-    }catch(e){}
+    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device, please also screenshot this page.';
+    queuePending(payload);
   }
+}
+function queuePending(payload){
+  try{
+    const pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]');
+    pending.push(payload); localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(pending));
+  }catch(e){}
 }
 
 /* ===================== INIT ===================== */
