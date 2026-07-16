@@ -114,6 +114,13 @@ button:active{ transform:translateY(1px); }
 textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-radius:10px; padding:14px; font-family:'IBM Plex Sans', inherit; font-size:15px; line-height:1.6; resize:vertical; color:var(--ink);}
 .wordcount{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--stone); margin-top:8px; text-align:right;}
 
+.photo-attach{ border:1px dashed var(--line); border-radius:10px; padding:14px; margin-top:14px; background:var(--paper);}
+.photo-label{ display:block; font-size:12.5px; font-weight:600; color:var(--forest-dark); margin-bottom:10px; }
+.photo-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.photo-row input[type=file]{ font-size:13px; max-width:100%; }
+.photo-status{ font-size:12px; color:var(--stone); margin-top:8px; }
+.photo-preview{ display:block; max-width:100%; max-height:320px; border-radius:8px; border:1px solid var(--line); margin-top:12px; object-fit:contain; }
+
 .result-hero{ text-align:center; padding:30px 20px 6px; }
 .result-hero .pct{ font-family:'Fraunces', serif; font-size:52px; color:var(--forest); font-weight:700; }
 .result-hero .pctlabel{ color:var(--stone); font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin-top:2px;}
@@ -343,8 +350,17 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
     <div class="qpanel">
       <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span></div>
       <div class="qtext" id="theory-qtext">—</div>
-      <textarea id="theory-answer" placeholder="Type your answer here..."></textarea>
+      <textarea id="theory-answer" placeholder="Type your answer here... (or attach a photo of your written working below)"></textarea>
       <div class="wordcount"><span id="theory-wordcount">0</span> words</div>
+      <div class="photo-attach">
+        <label class="photo-label">Attach a photo of your working (optional — good for calculations)</label>
+        <div class="photo-row">
+          <input type="file" id="theory-photo-input" accept="image/*" capture="environment">
+          <button type="button" class="ghost" id="theory-photo-remove" style="display:none;">Remove photo</button>
+        </div>
+        <div class="photo-status" id="theory-photo-status"></div>
+        <img id="theory-photo-preview" class="photo-preview" style="display:none;">
+      </div>
       <div class="qpanel-actions"><button class="ghost" id="theory-prev">← Previous</button><button class="ghost" id="theory-next">Next →</button></div>
     </div>
   </div>
@@ -406,6 +422,8 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
    ===================================================== */
 const CONFIG = {
   passMark: 40,
+  defaultObjectiveDraw: 20,
+  defaultTheoryDraw: 5,
   /* Points to your existing Apps Script deployment, which writes to the
      "Exam Results" tab in spreadsheet 1JDJPY9C0bKhi0rbUdVQOq7kzQYGLy_ZkII9pCrMz4yM.
      That script is already correct — don't replace it. If you ever edit it,
@@ -436,15 +454,101 @@ const FACULTIES = {
    Sample questions only — swap in real material per course.
    =========================================================== */
 const COURSES = {
-  "MTH 102": { title:"MTH 102 — General Mathematics II", eligible:"ALL",
+  "MTH 102": { title:"MTH 102 — Elementary Mathematics II (Calculus)", eligible:"ALL",
+    drawObjective: 25, drawTheory: 4,
     objective:[
-      {q:"The derivative of x³ with respect to x is:", options:["2x²","3x²","x²","3x"], answer:"B"},
-      {q:"∫2x dx equals:", options:["x²+C","2x²+C","x+C","x²/2+C"], answer:"A"},
-      {q:"If sin θ = 0.5, θ could be:", options:["30°","45°","60°","90°"], answer:"A"}
+      {q:"Which of the following is an irrational number?", options:["0.75","7/5","√3","-3"], answer:"C"},
+      {q:"The real number system is the union of:", options:["Even and odd numbers","Rational and irrational numbers","Positive and negative numbers","Integers and decimals"], answer:"B"},
+      {q:"Which property states that a + b = b + a for all real numbers a, b?", options:["Associative","Distributive","Commutative","Closure"], answer:"C"},
+      {q:"If a > b and c > 0, then:", options:["ac < bc","ac = bc","ac > bc","a/c < b/c"], answer:"C"},
+      {q:"A function f: A → B assigns to every element of A:", options:["At least one element of B","Exactly one element of B","No element of B","All elements of B"], answer:"B"},
+      {q:"The domain of f(x) = 1/x is:", options:["All real numbers","All real numbers except 0","Only positive numbers","Only negative numbers"], answer:"B"},
+      {q:"The range of f(x) = x² is:", options:["All real numbers","(-∞, 0]","[0, ∞)","(0, ∞)"], answer:"C"},
+      {q:"The graph of f(x) = c (a constant) is:", options:["A vertical line","A horizontal line","A parabola","A straight line through the origin"], answer:"B"},
+      {q:"A curve represents a function if and only if:", options:["Every horizontal line cuts it at most once","Every vertical line cuts it at most once","It passes through the origin","It is symmetric about the y-axis"], answer:"B"},
+      {q:"The graph of f(x) = x³ is called a:", options:["Parabola","Cubic curve","Straight line","Hyperbola"], answer:"B"},
+      {q:"The graph of f(x) = |x| has its vertex (turning point) at:", options:["(1, 0)","(0, 1)","(0, 0)","(-1, 0)"], answer:"C"},
+      {q:"Which function has a graph consisting of two separate branches?", options:["f(x) = x²","f(x) = 1/x","f(x) = x","f(x) = |x|"], answer:"B"},
+      {q:"A function is injective if:", options:["f(x1) = f(x2) implies x1 = x2","Every element of the codomain has a preimage","The range equals the codomain","It has two inverses"], answer:"A"},
+      {q:"The function f(x) = x² defined on all of R is NOT injective because:", options:["It is not defined at x = 0","f(2) = f(-2) but 2 ≠ -2","Its graph is a straight line","It has no derivative"], answer:"B"},
+      {q:"A function f: A → B is surjective if:", options:["f(A) = B","f(A) is strictly smaller than B","A = B","f is one-to-one"], answer:"A"},
+      {q:"The horizontal line test is used to check whether a function is:", options:["Continuous","Injective","Surjective","Differentiable"], answer:"B"},
+      {q:"A function that is both injective and surjective is called:", options:["Linear","Bijective","Constant","Periodic"], answer:"B"},
+      {q:"Only a __________ function has an inverse that is also a function.", options:["constant","linear","bijective","quadratic"], answer:"C"},
+      {q:"If f(x) = 2x + 1 and g(x) = x², then (g∘f)(x) equals:", options:["2x² + 1","(2x+1)²","2x² + 2x + 1","4x² + 1"], answer:"B"},
+      {q:"Composition of functions is:", options:["Always commutative","Generally not commutative","The same as addition","Only defined for linear functions"], answer:"B"},
+      {q:"The composite function g∘f is defined when:", options:["The domain of f equals the range of g","The range of f is contained in the domain of g","f and g have the same domain","f is always linear"], answer:"B"},
+      {q:"If f(x) = x - 3 and g(x) = √x, then (g∘f)(x) is defined only when:", options:["x ≤ 3","x ≥ 3","x ≠ 3","x is any real number"], answer:"B"},
+      {q:"A function has an inverse if and only if it is:", options:["Continuous","Bijective","Differentiable","Defined on all of R"], answer:"B"},
+      {q:"If f(x) = 2x + 3, then f⁻¹(x) equals:", options:["(x-3)/2","2x - 3","(x+3)/2","x/2 - 3"], answer:"A"},
+      {q:"If f(x) = x³, then f⁻¹(x) equals:", options:["x²","1/x³","the cube root of x","3x"], answer:"C"},
+      {q:"To find the inverse of a function, the first step after writing y = f(x) is to:", options:["Differentiate both sides","Interchange x and y","Integrate both sides","Set y = 0"], answer:"B"},
+      {q:"A sequence {an} converges to L if:", options:["an = L for all n","For every ε>0 there exists N such that |an − L| < ε whenever n > N","an is always increasing","an is bounded above only"], answer:"B"},
+      {q:"The limit of the sequence an = 1/n as n → ∞ is:", options:["1","∞","0","Undefined"], answer:"C"},
+      {q:"A sequence is a function whose domain is:", options:["The real numbers","The natural numbers","The rational numbers","The complex numbers"], answer:"B"},
+      {q:"lim(x→2) (3x + 1) equals:", options:["5","6","7","8"], answer:"C"},
+      {q:"lim(x→1) (x² − 1)/(x − 1) equals:", options:["0","1","2","Undefined"], answer:"C"},
+      {q:"According to the ε-δ definition, lim(x→a) f(x) = L means for every ε > 0 there exists δ > 0 such that whenever 0 < |x − a| < δ, then:", options:["|f(x)| < ε","|f(x) − L| < ε","|x − a| < ε","f(x) = L"], answer:"B"},
+      {q:"The Sum Law of limits states that lim(x→a)[f(x) + g(x)] equals:", options:["L − M","L × M","L + M","L/M"], answer:"C"},
+      {q:"The Quotient Law for limits requires that:", options:["M = 0","M ≠ 0","L = 0","L = M"], answer:"B"},
+      {q:"lim(x→a) c, where c is a constant, equals:", options:["0","a","c","Undefined"], answer:"C"},
+      {q:"A function f is continuous at a if:", options:["f(a) exists only","lim(x→a) f(x) exists only","lim(x→a) f(x) = f(a)","f is differentiable at a"], answer:"C"},
+      {q:"A function with a 'hole' or 'jump' at a point is said to be:", options:["Continuous","Differentiable","Discontinuous","Bijective"], answer:"C"},
+      {q:"Geometrically, a function is continuous at a point if its graph:", options:["Has a sharp corner there","Can be drawn without lifting the pen at that point","Crosses the x-axis there","Is a straight line"], answer:"B"},
+      {q:"If f(2) = 5 but lim(x→2) f(x) = 4, then f is:", options:["Continuous at x = 2","Discontinuous at x = 2","Differentiable at x = 2","Bijective at x = 2"], answer:"B"},
+      {q:"The Intermediate Value Theorem applies to functions that are:", options:["Differentiable on an open interval","Continuous on a closed interval","Bijective","Constant"], answer:"B"},
+      {q:"If f(1) = -3 and f(3) = 5, by the IVT, f(c) = 0 for some c in:", options:["(1, 3)","(-3, 5)","(0, 1)","(3, 5)"], answer:"A"},
+      {q:"The Extreme Value Theorem guarantees that a continuous function on a closed interval:", options:["Has no maximum or minimum","Attains both a maximum and a minimum value","Is always increasing","Has an inverse"], answer:"B"},
+      {q:"The Extreme Value Theorem requires the interval to be:", options:["Open","Closed and bounded","Infinite","A single point"], answer:"B"},
+      {q:"The derivative f'(a) is defined as the limit as h → 0 of:", options:["[f(a+h) + f(a)]/h","[f(a+h) − f(a)]/h","f(a+h) × f(a)","f(a)/h"], answer:"B"},
+      {q:"Geometrically, f'(a) represents the slope of the:", options:["Secant line","Tangent line at (a, f(a))","x-axis","y-axis"], answer:"B"},
+      {q:"If s(t) is the position of a particle, then s'(t) represents:", options:["Displacement","Velocity","Acceleration","Time"], answer:"B"},
+      {q:"The second derivative of displacement with respect to time represents:", options:["Velocity","Acceleration","Position","Distance"], answer:"B"},
+      {q:"Differentiability at a point implies:", options:["The function is discontinuous there","The function is continuous there","The function is unbounded","Nothing about continuity"], answer:"B"},
+      {q:"The derivative of a constant is:", options:["1","The constant itself","0","Undefined"], answer:"C"},
+      {q:"Using the power rule, d/dx(x⁷) equals:", options:["7x⁶","x⁶","6x⁷","7x⁸"], answer:"A"},
+      {q:"d/dx(4x³) equals:", options:["4x²","12x²","12x³","4x⁴"], answer:"B"},
+      {q:"The Product Rule states that if y = uv, then dy/dx equals:", options:["u'v'","u(dv/dx) + v(du/dx)","u(dv/dx) − v(du/dx)","(u dv/dx)/(v du/dx)"], answer:"B"},
+      {q:"The Quotient Rule for y = u/v gives dy/dx equal to:", options:["(u'v + uv')/v²","(v·u' − u·v')/v²","u'v'","(u' − v')/v"], answer:"B"},
+      {q:"The Chain Rule is used to differentiate:", options:["A sum of two functions","A composite function","A constant","An inverse function only"], answer:"B"},
+      {q:"Using the chain rule, d/dx (3x+1)⁵ equals:", options:["5(3x+1)⁴","15(3x+1)⁴","5(3x+1)⁵","3(3x+1)⁴"], answer:"B"},
+      {q:"Implicit differentiation is used when:", options:["y is explicitly given in terms of x","y is not isolated on one side of the equation","The function is a constant","The function has no derivative"], answer:"B"},
+      {q:"Logarithmic differentiation is especially useful for functions of the form:", options:["y = mx + c","y = xˣ","y = x²","y = c"], answer:"B"},
+      {q:"For parametric equations x = f(t), y = g(t), dy/dx is computed as:", options:["(dy/dt) × (dx/dt)","(dy/dt)/(dx/dt)","(dx/dt)/(dy/dt)","dy/dt + dx/dt"], answer:"B"},
+      {q:"If x = t² and y = t³, then dy/dx equals:", options:["3t/2","2t/3","3t²","2t"], answer:"A"},
+      {q:"A critical point of a function occurs where:", options:["f(x) = 0","f'(x) = 0 or f'(x) does not exist","f''(x) = 0","f is undefined everywhere"], answer:"B"},
+      {q:"For f(x) = x² − 4x + 3, the critical point occurs at:", options:["x = 1","x = 2","x = 3","x = 4"], answer:"B"},
+      {q:"Integration is the inverse process of:", options:["Addition","Differentiation","Multiplication","Limits"], answer:"B"},
+      {q:"∫3x² dx equals:", options:["x³","x³ + C","3x + C","x² + C"], answer:"B"},
+      {q:"The technique used for ∫2x(x²+1)³ dx by letting u = x²+1 is called:", options:["Integration by parts","Substitution method","Partial fractions","Trigonometric substitution"], answer:"B"},
+      {q:"Integration by parts is based on the formula:", options:["∫u dv = uv − ∫v du","∫u dv = uv + ∫v du","∫u dv = u/v","∫u dv = u + v"], answer:"A"},
+      {q:"The method of partial fractions is mainly used for integrating:", options:["Trigonometric functions","Rational functions","Exponential functions","Constant functions"], answer:"B"},
+      {q:"∫sin x dx equals:", options:["cos x + C","−cos x + C","sin x + C","−sin x + C"], answer:"B"},
+      {q:"Trigonometric substitution is typically used when the integrand involves:", options:["Products of polynomials","Square roots of expressions like 1 − x²","Logarithms","Constants only"], answer:"B"},
+      {q:"The definite integral ∫[a to b] f(x) dx represents:", options:["The derivative of f at b","The area under the curve from a to b","The slope of f at a","The maximum value of f"], answer:"B"},
+      {q:"By the Fundamental Theorem of Calculus, ∫[a to b] f(x) dx equals:", options:["F(a) − F(b)","F(b) − F(a)","F(a) + F(b)","F(b) × F(a)"], answer:"B"},
+      {q:"∫[0 to 2] 3x² dx equals:", options:["6","8","4","12"], answer:"B"},
+      {q:"∫[a to a] f(x) dx equals:", options:["1","f(a)","0","Undefined"], answer:"C"},
+      {q:"Reversing the limits of a definite integral:", options:["Doubles its value","Changes its sign","Has no effect","Makes it zero"], answer:"B"},
+      {q:"The area between two curves f(x) and g(x), where f(x) ≥ g(x) on [a,b], is given by:", options:["∫[a to b] f(x)g(x) dx","∫[a to b] [f(x) − g(x)] dx","∫[a to b] [f(x)+g(x)] dx","f(b) − g(a)"], answer:"B"},
+      {q:"The Disk Method for volumes of revolution about the x-axis uses the formula:", options:["V = π∫[a to b] f(x) dx","V = π∫[a to b] [f(x)]² dx","V = ∫[a to b] f(x) dx","V = 2π∫[a to b] f(x) dx"], answer:"B"},
+      {q:"The area under y = x² from x = 0 to x = 2 is:", options:["4/3","8/3","2","4"], answer:"B"}
     ],
     theory:[
-      {q:"Differentiate y = 3x² + 5x − 7 with respect to x, showing your working."},
-      {q:"Explain the difference between a permutation and a combination, with one example of each."}
+      {q:"State the definition of a function and explain the difference between its domain and codomain."},
+      {q:"Distinguish between injective, surjective and bijective functions, giving one example of each."},
+      {q:"Given f(x) = 2x + 1 and g(x) = x² − 3, find (f∘g)(x) and (g∘f)(x), and state whether composition of functions is commutative."},
+      {q:"Find the inverse of f(x) = (x − 1)/(x + 2), showing all steps."},
+      {q:"Using the ε-δ definition, show that lim(x→2)(3x − 1) = 5."},
+      {q:"Explain what it means for a function to be continuous at a point, and give an example of a function that is discontinuous at a point, clearly showing why."},
+      {q:"State the Intermediate Value Theorem and use it to show that x³ − x − 1 = 0 has a root between x = 1 and x = 2."},
+      {q:"Differentiate y = x²(x + 1) using the product rule, showing all working."},
+      {q:"Use the quotient rule to differentiate y = (x² + 1)/x."},
+      {q:"Given x² + y² = 25, use implicit differentiation to find dy/dx, and evaluate it at the point (3, 4)."},
+      {q:"Use logarithmic differentiation to find dy/dx for y = xˣ."},
+      {q:"A particle moves such that its displacement is s(t) = t³ − 6t² + 9t. Find the velocity and acceleration functions, and determine the time(s) when the particle is at rest."},
+      {q:"Evaluate ∫(x² + 2x) dx, and hence evaluate the definite integral from x = 0 to x = 1."},
+      {q:"Find the area enclosed between the curves y = x and y = x² on the interval [0, 1], showing all working."}
     ]},
   "COS 102": { title:"COS 102 — Introduction to Problem Solving", eligible:["B.Sc. Computer Science"],
     objective:[
@@ -593,7 +697,7 @@ let state = {
   studentName:'', studentReg:'', department:'', course:'',
   section:'objective',
   objAnswers:{}, objFlags:{}, objIndex:0,
-  theoryAnswers:{}, theoryIndex:0,
+  theoryAnswers:{}, theoryImages:{}, theoryIndex:0,
   objTimeLeft:0, theoryTimeLeft:0,
   examStarted:false, warningCount:0
 };
@@ -617,9 +721,13 @@ function shuffleObjectiveQuestion(item){
   return { q: item.q, options: shuffled.map(p => p.opt), answer: letters[newAnswerIndex] };
 }
 function buildShuffledSet(bank){
+  const objDraw = bank.drawObjective || CONFIG.defaultObjectiveDraw;
+  const theoryDraw = bank.drawTheory || CONFIG.defaultTheoryDraw;
+  const shuffledObj = shuffleArray(bank.objective.map(shuffleObjectiveQuestion));
+  const shuffledTheory = shuffleArray(bank.theory);
   return {
-    objective: shuffleArray(bank.objective.map(shuffleObjectiveQuestion)),
-    theory: shuffleArray(bank.theory)
+    objective: shuffledObj.slice(0, Math.min(objDraw, shuffledObj.length)),
+    theory: shuffledTheory.slice(0, Math.min(theoryDraw, shuffledTheory.length))
   };
 }
 
@@ -906,7 +1014,9 @@ function buildTheoryNav(){
 }
 function refreshTheoryNav(){
   document.querySelectorAll('#theory-navgrid .qcell').forEach((cell,i) => {
-    cell.classList.toggle('answered', !!(state.theoryAnswers[i] && state.theoryAnswers[i].trim()));
+    const hasText = !!(state.theoryAnswers[i] && state.theoryAnswers[i].trim());
+    const hasImage = !!(state.theoryImages && state.theoryImages[i]);
+    cell.classList.toggle('answered', hasText || hasImage);
     cell.classList.toggle('current', i===state.theoryIndex);
   });
 }
@@ -917,6 +1027,7 @@ function renderTheoryQuestion(){
   $('theory-qtext').textContent = item.q;
   $('theory-answer').value = state.theoryAnswers[state.theoryIndex] || '';
   updateWordCount();
+  renderPhotoForCurrentQuestion();
   $('theory-prev').disabled = state.theoryIndex===0;
   $('theory-next').textContent = state.theoryIndex===activeTheory.length-1 ? 'Last question' : 'Next →';
   refreshTheoryNav();
@@ -924,6 +1035,67 @@ function renderTheoryQuestion(){
 function updateWordCount(){ const t = $('theory-answer').value.trim(); $('theory-wordcount').textContent = t ? t.split(/\s+/).length : 0; }
 $('theory-answer').addEventListener('input', () => { saveTheoryDraft(); updateWordCount(); refreshTheoryNav(); });
 $('theory-answer').addEventListener('blur', autosave);
+
+/* ---- Photo attachment for theory answers ---- */
+function compressImage(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        const MAX = 1400;
+        let w = img.width, h = img.height;
+        if(w > MAX || h > MAX){
+          if(w > h){ h = Math.round(h * MAX / w); w = MAX; }
+          else { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.72));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderPhotoForCurrentQuestion(){
+  const img = state.theoryImages && state.theoryImages[state.theoryIndex];
+  $('theory-photo-input').value = '';
+  if(img){
+    $('theory-photo-preview').src = img;
+    $('theory-photo-preview').style.display = 'block';
+    $('theory-photo-remove').style.display = 'inline-block';
+    $('theory-photo-status').textContent = 'Photo attached for this question.';
+  } else {
+    $('theory-photo-preview').style.display = 'none';
+    $('theory-photo-remove').style.display = 'none';
+    $('theory-photo-status').textContent = '';
+  }
+}
+$('theory-photo-input').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  $('theory-photo-status').textContent = 'Processing photo…';
+  try{
+    const dataUrl = await compressImage(file);
+    if(!state.theoryImages) state.theoryImages = {};
+    state.theoryImages[state.theoryIndex] = dataUrl;
+    renderPhotoForCurrentQuestion();
+    refreshTheoryNav();
+    autosave();
+  }catch(err){
+    $('theory-photo-status').textContent = "Couldn't process that photo — please try again.";
+  }
+});
+$('theory-photo-remove').addEventListener('click', () => {
+  if(state.theoryImages) delete state.theoryImages[state.theoryIndex];
+  renderPhotoForCurrentQuestion();
+  refreshTheoryNav();
+  autosave();
+});
 $('theory-prev').addEventListener('click', () => { saveTheoryDraft(); if(state.theoryIndex>0){ state.theoryIndex--; renderTheoryQuestion(); } });
 $('theory-next').addEventListener('click', () => { saveTheoryDraft(); if(state.theoryIndex<activeTheory.length-1){ state.theoryIndex++; renderTheoryQuestion(); } });
 
@@ -940,7 +1112,9 @@ function runTheoryTicker(){
   },1000);
 }
 $('btn-submit-theory').addEventListener('click', async () => {
-  const answered = Object.values(state.theoryAnswers).filter(a=>a && a.trim()).length;
+  const answered = activeTheory.filter((_, i) =>
+    (state.theoryAnswers[i] && state.theoryAnswers[i].trim()) || (state.theoryImages && state.theoryImages[i])
+  ).length;
   if(answered < activeTheory.length){
     const ok = await openModal({title:'Incomplete section', message:`You've answered ${answered} of ${activeTheory.length} theory questions. Submit anyway?`, confirmText:'Submit anyway', cancelText:'Keep working'});
     if(!ok) return;
@@ -992,7 +1166,14 @@ function showResults(){
     theorySubmitted: true,
     totalScore: pct, /* theory isn't auto-graded, so total score currently mirrors the objective score */
     timeSpent: state.startedAt ? fmtDuration(Date.now() - state.startedAt) : '',
-    theoryAnswers: JSON.stringify(activeTheory.map((q,i) => ({question:q.q, answer:state.theoryAnswers[i]||''})))
+    theoryAnswers: JSON.stringify(activeTheory.map((q,i) => ({
+      question: q.q, answer: state.theoryAnswers[i] || '',
+      hasImage: !!(state.theoryImages && state.theoryImages[i])
+    }))),
+    /* Photos are sent separately (index + compressed base64) so the backend can
+       upload each to Drive and swap it for a link before writing to the sheet. */
+    theoryImages: activeTheory.map((q,i) => (state.theoryImages && state.theoryImages[i])
+      ? { index: i, dataUrl: state.theoryImages[i] } : null).filter(Boolean)
   });
 }
 
@@ -1019,10 +1200,13 @@ function renderReview(){
 
   $('review-theory').innerHTML = activeTheory.map((item,i) => {
     const ans = (state.theoryAnswers[i] || '').trim();
+    const img = state.theoryImages && state.theoryImages[i];
+    const textBlock = ans ? `<div class="answer-box">${escapeHtml(ans)}</div>` : (img ? '' : `<div class="answer-box empty">No answer submitted.</div>`);
+    const imgBlock = img ? `<img class="photo-preview" style="margin-top:${ans ? '10px':'0'};" src="${img}">` : '';
     return `<div class="review-item">
       <div class="qnum">Question ${i+1}</div>
       <div class="qtext-sm">${escapeHtml(item.q)}</div>
-      <div class="answer-box ${ans ? '' : 'empty'}">${ans ? escapeHtml(ans) : 'No answer submitted.'}</div>
+      ${textBlock}${imgBlock}
     </div>`;
   }).join('');
 }
@@ -1036,13 +1220,13 @@ async function sendResultsToSheet(payload){
     if(parsed && parsed.status === 'ok'){
       note.textContent = 'Your results have been sent to the department record sheet.';
     } else if(parsed && parsed.status === 'error'){
-      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device, please also screenshot this page.';
+      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device — please also screenshot this page.';
       queuePending(payload);
     } else {
       note.textContent = 'Sent, but got an unexpected response from the record sheet. Please also screenshot this page.';
     }
   }catch(err){
-    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device, please also screenshot this page.';
+    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device — please also screenshot this page.';
     queuePending(payload);
   }
 }
