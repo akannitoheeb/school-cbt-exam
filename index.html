@@ -44,15 +44,16 @@ h1,h2,h3{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; let
 .field{ margin-bottom:16px; }
 .field label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--forest-dark); }
 .field label .req{ color:var(--crimson); margin-left:2px; }
-.field input, .field select{ width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink);}
+.field input, .field select{ width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink); appearance:none; -webkit-appearance:none;}
 .field select:disabled{ color:var(--stone); background:var(--paper); }
 .field input.invalid{ border-color:var(--crimson); }
 .field-error{ color:var(--crimson); font-size:12px; margin-top:6px; display:none; }
 .field-error.show{ display:block; }
 .field-hint{ color:var(--stone); font-size:12px; margin-top:6px; }
 .field input:focus, .field select:focus, button:focus-visible{ outline:2px solid var(--forest); outline-offset:2px; }
+.field select{ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236E7568' d='M1 1l5 5 5-5' stroke='%236E7568' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:36px; cursor:pointer;}
 .checkline{ display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--stone); margin:18px 0; }
-.checkline input{ margin-top:3px; }
+.checkline input{ margin-top:3px; width:16px; height:16px; accent-color:var(--forest); cursor:pointer; }
 
 button{ font-family:'IBM Plex Sans', inherit; font-weight:600; font-size:15px; padding:13px 22px; border-radius:10px; border:none; cursor:pointer; transition:transform .12s ease, background .15s ease;}
 button.primary{ background:var(--forest); color:#fff; }
@@ -70,7 +71,7 @@ button:active{ transform:translateY(1px); }
 .plan-box{ border:1px solid var(--line); border-radius:10px; padding:14px; background:var(--forest-tint); }
 .plan-box .k{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--forest-dark); font-weight:600; }
 .plan-box .v{ font-family:'IBM Plex Mono', monospace; font-size:16px; margin:4px 0 10px; color:var(--forest-dark); }
-.plan-box select{ width:100%; padding:9px 10px; border:1px solid var(--gold); border-radius:8px; font-family:'IBM Plex Mono', monospace; font-size:13.5px; background:#fff; }
+.plan-box select{ width:100%; padding:9px 10px; border:1px solid var(--gold); border-radius:8px; font-family:'IBM Plex Mono', monospace; font-size:13.5px; background:#fff; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236E7568' d='M1 1l5 5 5-5' stroke='%236E7568' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; padding-right:30px;}
 
 .examtop{ position:sticky; top:0; z-index:20; background:rgba(250,248,242,.97); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:12px 18px;}
 .examtop-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
@@ -101,13 +102,13 @@ button:active{ transform:translateY(1px); }
 .qpanel{ border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:26px; min-height:340px; display:flex; flex-direction:column;}
 .qpanel .qmeta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
 .qpanel .qmeta .idx{ font-family:'IBM Plex Mono', monospace; color:var(--gold); font-weight:600; font-size:13px; }
-.flagbtn{ background:none; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--stone); cursor:pointer;}
+.flagbtn{ background:none; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--stone); cursor:pointer; font-family:inherit;}
 .flagbtn.on{ background:var(--crimson-tint); border-color:var(--crimson); color:var(--crimson); }
 .qtext{ font-size:18px; line-height:1.5; font-weight:500; margin-bottom:20px; }
 .option{ display:flex; align-items:center; gap:11px; padding:13px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:10px; cursor:pointer; background:var(--paper); font-size:15px;}
 .option:hover{ border-color:var(--forest); }
 .option.selected{ border-color:var(--forest); background:var(--forest-tint); }
-.option input{ accent-color:var(--forest); width:16px; height:16px; }
+.option input{ accent-color:var(--forest); width:16px; height:16px; cursor:pointer; }
 .option .letter{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); }
 .qpanel-actions{ margin-top:auto; padding-top:20px; display:flex; justify-content:space-between; gap:10px; }
 
@@ -117,7 +118,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 .photo-attach{ border:1px dashed var(--line); border-radius:10px; padding:14px; margin-top:14px; background:var(--paper);}
 .photo-label{ display:block; font-size:12.5px; font-weight:600; color:var(--forest-dark); margin-bottom:10px; }
 .photo-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.photo-row input[type=file]{ font-size:13px; max-width:100%; }
+.photo-row input[type=file]{ font-size:13px; max-width:100%; cursor:pointer; }
 .photo-status{ font-size:12px; color:var(--stone); margin-top:8px; }
 .photo-preview{ display:block; max-width:100%; max-height:320px; border-radius:8px; border:1px solid var(--line); margin-top:12px; object-fit:contain; }
 
@@ -173,6 +174,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -206,7 +208,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 
     <div class="field">
       <label for="in-name">Full Name <span class="req">*</span></label>
-      <input id="in-name" type="text" placeholder="e.g. Akanni Toheeb " autocomplete="name" required>
+      <input id="in-name" type="text" placeholder="e.g. Akanni Toheeb" autocomplete="name" required>
     </div>
     <div class="field">
       <label for="in-reg">Matric <span class="req">*</span></label>
@@ -216,11 +218,15 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
     </div>
     <div class="field">
       <label for="in-dept">Department <span class="req">*</span></label>
-      <select id="in-dept" required><option value="">Select your department</option></select>
+      <select id="in-dept" required>
+        <option value="">Select your department</option>
+      </select>
     </div>
     <div class="field">
       <label for="in-course">Course <span class="req">*</span></label>
-      <select id="in-course" disabled required><option value="">Select department first</option></select>
+      <select id="in-course" disabled required>
+        <option value="">Select department first</option>
+      </select>
     </div>
 
     <label class="checkline">
@@ -425,12 +431,6 @@ const CONFIG = {
   passMark: 40,
   defaultObjectiveDraw: 30,
   defaultTheoryDraw: 5,
-  /* Points to your existing Apps Script deployment, which writes to the
-     "Exam Results" tab in spreadsheet 1JDJPY9C0bKhi0rbUdVQOq7kzQYGLy_ZkII9pCrMz4yM.
-     That script is already correct — don't replace it. If you ever edit it,
-     remember: saving alone doesn't update this URL. Go to Deploy > Manage
-     deployments > edit the existing one > New version > Deploy to push changes
-     to this same /exec URL. */
   sheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec'
 };
 
@@ -452,7 +452,6 @@ const FACULTIES = {
 
 /* ===================== COURSES ==========================
    eligible: "ALL" | "FACULTY:<faculty name>" | [array of exact department names]
-   Sample questions only — swap in real material per course.
    =========================================================== */
 const COURSES = {
   "MTH 102": { title:"MTH 102 — Elementary Mathematics II (Calculus)", eligible:"ALL",
@@ -551,6 +550,7 @@ const COURSES = {
       {q:"Evaluate ∫(x² + 2x) dx, and hence evaluate the definite integral from x = 0 to x = 1."},
       {q:"Find the area enclosed between the curves y = x and y = x² on the interval [0, 1], showing all working."}
     ]},
+
   "COS 102": { title:"COS 102 — Introduction to Problem Solving", eligible:["B.Sc. Computer Science"],
     objective:[
       {q:"A flowchart is best described as:", options:["A programming language","A pictorial representation of an algorithm","A type of computer hardware","A database query"], answer:"B"},
@@ -571,277 +571,251 @@ const COURSES = {
       {q:"Explain the difference between an acid and a base, giving one example of each."},
       {q:"Describe, with an equation, what happens during a neutralisation reaction."}
     ]},
-  "AGG 112": { title:"AGG 112 — Introduction to Agriculture", eligible:"FACULTY:Faculty of Agriculture and Renewable Natural Resources",
+  "AGG 112": { title:"AGG 112 — Introduction to Agriculture", eligible:"ALL",
+    drawObjective: 30, drawTheory: 5,
     objective:[
       {q:"Which of these is a primary branch of agriculture?", options:["Crop production","Banking","Tourism","Telecommunications"], answer:"A"},
       {q:"The practice of growing different crops on the same land in successive seasons is called:", options:["Monocropping","Crop rotation","Intercropping","Fallowing"], answer:"B"},
-      {q:"Which of these is a farm input?", options:["Fertiliser","Market price","Weather forecast","Farm produce"], answer:"A"}
+      {q:"Which of these is a farm input?", options:["Fertiliser","Market price","Weather forecast","Farm produce"], answer:"A"},
+      {q:"Economics is defined as a social science which studies human behavior as a relationship between ends and scarce means which have:", options:["Fixed uses", "Alternative uses", "Single uses", "No uses"], answer:"B"},
+      {q:"According to Adam Smith, economics is the science of:", options:["Wealth", "Welfare", "Scarcity", "Growth"], answer:"A"},
+      {q:"Adam Smith wrote 'An Inquiry into Nature and Causes of Wealth of Nations' in the year:", options:["1776", "1890", "1932", "1948"], answer:"A"},
+      {q:"Alfred Marshall defined economics as 'the study of mankind in the ordinary business of life' in his book:", options:["Wealth of Nations", "Principles of Economics", "Essay on Economic Science", "Economic Growth"], answer:"B"},
+      {q:"According to Lionel Robbins, economics is a science which studies human behavior as a relationship between ends and:", options:["Abundant means", "Scarce means which have alternative uses", "Unlimited resources", "Fixed resources"], answer:"B"},
+      {q:"Lionel Robbins published his definition of economics in the book titled:", options:["Wealth of Nations", "Principles of Economics", "An Essay on the Nature and Significance of Economic Science", "Economic Development"], answer:"C"},
+      {q:"Paul Samuelson defined economics as the study of how men and society choose to employ scarce productive resources which could have:", options:["Fixed uses", "Alternative uses", "Single uses", "No alternative uses"], answer:"B"},
+      {q:"Paul Samuelson's definition of economics is also known as the:", options:["Wealth definition", "Welfare definition", "Scarcity definition", "Growth definition"], answer:"D"},
+      {q:"Which economist distinguished between material and immaterial things in economics?", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"B"},
+      {q:"Material things are those that can be seen, felt and touched. An example is:", options:["Skill", "Satisfaction", "Book", "Pleasure"], answer:"C"},
+      {q:"Immaterial things in economics include all EXCEPT:", options:["Skill", "Rice", "Satisfaction", "Comfort"], answer:"B"},
+      {q:"According to Robbins, 'ends' in economics refer to:", options:["Human resources", "Human wants", "Human labor", "Human capital"], answer:"B"},
+      {q:"Scarcity in economics occurs when:", options:["Supply exceeds demand", "Demand for a commodity is greater than its supply", "Price is very low", "Resources are unlimited"], answer:"B"},
+      {q:"The essential factors of production include land, labor, capital and:", options:["Money", "Entrepreneurship", "Technology", "Government"], answer:"B"},
+      {q:"Microeconomics is concerned with economic activities of:", options:["The entire economy", "Individual economic units", "Government only", "International trade only"], answer:"B"},
+      {q:"Macroeconomics focuses on aggregate indicators such as:", options:["Individual consumer behavior", "GDP, national income, inflation and unemployment", "Single firm production", "Household consumption only"], answer:"B"},
+      {q:"Which branch of economics studies the behavior of individuals and firms in making decisions regarding allocation of scarce resources?", options:["Macroeconomics", "Microeconomics", "Development economics", "International economics"], answer:"B"},
+      {q:"The study of the overall performance, structure and behavior of an economy is called:", options:["Microeconomics", "Macroeconomics", "Agricultural economics", "Managerial economics"], answer:"B"},
+      {q:"Economics is primarily concerned with how a society allocates its:", options:["Unlimited resources among unlimited wants", "Limited resources among unlimited wants", "Limited resources among limited wants", "Unlimited resources among limited wants"], answer:"B"},
+      {q:"Which of the following is NOT one of the definitions of economics discussed in the course material?", options:["Science of wealth", "Study of mankind in ordinary business of life", "Science of choice and scarcity", "Science of unlimited resources"], answer:"D"},
+      {q:"The year 1890 is associated with the publication of 'Principles of Economics' by:", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"B"},
+      {q:"The year 1932 is significant in economics because it marks the publication of:", options:["Wealth of Nations", "Principles of Economics", "An Essay on the Nature and Significance of Economic Science", "Economics textbook"], answer:"C"},
+      {q:"Human beings have an unlimited number of:", options:["Resources", "Wants", "Needs only", "Capital goods"], answer:"B"},
+      {q:"Resources or means in economics are:", options:["Unlimited in supply", "Limited or scarce in supply", "Freely available", "Not important"], answer:"B"},
+      {q:"The 'growth' definition of economics was stated by:", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"D"},
+      {q:"Scarcity refers to the limited availability of resources relative to:", options:["Limited human wants", "Unlimited human wants", "Government policies", "Market prices"], answer:"B"},
+      {q:"Opportunity cost is defined as the value of the:", options:["Best alternative chosen", "Next best alternative forgone", "Total cost of production", "Marginal cost"], answer:"B"},
+      {q:"If you have $100 and choose to spend it on a new phone, the opportunity cost is:", options:["The phone itself", "The value of other things you could have bought", "$100", "Nothing"], answer:"B"},
+      {q:"Demand is the quantity of goods or services buyers are willing to purchase at a particular:", options:["Quality", "Price", "Time", "Location"], answer:"B"},
+      {q:"The law of demand states that the higher the price, the:", options:["Higher the quantity demanded", "Lower the quantity demanded", "Same quantity demanded", "Unlimited quantity demanded"], answer:"B"},
+      {q:"Supply is the quantity of a good sellers are willing to deliver at a particular:", options:["Quality", "Price", "Season", "Location"], answer:"B"},
+      {q:"The law of supply states that the higher the price, the:", options:["Lower the supply", "Higher the supply", "Same supply", "No supply"], answer:"B"},
+      {q:"Equilibrium price is the market price at which:", options:["Demand exceeds supply", "Supply exceeds demand", "Quantity demanded equals quantity supplied", "Price is highest"], answer:"C"},
+      {q:"At equilibrium price, the market is said to be in:", options:["Shortage", "Surplus", "Balance", "Crisis"], answer:"C"},
+      {q:"'Ends' in economics refers to:", options:["Resources", "Human wants or needs", "Production methods", "Distribution channels"], answer:"B"},
+      {q:"'Means' in economics are:", options:["Human wants", "Human and material resources available for satisfying wants", "Finished goods", "Consumer goods"], answer:"B"},
+      {q:"Needs are fundamental requirements necessary for survival such as:", options:["Luxury cars", "Food, water, shelter, clothing", "Entertainment", "Vacations"], answer:"B"},
+      {q:"Wants are desires for goods and services that are:", options:["Essential for survival", "Beyond basic needs", "Free of charge", "Government-provided"], answer:"B"},
+      {q:"Which of the following is a NEED rather than a want?", options:["Luxury items", "Entertainment subscriptions", "Food and water", "Latest technology"], answer:"C"},
+      {q:"Which of the following is a WANT rather than a need?", options:["Food", "Shelter", "Healthcare", "Vacations"], answer:"D"},
+      {q:"Utility is defined as the:", options:["Price of a good", "Satisfaction achieved from consuming a good/service", "Quantity of a good", "Cost of production"], answer:"B"},
+      {q:"Marginal utility is the extra satisfaction one gets from:", options:["The first unit consumed", "Each additional unit of a good", "The total consumption", "Free goods"], answer:"B"},
+      {q:"Choice in economics arises as a result of:", options:["Limited wants and abundant resources", "Numerous human wants and scarcity of resources", "Government policies", "Market equilibrium"], answer:"B"},
+      {q:"A scale of preference is a list of wants arranged in order of:", options:["Alphabetical order", "Priority/relative importance", "Price", "Size"], answer:"B"},
+      {q:"If a student has N20 and needs exercise book (N2), biro (N5), textbook (N5), sandals (N10), shirts (N15), trousers (N12), and shoes (N30), which items can the student afford?", options:["Shoes only", "Exercise book, biro and textbook", "Shirts and trousers", "All items"], answer:"B"},
+      {q:"A student who follows his scale of preference according to importance is said to behave:", options:["Irrationally", "Rationally", "Emotionally", "Randomly"], answer:"B"},
+      {q:"Which of the following is NOT an importance of scale of preference?", options:["Helps rank needs by importance", "Aids rational choices", "Leads to wastage of resources", "Shows needs at a glance"], answer:"C"},
+      {q:"Elasticity measures the degree of responsiveness of demand or supply to changes in:", options:["Income", "Price", "Taste", "Population"], answer:"B"},
+      {q:"If quantity of a good changes drastically with a change in price, it is said to be:", options:["Inelastic", "Elastic", "Fixed", "Stable"], answer:"B"},
+      {q:"Onions are said to have relatively inelastic demand because:", options:["They are luxury items", "They are basic necessities with no actual substitutes", "They are expensive", "They are not commonly used"], answer:"B"},
+      {q:"Rationality in economics refers to the assumption that economic agents make decisions aimed at:", options:["Minimizing satisfaction", "Maximizing satisfaction or profit", "Random selection", "Government compliance"], answer:"B"},
+      {q:"Production is the process of transforming inputs into:", options:["More inputs", "Goods and services", "Money only", "Raw materials"], answer:"B"},
+      {q:"Distribution in economics describes the way goods, services and income are allocated among:", options:["Government agencies only", "Factors of production such as labor, land and capital", "Consumers only", "Producers only"], answer:"B"},
+      {q:"Consumption is the act of using goods and services to:", options:["Produce more goods", "Derive satisfaction or utility", "Store for future use", "Export to other countries"], answer:"B"},
+      {q:"Which of the following is a factor of production?", options:["Money", "Land", "Bank credit", "Government subsidy"], answer:"B"},
+      {q:"The distinction between needs and wants is that needs are:", options:["Desires that enhance life", "Essential for survival or well-being", "Luxury items", "Entertainment-related"], answer:"B"},
+      {q:"A scale of preference helps an individual to forgo wants he cannot satisfy due to:", options:["Excessive resources", "Limited available resources", "Government restrictions", "Market surplus"], answer:"B"},
+      {q:"The problem of choice and opportunity cost arises because of:", options:["Unlimited resources", "Limited resources relative to unlimited wants", "Government planning", "Market failure"], answer:"B"},
+      {q:"Economic rationality involves individuals making choices by weighing:", options:["Only costs", "Only benefits", "Costs and benefits", "Neither costs nor benefits"], answer:"C"},
+      {q:"Production characteristics in agriculture refer to the ways agricultural activities are organized and managed including:", options:["Only resources and inputs", "Resources, inputs, methods, scale of operation and efficiency", "Only climate and weather", "Only market prices"], answer:"B"},
+      {q:"Which of the following is NOT listed as a characteristic feature of agricultural production?", options:["Smallness of farm holdings", "Biological limits of farm production", "Unlimited farm production", "Susceptibility to climate"], answer:"C"},
+      {q:"Many agricultural production activities occur on relatively small plots of land, especially in:", options:["Commercial farming systems", "Peasant and subsistence systems", "Mechanized farming", "Plantation agriculture"], answer:"B"},
+      {q:"The smallness of farm holdings can limit:", options:["Labor availability", "Mechanization and large-scale operations", "Soil fertility", "Rainfall"], answer:"B"},
+      {q:"The smallness of farm holdings is a result of all EXCEPT:", options:["Historical land distribution patterns", "Inheritance laws", "Labor-intensive nature of farming", "Government subsidies"], answer:"D"},
+      {q:"Agricultural production is constrained by biological limits because:", options:["Machines are expensive", "Plants and animals have growth rates and biological cycles", "Land is scarce", "Labor is unskilled"], answer:"B"},
+      {q:"Production in agriculture cannot be expanded instantly like industrial production because of:", options:["Lack of capital", "Biological limits and growth cycles", "Government policies", "Market demand"], answer:"B"},
+      {q:"Agricultural production is highly susceptible to:", options:["Government policies only", "Climatic conditions", "Market prices only", "Labor laws only"], answer:"B"},
+      {q:"Unpredictable weather patterns that affect agriculture include:", options:["Only sunshine", "Droughts, floods and extreme temperatures", "Only rainfall", "Only wind"], answer:"B"},
+      {q:"Climate change has heightened risks in agricultural production by making it:", options:["More certain and predictable", "More uncertain and risky", "Completely independent of weather", "Only dependent on technology"], answer:"B"},
+      {q:"The seasonality of agricultural production means that planting, cultivating and harvesting:", options:["Occur throughout the year equally", "Follow natural cycles and occur during specific times", "Are done randomly", "Depend only on labor availability"], answer:"B"},
+      {q:"Seasonality of farm production poses challenges in terms of:", options:["Only seed quality", "Labor availability, storage and market supply", "Only soil fertility", "Only government policies"], answer:"B"},
+      {q:"During harvest seasons, abundance of certain crops can lead to:", options:["Permanent shortage", "Temporary oversupply and reduced prices", "No change in prices", "Increased demand"], answer:"B"},
+      {q:"Price elasticity in agriculture refers to the responsiveness of demand and supply to changes in:", options:["Quality", "Prices", "Seasons", "Location"], answer:"B"},
+      {q:"Staple crops like wheat and rice tend to have relatively:", options:["Elastic demand", "Inelastic demand", "No demand", "Perfectly elastic demand"], answer:"B"},
+      {q:"Staple crops have inelastic demand because they are:", options:["Luxury items", "Necessities with few substitutes", "Expensive goods", "Imported products"], answer:"B"},
+      {q:"Luxury fruits might have more elastic demand due to:", options:["Being necessities", "Availability of substitutes", "Government subsidies", "Low prices"], answer:"B"},
+      {q:"The biological limits of farm production are subject to the growth rates of:", options:["Only crops", "Only animals", "Plants and animals", "Only microorganisms"], answer:"C"},
+      {q:"Which characteristic feature of agricultural production is a result of historical land distribution patterns and inheritance laws?", options:["Biological limits", "Smallness of farm holdings", "Susceptibility to climate", "Seasonality"], answer:"B"},
+      {q:"Farm production characteristics reflect the sustainability of production systems and their ability to meet:", options:["Only food demands", "Food, fiber and fuel demands", "Only fuel demands", "Only export demands"], answer:"B"},
+      {q:"The time required for crops to grow sets a natural limit on:", options:["The speed of production increases", "The price of crops", "The demand for crops", "The export of crops"], answer:"A"},
+      {q:"Agricultural production systems must conserve natural resources while meeting demands for:", options:["Only food", "Food, fiber and fuel", "Only fiber", "Only fuel"], answer:"B"},
+      {q:"Which of the following is a challenge posed by the seasonality of agricultural production?", options:["Only seed germination", "Labor availability, storage and market supply", "Only soil erosion", "Only pest control"], answer:"B"},
+      {q:"The susceptibility of farm production to climate makes it dependent on:", options:["Government policies", "Weather patterns", "International trade", "Bank loans"], answer:"B"},
+      {q:"Price elasticity in demand and supply of agricultural produce varies due to factors such as:", options:["Only government policies", "Consumer preferences, substitution possibilities and availability", "Only soil type", "Only labor costs"], answer:"B"},
+      {q:"Which characteristic makes agricultural production different from industrial production?", options:["Ability to expand instantly", "Subject to biological limits and growth cycles", "Not dependent on weather", "Unlimited production capacity"], answer:"B"},
+      {q:"The labor-intensive nature of farming contributes to:", options:["Large farm holdings", "Smallness of farm holdings", "Mechanization", "Industrialization"], answer:"B"},
+      {q:"Which of the following best describes the relationship between agricultural production and climate?", options:["Completely independent", "Highly susceptible and dependent", "Slightly related", "Not important"], answer:"B"},
+      {q:"The conservation of natural resources is part of which aspect of agricultural production characteristics?", options:["Only economic", "Sustainability of production systems", "Only social", "Only political"], answer:"B"},
+      {q:"Farm surveying is defined as the process of measuring and mapping out the position, topography, height, size and:", options:["Color of farmland", "Boundary of an area of farmland", "Ownership of farmland", "Price of farmland"], answer:"B"},
+      {q:"Farm surveying involves plotting measurements to suitable scales forming a:", options:["Contract", "Map, plan or section", "Budget", "Invoice"], answer:"B"},
+      {q:"Farm surveying shows natural and man-made features such as streams, lakes, rivers, hills, valleys, rocks, roads and:", options:["Only animals", "Buildings", "Only crops", "Only soil types"], answer:"B"},
+      {q:"How many types of farm survey are discussed in the course material?", options:["Three", "Four", "Five", "Six"], answer:"C"},
+      {q:"Chain survey is described as the:", options:["Most complex form of survey", "Simplest and oldest form of survey", "Most expensive form", "Most modern form"], answer:"B"},
+      {q:"Chain survey involves the use of:", options:["Only GPS", "Chains or measuring tapes", "Only aircraft", "Only computers"], answer:"B"},
+      {q:"Geodetic or Traverse survey determines the size and shape of an area using:", options:["Only chains", "Prismatic compass", "Only GPS", "Only theodolite"], answer:"B"},
+      {q:"Soil survey is concerned with the examination, classification and systematic mapping of:", options:["Only water", "The soil", "Only crops", "Only animals"], answer:"B"},
+      {q:"Topographical survey identifies physical features of an area such as:", options:["Only soil fertility", "Flatness, steepness, valley, rivers", "Only crop yields", "Only farm income"], answer:"B"},
+      {q:"Aerial survey uses aircraft to observe:", options:["Only small gardens", "A large area of land showing different features", "Only buildings", "Only roads"], answer:"B"},
+      {q:"Which of the following is NOT a technique used in farm survey?", options:["Distance measurement", "Angle measurement", "Color measurement", "Leveling"], answer:"C"},
+      {q:"Distance measurement is the process of determining the horizontal distance between:", options:["Three points", "Two points on the ground", "Four points", "Multiple random points"], answer:"B"},
+      {q:"An odometer is a device that counts the revolutions of a:", options:["Chain", "Wheel rolled along the line to be measured", "Compass", "Tape"], answer:"B"},
+      {q:"Pacing is a method of estimating distance by:", options:["Using GPS", "Counting steps", "Using a wheel", "Using a chain only"], answer:"B"},
+      {q:"Stadia is a surveying method used to measure distance indirectly by using a:", options:["Only chain", "Theodolite telescope fitted with stadia hairs and a graduated rod", "Only compass", "Only GPS"], answer:"B"},
+      {q:"Taping or chaining involves using a survey chain or steel tape to obtain:", options:["Rough estimates", "Accurate measurements", "Random measurements", "No measurements"], answer:"B"},
+      {q:"GPS in surveying determines distances and coordinates using:", options:["Only ground stations", "Satellites", "Only aircraft", "Only maps"], answer:"B"},
+      {q:"Angle measurement involves determining horizontal or vertical angles between two survey lines using instruments such as:", options:["Only chains", "Compass, theodolite and total station", "Only tapes", "Only GPS"], answer:"B"},
+      {q:"A total station combines an electronic transit theodolite with:", options:["Only a compass", "An Electronic Distance Measurement (EDM) device, microprocessor, electronic data collector and internal memory", "Only a chain", "Only a tape"], answer:"B"},
+      {q:"Leveling is the process of determining the relative:", options:["Distances between points", "Heights or elevations of different points", "Soil types", "Crop yields"], answer:"B"},
+      {q:"Determining position in surveying establishes the exact location of a point using:", options:["Only visual estimation", "Coordinates or reference points", "Only guesswork", "Only maps"], answer:"B"},
+      {q:"A reference network in surveying is also known as:", options:["A farm map", "A survey control network", "A crop plan", "A budget sheet"], answer:"B"},
+      {q:"A reference network serves as the framework for:", options:["Only crop planting", "All subsequent survey measurements", "Only harvesting", "Only marketing"], answer:"B"},
+      {q:"A distance of 100ft in survey is called a:", options:["Plus station", "Full station", "Half station", "Quarter station"], answer:"B"},
+      {q:"A distance of 100ft is written in survey notation as:", options:["100ft", "1+00", "0+100", "100+0"], answer:"B"},
+      {q:"A fractional part of a distance between full stations is called a:", options:["Full station", "Plus station", "Minus station", "Zero station"], answer:"B"},
+      {q:"The survey distance 216.8ft is written as:", options:["21+68", "2+16.8", "216+8", "2+168"], answer:"B"},
+      {q:"Which of the following is NOT listed as common surveying equipment on the farm?", options:["Ranging pole", "Measuring tape", "Tractor", "Prismatic compass"], answer:"C"},
+      {q:"A ranging pole is used in farm surveying for:", options:["Measuring soil fertility", "Marking survey points and lines", "Planting crops", "Harvesting"], answer:"B"},
+      {q:"A dumpy level is used in farm surveying for:", options:["Only measuring distances", "Leveling and determining heights", "Only measuring angles", "Only planting"], answer:"B"},
+      {q:"A theodolite is used in surveying for:", options:["Only measuring distances", "Measuring horizontal and vertical angles", "Only soil testing", "Only crop counting"], answer:"B"},
+      {q:"Farm surveying helps to know the size of a farmstead and the arrangement of land for:", options:["Random usage", "Proper usage without the risk of land degradation", "Wasteful usage", "Illegal usage"], answer:"B"},
+      {q:"Farm surveying helps in determining the boundaries and:", options:["Only crop types", "Main features and location of the farm", "Only animal breeds", "Only market prices"], answer:"B"},
+      {q:"Results of farm survey can be used as collateral for:", options:["Government grants only", "Security loan from financial institutions", "Free gifts", "Only scholarships"], answer:"B"},
+      {q:"Farm surveying enables the farmer to lay his farm into:", options:["Only one large field", "Plots", "Only storage areas", "Only residential areas"], answer:"B"},
+      {q:"The topography or gradient of farmland can be determined through:", options:["Only visual inspection", "Farm surveying", "Only guessing", "Only soil testing"], answer:"B"},
+      {q:"Farm surveying helps the farmer know about the:", options:["Only crop prices", "Hydrology of the land", "Only animal health", "Only labor costs"], answer:"B"},
+      {q:"Which of the following helps in identifying various soils and their characteristics?", options:["Only farm records", "Farm surveying", "Only crop rotation", "Only irrigation"], answer:"B"},
+      {q:"Absolute and relative positions of points on the farm can be determined through:", options:["Only guessing", "Farm surveying", "Only planting", "Only harvesting"], answer:"B"},
+      {q:"A farmstead is defined as a farm house and all its:", options:["Only residential buildings", "Production and processing structures", "Only storage facilities", "Only animal pens"], answer:"B"},
+      {q:"Farmstead planning is the drawing or outlining of a farmstead and the arrangements of land for:", options:["Random usage", "Proper usage without the risk of land degradation", "Wasteful usage", "Only residential purposes"], answer:"B"},
+      {q:"The objectives of farmstead planning may include all EXCEPT:", options:["Expansion", "Improved performance", "Higher capacity", "Reduced productivity"], answer:"D"},
+      {q:"Planning a farmstead allows for proper utilization of resources:", options:["With wastage", "Without wastage", "Only for crops", "Only for animals"], answer:"B"},
+      {q:"Farmstead planning makes the farmer more responsive to:", options:["Only government policies", "Market demand", "Only weather", "Only soil type"], answer:"B"},
+      {q:"Which of the following is a reason for planning a farmstead?", options:["To encourage wastage", "To encourage efficiency of farm activities", "To reduce coordination", "To avoid control"], answer:"B"},
+      {q:"According to the principles of farmstead layout, crops should be planted on the:", options:["Poorest soil", "Best soil within the farm", "Only rocky areas", "Only waterlogged areas"], answer:"B"},
+      {q:"Livestock buildings should be located on the:", options:["Best soil", "Poorest soil within the farm", "Only hilly areas", "Only river banks"], answer:"B"},
+      {q:"Farm buildings should be located in:", options:["Only remote areas", "Easily accessible areas", "Only steep slopes", "Only waterlogged areas"], answer:"B"},
+      {q:"Farm buildings should NOT be located on slopes to avoid:", options:["Only shade", "Erosion", "Only wind", "Only sunshine"], answer:"B"},
+      {q:"Residential and office buildings should be located far away from livestock buildings to avoid:", options:["Only heat", "Noise and unpleasant odour from farm animals' wastes", "Only light", "Only rain"], answer:"B"},
+      {q:"Topography determines the location of:", options:["Only crops", "Farm buildings and structures", "Only roads", "Only markets"], answer:"B"},
+      {q:"Farm buildings or living quarters are usually located on:", options:["Low elevations", "High elevations for proper viewing of the farm", "Only flat areas", "Only valleys"], answer:"B"},
+      {q:"Animal quarters should be located:", options:["Close to staff living quarters", "Far from the staff living quarters", "Only indoors", "Only underground"], answer:"B"},
+      {q:"Crops such as vegetables should be located on:", options:["High elevations", "Low lying areas where moisture content is high", "Only sandy soils", "Only rocky areas"], answer:"B"},
+      {q:"Fish ponds are best located on:", options:["Flat grounds", "Sloppy grounds", "Only high elevations", "Only deserts"], answer:"B"},
+      {q:"Irrigation farms are best sited on:", options:["Steep slopes", "Flat lands", "Only hilly areas", "Only rocky areas"], answer:"B"},
+      {q:"Crop farms are sited on soils that are:", options:["Poor", "Fertile", "Only sandy", "Only clayey"], answer:"B"},
+      {q:"Pastures are sited on:", options:["Most fertile soils", "Less fertile soils", "Only waterlogged areas", "Only rocky areas"], answer:"B"},
+      {q:"Farm roads are best constructed on:", options:["Waterlogged areas", "Well drained poor soils", "Only fertile soils", "Only steep slopes"], answer:"B"},
+      {q:"In planning a farmstead, facilities should be located:", options:["Only in remote areas", "Within walking distance", "Only in cities", "Only underground"], answer:"B"},
+      {q:"Good roads in farmstead planning facilitate:", options:["Only recreation", "Transportation of farm inputs and evacuation of farm produce", "Only tourism", "Only residential movement"], answer:"B"},
+      {q:"Adequate water supply is needed for:", options:["Only crop irrigation", "Human and animal use", "Only industrial use", "Only recreational use"], answer:"B"},
+      {q:"Livestock structures should be located close to source of water supply for:", options:["Only drinking", "Easy cleaning", "Only decoration", "Only heating"], answer:"B"},
+      {q:"Livestock units should be erected:", options:["With wind direction", "Against wind direction", "Only indoors", "Only underground"], answer:"B"},
+      {q:"Animal units should be located far away from human residential houses to avoid:", options:["Only noise", "Health hazards", "Only light", "Only shade"], answer:"B"},
+      {q:"Nearness to market reduces:", options:["Only labor costs", "Distribution or transport cost", "Only seed costs", "Only fertilizer costs"], answer:"B"},
+      {q:"Adequate drainage is important to avoid:", options:["Only drought", "Water-logging", "Only erosion", "Only wind damage"], answer:"B"},
+      {q:"Gentle slope facilitates:", options:["Only planting", "Proper drainage", "Only harvesting", "Only storage"], answer:"B"},
+      {q:"Off-farmstead factors include all EXCEPT:", options:["Zoning and land-use permissions", "Building and housing code requirements", "Only internal farm decisions", "Environmental protection rules"], answer:"C"},
+      {q:"Simple farm tools are hand-operated tools that are NOT powered by:", options:["Human hands", "Engines or motor", "Only wind", "Only water"], answer:"B"},
+      {q:"Simple farm tools are typically made of metal with:", options:["Only plastic handles", "Wooden or plastic handles", "Only rubber handles", "Only metal handles"], answer:"B"},
+      {q:"A cutlass is sometimes called a:", options:["Spade", "Machete", "Hoe", "Rake"], answer:"B"},
+      {q:"How many main types of cutlass are discussed?", options:["One", "Two", "Three", "Four"], answer:"B"},
+      {q:"One type of cutlass has a slightly curved blade with a:", options:["Long metal handle", "Short wooden handle", "No handle", "Only plastic handle"], answer:"B"},
+      {q:"The other type of cutlass has a straight metal blade and a:", options:["Long metal handle", "Short wooden handle", "No handle", "Only rubber handle"], answer:"B"},
+      {q:"One edge of the cutlass metal blade is sharp and the other is:", options:["Also sharp", "Blunt", "Curved", "Broken"], answer:"B"},
+      {q:"A machete typically has a:", options:["Shorter blade than a cutlass", "Longer blade and is used for heavier tasks", "Same blade length as cutlass", "Only wooden blade"], answer:"B"},
+      {q:"A cutlass is used for clearing of:", options:["Only houses", "Bush, tree and farmland", "Only roads", "Only water"], answer:"B"},
+      {q:"Which of the following is NOT a use of a cutlass?", options:["Digging holes", "Transplanting seedlings", "Planting operation and harvesting crops", "Measuring soil pH"], answer:"D"},
+      {q:"Maintenance of a cutlass includes all EXCEPT:", options:["Cleaning after use", "Sharpening regularly", "Oiling to prevent rust", "Leaving it on the ground"], answer:"D"},
+      {q:"A hoe consists of a metal blade which may be rounded or:", options:["Only circular", "Slightly rectangular in shape", "Only triangular", "Only oval"], answer:"B"},
+      {q:"The West African hoe has a:", options:["Long wooden handle and rectangular blade", "Short wooden handle and round metal blade", "No handle", "Only metal handle"], answer:"B"},
+      {q:"The West Indian hoe has a:", options:["Short wooden handle and round blade", "Long wooden handle and rectangular metal blade", "No handle", "Only plastic handle"], answer:"B"},
+      {q:"The metal blade of the West African hoe is attached to the wooden handle with a:", options:["Only glue", "Socket", "Only tape", "Only rope"], answer:"B"},
+      {q:"The West Indian hoe metal blade has a loop around its:", options:["Tip", "Neck", "Base", "Edge"], answer:"B"},
+      {q:"A hoe is used for loosening and turning the:", options:["Only air", "Soil surface", "Only water", "Only stones"], answer:"B"},
+      {q:"Which of the following is NOT a use of a hoe?", options:["Making ridges and heaps", "Planting or transplanting some crops", "Harvesting some crops", "Measuring rainfall"], answer:"D"},
+      {q:"Maintenance of a hoe includes all EXCEPT:", options:["Regular cleaning", "Sharpening", "Oiling", "Leaving it in damp areas"], answer:"D"},
+      {q:"A spade has a long wooden handle and a broad:", options:["Plastic blade", "Metal blade", "Rubber blade", "Glass blade"], answer:"B"},
+      {q:"The edge of a spade's metal blade is sharp so that it can easily be driven into the:", options:["Only water", "Soil", "Only air", "Only stones"], answer:"B"},
+      {q:"A spade is used for lifting the soil and:", options:["Only throwing it away", "Completely turning it over", "Only leaving it", "Only mixing with water"], answer:"B"},
+      {q:"A spade is used for mixing cement/concrete for:", options:["Only cooking", "Farm structures", "Only decoration", "Only clothing"], answer:"B"},
+      {q:"Maintenance of a spade includes storing in a:", options:["Wet and hot place", "Dry and cool place", "Only sunny place", "Only waterlogged area"], answer:"B"},
+      {q:"A shovel is similar to a spade but its blade is:", options:["Solid and narrow", "Hollow and broad", "Only wooden", "Only plastic"], answer:"B"},
+      {q:"A shovel is used for lifting or transferring soil from:", options:["Only one fixed place", "One place to another", "Only underground", "Only above ground"], answer:"B"},
+      {q:"A shovel is used to load materials from ground level into a:", options:["Only truck", "Wheelbarrow", "Only airplane", "Only ship"], answer:"B"},
+      {q:"A garden fork usually has how many prongs or teeth?", options:["Two", "Three", "Four", "Five"], answer:"C"},
+      {q:"The prongs of a garden fork are made of:", options:["Only wood", "Hard metal", "Only plastic", "Only rubber"], answer:"B"},
+      {q:"The prongs of a garden fork are about:", options:["10cm long", "20cm long", "50cm long", "100cm long"], answer:"B"},
+      {q:"A garden fork is mounted on a long wooden handle of about:", options:["30-40cm", "70-80cm", "150-200cm", "300-400cm"], answer:"B"},
+      {q:"A garden fork is used for turning manure during:", options:["Only planting", "Compost making", "Only harvesting", "Only storage"], answer:"B"},
+      {q:"A hand fork consists of a piece of metal with:", options:["One or two prongs", "Three or four short flat prongs", "Ten prongs", "No prongs"], answer:"B"},
+      {q:"A hand fork is mainly used in:", options:["Standing position", "Squatting position", "Only lying position", "Only running position"], answer:"B"},
+      {q:"A hand trowel has a short metal blade that is:", options:["Only flat", "Scoop-shaped", "Only triangular", "Only square"], answer:"B"},
+      {q:"The curved metal blade of a hand trowel makes it possible to carry a small ball of earth with the:", options:["Only water", "Seedling during transplanting", "Only fertilizer", "Only stones"], answer:"B"},
+      {q:"A rake consists of a long wooden handle and a strong metal head with several:", options:["Smooth surfaces", "Stout prongs", "Only holes", "Only blades"], answer:"B"},
+      {q:"A rake is used for leveling or spreading soil surface after:", options:["Only planting", "Hoeing", "Only watering", "Only fertilizing"], answer:"B"},
+      {q:"A wheelbarrow is a simple tool with a tray, usually one front wheel, two handles and:", options:["Three legs", "Two legs/stands", "Four legs", "No legs"], answer:"B"},
+      {q:"A wheelbarrow is designed to move heavy or bulky materials with:", options:["Maximum effort", "Minimal effort", "No effort", "Only manual pulling"], answer:"B"},
+      {q:"A wheelbarrow uses a second-class lever where the wheel acts as the:", options:["Load", "Fulcrum", "Effort", "Resistance"], answer:"B"},
+      {q:"In a wheelbarrow, the load sits between the wheel and:", options:["The ground", "The handles", "The air", "The sky"], answer:"B"},
+      {q:"Maintenance of a wheelbarrow includes all EXCEPT:", options:["Cleaning regularly", "Checking tire pressure", "Inspecting for damage", "Leaving it exposed to rain always"], answer:"D"}
     ],
     theory:[
-      {q:"Discuss the importance of agriculture to the Nigerian economy."},
-      {q:"Explain any two challenges facing smallholder farmers in Nigeria today."}
+      {q:"Define Economics and explain the four definitions given by Adam Smith, Alfred Marshall, Lionel Robbins and Paul Samuelson."},
+      {q:"Distinguish between material and immaterial things in economics, giving two examples of each."},
+      {q:"Explain the concept of 'scarcity' as discussed by Lionel Robbins in his definition of economics."},
+      {q:"Differentiate between Microeconomics and Macroeconomics, giving two areas of focus for each."},
+      {q:"Why is Paul Samuelson's definition of economics regarded as the 'growth definition'?"},
+      {q:"Define scarcity and explain how it relates to unlimited human wants and limited resources."},
+      {q:"Explain the concept of opportunity cost with a practical example from agriculture."},
+      {q:"State and explain the law of demand and the law of supply."},
+      {q:"What is equilibrium price? Explain the conditions that exist at equilibrium price in a market."},
+      {q:"Differentiate between needs and wants, giving three examples of each."},
+      {q:"List and explain five characteristic features of agricultural production."},
+      {q:"Explain how the smallness of farm holdings affects mechanization and large-scale operations in agriculture."},
+      {q:"Discuss the biological limits of farm production and how they differ from industrial production."},
+      {q:"Explain how seasonality of farm production poses challenges in terms of labor availability, storage and market supply."},
+      {q:"Discuss the susceptibility of agricultural production to climate and the impact of climate change on farming."},
+      {q:"Define farm surveying and explain five techniques used in farm survey."},
+      {q:"List and describe the five types of farm survey discussed in the course material."},
+      {q:"Explain the concept of 'station' in survey and express the following distances in full and plus stations: (i) 1081.5ft (ii) 65.7ft (iii) 927.0ft (iv) 230.0ft."},
+      {q:"Describe five common surveying equipment used on the farm and state their uses."},
+      {q:"Discuss ten importance of farm surveying in agricultural development."},
+      {q:"Define farmstead and farmstead planning, and explain five reasons for planning a farmstead."},
+      {q:"State and explain five principles of farmstead layout."},
+      {q:"Discuss eight factors influencing the siting of farms or farmsteads."},
+      {q:"Explain how topography influences the location of farm buildings, crop farms, fish ponds and irrigation farms."},
+      {q:"Discuss the role of soil type, accessibility, water supply and health/hygiene in farmstead planning."},
+      {q:"Define simple farm tools and describe the two main types of cutlass, including their uses and maintenance."},
+      {q:"Differentiate between the West African hoe and the West Indian hoe, stating their uses and maintenance practices."},
+      {q:"Explain the difference between a cutlass and a machete."},
+      {q:"Describe a spade and a shovel, highlighting their similarities and differences in structure and use."},
+      {q:"Discuss the uses and maintenance practices of the garden fork and hand fork."},
+      {q:"Describe a hand trowel and explain its uses in nursery practices and transplanting."},
+      {q:"Explain the uses and maintenance of a rake in farm operations."},
+      {q:"Describe a wheelbarrow, explain how it function as a second-class lever, and discuss its uses and maintenance."},
+      {q:"Compare and contrast any five simple farm tools discussed in the course material, stating their uses and maintenance practices."},
+      {q:"Discuss the importance of proper maintenance of simple farm tools and the consequences of neglecting maintenance."}
     ]},
-  "AGG 112 — Introduction to Agriculture II",
-    eligible:"ALL",
-    drawObjective: 30,
-    drawTheory: 5,
-    objective:[
-        {q:"Economics is defined as a social science which studies human behavior as a relationship between ends and scarce means which have:", options:["Fixed uses", "Alternative uses", "Single uses", "No uses"], answer:"B"},
-        {q:"According to Adam Smith, economics is the science of:", options:["Wealth", "Welfare", "Scarcity", "Growth"], answer:"A"},
-        {q:"Adam Smith wrote 'An Inquiry into Nature and Causes of Wealth of Nations' in the year:", options:["1776", "1890", "1932", "1948"], answer:"A"},
-        {q:"Alfred Marshall defined economics as 'the study of mankind in the ordinary business of life' in his book:", options:["Wealth of Nations", "Principles of Economics", "Essay on Economic Science", "Economic Growth"], answer:"B"},
-        {q:"According to Lionel Robbins, economics is a science which studies human behavior as a relationship between ends and:", options:["Abundant means", "Scarce means which have alternative uses", "Unlimited resources", "Fixed resources"], answer:"B"},
-        {q:"Lionel Robbins published his definition of economics in the book titled:", options:["Wealth of Nations", "Principles of Economics", "An Essay on the Nature and Significance of Economic Science", "Economic Development"], answer:"C"},
-        {q:"Paul Samuelson defined economics as the study of how men and society choose to employ scarce productive resources which could have:", options:["Fixed uses", "Alternative uses", "Single uses", "No alternative uses"], answer:"B"},
-        {q:"Paul Samuelson's definition of economics is also known as the:", options:["Wealth definition", "Welfare definition", "Scarcity definition", "Growth definition"], answer:"D"},
-        {q:"Which economist distinguished between material and immaterial things in economics?", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"B"},
-        {q:"Material things are those that can be seen, felt and touched. An example is:", options:["Skill", "Satisfaction", "Book", "Pleasure"], answer:"C"},
-        {q:"Immaterial things in economics include all EXCEPT:", options:["Skill", "Rice", "Satisfaction", "Comfort"], answer:"B"},
-        {q:"According to Robbins, 'ends' in economics refer to:", options:["Human resources", "Human wants", "Human labor", "Human capital"], answer:"B"},
-        {q:"Scarcity in economics occurs when:", options:["Supply exceeds demand", "Demand for a commodity is greater than its supply", "Price is very low", "Resources are unlimited"], answer:"B"},
-        {q:"The essential factors of production include land, labor, capital and:", options:["Money", "Entrepreneurship", "Technology", "Government"], answer:"B"},
-        {q:"Microeconomics is concerned with economic activities of:", options:["The entire economy", "Individual economic units", "Government only", "International trade only"], answer:"B"},
-        {q:"Macroeconomics focuses on aggregate indicators such as:", options:["Individual consumer behavior", "GDP, national income, inflation and unemployment", "Single firm production", "Household consumption only"], answer:"B"},
-        {q:"Which branch of economics studies the behavior of individuals and firms in making decisions regarding allocation of scarce resources?", options:["Macroeconomics", "Microeconomics", "Development economics", "International economics"], answer:"B"},
-        {q:"The study of the overall performance, structure and behavior of an economy is called:", options:["Microeconomics", "Macroeconomics", "Agricultural economics", "Managerial economics"], answer:"B"},
-        {q:"Economics is primarily concerned with how a society allocates its:", options:["Unlimited resources among unlimited wants", "Limited resources among unlimited wants", "Limited resources among limited wants", "Unlimited resources among limited wants"], answer:"B"},
-        {q:"Which of the following is NOT one of the definitions of economics discussed in the course material?", options:["Science of wealth", "Study of mankind in ordinary business of life", "Science of choice and scarcity", "Science of unlimited resources"], answer:"D"},
-        {q:"The year 1890 is associated with the publication of 'Principles of Economics' by:", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"B"},
-        {q:"The year 1932 is significant in economics because it marks the publication of:", options:["Wealth of Nations", "Principles of Economics", "An Essay on the Nature and Significance of Economic Science", "Economics textbook"], answer:"C"},
-        {q:"Human beings have an unlimited number of:", options:["Resources", "Wants", "Needs only", "Capital goods"], answer:"B"},
-        {q:"Resources or means in economics are:", options:["Unlimited in supply", "Limited or scarce in supply", "Freely available", "Not important"], answer:"B"},
-        {q:"The 'growth' definition of economics was stated by:", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"D"},
-        {q:"Scarcity refers to the limited availability of resources relative to:", options:["Limited human wants", "Unlimited human wants", "Government policies", "Market prices"], answer:"B"},
-        {q:"Opportunity cost is defined as the value of the:", options:["Best alternative chosen", "Next best alternative forgone", "Total cost of production", "Marginal cost"], answer:"B"},
-        {q:"If you have $100 and choose to spend it on a new phone, the opportunity cost is:", options:["The phone itself", "The value of other things you could have bought", "$100", "Nothing"], answer:"B"},
-        {q:"Demand is the quantity of goods or services buyers are willing to purchase at a particular:", options:["Quality", "Price", "Time", "Location"], answer:"B"},
-        {q:"The law of demand states that the higher the price, the:", options:["Higher the quantity demanded", "Lower the quantity demanded", "Same quantity demanded", "Unlimited quantity demanded"], answer:"B"},
-        {q:"Supply is the quantity of a good sellers are willing to deliver at a particular:", options:["Quality", "Price", "Season", "Location"], answer:"B"},
-        {q:"The law of supply states that the higher the price, the:", options:["Lower the supply", "Higher the supply", "Same supply", "No supply"], answer:"B"},
-        {q:"Equilibrium price is the market price at which:", options:["Demand exceeds supply", "Supply exceeds demand", "Quantity demanded equals quantity supplied", "Price is highest"], answer:"C"},
-        {q:"At equilibrium price, the market is said to be in:", options:["Shortage", "Surplus", "Balance", "Crisis"], answer:"C"},
-        {q:"'Ends' in economics refers to:", options:["Resources", "Human wants or needs", "Production methods", "Distribution channels"], answer:"B"},
-        {q:"'Means' in economics are:", options:["Human wants", "Human and material resources available for satisfying wants", "Finished goods", "Consumer goods"], answer:"B"},
-        {q:"Needs are fundamental requirements necessary for survival such as:", options:["Luxury cars", "Food, water, shelter, clothing", "Entertainment", "Vacations"], answer:"B"},
-        {q:"Wants are desires for goods and services that are:", options:["Essential for survival", "Beyond basic needs", "Free of charge", "Government-provided"], answer:"B"},
-        {q:"Which of the following is a NEED rather than a want?", options:["Luxury items", "Entertainment subscriptions", "Food and water", "Latest technology"], answer:"C"},
-        {q:"Which of the following is a WANT rather than a need?", options:["Food", "Shelter", "Healthcare", "Vacations"], answer:"D"},
-        {q:"Utility is defined as the:", options:["Price of a good", "Satisfaction achieved from consuming a good/service", "Quantity of a good", "Cost of production"], answer:"B"},
-        {q:"Marginal utility is the extra satisfaction one gets from:", options:["The first unit consumed", "Each additional unit of a good", "The total consumption", "Free goods"], answer:"B"},
-        {q:"Choice in economics arises as a result of:", options:["Limited wants and abundant resources", "Numerous human wants and scarcity of resources", "Government policies", "Market equilibrium"], answer:"B"},
-        {q:"A scale of preference is a list of wants arranged in order of:", options:["Alphabetical order", "Priority/relative importance", "Price", "Size"], answer:"B"},
-        {q:"If a student has N20 and needs exercise book (N2), biro (N5), textbook (N5), sandals (N10), shirts (N15), trousers (N12), and shoes (N30), which items can the student afford?", options:["Shoes only", "Exercise book, biro and textbook", "Shirts and trousers", "All items"], answer:"B"},
-        {q:"A student who follows his scale of preference according to importance is said to behave:", options:["Irrationally", "Rationally", "Emotionally", "Randomly"], answer:"B"},
-        {q:"Which of the following is NOT an importance of scale of preference?", options:["Helps rank needs by importance", "Aids rational choices", "Leads to wastage of resources", "Shows needs at a glance"], answer:"C"},
-        {q:"Elasticity measures the degree of responsiveness of demand or supply to changes in:", options:["Income", "Price", "Taste", "Population"], answer:"B"},
-        {q:"If quantity of a good changes drastically with a change in price, it is said to be:", options:["Inelastic", "Elastic", "Fixed", "Stable"], answer:"B"},
-        {q:"Onions are said to have relatively inelastic demand because:", options:["They are luxury items", "They are basic necessities with no actual substitutes", "They are expensive", "They are not commonly used"], answer:"B"},
-        {q:"Rationality in economics refers to the assumption that economic agents make decisions aimed at:", options:["Minimizing satisfaction", "Maximizing satisfaction or profit", "Random selection", "Government compliance"], answer:"B"},
-        {q:"Production is the process of transforming inputs into:", options:["More inputs", "Goods and services", "Money only", "Raw materials"], answer:"B"},
-        {q:"Distribution in economics describes the way goods, services and income are allocated among:", options:["Government agencies only", "Factors of production such as labor, land and capital", "Consumers only", "Producers only"], answer:"B"},
-        {q:"Consumption is the act of using goods and services to:", options:["Produce more goods", "Derive satisfaction or utility", "Store for future use", "Export to other countries"], answer:"B"},
-        {q:"Which of the following is a factor of production?", options:["Money", "Land", "Bank credit", "Government subsidy"], answer:"B"},
-        {q:"The distinction between needs and wants is that needs are:", options:["Desires that enhance life", "Essential for survival or well-being", "Luxury items", "Entertainment-related"], answer:"B"},
-        {q:"A scale of preference helps an individual to forgo wants he cannot satisfy due to:", options:["Excessive resources", "Limited available resources", "Government restrictions", "Market surplus"], answer:"B"},
-        {q:"The problem of choice and opportunity cost arises because of:", options:["Unlimited resources", "Limited resources relative to unlimited wants", "Government planning", "Market failure"], answer:"B"},
-        {q:"Economic rationality involves individuals making choices by weighing:", options:["Only costs", "Only benefits", "Costs and benefits", "Neither costs nor benefits"], answer:"C"},
-        {q:"Production characteristics in agriculture refer to the ways agricultural activities are organized and managed including:", options:["Only resources and inputs", "Resources, inputs, methods, scale of operation and efficiency", "Only climate and weather", "Only market prices"], answer:"B"},
-        {q:"Which of the following is NOT listed as a characteristic feature of agricultural production?", options:["Smallness of farm holdings", "Biological limits of farm production", "Unlimited farm production", "Susceptibility to climate"], answer:"C"},
-        {q:"Many agricultural production activities occur on relatively small plots of land, especially in:", options:["Commercial farming systems", "Peasant and subsistence systems", "Mechanized farming", "Plantation agriculture"], answer:"B"},
-        {q:"The smallness of farm holdings can limit:", options:["Labor availability", "Mechanization and large-scale operations", "Soil fertility", "Rainfall"], answer:"B"},
-        {q:"The smallness of farm holdings is a result of all EXCEPT:", options:["Historical land distribution patterns", "Inheritance laws", "Labor-intensive nature of farming", "Government subsidies"], answer:"D"},
-        {q:"Agricultural production is constrained by biological limits because:", options:["Machines are expensive", "Plants and animals have growth rates and biological cycles", "Land is scarce", "Labor is unskilled"], answer:"B"},
-        {q:"Production in agriculture cannot be expanded instantly like industrial production because of:", options:["Lack of capital", "Biological limits and growth cycles", "Government policies", "Market demand"], answer:"B"},
-        {q:"Agricultural production is highly susceptible to:", options:["Government policies only", "Climatic conditions", "Market prices only", "Labor laws only"], answer:"B"},
-        {q:"Unpredictable weather patterns that affect agriculture include:", options:["Only sunshine", "Droughts, floods and extreme temperatures", "Only rainfall", "Only wind"], answer:"B"},
-        {q:"Climate change has heightened risks in agricultural production by making it:", options:["More certain and predictable", "More uncertain and risky", "Completely independent of weather", "Only dependent on technology"], answer:"B"},
-        {q:"The seasonality of agricultural production means that planting, cultivating and harvesting:", options:["Occur throughout the year equally", "Follow natural cycles and occur during specific times", "Are done randomly", "Depend only on labor availability"], answer:"B"},
-        {q:"Seasonality of farm production poses challenges in terms of:", options:["Only seed quality", "Labor availability, storage and market supply", "Only soil fertility", "Only government policies"], answer:"B"},
-        {q:"During harvest seasons, abundance of certain crops can lead to:", options:["Permanent shortage", "Temporary oversupply and reduced prices", "No change in prices", "Increased demand"], answer:"B"},
-        {q:"Price elasticity in agriculture refers to the responsiveness of demand and supply to changes in:", options:["Quality", "Prices", "Seasons", "Location"], answer:"B"},
-        {q:"Staple crops like wheat and rice tend to have relatively:", options:["Elastic demand", "Inelastic demand", "No demand", "Perfectly elastic demand"], answer:"B"},
-        {q:"Staple crops have inelastic demand because they are:", options:["Luxury items", "Necessities with few substitutes", "Expensive goods", "Imported products"], answer:"B"},
-        {q:"Luxury fruits might have more elastic demand due to:", options:["Being necessities", "Availability of substitutes", "Government subsidies", "Low prices"], answer:"B"},
-        {q:"The biological limits of farm production are subject to the growth rates of:", options:["Only crops", "Only animals", "Plants and animals", "Only microorganisms"], answer:"C"},
-        {q:"Which characteristic feature of agricultural production is a result of historical land distribution patterns and inheritance laws?", options:["Biological limits", "Smallness of farm holdings", "Susceptibility to climate", "Seasonality"], answer:"B"},
-        {q:"Farm production characteristics reflect the sustainability of production systems and their ability to meet:", options:["Only food demands", "Food, fiber and fuel demands", "Only fuel demands", "Only export demands"], answer:"B"},
-        {q:"The time required for crops to grow sets a natural limit on:", options:["The speed of production increases", "The price of crops", "The demand for crops", "The export of crops"], answer:"A"},
-        {q:"Agricultural production systems must conserve natural resources while meeting demands for:", options:["Only food", "Food, fiber and fuel", "Only fiber", "Only fuel"], answer:"B"},
-        {q:"Which of the following is a challenge posed by the seasonality of agricultural production?", options:["Only seed germination", "Labor availability, storage and market supply", "Only soil erosion", "Only pest control"], answer:"B"},
-        {q:"The susceptibility of farm production to climate makes it dependent on:", options:["Government policies", "Weather patterns", "International trade", "Bank loans"], answer:"B"},
-        {q:"Price elasticity in demand and supply of agricultural produce varies due to factors such as:", options:["Only government policies", "Consumer preferences, substitution possibilities and availability", "Only soil type", "Only labor costs"], answer:"B"},
-        {q:"Which characteristic makes agricultural production different from industrial production?", options:["Ability to expand instantly", "Subject to biological limits and growth cycles", "Not dependent on weather", "Unlimited production capacity"], answer:"B"},
-        {q:"The labor-intensive nature of farming contributes to:", options:["Large farm holdings", "Smallness of farm holdings", "Mechanization", "Industrialization"], answer:"B"},
-        {q:"Which of the following best describes the relationship between agricultural production and climate?", options:["Completely independent", "Highly susceptible and dependent", "Slightly related", "Not important"], answer:"B"},
-        {q:"The conservation of natural resources is part of which aspect of agricultural production characteristics?", options:["Only economic", "Sustainability of production systems", "Only social", "Only political"], answer:"B"},
-        {q:"Farm surveying is defined as the process of measuring and mapping out the position, topography, height, size and:", options:["Color of farmland", "Boundary of an area of farmland", "Ownership of farmland", "Price of farmland"], answer:"B"},
-        {q:"Farm surveying involves plotting measurements to suitable scales forming a:", options:["Contract", "Map, plan or section", "Budget", "Invoice"], answer:"B"},
-        {q:"Farm surveying shows natural and man-made features such as streams, lakes, rivers, hills, valleys, rocks, roads and:", options:["Only animals", "Buildings", "Only crops", "Only soil types"], answer:"B"},
-        {q:"How many types of farm survey are discussed in the course material?", options:["Three", "Four", "Five", "Six"], answer:"C"},
-        {q:"Chain survey is described as the:", options:["Most complex form of survey", "Simplest and oldest form of survey", "Most expensive form", "Most modern form"], answer:"B"},
-        {q:"Chain survey involves the use of:", options:["Only GPS", "Chains or measuring tapes", "Only aircraft", "Only computers"], answer:"B"},
-        {q:"Geodetic or Traverse survey determines the size and shape of an area using:", options:["Only chains", "Prismatic compass", "Only GPS", "Only theodolite"], answer:"B"},
-        {q:"Soil survey is concerned with the examination, classification and systematic mapping of:", options:["Only water", "The soil", "Only crops", "Only animals"], answer:"B"},
-        {q:"Topographical survey identifies physical features of an area such as:", options:["Only soil fertility", "Flatness, steepness, valley, rivers", "Only crop yields", "Only farm income"], answer:"B"},
-        {q:"Aerial survey uses aircraft to observe:", options:["Only small gardens", "A large area of land showing different features", "Only buildings", "Only roads"], answer:"B"},
-        {q:"Which of the following is NOT a technique used in farm survey?", options:["Distance measurement", "Angle measurement", "Color measurement", "Leveling"], answer:"C"},
-        {q:"Distance measurement is the process of determining the horizontal distance between:", options:["Three points", "Two points on the ground", "Four points", "Multiple random points"], answer:"B"},
-        {q:"An odometer is a device that counts the revolutions of a:", options:["Chain", "Wheel rolled along the line to be measured", "Compass", "Tape"], answer:"B"},
-        {q:"Pacing is a method of estimating distance by:", options:["Using GPS", "Counting steps", "Using a wheel", "Using a chain only"], answer:"B"},
-        {q:"Stadia is a surveying method used to measure distance indirectly by using a:", options:["Only chain", "Theodolite telescope fitted with stadia hairs and a graduated rod", "Only compass", "Only GPS"], answer:"B"},
-        {q:"Taping or chaining involves using a survey chain or steel tape to obtain:", options:["Rough estimates", "Accurate measurements", "Random measurements", "No measurements"], answer:"B"},
-        {q:"GPS in surveying determines distances and coordinates using:", options:["Only ground stations", "Satellites", "Only aircraft", "Only maps"], answer:"B"},
-        {q:"Angle measurement involves determining horizontal or vertical angles between two survey lines using instruments such as:", options:["Only chains", "Compass, theodolite and total station", "Only tapes", "Only GPS"], answer:"B"},
-        {q:"A total station combines an electronic transit theodolite with:", options:["Only a compass", "An Electronic Distance Measurement (EDM) device, microprocessor, electronic data collector and internal memory", "Only a chain", "Only a tape"], answer:"B"},
-        {q:"Leveling is the process of determining the relative:", options:["Distances between points", "Heights or elevations of different points", "Soil types", "Crop yields"], answer:"B"},
-        {q:"Determining position in surveying establishes the exact location of a point using:", options:["Only visual estimation", "Coordinates or reference points", "Only guesswork", "Only maps"], answer:"B"},
-        {q:"A reference network in surveying is also known as:", options:["A farm map", "A survey control network", "A crop plan", "A budget sheet"], answer:"B"},
-        {q:"A reference network serves as the framework for:", options:["Only crop planting", "All subsequent survey measurements", "Only harvesting", "Only marketing"], answer:"B"},
-        {q:"A distance of 100ft in survey is called a:", options:["Plus station", "Full station", "Half station", "Quarter station"], answer:"B"},
-        {q:"A distance of 100ft is written in survey notation as:", options:["100ft", "1+00", "0+100", "100+0"], answer:"B"},
-        {q:"A fractional part of a distance between full stations is called a:", options:["Full station", "Plus station", "Minus station", "Zero station"], answer:"B"},
-        {q:"The survey distance 216.8ft is written as:", options:["21+68", "2+16.8", "216+8", "2+168"], answer:"B"},
-        {q:"Which of the following is NOT listed as common surveying equipment on the farm?", options:["Ranging pole", "Measuring tape", "Tractor", "Prismatic compass"], answer:"C"},
-        {q:"A ranging pole is used in farm surveying for:", options:["Measuring soil fertility", "Marking survey points and lines", "Planting crops", "Harvesting"], answer:"B"},
-        {q:"A dumpy level is used in farm surveying for:", options:["Only measuring distances", "Leveling and determining heights", "Only measuring angles", "Only planting"], answer:"B"},
-        {q:"A theodolite is used in surveying for:", options:["Only measuring distances", "Measuring horizontal and vertical angles", "Only soil testing", "Only crop counting"], answer:"B"},
-        {q:"Farm surveying helps to know the size of a farmstead and the arrangement of land for:", options:["Random usage", "Proper usage without the risk of land degradation", "Wasteful usage", "Illegal usage"], answer:"B"},
-        {q:"Farm surveying helps in determining the boundaries and:", options:["Only crop types", "Main features and location of the farm", "Only animal breeds", "Only market prices"], answer:"B"},
-        {q:"Results of farm survey can be used as collateral for:", options:["Government grants only", "Security loan from financial institutions", "Free gifts", "Only scholarships"], answer:"B"},
-        {q:"Farm surveying enables the farmer to lay his farm into:", options:["Only one large field", "Plots", "Only storage areas", "Only residential areas"], answer:"B"},
-        {q:"The topography or gradient of farmland can be determined through:", options:["Only visual inspection", "Farm surveying", "Only guessing", "Only soil testing"], answer:"B"},
-        {q:"Farm surveying helps the farmer know about the:", options:["Only crop prices", "Hydrology of the land", "Only animal health", "Only labor costs"], answer:"B"},
-        {q:"Which of the following helps in identifying various soils and their characteristics?", options:["Only farm records", "Farm surveying", "Only crop rotation", "Only irrigation"], answer:"B"},
-        {q:"Absolute and relative positions of points on the farm can be determined through:", options:["Only guessing", "Farm surveying", "Only planting", "Only harvesting"], answer:"B"},
-        {q:"A farmstead is defined as a farm house and all its:", options:["Only residential buildings", "Production and processing structures", "Only storage facilities", "Only animal pens"], answer:"B"},
-        {q:"Farmstead planning is the drawing or outlining of a farmstead and the arrangements of land for:", options:["Random usage", "Proper usage without the risk of land degradation", "Wasteful usage", "Only residential purposes"], answer:"B"},
-        {q:"The objectives of farmstead planning may include all EXCEPT:", options:["Expansion", "Improved performance", "Higher capacity", "Reduced productivity"], answer:"D"},
-        {q:"Planning a farmstead allows for proper utilization of resources:", options:["With wastage", "Without wastage", "Only for crops", "Only for animals"], answer:"B"},
-        {q:"Farmstead planning makes the farmer more responsive to:", options:["Only government policies", "Market demand", "Only weather", "Only soil type"], answer:"B"},
-        {q:"Which of the following is a reason for planning a farmstead?", options:["To encourage wastage", "To encourage efficiency of farm activities", "To reduce coordination", "To avoid control"], answer:"B"},
-        {q:"According to the principles of farmstead layout, crops should be planted on the:", options:["Poorest soil", "Best soil within the farm", "Only rocky areas", "Only waterlogged areas"], answer:"B"},
-        {q:"Livestock buildings should be located on the:", options:["Best soil", "Poorest soil within the farm", "Only hilly areas", "Only river banks"], answer:"B"},
-        {q:"Farm buildings should be located in:", options:["Only remote areas", "Easily accessible areas", "Only steep slopes", "Only waterlogged areas"], answer:"B"},
-        {q:"Farm buildings should NOT be located on slopes to avoid:", options:["Only shade", "Erosion", "Only wind", "Only sunshine"], answer:"B"},
-        {q:"Residential and office buildings should be located far away from livestock buildings to avoid:", options:["Only heat", "Noise and unpleasant odour from farm animals' wastes", "Only light", "Only rain"], answer:"B"},
-        {q:"Topography determines the location of:", options:["Only crops", "Farm buildings and structures", "Only roads", "Only markets"], answer:"B"},
-        {q:"Farm buildings or living quarters are usually located on:", options:["Low elevations", "High elevations for proper viewing of the farm", "Only flat areas", "Only valleys"], answer:"B"},
-        {q:"Animal quarters should be located:", options:["Close to staff living quarters", "Far from the staff living quarters", "Only indoors", "Only underground"], answer:"B"},
-        {q:"Crops such as vegetables should be located on:", options:["High elevations", "Low lying areas where moisture content is high", "Only sandy soils", "Only rocky areas"], answer:"B"},
-        {q:"Fish ponds are best located on:", options:["Flat grounds", "Sloppy grounds", "Only high elevations", "Only deserts"], answer:"B"},
-        {q:"Irrigation farms are best sited on:", options:["Steep slopes", "Flat lands", "Only hilly areas", "Only rocky areas"], answer:"B"},
-        {q:"Crop farms are sited on soils that are:", options:["Poor", "Fertile", "Only sandy", "Only clayey"], answer:"B"},
-        {q:"Pastures are sited on:", options:["Most fertile soils", "Less fertile soils", "Only waterlogged areas", "Only rocky areas"], answer:"B"},
-        {q:"Farm roads are best constructed on:", options:["Waterlogged areas", "Well drained poor soils", "Only fertile soils", "Only steep slopes"], answer:"B"},
-        {q:"In planning a farmstead, facilities should be located:", options:["Only in remote areas", "Within walking distance", "Only in cities", "Only underground"], answer:"B"},
-        {q:"Good roads in farmstead planning facilitate:", options:["Only recreation", "Transportation of farm inputs and evacuation of farm produce", "Only tourism", "Only residential movement"], answer:"B"},
-        {q:"Adequate water supply is needed for:", options:["Only crop irrigation", "Human and animal use", "Only industrial use", "Only recreational use"], answer:"B"},
-        {q:"Livestock structures should be located close to source of water supply for:", options:["Only drinking", "Easy cleaning", "Only decoration", "Only heating"], answer:"B"},
-        {q:"Livestock units should be erected:", options:["With wind direction", "Against wind direction", "Only indoors", "Only underground"], answer:"B"},
-        {q:"Animal units should be located far away from human residential houses to avoid:", options:["Only noise", "Health hazards", "Only light", "Only shade"], answer:"B"},
-        {q:"Nearness to market reduces:", options:["Only labor costs", "Distribution or transport cost", "Only seed costs", "Only fertilizer costs"], answer:"B"},
-        {q:"Adequate drainage is important to avoid:", options:["Only drought", "Water-logging", "Only erosion", "Only wind damage"], answer:"B"},
-        {q:"Gentle slope facilitates:", options:["Only planting", "Proper drainage", "Only harvesting", "Only storage"], answer:"B"},
-        {q:"Off-farmstead factors include all EXCEPT:", options:["Zoning and land-use permissions", "Building and housing code requirements", "Only internal farm decisions", "Environmental protection rules"], answer:"C"},
 
-        /* ===== WEEK 6: Simple Farm Tools - Cutlass & Hoe (Q161-180) ===== */
-        {q:"Simple farm tools are hand-operated tools that are NOT powered by:", options:["Human hands", "Engines or motor", "Only wind", "Only water"], answer:"B"},
-        {q:"Simple farm tools are typically made of metal with:", options:["Only plastic handles", "Wooden or plastic handles", "Only rubber handles", "Only metal handles"], answer:"B"},
-        {q:"A cutlass is sometimes called a:", options:["Spade", "Machete", "Hoe", "Rake"], answer:"B"},
-        {q:"How many main types of cutlass are discussed?", options:["One", "Two", "Three", "Four"], answer:"B"},
-        {q:"One type of cutlass has a slightly curved blade with a:", options:["Long metal handle", "Short wooden handle", "No handle", "Only plastic handle"], answer:"B"},
-        {q:"The other type of cutlass has a straight metal blade and a:", options:["Long metal handle", "Short wooden handle", "No handle", "Only rubber handle"], answer:"B"},
-        {q:"One edge of the cutlass metal blade is sharp and the other is:", options:["Also sharp", "Blunt", "Curved", "Broken"], answer:"B"},
-        {q:"A machete typically has a:", options:["Shorter blade than a cutlass", "Longer blade and is used for heavier tasks", "Same blade length as cutlass", "Only wooden blade"], answer:"B"},
-        {q:"A cutlass is used for clearing of:", options:["Only houses", "Bush, tree and farmland", "Only roads", "Only water"], answer:"B"},
-        {q:"Which of the following is NOT a use of a cutlass?", options:["Digging holes", "Transplanting seedlings", "Planting operation and harvesting crops", "Measuring soil pH"], answer:"D"},
-        {q:"Maintenance of a cutlass includes all EXCEPT:", options:["Cleaning after use", "Sharpening regularly", "Oiling to prevent rust", "Leaving it on the ground"], answer:"D"},
-        {q:"A hoe consists of a metal blade which may be rounded or:", options:["Only circular", "Slightly rectangular in shape", "Only triangular", "Only oval"], answer:"B"},
-        {q:"The West African hoe has a:", options:["Long wooden handle and rectangular blade", "Short wooden handle and round metal blade", "No handle", "Only metal handle"], answer:"B"},
-        {q:"The West Indian hoe has a:", options:["Short wooden handle and round blade", "Long wooden handle and rectangular metal blade", "No handle", "Only plastic handle"], answer:"B"},
-        {q:"The metal blade of the West African hoe is attached to the wooden handle with a:", options:["Only glue", "Socket", "Only tape", "Only rope"], answer:"B"},
-        {q:"The West Indian hoe metal blade has a loop around its:", options:["Tip", "Neck", "Base", "Edge"], answer:"B"},
-        {q:"A hoe is used for loosening and turning the:", options:["Only air", "Soil surface", "Only water", "Only stones"], answer:"B"},
-        {q:"Which of the following is NOT a use of a hoe?", options:["Making ridges and heaps", "Planting or transplanting some crops", "Harvesting some crops", "Measuring rainfall"], answer:"D"},
-        {q:"Maintenance of a hoe includes all EXCEPT:", options:["Regular cleaning", "Sharpening", "Oiling", "Leaving it in damp areas"], answer:"D"},
-        {q:"A spade has a long wooden handle and a broad:", options:["Plastic blade", "Metal blade", "Rubber blade", "Glass blade"], answer:"B"},
-
-        /* ===== WEEK 7: Simple Farm Tools - Spade, Shovel, Forks, Trowel, Rake, Wheelbarrow (Q181-200) ===== */
-        {q:"The edge of a spade's metal blade is sharp so that it can easily be driven into the:", options:["Only water", "Soil", "Only air", "Only stones"], answer:"B"},
-        {q:"A spade is used for lifting the soil and:", options:["Only throwing it away", "Completely turning it over", "Only leaving it", "Only mixing with water"], answer:"B"},
-        {q:"A spade is used for mixing cement/concrete for:", options:["Only cooking", "Farm structures", "Only decoration", "Only clothing"], answer:"B"},
-        {q:"Maintenance of a spade includes storing in a:", options:["Wet and hot place", "Dry and cool place", "Only sunny place", "Only waterlogged area"], answer:"B"},
-        {q:"A shovel is similar to a spade but its blade is:", options:["Solid and narrow", "Hollow and broad", "Only wooden", "Only plastic"], answer:"B"},
-        {q:"A shovel is used for lifting or transferring soil from:", options:["Only one fixed place", "One place to another", "Only underground", "Only above ground"], answer:"B"},
-        {q:"A shovel is used to load materials from ground level into a:", options:["Only truck", "Wheelbarrow", "Only airplane", "Only ship"], answer:"B"},
-        {q:"A garden fork usually has how many prongs or teeth?", options:["Two", "Three", "Four", "Five"], answer:"C"},
-        {q:"The prongs of a garden fork are made of:", options:["Only wood", "Hard metal", "Only plastic", "Only rubber"], answer:"B"},
-        {q:"The prongs of a garden fork are about:", options:["10cm long", "20cm long", "50cm long", "100cm long"], answer:"B"},
-        {q:"A garden fork is mounted on a long wooden handle of about:", options:["30-40cm", "70-80cm", "150-200cm", "300-400cm"], answer:"B"},
-        {q:"A garden fork is used for turning manure during:", options:["Only planting", "Compost making", "Only harvesting", "Only storage"], answer:"B"},
-        {q:"A hand fork consists of a piece of metal with:", options:["One or two prongs", "Three or four short flat prongs", "Ten prongs", "No prongs"], answer:"B"},
-        {q:"A hand fork is mainly used in:", options:["Standing position", "Squatting position", "Only lying position", "Only running position"], answer:"B"},
-        {q:"A hand trowel has a short metal blade that is:", options:["Only flat", "Scoop-shaped", "Only triangular", "Only square"], answer:"B"},
-        {q:"The curved metal blade of a hand trowel makes it possible to carry a small ball of earth with the:", options:["Only water", "Seedling during transplanting", "Only fertilizer", "Only stones"], answer:"B"},
-        {q:"A rake consists of a long wooden handle and a strong metal head with several:", options:["Smooth surfaces", "Stout prongs", "Only holes", "Only blades"], answer:"B"},
-        {q:"A rake is used for leveling or spreading soil surface after:", options:["Only planting", "Hoeing", "Only watering", "Only fertilizing"], answer:"B"},
-        {q:"A wheelbarrow is a simple tool with a tray, usually one front wheel, two handles and:", options:["Three legs", "Two legs/stands", "Four legs", "No legs"], answer:"B"},
-        {q:"A wheelbarrow is designed to move heavy or bulky materials with:", options:["Maximum effort", "Minimal effort", "No effort", "Only manual pulling"], answer:"B"},
-        {q:"A wheelbarrow uses a second-class lever where the wheel acts as the:", options:["Load", "Fulcrum", "Effort", "Resistance"], answer:"B"},
-        {q:"In a wheelbarrow, the load sits between the wheel and:", options:["The ground", "The handles", "The air", "The sky"], answer:"B"},
-        {q:"Maintenance of a wheelbarrow includes all EXCEPT:", options:["Cleaning regularly", "Checking tire pressure", "Inspecting for damage", "Leaving it exposed to rain always"], answer:"D"},
-    ],
-    theory:[
-        /* WEEK 1: Meaning of Economics & Definitions */
-        {q:"Define Economics and explain the four definitions given by Adam Smith, Alfred Marshall, Lionel Robbins and Paul Samuelson."},
-        {q:"Distinguish between material and immaterial things in economics, giving two examples of each."},
-        {q:"Explain the concept of 'scarcity' as discussed by Lionel Robbins in his definition of economics."},
-        {q:"Differentiate between Microeconomics and Macroeconomics, giving two areas of focus for each."},
-        {q:"Why is Paul Samuelson's definition of economics regarded as the 'growth definition'?"},
-        /* WEEK 2: Basic Economic Principles */
-        {q:"Define scarcity and explain how it relates to unlimited human wants and limited resources."},
-        {q:"Explain the concept of opportunity cost with a practical example from agriculture."},
-        {q:"State and explain the law of demand and the law of supply."},
-        {q:"What is equilibrium price? Explain the conditions that exist at equilibrium price in a market."},
-        {q:"Differentiate between needs and wants, giving three examples of each."},
-        /* WEEK 3: Characteristic Features of Agricultural Production */
-        {q:"List and explain five characteristic features of agricultural production."},
-        {q:"Explain how the smallness of farm holdings affects mechanization and large-scale operations in agriculture."},
-        {q:"Discuss the biological limits of farm production and how they differ from industrial production."},
-        {q:"Explain how seasonality of farm production poses challenges in terms of labor availability, storage and market supply."},
-        {q:"Discuss the susceptibility of agricultural production to climate and the impact of climate change on farming."},
-        /* WEEK 4: Farm Surveying */
-        {q:"Define farm surveying and explain five techniques used in farm survey."},
-        {q:"List and describe the five types of farm survey discussed in the course material."},
-        {q:"Explain the concept of 'station' in survey and express the following distances in full and plus stations: (i) 1081.5ft (ii) 65.7ft (iii) 927.0ft (iv) 230.0ft."},
-        {q:"Describe five common surveying equipment used on the farm and state their uses."},
-        {q:"Discuss ten importance of farm surveying in agricultural development."},
-        /* WEEK 5: Farmstead Planning */
-        {q:"Define farmstead and farmstead planning, and explain five reasons for planning a farmstead."},
-        {q:"State and explain five principles of farmstead layout."},
-        {q:"Discuss eight factors influencing the siting of farms or farmsteads."},
-        {q:"Explain how topography influences the location of farm buildings, crop farms, fish ponds and irrigation farms."},
-        {q:"Discuss the role of soil type, accessibility, water supply and health/hygiene in farmstead planning."},
-        /* WEEK 6: Simple Farm Tools - Cutlass & Hoe */
-        {q:"Define simple farm tools and describe the two main types of cutlass, including their uses and maintenance."},
-        {q:"Differentiate between the West African hoe and the West Indian hoe, stating their uses and maintenance practices."},
-        {q:"Explain the difference between a cutlass and a machete."},
-        /* WEEK 7: Simple Farm Tools - Spade, Shovel, Forks, Trowel, Rake, Wheelbarrow */
-        {q:"Describe a spade and a shovel, highlighting their similarities and differences in structure and use."},
-        {q:"Discuss the uses and maintenance practices of the garden fork and hand fork."},
-        {q:"Describe a hand trowel and explain its uses in nursery practices and transplanting."},
-        {q:"Explain the uses and maintenance of a rake in farm operations."},
-        {q:"Describe a wheelbarrow, explain how it function as a second-class lever, and discuss its uses and maintenance."},
-        {q:"Compare and contrast any five simple farm tools discussed in the course material, stating their uses and maintenance practices."},
-        {q:"Discuss the importance of proper maintenance of simple farm tools and the consequences of neglecting maintenance."},
-      {q:"Germination is best described as:", options:["The death of a seed","The development of a seed into a seedling","The flowering stage of a plant","The harvesting of grains"], answer:"B"},
-      {q:"Which of these nutrients is required by plants in the largest quantity?", options:["Nitrogen","Zinc","Boron","Molybdenum"], answer:"A"},
-      {q:"Weeding is carried out mainly to:", options:["Increase pest population","Reduce competition for nutrients and water","Reduce soil fertility","Increase soil erosion"], answer:"B"}
-    ],
-    theory:[
-      {q:"Describe the stages involved in the production of a cereal crop from planting to harvest."},
-      {q:"Explain the role of fertiliser application in crop yield improvement."}
-    ]},
   "PHY 102": { title:"PHY 102 — General Physics II", eligible:"ALL",
     objective:[
       {q:"The SI unit of electric current is the:", options:["Volt","Ohm","Ampere","Watt"], answer:"C"},
@@ -852,250 +826,248 @@ const COURSES = {
       {q:"State Ohm's Law and use it to calculate the current flowing through a 10Ω resistor connected to a 20V source."},
       {q:"Explain the difference between series and parallel circuits."}
     ]},
-"WMA 142": { title:"WMA 142 — Introduction to Water Resources Management and Agrometeorology",
-  eligible:["B.Sc. Water Resources Management and Agro-Meteorology"],
-  drawObjective: 30, drawTheory: 5,
-  objective:[
-    /* ===== WEEK 1: Water Resources Management & Water Cycle (Q1-40) ===== */
-    {q:"An instrument used to measure atmospheric pressure is called a:", options:["Rain gauge","Barometer","Anemometer","Hygrometer"], answer:"B"},
-    {q:"The main source of freshwater on Earth is:", options:["Oceans","Glaciers and groundwater","Seawater","Salt lakes"], answer:"B"},
-    {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"},
-    {q:"Which of the following best defines 'Water Resources'?", options:["Only rivers and lakes","Sources of water that are useful to humans and ecosystems","Only groundwater sources","Water used exclusively for irrigation"], answer:"B"},
-    {q:"Which of the following is NOT listed among the types of water resources?", options:["Surface water","Groundwater","Reclaimed and recycled water","Seawater ice caps"], answer:"D"},
-    {q:"Water Resources Management (WRM) is defined as the coordinated development and management of:", options:["Land and water only","Land, water and related resources","Only groundwater resources","Rainfall records"], answer:"B"},
-    {q:"The main goal of WRM is to maximize economic and social welfare without:", options:["Increasing water prices","Compromising the sustainability of vital ecosystems","Reducing population growth","Affecting weather patterns"], answer:"B"},
-    {q:"Which of the following is an objective of Water Resources Management?", options:["Maximizing flood occurrence","Sustainable water supply","Reducing agricultural output","Encouraging water disputes"], answer:"B"},
-    {q:"'Effective water use', as an objective of WRM, promotes:", options:["Maximum benefits from available water resources","Wastage in industry only","Groundwater depletion","Unregulated water abstraction"], answer:"A"},
-    {q:"Which WRM objective directly addresses disputes among water users?", options:["Disaster risk reduction","Conflict reduction","Public health improvement","Economic development"], answer:"B"},
-    {q:"Disaster risk reduction, as an objective of WRM, focuses on minimizing the impacts of:", options:["Floods and droughts","Urbanization and industrialization","Population growth","Pollution"], answer:"A"},
-    {q:"Which of the following is a SOCIAL benefit of WRM?", options:["Enhances agricultural productivity","Improves public health","Conserves biodiversity","Enhances drought preparedness"], answer:"B"},
-    {q:"Which of the following is classified as an ECONOMIC benefit of WRM?", options:["Supports industries","Conserves biodiversity","Reduces flood impacts","Improves public health"], answer:"A"},
-    {q:"Which of the following is an ENVIRONMENTAL benefit of WRM?", options:["Enhances drought preparedness","Promotes rivers and wetlands","Supports community development","Promotes energy generation"], answer:"B"},
-    {q:"Improved resilience to climate change is classified under which benefit category of WRM?", options:["Social","Economic","Environmental","Climatic"], answer:"D"},
-    {q:"Which of the following is a challenge facing Water Resources Management?", options:["Declining population","Pollution","Excess funding","Abundant hydrological data"], answer:"B"},
-    {q:"Poor governance, as a challenge to WRM, results mainly from:", options:["Strong institutional frameworks","Weak policies and institutional frameworks","Excess water supply","High rainfall"], answer:"B"},
-    {q:"A lack of reliable hydrological and water quality data is best described as:", options:["Financial constraint","Data limitation","Poor governance","Urbanization pressure"], answer:"B"},
-    {q:"Which federal institution is primarily responsible for water resources in Nigeria?", options:["Federal Ministry of Water Resources and Sanitation","Federal Ministry of Agriculture","National Population Commission","Federal Ministry of Environment"], answer:"A"},
-    {q:"River Basin Development Authorities (RBDAs) in Nigeria are examples of:", options:["State Water Agencies","Key institutions of water resources management","NGOs","International bodies"], answer:"B"},
-    {q:"Which Nigerian agency is responsible for hydrological services?", options:["NIHSA","NAFDAC","NIMET","NEMA"], answer:"A"},
-    {q:"NWRI stands for:", options:["National Water Regulatory Institute","National Water Resources Institute","Nigerian Water Research Institute","National Watershed Research Institute"], answer:"B"},
-    {q:"The continuous movement and circulation of water between the earth's surface, atmosphere and subsurface is called the:", options:["Nitrogen cycle","Water (hydrological) cycle","Carbon cycle","Rock cycle"], answer:"B"},
-    {q:"Which of the following is NOT one of the importance of the water cycle?", options:["Maintains the earth's water balance","Purifies water naturally","Increases atmospheric carbon dioxide","Sustains ecosystems and biodiversity"], answer:"C"},
-    {q:"The process by which liquid water changes into water vapour due to heat from the sun is called:", options:["Condensation","Evaporation","Infiltration","Percolation"], answer:"B"},
-    {q:"The release of water vapour from plant leaves into the atmosphere is known as:", options:["Transpiration","Evaporation","Precipitation","Interception"], answer:"A"},
-    {q:"The combined process of evaporation and transpiration is called:", options:["Percolation","Evapotranspiration","Infiltration","Condensation"], answer:"B"},
-    {q:"Water vapour cooling and changing into liquid droplets, forming clouds, is called:", options:["Precipitation","Condensation","Runoff","Percolation"], answer:"B"},
-    {q:"Which of the following is NOT a form of precipitation?", options:["Rain","Hail","Sleet","Evaporation"], answer:"D"},
-    {q:"When precipitation is captured by vegetation before reaching the ground, this process is called:", options:["Interception","Infiltration","Percolation","Runoff"], answer:"A"},
-    {q:"The movement of water from the ground surface into the soil is called:", options:["Percolation","Infiltration","Runoff","Interception"], answer:"B"},
-    {q:"Infiltration helps to:", options:["Increase surface runoff only","Recharge groundwater and reduce flooding","Prevent evaporation","Increase atmospheric pressure"], answer:"B"},
-    {q:"The downward movement of infiltrated water through soil layers towards groundwater reservoirs is:", options:["Percolation","Interception","Transpiration","Runoff"], answer:"A"},
-    {q:"The portion of precipitation that flows over the land surface toward rivers, lakes and oceans is called:", options:["Infiltration","Surface runoff","Percolation","Groundwater flow"], answer:"B"},
-    {q:"Surface runoff is usually caused by:", options:["Low rainfall and dry soil","Heavy rainfall, impermeable surfaces, and saturated soil","High infiltration rates","Dense forest cover"], answer:"B"},
-    {q:"The movement of water through underground aquifers that supplies wells and springs is:", options:["Groundwater flow","Surface runoff","Interception","Evapotranspiration"], answer:"A"},
-    {q:"In the water balance equation P = ET + Q + ΔS, 'Q' represents:", options:["Precipitation","Evapotranspiration","Runoff","Change in storage"], answer:"C"},
-    {q:"In the water balance equation, ΔS represents:", options:["Precipitation","Change in storage","Evapotranspiration","Runoff"], answer:"B"},
-    {q:"Which factor affecting the water cycle relates to soil permeability and rock structure?", options:["Climatic factors","Topographical factors","Geological factors","Vegetation factors"], answer:"C"},
-    {q:"Which of the following is a topographical factor affecting the water cycle?", options:["Humidity","Elevation and slope","Forest cover","Deforestation"], answer:"B"},
-    {q:"Urbanization, deforestation, irrigation and dam construction are examples of which factor affecting the water cycle?", options:["Climatic factors","Geological factors","Human activities","Vegetation factors"], answer:"C"},
-    {q:"Which of the following is a climatic factor influencing the water cycle?", options:["Soil permeability","Temperature and wind speed","Forest cover","Dam construction"], answer:"B"},
-    {q:"Fresh water is renewable primarily through the:", options:["Carbon cycle","Hydrological cycle","Nitrogen cycle","Rock cycle"], answer:"B"},
-    {q:"Hydrological measurements are crucial mainly for:", options:["Predicting stock market trends","Understanding and managing water resources","Measuring air quality","Determining soil fertility only"], answer:"B"},
-    {q:"Which type of hydrological measurement quantifies the volume of water flowing through a specific point over time?", options:["Discharge measurement","Flow measurement","Water level measurement","Water quality measurement"], answer:"B"},
-    {q:"Discharge measurements are commonly taken using:", options:["Thermometers","Discharge gauges or weirs","Rain gauges","Hygrometers"], answer:"B"},
-    {q:"Water level measurements determine the:", options:["Rate at which water flows out of a lake","Height of the water surface in a water body","Chemical composition of water","Volume of dissolved oxygen"], answer:"B"},
-    {q:"Which instrument is used to measure turbidity in water quality assessment?", options:["Spectrophotometer","Turbidimeter","Anemometer","Barometer"], answer:"B"},
-    {q:"Hydrometry refers to the measurement of:", options:["Soil composition","Volume and flow rate of water","Air temperature","Wind direction"], answer:"B"},
-    {q:"Sediment trapping is used to determine:", options:["The temperature of a water body","The composition and properties of sediment samples","The pH of rainwater","Wind speed over a river"], answer:"B"},
-    {q:"Which of the following is NOT a common technique for measuring hydrological variables?", options:["Hydrometry","Water sampling","Sediment trapping","Seismography"], answer:"D"},
-    {q:"Data collection in hydrology involves gathering information from:", options:["Field measurements only","Field measurements, remote sensing, and literature reviews","Only satellite images","Only questionnaires"], answer:"B"},
-    {q:"Which data source involves direct measurement of water resources using instruments such as rain gauges and flowmeters?", options:["Remote sensing","Field measurements","Literature reviews","Surveys and questionnaires"], answer:"B"},
-    {q:"Remote sensing in hydrology primarily uses:", options:["Rain gauges and flowmeters","Satellite and aerial imagery","Interviews with farmers","Historical archives only"], answer:"B"},
-    {q:"Remote sensing is especially useful for estimating:", options:["Evapotranspiration and soil moisture","Groundwater pH only","Sediment colour","Discharge gauge calibration"], answer:"A"},
-    {q:"Literature reviews in hydrological data collection help to:", options:["Collect new field samples","Provide context and understanding of hydrological phenomena","Replace field measurements entirely","Measure river discharge directly"], answer:"B"},
-    {q:"Surveys and questionnaires in hydrological data collection are typically used to gather data from:", options:["Satellites","Stakeholders such as farmers and community members","Rain gauges","Groundwater aquifers"], answer:"B"},
-    {q:"Data analysis in hydrology involves the use of:", options:["Statistical and computational techniques","Only visual inspection","Guesswork","Manual counting only"], answer:"A"},
-    {q:"Descriptive statistics describe basic characteristics of data such as:", options:["Mean, median, and standard deviation","Satellite imagery resolution","Sediment colour","Cloud cover percentage"], answer:"A"},
-    {q:"Which type of statistics is used to make inferences about a population based on sample data?", options:["Descriptive statistics","Inferential statistics","Signal processing","Qualitative analysis"], answer:"B"},
-    {q:"Signal processing techniques such as filtering and spectral analysis are used to:", options:["Extract patterns from time-series data","Collect rainfall samples","Measure atmospheric pressure","Determine soil texture"], answer:"A"},
-    {q:"Data interpretation involves:", options:["Collecting raw data only","Understanding the meaning of results and applying them to real-world problems","Installing rain gauges","Calibrating anemometers"], answer:"B"},
-    {q:"Quantitative analysis in data interpretation focuses on:", options:["Non-numerical data such as text","Numerical values and statistical relationships","Only qualitative descriptions","Photographic images"], answer:"B"},
-    {q:"Qualitative analysis in data interpretation focuses mainly on:", options:["Numerical values","Statistical relationships only","Non-numerical data such as text and images","River discharge"], answer:"C"},
-    {q:"Combining multiple datasets and models to generate new insights is called:", options:["Descriptive statistics","Synthesis","Hydrometry","Sediment trapping"], answer:"B"},
-    {q:"Analyzing the relationship between precipitation and runoff mainly helps to:", options:["Predict flood events and inform water management","Determine soil colour","Estimate air pressure","Measure sunshine duration"], answer:"A"},
-    {q:"Analyzing groundwater recharge rates helps inform:", options:["Aquifer management and water supply planning","Cloud classification","Wind pattern analysis","Sediment trapping techniques"], answer:"A"},
-    {q:"Analyzing surface water flow patterns can inform:", options:["River management and habitat restoration","Solar radiation measurement","Atmospheric pressure trends","Soil fertility testing"], answer:"A"},
-    {q:"Errors in measurement or data collection that lead to inaccurate results are classified under:", options:["Modeling uncertainties","Data quality issues","Spatial variability","Emerging technologies"], answer:"B"},
-    {q:"The challenge where hydrological systems vary across location and time, making generalization difficult, is called:", options:["Data quality issues","Spatial and temporal variability","Modeling uncertainties","Signal processing limitation"], answer:"B"},
-    {q:"Modeling uncertainties in hydrology arise mainly due to:", options:["Excess field data","Non-linear relationships between variables","Too many rain gauges","Simple, linear systems"], answer:"B"},
-    {q:"Which of the following is identified as a future direction for hydrological measurement and data analysis?", options:["Elimination of remote sensing","Integration of IoT sensors, drones, and machine learning","Removal of statistical techniques","Reduction of field data collection"], answer:"B"},
-    {q:"Improving data quality and interoperability in hydrology involves developing:", options:["Standards for data sharing and using AI to reduce errors","More manual data entry","Fewer monitoring stations","Less collaboration between agencies"], answer:"A"},
-    {q:"Enhancing model complexity and resolution in hydrology aims to:", options:["Simplify all hydrological models","Capture the full range of hydrological phenomena","Eliminate the need for data","Reduce computational requirements to zero"], answer:"B"},
-    {q:"Which of the following best measures the physical, chemical and biological characteristics of water?", options:["Flow measurement","Water quality measurement","Discharge measurement","Water level measurement"], answer:"B"},
-    {q:"A DO meter is used to measure:", options:["pH","Turbidity","Dissolved oxygen levels","Temperature only"], answer:"C"},
-    {q:"Water sampling as a hydrological technique involves:", options:["Only visual observation of a river","Collection and analysis of water samples","Measuring wind speed","Estimating cloud cover"], answer:"B"},
-    {q:"Which of the following instruments would most likely be used in field measurements of hydrological data?", options:["Rain gauges, flowmeters, water level meters","Satellites only","Questionnaires only","Literature databases"], answer:"A"},
-    {q:"Emerging technologies being integrated into hydrological measurement include:", options:["IoT sensors, drones, and machine learning","Typewriters and paper maps only","Manual river wading only","Sundials"], answer:"A"},
-    {q:"The primary purpose of interpreting precipitation-runoff relationships is to:", options:["Predict floods and inform water management strategies","Measure sunshine duration","Classify soil types","Determine building material strength"], answer:"A"},
-    {q:"Which of the following data analysis techniques would be most appropriate for detecting patterns in a long-term streamflow time-series?", options:["Signal processing","Literature review","Water sampling","Sediment trapping"], answer:"A"},
-    {q:"A major limitation of hydrological data collection in developing regions is often:", options:["Excess funding","Data quality and availability issues","Too many monitoring stations","Overly simple hydrological systems"], answer:"B"},
-    {q:"The overall purpose of hydrological measurement, data collection, and analysis is to support:", options:["Agricultural export pricing only","Water resources management, flood/drought prediction, and ecosystem health","Urban housing design only","Political campaigning"], answer:"B"},
-    {q:"Integrated Water Resources Management (IWRM) is best defined as:", options:["A process focused solely on building dams","Coordinated development and management of water, land and related resources to maximize welfare without compromising ecosystems","A method for measuring rainfall only","A private industry water pricing scheme"], answer:"B"},
-    {q:"The Dublin Principles were adopted in:", options:["1977 in Mar del Plata","1992 in Rio de Janeiro","2000 in New York","2015 in Paris"], answer:"B"},
-    {q:"Which Dublin Principle states that fresh water is essential for sustaining life, development, and the environment?", options:["Freshwater is a finite and vulnerable resource","Participatory approach","Women's central role","Water as an economic good"], answer:"A"},
-    {q:"According to the Dublin Principles, water development should be based on a:", options:["Top-down, government-only approach","Participatory approach involving all stakeholders","Purely private-sector approach","Military-controlled approach"], answer:"B"},
-    {q:"The Dublin Principle on women's role states that:", options:["Women should be excluded from water governance","Women play a central part in providing, managing, and safeguarding water","Only men should manage water resources","Women's roles are irrelevant to water management"], answer:"B"},
-    {q:"Recognizing water as an economic good implies that:", options:["Water should never be priced","Water has economic value in all its competing uses","Only industries should pay for water","Basic human needs should not be protected"], answer:"B"},
-    {q:"Which of the following is a core element of IWRM under 'Enabling Environment'?", options:["River basin organisations","National water policies","Water audits","Public education campaigns"], answer:"B"},
-    {q:"Cross-sectoral coordination mechanisms such as inter-ministerial committees fall under which IWRM core element?", options:["Enabling Environment","Institutional Roles","Management Instruments","Water Regulation"], answer:"B"},
-    {q:"Water resources assessment, demand management tools, and conflict resolution mechanisms fall under which IWRM core element?", options:["Enabling Environment","Institutional Roles","Management Instruments","None of the above"], answer:"C"},
-    {q:"Traditional water management primarily focuses on:", options:["Demand reduction","Supply augmentation such as building dams and drilling wells","Water pricing only","Wastewater recycling only"], answer:"B"},
-    {q:"Water demand management encompasses actions that:", options:["Increase wasteful consumption","Improve efficiency of water use and reduce wasteful consumption","Focus only on building new dams","Eliminate agricultural water use"], answer:"B"},
-    {q:"Progressive water tariffs are designed to:", options:["Charge less per unit as consumption rises","Charge more per unit as consumption rises, incentivizing efficiency","Eliminate water charges entirely","Apply only to industrial users"], answer:"B"},
-    {q:"Lifeline tariffs are intended to:", options:["Increase cost for low-income users","Protect access to a basic water allocation","Eliminate metering","Encourage water wastage"], answer:"B"},
-    {q:"The single most effective urban water demand reduction tool, according to the material, is:", options:["Graywater recycling","Universal metering with accurate billing","Rainwater harvesting","Desalination"], answer:"B"},
-    {q:"Dual flush toilets can reduce per-flush water use by approximately:", options:["5-10%","20-30%","50-67%","90-100%"], answer:"C"},
-    {q:"Graywater recycling involves the reuse of:", options:["Water from toilets only","Lightly contaminated household water from sinks and showers","Seawater","Industrial wastewater only"], answer:"B"},
-    {q:"Agriculture accounts for approximately what percentage of global freshwater withdrawals?", options:["30%","50%","70%","90%"], answer:"C"},
-    {q:"Drip/trickle irrigation reduces water losses by approximately:", options:["10-20%","40-70%","80-90%","100%"], answer:"B"},
-    {q:"Deficit irrigation involves:", options:["Applying more water than the crop needs","Deliberately applying less water than full evapotranspiration demand at tolerant growth stages","Eliminating irrigation entirely","Only irrigating during the rainy season"], answer:"B"},
-    {q:"Water harvesting for agriculture involves:", options:["Capturing rainfall in ponds, check dams, or soil conservation structures","Drilling deep boreholes only","Desalinating seawater","Building large interbasin transfer canals"], answer:"A"},
-    {q:"Irrigation scheduling uses which of the following to determine when and where to apply water?", options:["Soil moisture sensors, evapotranspiration data, and weather forecasts","Random guessing","Fixed calendar dates only","Market prices of crops"], answer:"A"},
-    {q:"Reservoir storage as a water supply strategy is limited mainly by:", options:["Excess rainfall","Evaporation losses, especially in arid regions","Too much groundwater","Lack of dams"], answer:"B"},
-    {q:"Run-off river diversions differ from reservoir storage in that they:", options:["Involve large storage capacity","Directly abstract water without large storage, depending on seasonal flow","Only operate underground","Require desalination"], answer:"B"},
-    {q:"Interbasin transfers involve:", options:["Diverting water from water-rich to water-scarce basins","Storing water only within a single basin","Removing salts from seawater","Recharging aquifers artificially"], answer:"A"},
-    {q:"Managed Aquifer Recharge (MAR) involves:", options:["Draining aquifers permanently","Artificial injection or spreading of surface water into aquifers for later recovery","Building surface reservoirs only","Desalinating groundwater"], answer:"B"},
-    {q:"Conjunctive use in water supply management refers to:", options:["Using only groundwater sources","Coordinated surface and groundwater management, using each source when most available and cost-effective","Avoiding groundwater entirely","Interbasin transfer only"], answer:"B"},
-    {q:"Desalination is the process of:", options:["Adding salt to freshwater","Removing dissolved salts and impurities from saline water to produce freshwater","Filtering sediments from rivers","Increasing turbidity of water"], answer:"B"},
-    {q:"Wastewater reuse can be applied to all of the following EXCEPT:", options:["Agricultural irrigation","Industrial cooling","Groundwater recharge","Direct human consumption without any treatment"], answer:"D"},
-    {q:"Which water quality parameter category includes pH, hardness, and heavy metals?", options:["Physical","Chemical Inorganic","Chemical Organic","Microbiological"], answer:"B"},
-    {q:"BOD, COD, and pesticides fall under which water quality parameter category?", options:["Physical","Chemical Inorganic","Chemical Organic","Radiological"], answer:"C"},
-    {q:"E. coli (fecal coliforms) is a parameter under which water quality category?", options:["Physical","Chemical","Microbiological","Radiological"], answer:"C"},
-    {q:"Radon and radium are examples of parameters under which water quality category?", options:["Physical","Chemical Organic","Microbiological","Radiological"], answer:"D"},
-    {q:"Pollution discharged from a single, identifiable location is called:", options:["Non-point source pollution","Point source pollution","Diffuse pollution","Atmospheric pollution"], answer:"B"},
-    {q:"Non-point source pollution is:", options:["Easier to regulate than point source","Generated across a broad area and harder to regulate than point source","Only found in urban areas","Not related to agriculture"], answer:"B"},
-    {q:"Source protection as a water quality management strategy includes:", options:["Delineating wellhead protection areas","Constructing more dams","Increasing industrial discharge","Reducing monitoring"], answer:"A"},
-    {q:"Coagulation, sedimentation, filtration, and disinfection are steps in:", options:["Wastewater treatment for discharge","Drinking water treatment","Sediment trapping","Aquifer recharge"], answer:"B"},
-    {q:"Access to clean drinking water is most directly linked to:", options:["Reduced illness and mortality among children under five","Increased industrial output only","Higher rainfall totals","Reduced solar radiation"], answer:"A"},
-    {q:"Which of the following is an environmental importance of good water quality?", options:["Increased eutrophication","Protection of aquatic ecosystems","Reduced biodiversity","Decomposition failure"], answer:"B"},
-    {q:"Controlling nutrient pollution to reduce excessive algal growth helps prevent:", options:["Eutrophication","Desalination","Deficit irrigation","Percolation"], answer:"A"},
-    {q:"Which of the following best summarizes the goal of IWRM?", options:["Prioritizing economic uses of water above all else","Balancing economic, social, and environmental water needs sustainably","Focusing only on urban water supply","Eliminating agricultural water use"], answer:"B"},
-
-    /* ===== WEEK 4: Water Policy, Regulation & Emerging Technologies (Q121-160) ===== */
-    {q:"Water policy encompasses:", options:["Only engineering designs for dams","Principles, objectives, and strategies guiding water resources development and management","Only weather forecasting techniques","Private company profit strategies"], answer:"B"},
-    {q:"An effective water policy must bridge:", options:["Only technical knowledge","Technical, economic, social, environmental, and political considerations","Only political feasibility","Only environmental sustainability"], answer:"B"},
-    {q:"Which of the following is part of a national water policy framework?", options:["Vision and objectives","Football league schedules","Currency exchange rates","Population census only"], answer:"A"},
-    {q:"Allocation priorities in national water policy typically place first priority on:", options:["Industrial uses","Basic human needs","Tourism","Mining"], answer:"B"},
-    {q:"According to typical allocation priorities, after basic human needs the next priority is usually:", options:["Economic uses","Ecological flows","Mining","Tourism"], answer:"B"},
-    {q:"Financing mechanisms for water infrastructure may include:", options:["Cost recovery, subsidies, public investment, and private participation","Only foreign aid","Only taxation","Elimination of all funding"], answer:"A"},
-    {q:"The Mar del Plata Action Plan, held in 1977, is significant because it:", options:["Established the Dublin Principles","Called for national water assessments and established the 'Water Decade'","Created the SDGs","Established the UNECE Water Convention"], answer:"B"},
-    {q:"The Dublin Statement on Water and Sustainable Development (1992) is significant for establishing:", options:["The Millennium Development Goals","The four Dublin Principles, foundational to IWRM","The UN Resolution on the human right to water","The Johannesburg Plan of Implementation"], answer:"B"},
-    {q:"The Millennium Development Goals (MDGs), adopted in 2000, aimed to:", options:["Eliminate all water usage globally","Halve the proportion of people without access to safe water and sanitation by 2015","Establish desalination as the primary water source","End international water treaties"], answer:"B"},
-    {q:"The Johannesburg Plan of Implementation (2002) called for:", options:["IWRM and Water Efficiency Plans by 2006","Elimination of groundwater use","The first global water conference","The UNECE Water Convention"], answer:"A"},
-    {q:"SDG 6 focuses on:", options:["Clean Water and Sanitation","Climate Action","No Poverty","Gender Equality"], answer:"A"},
-    {q:"SDG 6 aims to achieve universal access to safe water and sanitation, implement IWRM, and protect water-related ecosystems by:", options:["2020","2025","2030","2050"], answer:"C"},
-    {q:"UN Resolution A/RES/64/292 (2010) is significant for:", options:["Recognizing the human right to safe drinking water and sanitation","Establishing desalination standards","Creating the Dublin Principles","Establishing the MDGs"], answer:"A"},
-    {q:"The UNECE Water Convention is significant as a:", options:["Non-binding voluntary agreement","Legally binding convention on transboundary watercourses, later expanded to global membership","Regional agreement limited to Europe only","Purely advisory framework with no legal standing"], answer:"B"},
-    {q:"A water use license or permit grants:", options:["Unlimited abstraction of water from any source","Legal authorization to abstract a specific volume of water from a specific source under defined conditions","Permission to discharge pollutants without limits","Automatic access to groundwater without regulation"], answer:"B"},
-    {q:"A discharge permit (consent to discharge) sets:", options:["Maximum concentration and loads of pollutants allowed for effluent discharge","The price of drinking water","The volume of rainfall permitted","The height of dams"], answer:"A"},
-    {q:"Breach of a discharge permit typically leads to:", options:["No consequence","Enforcement action","Automatic permit renewal","Increased water allocation"], answer:"B"},
-    {q:"An Environmental Flow Requirement is a regulatory mandate to:", options:["Maximize water abstraction for industry","Maintain a minimum flow in rivers to sustain ecological functions and downstream users","Eliminate all river flow for storage","Increase pollution discharge limits"], answer:"B"},
-    {q:"South Africa's National Water Act (1998) introduced the concept of the:", options:["Ecological reserve","Water Decade","Dublin Principles","MDG framework"], answer:"A"},
-    {q:"Under South Africa's ecological reserve concept, which needs must be met before any allocation to economic uses?", options:["Industrial needs only","Ecological and basic human needs","Mining needs only","Tourism needs only"], answer:"B"},
-    {q:"Water Quality Standards may be derived from:", options:["Health-based guidelines, ecological toxicity, or technology-based limits","Only market prices","Only political considerations","Random selection"], answer:"A"},
-    {q:"Emerging technologies in hydrological modelling are centered on:", options:["AI/ML, remote sensing, IoT sensor networks, and cloud/quantum computing","Manual paper record-keeping only","Traditional rain gauges exclusively","Sundials and water clocks"], answer:"A"},
-    {q:"AI, machine learning, and deep learning are particularly useful in hydrology for capturing:", options:["Linear relationships only","Nonlinear hydrological relationships such as rainfall-runoff","Static, unchanging data","Historical archives only"], answer:"B"},
-    {q:"Explainable AI and transfer learning are important because they:", options:["Reduce model transparency","Improve transparency and let models adapt across regions with limited local data","Eliminate the need for data","Only work in a single region"], answer:"B"},
-    {q:"Remote sensing and non-traditional data assimilation expand model inputs beyond:", options:["Satellite imagery","Ground gauges, especially for large or data-scarce basins","Machine learning algorithms","Cloud computing resources"], answer:"B"},
-    {q:"IoT and advanced environmental sensors are making which of the following more practical?", options:["Historical data destruction","Near-real-time monitoring for forecasting and risk assessment","Manual paper-based record keeping","Elimination of ground stations"], answer:"B"},
-    {q:"Cloud and quantum computing are being explored in hydrology mainly to:", options:["Reduce data availability","Handle the growing computational load of integrated hydrological models","Eliminate the need for remote sensing","Replace field measurements entirely"], answer:"B"},
-    {q:"Hydrological modelling assists in which of the following areas?", options:["Flood forecasting and real-time warning systems","Only tourism planning","Only mining exploration","Only stock market prediction"], answer:"A"},
-    {q:"Which of the following is NOT listed as an area where hydrological modelling helps?", options:["Streamflow prediction and drought monitoring","Groundwater and surface water interaction modelling","Political election forecasting","Integrated watershed planning and climate adaptation"], answer:"C"},
-    {q:"A key limitation of hydrological modelling mentioned in the material is:", options:["Excess computational resources","Data scarcity, limited interpretability, and high cost of training complex models","Too much available data","Overly simple models"], answer:"B"},
-    {q:"Which international instrument specifically addresses gender representation in water governance?", options:["Mar del Plata Action Plan","Dublin Statement (Dublin Principles)","SDG 6","UNECE Water Convention"], answer:"B"},
-    {q:"The vision and objectives component of a national water policy typically includes goals such as:", options:["Universal access, sustainability, food security, flood safety","Only tourism development","Only mining regulation","Only urban infrastructure"], answer:"A"},
-    {q:"Institutional arrangement in a national water policy defines:", options:["Which agencies are responsible for aspects of water management and how they coordinate","The price of bottled water","The design of dams only","The chemical composition of rainwater"], answer:"A"},
-    {q:"International commitments in a national water policy relate to how a country implements obligations under:", options:["International treaties and global frameworks such as the SDGs","Local farming customs only","Regional agreements unrelated to water","National currency policy"], answer:"A"},
-    {q:"Which policy principle relates to fairness in how water benefits and burdens are distributed?", options:["Equity","Efficiency only","Profit maximization","Urbanization"], answer:"A"},
-    {q:"Regulatory instruments such as abstraction licenses and pollution discharge permits fall under which IWRM management category?", options:["Enabling Environment","Institutional Roles","Management Instruments","Financing strategies"], answer:"C"},
-    {q:"Which of the following best distinguishes a legally binding water instrument from an advisory one?", options:["Legally binding instruments carry enforceable obligations, unlike advisory ones","Advisory instruments are always followed strictly","There is no difference","Only advisory instruments matter"], answer:"A"},
-    {q:"The WHO plays a role in setting water quality standards primarily through:", options:["Health-based guidelines","Football regulations","Mining permits","Currency policy"], answer:"A"},
-    {q:"A country's obligation to protect water-related ecosystems by 2030 is a target under:", options:["SDG 6","Mar del Plata Action Plan","MDGs","UNECE Water Convention"], answer:"A"},
-    {q:"Overall, water policy and regulation aim primarily to:", options:["Guide sustainable, equitable development, allocation, protection and management of water resources","Maximize private profit only","Eliminate all water regulation","Focus solely on dam construction"], answer:"A"},
-    {q:"Weather refers to:", options:["The long-term average atmospheric condition of a region","The short-term condition of the atmosphere at a particular place and time","The permanent classification of a region's vegetation","The total rainfall over 30 years"], answer:"B"},
-    {q:"According to the WMO, weather is described with respect to variables such as:", options:["Temperature, rainfall, humidity, wind, pressure, cloud cover","Soil type and mineral content","Population and land use","Ocean salinity"], answer:"A"},
-    {q:"Which of the following is an example of weather rather than climate?", options:["Tropical rainforest climate","Thunderstorm this afternoon","Desert climate zone","Polar climate"], answer:"B"},
-    {q:"Weather is generally:", options:["Long-term and stable","Short-term, changes rapidly, and localized","Unchanging over decades","Predictable only over 30 years"], answer:"B"},
-    {q:"Temperature is measured using a:", options:["Rain gauge","Thermometer","Anemometer","Barometer"], answer:"B"},
-    {q:"Rainfall (precipitation) is measured using a:", options:["Hygrometer","Rain gauge","Sunshine recorder","Wind vane"], answer:"B"},
-    {q:"Humidity is measured using a:", options:["Hygrometer","Barometer","Thermometer","Anemometer"], answer:"A"},
-    {q:"Wind speed is measured using a(n):", options:["Wind vane","Anemometer","Barometer","Hygrometer"], answer:"B"},
-    {q:"Wind direction is measured using a:", options:["Anemometer","Wind vane","Sunshine recorder","Rain gauge"], answer:"B"},
-    {q:"Atmospheric pressure is measured using a barometer, in units of:", options:["Millimetres and litres","Millibar and Pascal","Degrees Celsius and Kelvin","Percentage"], answer:"B"},
-    {q:"Sunshine duration is measured using a:", options:["Sunshine recorder","Barometer","Hygrometer","Rain gauge"], answer:"A"},
-    {q:"Cloud cover refers to:", options:["The amount of water vapour in the air","The proportion of the sky covered by clouds","The speed of wind at cloud level","The temperature inside clouds"], answer:"B"},
-    {q:"Climate refers to:", options:["The short-term state of the atmosphere","The average weather conditions of a place over a long period, usually 30 years or more","A single day's rainfall total","The daily temperature reading"], answer:"B"},
-    {q:"According to the WMO, climate is the statistical description of weather conditions over a period of at least:", options:["5 years","10 years","30 years","100 years"], answer:"C"},
-    {q:"Which of the following is a characteristic of climate rather than weather?", options:["Highly variable","Changes hourly","Relatively stable and covers large geographical areas","Difficult to predict over a long period"], answer:"C"},
-    {q:"Nigeria generally experiences which two broad seasons?", options:["Spring and autumn","Wet season and dry season","Summer and winter","Monsoon and blizzard"], answer:"B"},
-    {q:"The United Kingdom is generally described as having a:", options:["Hot desert climate","Temperate maritime climate","Tropical rainforest climate","Polar climate"], answer:"B"},
-    {q:"Antarctica's climate is characterized by:", options:["High temperatures and heavy rainfall year-round","Extremely low temperatures and ice cover throughout most of the year","Moderate rainfall and four seasons","Hot summers and cold winters only"], answer:"B"},
-    {q:"The environment refers to:", options:["Only the atmosphere","Everything surrounding living organisms that influences their growth, survival and development","Only human-built structures","Only rainfall and temperature"], answer:"B"},
-    {q:"The environment includes:", options:["Only biotic components","Only abiotic components","Living (biotic) and non-living (abiotic) components","Only industrial components"], answer:"C"},
-    {q:"Air, water, soil, rocks, climate and sunlight are components of the:", options:["Biological Environment","Physical Environment","Human/Built Environment","Political environment"], answer:"B"},
-    {q:"Plants, animals, microorganisms and humans are components of the:", options:["Physical Environment","Biological Environment","Human/Built Environment","None of the above"], answer:"B"},
-    {q:"Roads, buildings, dams, industries and cities are components of the:", options:["Physical Environment","Biological Environment","Human or Built Environment","Atmospheric environment"], answer:"C"},
-    {q:"The Köppen Climate Classification system classifies climates mainly using:", options:["Temperature and rainfall patterns","Population size and industrial output","Soil type and mineral composition","Ocean depth and salinity"], answer:"A"},
-    {q:"Which climate type has high temperature year-round, heavy rainfall and dense vegetation?", options:["Tropical Climate","Dry Climate","Polar Climate","Continental Climate"], answer:"A"},
-    {q:"Cocoa, oil palm, rubber, rice and cassava are crops suitable for which climate type, found in Southern Nigeria, Brazil, and Indonesia?", options:["Dry Climate","Tropical Climate","Temperate Climate","Polar Climate"], answer:"B"},
-    {q:"Which climate type is characterized by very little rainfall, high evaporation and water scarcity, e.g. the Sahara Desert?", options:["Tropical Climate","Dry (Arid and Semi-Arid) Climate","Temperate Climate","Polar Climate"], answer:"B"},
-    {q:"Moderate temperature, four seasons, and moderate rainfall (e.g. UK, France, Germany) describe which climate type?", options:["Tropical Climate","Dry Climate","Temperate Climate","Polar Climate"], answer:"C"},
-    {q:"Hot summers, cold winters and large temperature differences (e.g. Russia, Canada) describe which climate type?", options:["Tropical Climate","Continental Climate","Polar Climate","Dry Climate"], answer:"B"},
-    {q:"Extremely cold with snow throughout most of the year and very little vegetation (e.g. Antarctica, Greenland) describes which climate type?", options:["Tropical Climate","Continental Climate","Temperate Climate","Polar Climate"], answer:"D"},
-    {q:"Latitude, as a driver of climate, primarily determines:", options:["The angle at which sunlight reaches the Earth","The volume of groundwater","The type of soil","The rate of deforestation"], answer:"A"},
-    {q:"The environmental lapse rate describes an approximate temperature decrease of about ___ per 1,000 metres of elevation.", options:["1°C","6.5°C","15°C","25°C"], answer:"B"},
-    {q:"Areas close to oceans generally experience:", options:["Greater temperature extremes and lower humidity","Moderate temperatures, higher humidity and more rainfall","No rainfall at all","Colder temperatures than inland areas at the same latitude"], answer:"B"},
-    {q:"Warm ocean currents tend to:", options:["Reduce temperature, humidity and rainfall","Increase temperature, humidity and rainfall","Have no effect on climate","Only affect polar regions"], answer:"B"},
-    {q:"The South-West Monsoon Wind in West Africa is significant because it:", options:["Brings rain","Causes the Harmattan","Increases desertification","Has no seasonal effect"], answer:"A"},
-    {q:"The North-East Trade Wind in West Africa is associated with:", options:["Heavy rainfall","The Harmattan (dry, dusty wind)","Ocean currents","Tropical cyclones"], answer:"B"},
-    {q:"Mountains influence rainfall through the orographic effect, causing heavy rainfall on the ___ side and a rain shadow on the ___ side.", options:["Leeward; windward","Windward; leeward","Northern; southern","Eastern; western"], answer:"B"},
-    {q:"Deforestation tends to:", options:["Increase rainfall and reduce temperature","Reduce rainfall, increase temperature, and promote erosion","Have no effect on climate","Only affect ocean currents"], answer:"B"},
-    {q:"Warm, wet conditions associated with certain climates increase the transmission of:", options:["Malaria","Only respiratory disease","Only cholera","Only typhoid"], answer:"A"},
-    {q:"Nigeria's three broad climatic zones, from south to north, are:", options:["Tropical Rainforest, Guinea Savannah, and Sudan/Sahel Savannah","Desert, Temperate, and Polar","Continental, Tropical, and Arid","Mediterranean, Tundra, and Monsoon"], answer:"A"}
-  ],
-  theory:[
-    {q:"Define Water Resources Management and explain its main objectives."},
-    {q:"Discuss the social, economic, environmental and climatic benefits of Water Resources Management."},
-    {q:"Explain any five challenges facing Water Resources Management in Nigeria."},
-    {q:"List and briefly describe five key institutions responsible for water resources management in Nigeria."},
-    {q:"With the aid of the water balance equation, describe the main processes of the water cycle."},
-    {q:"Explain the factors that affect the water cycle, giving examples under each category."},
-    {q:"Explain the different types of hydrological measurements, giving the instruments used for each."},
-    {q:"Describe the main sources of hydrological data collection."},
-    {q:"Differentiate between descriptive statistics and inferential statistics in hydrological data analysis."},
-    {q:"Discuss any three examples of hydrological data interpretation and their practical significance."},
-    {q:"Discuss the major challenges and limitations of hydrological data collection and analysis."},
-    {q:"Explain the future directions in hydrological measurement and data analysis, highlighting the role of emerging technologies."},
-    {q:"Define IWRM and explain the four Dublin Principles with their implications for water management."},
-    {q:"Discuss the three core elements of IWRM."},
-    {q:"Compare and contrast water demand management strategies in the urban and agricultural sectors."},
-    {q:"Discuss the major approaches to water supply management, covering surface water, groundwater, and alternative sources."},
-    {q:"Describe the water quality parameter categories and give two examples of parameters under each."},
-    {q:"Explain the strategies used in water quality management and discuss the importance of water quality to human health and the environment."},
-    {q:"Discuss the key components of a national water policy framework."},
-    {q:"Discuss any four international water policy instruments, stating their year and significance."},
-    {q:"Explain the different types of water regulation instruments, using examples."},
-    {q:"Explain the concept of the 'ecological reserve' as introduced by South Africa's National Water Act (1998)."},
-    {q:"Discuss the emerging technologies being applied in hydrological modelling and their contributions."},
-    {q:"Highlight the key limitations of hydrological modelling and suggest ways they could be addressed."},
-    {q:"Define weather and climate, and state five differences between them."},
-    {q:"Explain the concept of the environment and describe its three major components with examples."},
-    {q:"Discuss the major types of climate under the Köppen classification, giving characteristics and examples of regions for each."},
-    {q:"Explain at least seven factors (drivers) that influence climate."},
-    {q:"Discuss the importance of climate to agriculture, water resources, and human health."},
-    {q:"Describe Nigeria's three broad climatic zones and their characteristics."}
-  ]
+  "WMA 142": { title:"WMA 142 — Introduction to Water Resources Management and Agrometeorology",
+    eligible:["B.Sc. Water Resources Management and Agro-Meteorology"],
+    drawObjective: 30, drawTheory: 5,
+    objective:[
+      {q:"An instrument used to measure atmospheric pressure is called a:", options:["Rain gauge","Barometer","Anemometer","Hygrometer"], answer:"B"},
+      {q:"The main source of freshwater on Earth is:", options:["Oceans","Glaciers and groundwater","Seawater","Salt lakes"], answer:"B"},
+      {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"},
+      {q:"Which of the following best defines 'Water Resources'?", options:["Only rivers and lakes","Sources of water that are useful to humans and ecosystems","Only groundwater sources","Water used exclusively for irrigation"], answer:"B"},
+      {q:"Which of the following is NOT listed among the types of water resources?", options:["Surface water","Groundwater","Reclaimed and recycled water","Seawater ice caps"], answer:"D"},
+      {q:"Water Resources Management (WRM) is defined as the coordinated development and management of:", options:["Land and water only","Land, water and related resources","Only groundwater resources","Rainfall records"], answer:"B"},
+      {q:"The main goal of WRM is to maximize economic and social welfare without:", options:["Increasing water prices","Compromising the sustainability of vital ecosystems","Reducing population growth","Affecting weather patterns"], answer:"B"},
+      {q:"Which of the following is an objective of Water Resources Management?", options:["Maximizing flood occurrence","Sustainable water supply","Reducing agricultural output","Encouraging water disputes"], answer:"B"},
+      {q:"'Effective water use', as an objective of WRM, promotes:", options:["Maximum benefits from available water resources","Wastage in industry only","Groundwater depletion","Unregulated water abstraction"], answer:"A"},
+      {q:"Which WRM objective directly addresses disputes among water users?", options:["Disaster risk reduction","Conflict reduction","Public health improvement","Economic development"], answer:"B"},
+      {q:"Disaster risk reduction, as an objective of WRM, focuses on minimizing the impacts of:", options:["Floods and droughts","Urbanization and industrialization","Population growth","Pollution"], answer:"A"},
+      {q:"Which of the following is a SOCIAL benefit of WRM?", options:["Enhances agricultural productivity","Improves public health","Conserves biodiversity","Enhances drought preparedness"], answer:"B"},
+      {q:"Which of the following is classified as an ECONOMIC benefit of WRM?", options:["Supports industries","Conserves biodiversity","Reduces flood impacts","Improves public health"], answer:"A"},
+      {q:"Which of the following is an ENVIRONMENTAL benefit of WRM?", options:["Enhances drought preparedness","Promotes rivers and wetlands","Supports community development","Promotes energy generation"], answer:"B"},
+      {q:"Improved resilience to climate change is classified under which benefit category of WRM?", options:["Social","Economic","Environmental","Climatic"], answer:"D"},
+      {q:"Which of the following is a challenge facing Water Resources Management?", options:["Declining population","Pollution","Excess funding","Abundant hydrological data"], answer:"B"},
+      {q:"Poor governance, as a challenge to WRM, results mainly from:", options:["Strong institutional frameworks","Weak policies and institutional frameworks","Excess water supply","High rainfall"], answer:"B"},
+      {q:"A lack of reliable hydrological and water quality data is best described as:", options:["Financial constraint","Data limitation","Poor governance","Urbanization pressure"], answer:"B"},
+      {q:"Which federal institution is primarily responsible for water resources in Nigeria?", options:["Federal Ministry of Water Resources and Sanitation","Federal Ministry of Agriculture","National Population Commission","Federal Ministry of Environment"], answer:"A"},
+      {q:"River Basin Development Authorities (RBDAs) in Nigeria are examples of:", options:["State Water Agencies","Key institutions of water resources management","NGOs","International bodies"], answer:"B"},
+      {q:"Which Nigerian agency is responsible for hydrological services?", options:["NIHSA","NAFDAC","NIMET","NEMA"], answer:"A"},
+      {q:"NWRI stands for:", options:["National Water Regulatory Institute","National Water Resources Institute","Nigerian Water Research Institute","National Watershed Research Institute"], answer:"B"},
+      {q:"The continuous movement and circulation of water between the earth's surface, atmosphere and subsurface is called the:", options:["Nitrogen cycle","Water (hydrological) cycle","Carbon cycle","Rock cycle"], answer:"B"},
+      {q:"Which of the following is NOT one of the importance of the water cycle?", options:["Maintains the earth's water balance","Purifies water naturally","Increases atmospheric carbon dioxide","Sustains ecosystems and biodiversity"], answer:"C"},
+      {q:"The process by which liquid water changes into water vapour due to heat from the sun is called:", options:["Condensation","Evaporation","Infiltration","Percolation"], answer:"B"},
+      {q:"The release of water vapour from plant leaves into the atmosphere is known as:", options:["Transpiration","Evaporation","Precipitation","Interception"], answer:"A"},
+      {q:"The combined process of evaporation and transpiration is called:", options:["Percolation","Evapotranspiration","Infiltration","Condensation"], answer:"B"},
+      {q:"Water vapour cooling and changing into liquid droplets, forming clouds, is called:", options:["Precipitation","Condensation","Runoff","Percolation"], answer:"B"},
+      {q:"Which of the following is NOT a form of precipitation?", options:["Rain","Hail","Sleet","Evaporation"], answer:"D"},
+      {q:"When precipitation is captured by vegetation before reaching the ground, this process is called:", options:["Interception","Infiltration","Percolation","Runoff"], answer:"A"},
+      {q:"The movement of water from the ground surface into the soil is called:", options:["Percolation","Infiltration","Runoff","Interception"], answer:"B"},
+      {q:"Infiltration helps to:", options:["Increase surface runoff only","Recharge groundwater and reduce flooding","Prevent evaporation","Increase atmospheric pressure"], answer:"B"},
+      {q:"The downward movement of infiltrated water through soil layers towards groundwater reservoirs is:", options:["Percolation","Interception","Transpiration","Runoff"], answer:"A"},
+      {q:"The portion of precipitation that flows over the land surface toward rivers, lakes and oceans is called:", options:["Infiltration","Surface runoff","Percolation","Groundwater flow"], answer:"B"},
+      {q:"Surface runoff is usually caused by:", options:["Low rainfall and dry soil","Heavy rainfall, impermeable surfaces, and saturated soil","High infiltration rates","Dense forest cover"], answer:"B"},
+      {q:"The movement of water through underground aquifers that supplies wells and springs is:", options:["Groundwater flow","Surface runoff","Interception","Evapotranspiration"], answer:"A"},
+      {q:"In the water balance equation P = ET + Q + ΔS, 'Q' represents:", options:["Precipitation","Evapotranspiration","Runoff","Change in storage"], answer:"C"},
+      {q:"In the water balance equation, ΔS represents:", options:["Precipitation","Change in storage","Evapotranspiration","Runoff"], answer:"B"},
+      {q:"Which factor affecting the water cycle relates to soil permeability and rock structure?", options:["Climatic factors","Topographical factors","Geological factors","Vegetation factors"], answer:"C"},
+      {q:"Which of the following is a topographical factor affecting the water cycle?", options:["Humidity","Elevation and slope","Forest cover","Deforestation"], answer:"B"},
+      {q:"Urbanization, deforestation, irrigation and dam construction are examples of which factor affecting the water cycle?", options:["Climatic factors","Geological factors","Human activities","Vegetation factors"], answer:"C"},
+      {q:"Which of the following is a climatic factor influencing the water cycle?", options:["Soil permeability","Temperature and wind speed","Forest cover","Dam construction"], answer:"B"},
+      {q:"Fresh water is renewable primarily through the:", options:["Carbon cycle","Hydrological cycle","Nitrogen cycle","Rock cycle"], answer:"B"},
+      {q:"Hydrological measurements are crucial mainly for:", options:["Predicting stock market trends","Understanding and managing water resources","Measuring air quality","Determining soil fertility only"], answer:"B"},
+      {q:"Which type of hydrological measurement quantifies the volume of water flowing through a specific point over time?", options:["Discharge measurement","Flow measurement","Water level measurement","Water quality measurement"], answer:"B"},
+      {q:"Discharge measurements are commonly taken using:", options:["Thermometers","Discharge gauges or weirs","Rain gauges","Hygrometers"], answer:"B"},
+      {q:"Water level measurements determine the:", options:["Rate at which water flows out of a lake","Height of the water surface in a water body","Chemical composition of water","Volume of dissolved oxygen"], answer:"B"},
+      {q:"Which instrument is used to measure turbidity in water quality assessment?", options:["Spectrophotometer","Turbidimeter","Anemometer","Barometer"], answer:"B"},
+      {q:"Hydrometry refers to the measurement of:", options:["Soil composition","Volume and flow rate of water","Air temperature","Wind direction"], answer:"B"},
+      {q:"Sediment trapping is used to determine:", options:["The temperature of a water body","The composition and properties of sediment samples","The pH of rainwater","Wind speed over a river"], answer:"B"},
+      {q:"Which of the following is NOT a common technique for measuring hydrological variables?", options:["Hydrometry","Water sampling","Sediment trapping","Seismography"], answer:"D"},
+      {q:"Data collection in hydrology involves gathering information from:", options:["Field measurements only","Field measurements, remote sensing, and literature reviews","Only satellite images","Only questionnaires"], answer:"B"},
+      {q:"Which data source involves direct measurement of water resources using instruments such as rain gauges and flowmeters?", options:["Remote sensing","Field measurements","Literature reviews","Surveys and questionnaires"], answer:"B"},
+      {q:"Remote sensing in hydrology primarily uses:", options:["Rain gauges and flowmeters","Satellite and aerial imagery","Interviews with farmers","Historical archives only"], answer:"B"},
+      {q:"Remote sensing is especially useful for estimating:", options:["Evapotranspiration and soil moisture","Groundwater pH only","Sediment colour","Discharge gauge calibration"], answer:"A"},
+      {q:"Literature reviews in hydrological data collection help to:", options:["Collect new field samples","Provide context and understanding of hydrological phenomena","Replace field measurements entirely","Measure river discharge directly"], answer:"B"},
+      {q:"Surveys and questionnaires in hydrological data collection are typically used to gather data from:", options:["Satellites","Stakeholders such as farmers and community members","Rain gauges","Groundwater aquifers"], answer:"B"},
+      {q:"Data analysis in hydrology involves the use of:", options:["Statistical and computational techniques","Only visual inspection","Guesswork","Manual counting only"], answer:"A"},
+      {q:"Descriptive statistics describe basic characteristics of data such as:", options:["Mean, median, and standard deviation","Satellite imagery resolution","Sediment colour","Cloud cover percentage"], answer:"A"},
+      {q:"Which type of statistics is used to make inferences about a population based on sample data?", options:["Descriptive statistics","Inferential statistics","Signal processing","Qualitative analysis"], answer:"B"},
+      {q:"Signal processing techniques such as filtering and spectral analysis are used to:", options:["Extract patterns from time-series data","Collect rainfall samples","Measure atmospheric pressure","Determine soil texture"], answer:"A"},
+      {q:"Data interpretation involves:", options:["Collecting raw data only","Understanding the meaning of results and applying them to real-world problems","Installing rain gauges","Calibrating anemometers"], answer:"B"},
+      {q:"Quantitative analysis in data interpretation focuses on:", options:["Non-numerical data such as text","Numerical values and statistical relationships","Only qualitative descriptions","Photographic images"], answer:"B"},
+      {q:"Qualitative analysis in data interpretation focuses mainly on:", options:["Numerical values","Statistical relationships only","Non-numerical data such as text and images","River discharge"], answer:"C"},
+      {q:"Combining multiple datasets and models to generate new insights is called:", options:["Descriptive statistics","Synthesis","Hydrometry","Sediment trapping"], answer:"B"},
+      {q:"Analyzing the relationship between precipitation and runoff mainly helps to:", options:["Predict flood events and inform water management","Determine soil colour","Estimate air pressure","Measure sunshine duration"], answer:"A"},
+      {q:"Analyzing groundwater recharge rates helps inform:", options:["Aquifer management and water supply planning","Cloud classification","Wind pattern analysis","Sediment trapping techniques"], answer:"A"},
+      {q:"Analyzing surface water flow patterns can inform:", options:["River management and habitat restoration","Solar radiation measurement","Atmospheric pressure trends","Soil fertility testing"], answer:"A"},
+      {q:"Errors in measurement or data collection that lead to inaccurate results are classified under:", options:["Modeling uncertainties","Data quality issues","Spatial variability","Emerging technologies"], answer:"B"},
+      {q:"The challenge where hydrological systems vary across location and time, making generalization difficult, is called:", options:["Data quality issues","Spatial and temporal variability","Modeling uncertainties","Signal processing limitation"], answer:"B"},
+      {q:"Modeling uncertainties in hydrology arise mainly due to:", options:["Excess field data","Non-linear relationships between variables","Too many rain gauges","Simple, linear systems"], answer:"B"},
+      {q:"Which of the following is identified as a future direction for hydrological measurement and data analysis?", options:["Elimination of remote sensing","Integration of IoT sensors, drones, and machine learning","Removal of statistical techniques","Reduction of field data collection"], answer:"B"},
+      {q:"Improving data quality and interoperability in hydrology involves developing:", options:["Standards for data sharing and using AI to reduce errors","More manual data entry","Fewer monitoring stations","Less collaboration between agencies"], answer:"A"},
+      {q:"Enhancing model complexity and resolution in hydrology aims to:", options:["Simplify all hydrological models","Capture the full range of hydrological phenomena","Eliminate the need for data","Reduce computational requirements to zero"], answer:"B"},
+      {q:"Which of the following best measures the physical, chemical and biological characteristics of water?", options:["Flow measurement","Water quality measurement","Discharge measurement","Water level measurement"], answer:"B"},
+      {q:"A DO meter is used to measure:", options:["pH","Turbidity","Dissolved oxygen levels","Temperature only"], answer:"C"},
+      {q:"Water sampling as a hydrological technique involves:", options:["Only visual observation of a river","Collection and analysis of water samples","Measuring wind speed","Estimating cloud cover"], answer:"B"},
+      {q:"Which of the following instruments would most likely be used in field measurements of hydrological data?", options:["Rain gauges, flowmeters, water level meters","Satellites only","Questionnaires only","Literature databases"], answer:"A"},
+      {q:"Emerging technologies being integrated into hydrological measurement include:", options:["IoT sensors, drones, and machine learning","Typewriters and paper maps only","Manual river wading only","Sundials"], answer:"A"},
+      {q:"The primary purpose of interpreting precipitation-runoff relationships is to:", options:["Predict floods and inform water management strategies","Measure sunshine duration","Classify soil types","Determine building material strength"], answer:"A"},
+      {q:"Which of the following data analysis techniques would be most appropriate for detecting patterns in a long-term streamflow time-series?", options:["Signal processing","Literature review","Water sampling","Sediment trapping"], answer:"A"},
+      {q:"A major limitation of hydrological data collection in developing regions is often:", options:["Excess funding","Data quality and availability issues","Too many monitoring stations","Overly simple hydrological systems"], answer:"B"},
+      {q:"The overall purpose of hydrological measurement, data collection, and analysis is to support:", options:["Agricultural export pricing only","Water resources management, flood/drought prediction, and ecosystem health","Urban housing design only","Political campaigning"], answer:"B"},
+      {q:"Integrated Water Resources Management (IWRM) is best defined as:", options:["A process focused solely on building dams","Coordinated development and management of water, land and related resources to maximize welfare without compromising ecosystems","A method for measuring rainfall only","A private industry water pricing scheme"], answer:"B"},
+      {q:"The Dublin Principles were adopted in:", options:["1977 in Mar del Plata","1992 in Rio de Janeiro","2000 in New York","2015 in Paris"], answer:"B"},
+      {q:"Which Dublin Principle states that fresh water is essential for sustaining life, development, and the environment?", options:["Freshwater is a finite and vulnerable resource","Participatory approach","Women's central role","Water as an economic good"], answer:"A"},
+      {q:"According to the Dublin Principles, water development should be based on a:", options:["Top-down, government-only approach","Participatory approach involving all stakeholders","Purely private-sector approach","Military-controlled approach"], answer:"B"},
+      {q:"The Dublin Principle on women's role states that:", options:["Women should be excluded from water governance","Women play a central part in providing, managing, and safeguarding water","Only men should manage water resources","Women's roles are irrelevant to water management"], answer:"B"},
+      {q:"Recognizing water as an economic good implies that:", options:["Water should never be priced","Water has economic value in all its competing uses","Only industries should pay for water","Basic human needs should not be protected"], answer:"B"},
+      {q:"Which of the following is a core element of IWRM under 'Enabling Environment'?", options:["River basin organisations","National water policies","Water audits","Public education campaigns"], answer:"B"},
+      {q:"Cross-sectoral coordination mechanisms such as inter-ministerial committees fall under which IWRM core element?", options:["Enabling Environment","Institutional Roles","Management Instruments","Water Regulation"], answer:"B"},
+      {q:"Water resources assessment, demand management tools, and conflict resolution mechanisms fall under which IWRM core element?", options:["Enabling Environment","Institutional Roles","Management Instruments","None of the above"], answer:"C"},
+      {q:"Traditional water management primarily focuses on:", options:["Demand reduction","Supply augmentation such as building dams and drilling wells","Water pricing only","Wastewater recycling only"], answer:"B"},
+      {q:"Water demand management encompasses actions that:", options:["Increase wasteful consumption","Improve efficiency of water use and reduce wasteful consumption","Focus only on building new dams","Eliminate agricultural water use"], answer:"B"},
+      {q:"Progressive water tariffs are designed to:", options:["Charge less per unit as consumption rises","Charge more per unit as consumption rises, incentivizing efficiency","Eliminate water charges entirely","Apply only to industrial users"], answer:"B"},
+      {q:"Lifeline tariffs are intended to:", options:["Increase cost for low-income users","Protect access to a basic water allocation","Eliminate metering","Encourage water wastage"], answer:"B"},
+      {q:"The single most effective urban water demand reduction tool, according to the material, is:", options:["Graywater recycling","Universal metering with accurate billing","Rainwater harvesting","Desalination"], answer:"B"},
+      {q:"Dual flush toilets can reduce per-flush water use by approximately:", options:["5-10%","20-30%","50-67%","90-100%"], answer:"C"},
+      {q:"Graywater recycling involves the reuse of:", options:["Water from toilets only","Lightly contaminated household water from sinks and showers","Seawater","Industrial wastewater only"], answer:"B"},
+      {q:"Agriculture accounts for approximately what percentage of global freshwater withdrawals?", options:["30%","50%","70%","90%"], answer:"C"},
+      {q:"Drip/trickle irrigation reduces water losses by approximately:", options:["10-20%","40-70%","80-90%","100%"], answer:"B"},
+      {q:"Deficit irrigation involves:", options:["Applying more water than the crop needs","Deliberately applying less water than full evapotranspiration demand at tolerant growth stages","Eliminating irrigation entirely","Only irrigating during the rainy season"], answer:"B"},
+      {q:"Water harvesting for agriculture involves:", options:["Capturing rainfall in ponds, check dams, or soil conservation structures","Drilling deep boreholes only","Desalinating seawater","Building large interbasin transfer canals"], answer:"A"},
+      {q:"Irrigation scheduling uses which of the following to determine when and where to apply water?", options:["Soil moisture sensors, evapotranspiration data, and weather forecasts","Random guessing","Fixed calendar dates only","Market prices of crops"], answer:"A"},
+      {q:"Reservoir storage as a water supply strategy is limited mainly by:", options:["Excess rainfall","Evaporation losses, especially in arid regions","Too much groundwater","Lack of dams"], answer:"B"},
+      {q:"Run-off river diversions differ from reservoir storage in that they:", options:["Involve large storage capacity","Directly abstract water without large storage, depending on seasonal flow","Only operate underground","Require desalination"], answer:"B"},
+      {q:"Interbasin transfers involve:", options:["Diverting water from water-rich to water-scarce basins","Storing water only within a single basin","Removing salts from seawater","Recharging aquifers artificially"], answer:"A"},
+      {q:"Managed Aquifer Recharge (MAR) involves:", options:["Draining aquifers permanently","Artificial injection or spreading of surface water into aquifers for later recovery","Building surface reservoirs only","Desalinating groundwater"], answer:"B"},
+      {q:"Conjunctive use in water supply management refers to:", options:["Using only groundwater sources","Coordinated surface and groundwater management, using each source when most available and cost-effective","Avoiding groundwater entirely","Interbasin transfer only"], answer:"B"},
+      {q:"Desalination is the process of:", options:["Adding salt to freshwater","Removing dissolved salts and impurities from saline water to produce freshwater","Filtering sediments from rivers","Increasing turbidity of water"], answer:"B"},
+      {q:"Wastewater reuse can be applied to all of the following EXCEPT:", options:["Agricultural irrigation","Industrial cooling","Groundwater recharge","Direct human consumption without any treatment"], answer:"D"},
+      {q:"Which water quality parameter category includes pH, hardness, and heavy metals?", options:["Physical","Chemical Inorganic","Chemical Organic","Microbiological"], answer:"B"},
+      {q:"BOD, COD, and pesticides fall under which water quality parameter category?", options:["Physical","Chemical Inorganic","Chemical Organic","Radiological"], answer:"C"},
+      {q:"E. coli (fecal coliforms) is a parameter under which water quality category?", options:["Physical","Chemical","Microbiological","Radiological"], answer:"C"},
+      {q:"Radon and radium are examples of parameters under which water quality category?", options:["Physical","Chemical Organic","Microbiological","Radiological"], answer:"D"},
+      {q:"Pollution discharged from a single, identifiable location is called:", options:["Non-point source pollution","Point source pollution","Diffuse pollution","Atmospheric pollution"], answer:"B"},
+      {q:"Non-point source pollution is:", options:["Easier to regulate than point source","Generated across a broad area and harder to regulate than point source","Only found in urban areas","Not related to agriculture"], answer:"B"},
+      {q:"Source protection as a water quality management strategy includes:", options:["Delineating wellhead protection areas","Constructing more dams","Increasing industrial discharge","Reducing monitoring"], answer:"A"},
+      {q:"Coagulation, sedimentation, filtration, and disinfection are steps in:", options:["Wastewater treatment for discharge","Drinking water treatment","Sediment trapping","Aquifer recharge"], answer:"B"},
+      {q:"Access to clean drinking water is most directly linked to:", options:["Reduced illness and mortality among children under five","Increased industrial output only","Higher rainfall totals","Reduced solar radiation"], answer:"A"},
+      {q:"Which of the following is an environmental importance of good water quality?", options:["Increased eutrophication","Protection of aquatic ecosystems","Reduced biodiversity","Decomposition failure"], answer:"B"},
+      {q:"Controlling nutrient pollution to reduce excessive algal growth helps prevent:", options:["Eutrophication","Desalination","Deficit irrigation","Percolation"], answer:"A"},
+      {q:"Which of the following best summarizes the goal of IWRM?", options:["Prioritizing economic uses of water above all else","Balancing economic, social, and environmental water needs sustainably","Focusing only on urban water supply","Eliminating agricultural water use"], answer:"B"},
+      {q:"Water policy encompasses:", options:["Only engineering designs for dams","Principles, objectives, and strategies guiding water resources development and management","Only weather forecasting techniques","Private company profit strategies"], answer:"B"},
+      {q:"An effective water policy must bridge:", options:["Only technical knowledge","Technical, economic, social, environmental, and political considerations","Only political feasibility","Only environmental sustainability"], answer:"B"},
+      {q:"Which of the following is part of a national water policy framework?", options:["Vision and objectives","Football league schedules","Currency exchange rates","Population census only"], answer:"A"},
+      {q:"Allocation priorities in national water policy typically place first priority on:", options:["Industrial uses","Basic human needs","Tourism","Mining"], answer:"B"},
+      {q:"According to typical allocation priorities, after basic human needs the next priority is usually:", options:["Economic uses","Ecological flows","Mining","Tourism"], answer:"B"},
+      {q:"Financing mechanisms for water infrastructure may include:", options:["Cost recovery, subsidies, public investment, and private participation","Only foreign aid","Only taxation","Elimination of all funding"], answer:"A"},
+      {q:"The Mar del Plata Action Plan, held in 1977, is significant because it:", options:["Established the Dublin Principles","Called for national water assessments and established the 'Water Decade'","Created the SDGs","Established the UNECE Water Convention"], answer:"B"},
+      {q:"The Dublin Statement on Water and Sustainable Development (1992) is significant for establishing:", options:["The Millennium Development Goals","The four Dublin Principles, foundational to IWRM","The UN Resolution on the human right to water","The Johannesburg Plan of Implementation"], answer:"B"},
+      {q:"The Millennium Development Goals (MDGs), adopted in 2000, aimed to:", options:["Eliminate all water usage globally","Halve the proportion of people without access to safe water and sanitation by 2015","Establish desalination as the primary water source","End international water treaties"], answer:"B"},
+      {q:"The Johannesburg Plan of Implementation (2002) called for:", options:["IWRM and Water Efficiency Plans by 2006","Elimination of groundwater use","The first global water conference","The UNECE Water Convention"], answer:"A"},
+      {q:"SDG 6 focuses on:", options:["Clean Water and Sanitation","Climate Action","No Poverty","Gender Equality"], answer:"A"},
+      {q:"SDG 6 aims to achieve universal access to safe water and sanitation, implement IWRM, and protect water-related ecosystems by:", options:["2020","2025","2030","2050"], answer:"C"},
+      {q:"UN Resolution A/RES/64/292 (2010) is significant for:", options:["Recognizing the human right to safe drinking water and sanitation","Establishing desalination standards","Creating the Dublin Principles","Establishing the MDGs"], answer:"A"},
+      {q:"The UNECE Water Convention is significant as a:", options:["Non-binding voluntary agreement","Legally binding convention on transboundary watercourses, later expanded to global membership","Regional agreement limited to Europe only","Purely advisory framework with no legal standing"], answer:"B"},
+      {q:"A water use license or permit grants:", options:["Unlimited abstraction of water from any source","Legal authorization to abstract a specific volume of water from a specific source under defined conditions","Permission to discharge pollutants without limits","Automatic access to groundwater without regulation"], answer:"B"},
+      {q:"A discharge permit (consent to discharge) sets:", options:["Maximum concentration and loads of pollutants allowed for effluent discharge","The price of drinking water","The volume of rainfall permitted","The height of dams"], answer:"A"},
+      {q:"Breach of a discharge permit typically leads to:", options:["No consequence","Enforcement action","Automatic permit renewal","Increased water allocation"], answer:"B"},
+      {q:"An Environmental Flow Requirement is a regulatory mandate to:", options:["Maximize water abstraction for industry","Maintain a minimum flow in rivers to sustain ecological functions and downstream users","Eliminate all river flow for storage","Increase pollution discharge limits"], answer:"B"},
+      {q:"South Africa's National Water Act (1998) introduced the concept of the:", options:["Ecological reserve","Water Decade","Dublin Principles","MDG framework"], answer:"A"},
+      {q:"Under South Africa's ecological reserve concept, which needs must be met before any allocation to economic uses?", options:["Industrial needs only","Ecological and basic human needs","Mining needs only","Tourism needs only"], answer:"B"},
+      {q:"Water Quality Standards may be derived from:", options:["Health-based guidelines, ecological toxicity, or technology-based limits","Only market prices","Only political considerations","Random selection"], answer:"A"},
+      {q:"Emerging technologies in hydrological modelling are centered on:", options:["AI/ML, remote sensing, IoT sensor networks, and cloud/quantum computing","Manual paper record-keeping only","Traditional rain gauges exclusively","Sundials and water clocks"], answer:"A"},
+      {q:"AI, machine learning, and deep learning are particularly useful in hydrology for capturing:", options:["Linear relationships only","Nonlinear hydrological relationships such as rainfall-runoff","Static, unchanging data","Historical archives only"], answer:"B"},
+      {q:"Explainable AI and transfer learning are important because they:", options:["Reduce model transparency","Improve transparency and let models adapt across regions with limited local data","Eliminate the need for data","Only work in a single region"], answer:"B"},
+      {q:"Remote sensing and non-traditional data assimilation expand model inputs beyond:", options:["Satellite imagery","Ground gauges, especially for large or data-scarce basins","Machine learning algorithms","Cloud computing resources"], answer:"B"},
+      {q:"IoT and advanced environmental sensors are making which of the following more practical?", options:["Historical data destruction","Near-real-time monitoring for forecasting and risk assessment","Manual paper-based record keeping","Elimination of ground stations"], answer:"B"},
+      {q:"Cloud and quantum computing are being explored in hydrology mainly to:", options:["Reduce data availability","Handle the growing computational load of integrated hydrological models","Eliminate the need for remote sensing","Replace field measurements entirely"], answer:"B"},
+      {q:"Hydrological modelling assists in which of the following areas?", options:["Flood forecasting and real-time warning systems","Only tourism planning","Only mining exploration","Only stock market prediction"], answer:"A"},
+      {q:"Which of the following is NOT listed as an area where hydrological modelling helps?", options:["Streamflow prediction and drought monitoring","Groundwater and surface water interaction modelling","Political election forecasting","Integrated watershed planning and climate adaptation"], answer:"C"},
+      {q:"A key limitation of hydrological modelling mentioned in the material is:", options:["Excess computational resources","Data scarcity, limited interpretability, and high cost of training complex models","Too much available data","Overly simple models"], answer:"B"},
+      {q:"Which international instrument specifically addresses gender representation in water governance?", options:["Mar del Plata Action Plan","Dublin Statement (Dublin Principles)","SDG 6","UNECE Water Convention"], answer:"B"},
+      {q:"The vision and objectives component of a national water policy typically includes goals such as:", options:["Universal access, sustainability, food security, flood safety","Only tourism development","Only mining regulation","Only urban infrastructure"], answer:"A"},
+      {q:"Institutional arrangement in a national water policy defines:", options:["Which agencies are responsible for aspects of water management and how they coordinate","The price of bottled water","The design of dams only","The chemical composition of rainwater"], answer:"A"},
+      {q:"International commitments in a national water policy relate to how a country implements obligations under:", options:["International treaties and global frameworks such as the SDGs","Local farming customs only","Regional agreements unrelated to water","National currency policy"], answer:"A"},
+      {q:"Which policy principle relates to fairness in how water benefits and burdens are distributed?", options:["Equity","Efficiency only","Profit maximization","Urbanization"], answer:"A"},
+      {q:"Regulatory instruments such as abstraction licenses and pollution discharge permits fall under which IWRM management category?", options:["Enabling Environment","Institutional Roles","Management Instruments","Financing strategies"], answer:"C"},
+      {q:"Which of the following best distinguishes a legally binding water instrument from an advisory one?", options:["Legally binding instruments carry enforceable obligations, unlike advisory ones","Advisory instruments are always followed strictly","There is no difference","Only advisory instruments matter"], answer:"A"},
+      {q:"The WHO plays a role in setting water quality standards primarily through:", options:["Health-based guidelines","Football regulations","Mining permits","Currency policy"], answer:"A"},
+      {q:"A country's obligation to protect water-related ecosystems by 2030 is a target under:", options:["SDG 6","Mar del Plata Action Plan","MDGs","UNECE Water Convention"], answer:"A"},
+      {q:"Overall, water policy and regulation aim primarily to:", options:["Guide sustainable, equitable development, allocation, protection and management of water resources","Maximize private profit only","Eliminate all water regulation","Focus solely on dam construction"], answer:"A"},
+      {q:"Weather refers to:", options:["The long-term average atmospheric condition of a region","The short-term condition of the atmosphere at a particular place and time","The permanent classification of a region's vegetation","The total rainfall over 30 years"], answer:"B"},
+      {q:"According to the WMO, weather is described with respect to variables such as:", options:["Temperature, rainfall, humidity, wind, pressure, cloud cover","Soil type and mineral content","Population and land use","Ocean salinity"], answer:"A"},
+      {q:"Which of the following is an example of weather rather than climate?", options:["Tropical rainforest climate","Thunderstorm this afternoon","Desert climate zone","Polar climate"], answer:"B"},
+      {q:"Weather is generally:", options:["Long-term and stable","Short-term, changes rapidly, and localized","Unchanging over decades","Predictable only over 30 years"], answer:"B"},
+      {q:"Temperature is measured using a:", options:["Rain gauge","Thermometer","Anemometer","Barometer"], answer:"B"},
+      {q:"Rainfall (precipitation) is measured using a:", options:["Hygrometer","Rain gauge","Sunshine recorder","Wind vane"], answer:"B"},
+      {q:"Humidity is measured using a:", options:["Hygrometer","Barometer","Thermometer","Anemometer"], answer:"A"},
+      {q:"Wind speed is measured using a(n):", options:["Wind vane","Anemometer","Barometer","Hygrometer"], answer:"B"},
+      {q:"Wind direction is measured using a:", options:["Anemometer","Wind vane","Sunshine recorder","Rain gauge"], answer:"B"},
+      {q:"Atmospheric pressure is measured using a barometer, in units of:", options:["Millimetres and litres","Millibar and Pascal","Degrees Celsius and Kelvin","Percentage"], answer:"B"},
+      {q:"Sunshine duration is measured using a:", options:["Sunshine recorder","Barometer","Hygrometer","Rain gauge"], answer:"A"},
+      {q:"Cloud cover refers to:", options:["The amount of water vapour in the air","The proportion of the sky covered by clouds","The speed of wind at cloud level","The temperature inside clouds"], answer:"B"},
+      {q:"Climate refers to:", options:["The short-term state of the atmosphere","The average weather conditions of a place over a long period, usually 30 years or more","A single day's rainfall total","The daily temperature reading"], answer:"B"},
+      {q:"According to the WMO, climate is the statistical description of weather conditions over a period of at least:", options:["5 years","10 years","30 years","100 years"], answer:"C"},
+      {q:"Which of the following is a characteristic of climate rather than weather?", options:["Highly variable","Changes hourly","Relatively stable and covers large geographical areas","Difficult to predict over a long period"], answer:"C"},
+      {q:"Nigeria generally experiences which two broad seasons?", options:["Spring and autumn","Wet season and dry season","Summer and winter","Monsoon and blizzard"], answer:"B"},
+      {q:"The United Kingdom is generally described as having a:", options:["Hot desert climate","Temperate maritime climate","Tropical rainforest climate","Polar climate"], answer:"B"},
+      {q:"Antarctica's climate is characterized by:", options:["High temperatures and heavy rainfall year-round","Extremely low temperatures and ice cover throughout most of the year","Moderate rainfall and four seasons","Hot summers and cold winters only"], answer:"B"},
+      {q:"The environment refers to:", options:["Only the atmosphere","Everything surrounding living organisms that influences their growth, survival and development","Only human-built structures","Only rainfall and temperature"], answer:"B"},
+      {q:"The environment includes:", options:["Only biotic components","Only abiotic components","Living (biotic) and non-living (abiotic) components","Only industrial components"], answer:"C"},
+      {q:"Air, water, soil, rocks, climate and sunlight are components of the:", options:["Biological Environment","Physical Environment","Human/Built Environment","Political environment"], answer:"B"},
+      {q:"Plants, animals, microorganisms and humans are components of the:", options:["Physical Environment","Biological Environment","Human/Built Environment","None of the above"], answer:"B"},
+      {q:"Roads, buildings, dams, industries and cities are components of the:", options:["Physical Environment","Biological Environment","Human or Built Environment","Atmospheric environment"], answer:"C"},
+      {q:"The Köppen Climate Classification system classifies climates mainly using:", options:["Temperature and rainfall patterns","Population size and industrial output","Soil type and mineral composition","Ocean depth and salinity"], answer:"A"},
+      {q:"Which climate type has high temperature year-round, heavy rainfall and dense vegetation?", options:["Tropical Climate","Dry Climate","Polar Climate","Continental Climate"], answer:"A"},
+      {q:"Cocoa, oil palm, rubber, rice and cassava are crops suitable for which climate type, found in Southern Nigeria, Brazil, and Indonesia?", options:["Dry Climate","Tropical Climate","Temperate Climate","Polar Climate"], answer:"B"},
+      {q:"Which climate type is characterized by very little rainfall, high evaporation and water scarcity, e.g. the Sahara Desert?", options:["Tropical Climate","Dry (Arid and Semi-Arid) Climate","Temperate Climate","Polar Climate"], answer:"B"},
+      {q:"Moderate temperature, four seasons, and moderate rainfall (e.g. UK, France, Germany) describe which climate type?", options:["Tropical Climate","Dry Climate","Temperate Climate","Polar Climate"], answer:"C"},
+      {q:"Hot summers, cold winters and large temperature differences (e.g. Russia, Canada) describe which climate type?", options:["Tropical Climate","Continental Climate","Polar Climate","Dry Climate"], answer:"B"},
+      {q:"Extremely cold with snow throughout most of the year and very little vegetation (e.g. Antarctica, Greenland) describes which climate type?", options:["Tropical Climate","Continental Climate","Temperate Climate","Polar Climate"], answer:"D"},
+      {q:"Latitude, as a driver of climate, primarily determines:", options:["The angle at which sunlight reaches the Earth","The volume of groundwater","The type of soil","The rate of deforestation"], answer:"A"},
+      {q:"The environmental lapse rate describes an approximate temperature decrease of about ___ per 1,000 metres of elevation.", options:["1°C","6.5°C","15°C","25°C"], answer:"B"},
+      {q:"Areas close to oceans generally experience:", options:["Greater temperature extremes and lower humidity","Moderate temperatures, higher humidity and more rainfall","No rainfall at all","Colder temperatures than inland areas at the same latitude"], answer:"B"},
+      {q:"Warm ocean currents tend to:", options:["Reduce temperature, humidity and rainfall","Increase temperature, humidity and rainfall","Have no effect on climate","Only affect polar regions"], answer:"B"},
+      {q:"The South-West Monsoon Wind in West Africa is significant because it:", options:["Brings rain","Causes the Harmattan","Increases desertification","Has no seasonal effect"], answer:"A"},
+      {q:"The North-East Trade Wind in West Africa is associated with:", options:["Heavy rainfall","The Harmattan (dry, dusty wind)","Ocean currents","Tropical cyclones"], answer:"B"},
+      {q:"Mountains influence rainfall through the orographic effect, causing heavy rainfall on the ___ side and a rain shadow on the ___ side.", options:["Leeward; windward","Windward; leeward","Northern; southern","Eastern; western"], answer:"B"},
+      {q:"Deforestation tends to:", options:["Increase rainfall and reduce temperature","Reduce rainfall, increase temperature, and promote erosion","Have no effect on climate","Only affect ocean currents"], answer:"B"},
+      {q:"Warm, wet conditions associated with certain climates increase the transmission of:", options:["Malaria","Only respiratory disease","Only cholera","Only typhoid"], answer:"A"},
+      {q:"Nigeria's three broad climatic zones, from south to north, are:", options:["Tropical Rainforest, Guinea Savannah, and Sudan/Sahel Savannah","Desert, Temperate, and Polar","Continental, Tropical, and Arid","Mediterranean, Tundra, and Monsoon"], answer:"A"}
+    ],
+    theory:[
+      {q:"Define Water Resources Management and explain its main objectives."},
+      {q:"Discuss the social, economic, environmental and climatic benefits of Water Resources Management."},
+      {q:"Explain any five challenges facing Water Resources Management in Nigeria."},
+      {q:"List and briefly describe five key institutions responsible for water resources management in Nigeria."},
+      {q:"With the aid of the water balance equation, describe the main processes of the water cycle."},
+      {q:"Explain the factors that affect the water cycle, giving examples under each category."},
+      {q:"Explain the different types of hydrological measurements, giving the instruments used for each."},
+      {q:"Describe the main sources of hydrological data collection."},
+      {q:"Differentiate between descriptive statistics and inferential statistics in hydrological data analysis."},
+      {q:"Discuss any three examples of hydrological data interpretation and their practical significance."},
+      {q:"Discuss the major challenges and limitations of hydrological data collection and analysis."},
+      {q:"Explain the future directions in hydrological measurement and data analysis, highlighting the role of emerging technologies."},
+      {q:"Define IWRM and explain the four Dublin Principles with their implications for water management."},
+      {q:"Discuss the three core elements of IWRM."},
+      {q:"Compare and contrast water demand management strategies in the urban and agricultural sectors."},
+      {q:"Discuss the major approaches to water supply management, covering surface water, groundwater, and alternative sources."},
+      {q:"Describe the water quality parameter categories and give two examples of parameters under each."},
+      {q:"Explain the strategies used in water quality management and discuss the importance of water quality to human health and the environment."},
+      {q:"Discuss the key components of a national water policy framework."},
+      {q:"Discuss any four international water policy instruments, stating their year and significance."},
+      {q:"Explain the different types of water regulation instruments, using examples."},
+      {q:"Explain the concept of the 'ecological reserve' as introduced by South Africa's National Water Act (1998)."},
+      {q:"Discuss the emerging technologies being applied in hydrological modelling and their contributions."},
+      {q:"Highlight the key limitations of hydrological modelling and suggest ways they could be addressed."},
+      {q:"Define weather and climate, and state five differences between them."},
+      {q:"Explain the concept of the environment and describe its three major components with examples."},
+      {q:"Discuss the major types of climate under the Köppen classification, giving characteristics and examples of regions for each."},
+      {q:"Explain at least seven factors (drivers) that influence climate."},
+      {q:"Discuss the importance of climate to agriculture, water resources, and human health."},
+      {q:"Describe Nigeria's three broad climatic zones and their characteristics."}
+    ]
   },
+
   "GST 112": { title:"GST 112 — Nigerian Peoples and Culture", eligible:"ALL",
     objective:[
       {q:"Nigeria gained independence from Britain in:", options:["1957","1960","1963","1970"], answer:"B"},
@@ -1185,7 +1157,7 @@ let state = {
   objAnswers:{}, objFlags:{}, objIndex:0,
   theoryAnswers:{}, theoryImages:{}, theoryIndex:0,
   objTimeLeft:0, theoryTimeLeft:0,
-  examStarted:false, warningCount:0
+  examStarted:false, warningCount:0, startedAt:0
 };
 let objInterval, theoryInterval;
 let activeObjectives = [], activeTheory = [];
@@ -1229,9 +1201,9 @@ function fmtDuration(ms){
   if(m>0) return `${m}m ${s}s`;
   return `${s}s`;
 }
-function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&lt;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c)); }
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c)); }
 
-/* ===================== CUSTOM MODAL (replaces native confirm/alert) ===================== */
+/* ===================== CUSTOM MODAL ===================== */
 let modalResolve = null;
 function openModal({title, message, confirmText='OK', cancelText=null}){
   return new Promise(resolve => {
@@ -1247,23 +1219,30 @@ function openModal({title, message, confirmText='OK', cancelText=null}){
 $('modal-confirm').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(true); });
 $('modal-cancel').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(false); });
 
-/* ===================== DEPARTMENT / COURSE SETUP ===================== */
+/* ===================== DEPARTMENT / COURSE SETUP (FIXED) ===================== */
 function populateDepartments(){
   const sel = $('in-dept');
+  sel.innerHTML = '<option value="">Select your department</option>';
   Object.keys(FACULTIES).forEach(fac => {
-    const header = document.createElement('option');
-    header.disabled = true; header.value = ''; header.textContent = '━━ ' + fac + ' ━━';
-    sel.appendChild(header);
+    const group = document.createElement('optgroup');
+    group.label = fac;
     FACULTIES[fac].forEach(dep => {
-      const opt = document.createElement('option'); opt.value = dep; opt.textContent = dep; sel.appendChild(opt);
+      const opt = document.createElement('option');
+      opt.value = dep;
+      opt.textContent = dep;
+      group.appendChild(opt);
     });
+    sel.appendChild(group);
   });
 }
+
 function facultyOf(dep){
   for(const fac in FACULTIES){ if(FACULTIES[fac].includes(dep)) return fac; }
   return null;
 }
+
 function courseEligible(course, dep){
+  if(!course || !dep) return false;
   if(course.eligible === 'ALL') return true;
   if(typeof course.eligible === 'string' && course.eligible.startsWith('FACULTY:')){
     return course.eligible.slice(8) === facultyOf(dep);
@@ -1271,6 +1250,7 @@ function courseEligible(course, dep){
   if(Array.isArray(course.eligible)) return course.eligible.includes(dep);
   return false;
 }
+
 $('in-dept').addEventListener('change', () => {
   const dep = $('in-dept').value;
   const courseSel = $('in-course');
@@ -1280,7 +1260,10 @@ $('in-dept').addEventListener('change', () => {
   courseSel.innerHTML = '<option value="">Select a course</option>';
   Object.keys(COURSES).forEach(code => {
     if(courseEligible(COURSES[code], dep)){
-      const opt = document.createElement('option'); opt.value = code; opt.textContent = COURSES[code].title; courseSel.appendChild(opt);
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = COURSES[code].title;
+      courseSel.appendChild(opt);
     }
   });
   validateGate();
@@ -1347,7 +1330,8 @@ function setupAntiCheat(){
   document.addEventListener('keydown', e => {
     if(!state.examStarted) return;
     if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) || (e.ctrlKey && e.key.toLowerCase()==='u')){
-      e.preventDefault(); openModal({title:'Not allowed', message:'Developer tools are not allowed during the exam.', confirmText:'OK'});
+      e.preventDefault();
+      openModal({title:'Not allowed', message:'Developer tools are not allowed during the exam.', confirmText:'OK'});
     }
   });
   document.addEventListener('visibilitychange', () => {
@@ -1386,7 +1370,9 @@ function checkForResume(){
 }
 $('btn-discard').addEventListener('click', () => { localStorage.removeItem('fuadsi_cbt_progress'); hide('resume-banner'); });
 $('btn-resume').addEventListener('click', () => {
-  const saved = JSON.parse(localStorage.getItem('fuadsi_cbt_progress'));
+  let saved;
+  try{ saved = JSON.parse(localStorage.getItem('fuadsi_cbt_progress')); }catch(e){ return; }
+  if(!saved || !saved.state) return;
   state = saved.state; activeObjectives = saved.activeObjectives; activeTheory = saved.activeTheory;
   const elapsed = Math.floor((Date.now() - saved.savedAt)/1000);
   if(state.section === 'objective') state.objTimeLeft = Math.max(0, state.objTimeLeft - elapsed);
@@ -1477,7 +1463,7 @@ function finishObjectives(){
   clearInterval(objInterval);
   document.getElementById('screen-objectives').style.display='none';
   state.section = 'theory';
-  state.examStarted = false; /* pause monitoring between sections */
+  state.examStarted = false;
   autosave();
   show('screen-transition'); window.scrollTo({top:0});
 }
@@ -1651,14 +1637,12 @@ function showResults(){
     department: state.department, course: COURSES[state.course].title,
     objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
     theorySubmitted: true,
-    totalScore: pct, /* theory isn't auto-graded, so total score currently mirrors the objective score */
+    totalScore: pct,
     timeSpent: state.startedAt ? fmtDuration(Date.now() - state.startedAt) : '',
     theoryAnswers: JSON.stringify(activeTheory.map((q,i) => ({
       question: q.q, answer: state.theoryAnswers[i] || '',
       hasImage: !!(state.theoryImages && state.theoryImages[i])
     }))),
-    /* Photos are sent separately (index + compressed base64) so the backend can
-       upload each to Drive and swap it for a link before writing to the sheet. */
     theoryImages: activeTheory.map((q,i) => (state.theoryImages && state.theoryImages[i])
       ? { index: i, dataUrl: state.theoryImages[i] } : null).filter(Boolean)
   });
