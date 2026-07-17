@@ -172,6 +172,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 }
 @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -607,7 +608,7 @@ const COURSES = {
     /* ===== WEEK 1: Water Resources Management & Water Cycle (Q1-40) ===== */
     {q:"An instrument used to measure atmospheric pressure is called a:", options:["Rain gauge","Barometer","Anemometer","Hygrometer"], answer:"B"},
     {q:"The main source of freshwater on Earth is:", options:["Oceans","Glaciers and groundwater","Seawater","Salt lakes"], answer:"B"},
-    {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"}
+    {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"},
     {q:"Which of the following best defines 'Water Resources'?", options:["Only rivers and lakes","Sources of water that are useful to humans and ecosystems","Only groundwater sources","Water used exclusively for irrigation"], answer:"B"},
     {q:"Which of the following is NOT listed among the types of water resources?", options:["Surface water","Groundwater","Reclaimed and recycled water","Seawater ice caps"], answer:"D"},
     {q:"Water Resources Management (WRM) is defined as the coordinated development and management of:", options:["Land and water only","Land, water and related resources","Only groundwater resources","Rainfall records"], answer:"B"},
@@ -855,11 +856,6 @@ const COURSES = {
     {q:"Describe Nigeria's three broad climatic zones and their characteristics."}
   ]
   },
-    ],
-    theory:[
-      {q:"Explain the importance of weather forecasting to agricultural planning."},
-      {q:"Discuss two methods of irrigation commonly used in Nigerian agriculture."}
-    ]},
   "GST 112": { title:"GST 112 — Nigerian Peoples and Culture", eligible:"ALL",
     objective:[
       {q:"Nigeria gained independence from Britain in:", options:["1957","1960","1963","1970"], answer:"B"},
@@ -1015,11 +1011,12 @@ $('modal-cancel').addEventListener('click', () => { $('modal-overlay').classList
 function populateDepartments(){
   const sel = $('in-dept');
   Object.keys(FACULTIES).forEach(fac => {
-    const group = document.createElement('optgroup'); group.label = fac;
+    const header = document.createElement('option');
+    header.disabled = true; header.value = ''; header.textContent = '━━ ' + fac + ' ━━';
+    sel.appendChild(header);
     FACULTIES[fac].forEach(dep => {
-      const opt = document.createElement('option'); opt.value = dep; opt.textContent = dep; group.appendChild(opt);
+      const opt = document.createElement('option'); opt.value = dep; opt.textContent = dep; sel.appendChild(opt);
     });
-    sel.appendChild(group);
   });
 }
 function facultyOf(dep){
