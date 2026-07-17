@@ -73,6 +73,11 @@ button:active{ transform:translateY(1px); }
 .plan-box .v{ font-family:'IBM Plex Mono', monospace; font-size:16px; margin:4px 0 10px; color:var(--forest-dark); }
 .plan-box select{ width:100%; padding:9px 10px; border:1px solid var(--gold); border-radius:8px; font-family:'IBM Plex Mono', monospace; font-size:13.5px; background:#fff; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236E7568' d='M1 1l5 5 5-5' stroke='%236E7568' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; padding-right:30px;}
 
+.count-selector{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
+.count-selector input[type=range]{ flex:1; min-width:120px; accent-color:var(--forest); }
+.count-selector .count-display{ font-family:'IBM Plex Mono', monospace; font-size:18px; font-weight:600; color:var(--forest); min-width:40px; text-align:center; background:var(--forest-tint); padding:4px 10px; border-radius:8px; }
+.count-hint{ font-size:12px; color:var(--stone); margin-top:4px; }
+
 .examtop{ position:sticky; top:0; z-index:20; background:rgba(250,248,242,.97); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:12px 18px;}
 .examtop-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
 .examtop .who{ font-size:12.5px; color:var(--stone); }
@@ -164,6 +169,11 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 .modal .mbtns{ display:flex; gap:10px; }
 .modal .mbtns button{ flex:1; }
 
+.new-course-card{ background:var(--forest-tint); border:1px solid var(--forest); border-radius:var(--radius); padding:20px; margin-top:20px; text-align:center; }
+.new-course-card h3{ color:var(--forest-dark); font-size:18px; margin-bottom:8px; }
+.new-course-card p{ color:var(--stone); font-size:13.5px; margin-bottom:14px; }
+.new-course-card .btn-row{ justify-content:center; margin-top:0; }
+
 @media (max-width:720px){
   .examgrid{ grid-template-columns:1fr; }
   .navcard{ position:static; order:2; }
@@ -248,21 +258,40 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div class="plan-box">
         <div class="k">Section A · Objectives</div>
         <div class="v" id="plan-obj-count">—</div>
-        <select id="sel-obj-time">
-          <option value="15">15 minutes</option>
-          <option value="30" selected>30 minutes</option>
-          <option value="45">45 minutes</option>
-          <option value="60">60 minutes</option>
-          <option value="90">90 minutes</option>
-          <option value="120">120 minutes</option>
-          <option value="150">150 minutes</option>
-          <option value="180">180 minutes</option>
-        </select>
+        <div class="field" style="margin-bottom:0;">
+          <label style="font-size:12px; margin-bottom:4px;">Number of questions (10–200)</label>
+          <div class="count-selector">
+            <input type="range" id="range-obj-count" min="10" max="200" value="30" step="1">
+            <span class="count-display" id="display-obj-count">30</span>
+          </div>
+          <div class="count-hint">Drag to select how many objective questions you want</div>
+        </div>
+        <div class="field" style="margin-top:10px; margin-bottom:0;">
+          <label for="sel-obj-time">Duration</label>
+          <select id="sel-obj-time">
+            <option value="15">15 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="45">45 minutes</option>
+            <option value="60">60 minutes</option>
+            <option value="90">90 minutes</option>
+            <option value="120">120 minutes</option>
+            <option value="150">150 minutes</option>
+            <option value="180">180 minutes</option>
+          </select>
+        </div>
       </div>
       <div class="plan-box">
         <div class="k">Section B · Theory</div>
         <div class="v" id="plan-theory-count">—</div>
-        <div class="field-hint" style="margin-top:0;">Set on the next screen, right before Section B starts.</div>
+        <div class="field" style="margin-bottom:0;">
+          <label style="font-size:12px; margin-bottom:4px;">Number of questions (3–30)</label>
+          <div class="count-selector">
+            <input type="range" id="range-theory-count" min="3" max="30" value="5" step="1">
+            <span class="count-display" id="display-theory-count">5</span>
+          </div>
+          <div class="count-hint">Drag to select how many theory questions you want</div>
+        </div>
+        <div class="field-hint" style="margin-top:10px;">Duration is set on the next screen, right before Section B starts.</div>
       </div>
     </div>
     <ul class="rules">
@@ -407,6 +436,14 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
     <h2 style="font-size:19px; margin-bottom:16px;">Submitted for manual grading</h2>
     <div id="review-theory"></div>
   </div>
+
+  <div class="new-course-card">
+    <h3>Take Another Course</h3>
+    <p>Want to practice another course? You can start a new exam session right away.</p>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="primary" id="btn-new-course">Select New Course</button>
+    </div>
+  </div>
 </div>
 
 <div class="autosave-toast" id="autosave-toast"><span class="dotpulse"></span><span>Progress saved</span></div>
@@ -431,6 +468,10 @@ const CONFIG = {
   passMark: 55,
   defaultObjectiveDraw: 30,
   defaultTheoryDraw: 5,
+  minObjective: 10,
+  maxObjective: 200,
+  minTheory: 3,
+  maxTheory: 30,
   sheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec'
 };
 
@@ -450,105 +491,242 @@ const FACULTIES = {
   ]
 };
 
-/* ===================== COURSES ==========================
-   eligible: "ALL" | "FACULTY:<faculty name>" | [array of exact department names]
-   =========================================================== */
+/* ===================== COURSES ========================== */
 const COURSES = {
   "MTH 102": { title:"MTH 102 — Elementary Mathematics II (Calculus)", eligible:"ALL",
-    drawObjective: 30, drawTheory: 5,
     objective:[
-      {q:"Which of the following is an irrational number?", options:["0.75","7/5","√3","-3"], answer:"C"},
-      {q:"The real number system is the union of:", options:["Even and odd numbers","Rational and irrational numbers","Positive and negative numbers","Integers and decimals"], answer:"B"},
-      {q:"Which property states that a + b = b + a for all real numbers a, b?", options:["Associative","Distributive","Commutative","Closure"], answer:"C"},
-      {q:"If a > b and c > 0, then:", options:["ac < bc","ac = bc","ac > bc","a/c < b/c"], answer:"C"},
-      {q:"A function f: A → B assigns to every element of A:", options:["At least one element of B","Exactly one element of B","No element of B","All elements of B"], answer:"B"},
-      {q:"The domain of f(x) = 1/x is:", options:["All real numbers","All real numbers except 0","Only positive numbers","Only negative numbers"], answer:"B"},
-      {q:"The range of f(x) = x² is:", options:["All real numbers","(-∞, 0]","[0, ∞)","(0, ∞)"], answer:"C"},
-      {q:"The graph of f(x) = c (a constant) is:", options:["A vertical line","A horizontal line","A parabola","A straight line through the origin"], answer:"B"},
-      {q:"A curve represents a function if and only if:", options:["Every horizontal line cuts it at most once","Every vertical line cuts it at most once","It passes through the origin","It is symmetric about the y-axis"], answer:"B"},
-      {q:"The graph of f(x) = x³ is called a:", options:["Parabola","Cubic curve","Straight line","Hyperbola"], answer:"B"},
-      {q:"The graph of f(x) = |x| has its vertex (turning point) at:", options:["(1, 0)","(0, 1)","(0, 0)","(-1, 0)"], answer:"C"},
-      {q:"Which function has a graph consisting of two separate branches?", options:["f(x) = x²","f(x) = 1/x","f(x) = x","f(x) = |x|"], answer:"B"},
-      {q:"A function is injective if:", options:["f(x1) = f(x2) implies x1 = x2","Every element of the codomain has a preimage","The range equals the codomain","It has two inverses"], answer:"A"},
-      {q:"The function f(x) = x² defined on all of R is NOT injective because:", options:["It is not defined at x = 0","f(2) = f(-2) but 2 ≠ -2","Its graph is a straight line","It has no derivative"], answer:"B"},
-      {q:"A function f: A → B is surjective if:", options:["f(A) = B","f(A) is strictly smaller than B","A = B","f is one-to-one"], answer:"A"},
-      {q:"The horizontal line test is used to check whether a function is:", options:["Continuous","Injective","Surjective","Differentiable"], answer:"B"},
-      {q:"A function that is both injective and surjective is called:", options:["Linear","Bijective","Constant","Periodic"], answer:"B"},
-      {q:"Only a __________ function has an inverse that is also a function.", options:["constant","linear","bijective","quadratic"], answer:"C"},
-      {q:"If f(x) = 2x + 1 and g(x) = x², then (g∘f)(x) equals:", options:["2x² + 1","(2x+1)²","2x² + 2x + 1","4x² + 1"], answer:"B"},
-      {q:"Composition of functions is:", options:["Always commutative","Generally not commutative","The same as addition","Only defined for linear functions"], answer:"B"},
-      {q:"The composite function g∘f is defined when:", options:["The domain of f equals the range of g","The range of f is contained in the domain of g","f and g have the same domain","f is always linear"], answer:"B"},
-      {q:"If f(x) = x - 3 and g(x) = √x, then (g∘f)(x) is defined only when:", options:["x ≤ 3","x ≥ 3","x ≠ 3","x is any real number"], answer:"B"},
-      {q:"A function has an inverse if and only if it is:", options:["Continuous","Bijective","Differentiable","Defined on all of R"], answer:"B"},
-      {q:"If f(x) = 2x + 3, then f⁻¹(x) equals:", options:["(x-3)/2","2x - 3","(x+3)/2","x/2 - 3"], answer:"A"},
-      {q:"If f(x) = x³, then f⁻¹(x) equals:", options:["x²","1/x³","the cube root of x","3x"], answer:"C"},
-      {q:"To find the inverse of a function, the first step after writing y = f(x) is to:", options:["Differentiate both sides","Interchange x and y","Integrate both sides","Set y = 0"], answer:"B"},
-      {q:"A sequence {an} converges to L if:", options:["an = L for all n","For every ε>0 there exists N such that |an − L| < ε whenever n > N","an is always increasing","an is bounded above only"], answer:"B"},
-      {q:"The limit of the sequence an = 1/n as n → ∞ is:", options:["1","∞","0","Undefined"], answer:"C"},
-      {q:"A sequence is a function whose domain is:", options:["The real numbers","The natural numbers","The rational numbers","The complex numbers"], answer:"B"},
-      {q:"lim(x→2) (3x + 1) equals:", options:["5","6","7","8"], answer:"C"},
-      {q:"lim(x→1) (x² − 1)/(x − 1) equals:", options:["0","1","2","Undefined"], answer:"C"},
-      {q:"According to the ε-δ definition, lim(x→a) f(x) = L means for every ε > 0 there exists δ > 0 such that whenever 0 < |x − a| < δ, then:", options:["|f(x)| < ε","|f(x) − L| < ε","|x − a| < ε","f(x) = L"], answer:"B"},
-      {q:"The Sum Law of limits states that lim(x→a)[f(x) + g(x)] equals:", options:["L − M","L × M","L + M","L/M"], answer:"C"},
-      {q:"The Quotient Law for limits requires that:", options:["M = 0","M ≠ 0","L = 0","L = M"], answer:"B"},
-      {q:"lim(x→a) c, where c is a constant, equals:", options:["0","a","c","Undefined"], answer:"C"},
-      {q:"A function f is continuous at a if:", options:["f(a) exists only","lim(x→a) f(x) exists only","lim(x→a) f(x) = f(a)","f is differentiable at a"], answer:"C"},
-      {q:"A function with a 'hole' or 'jump' at a point is said to be:", options:["Continuous","Differentiable","Discontinuous","Bijective"], answer:"C"},
-      {q:"Geometrically, a function is continuous at a point if its graph:", options:["Has a sharp corner there","Can be drawn without lifting the pen at that point","Crosses the x-axis there","Is a straight line"], answer:"B"},
-      {q:"If f(2) = 5 but lim(x→2) f(x) = 4, then f is:", options:["Continuous at x = 2","Discontinuous at x = 2","Differentiable at x = 2","Bijective at x = 2"], answer:"B"},
-      {q:"The Intermediate Value Theorem applies to functions that are:", options:["Differentiable on an open interval","Continuous on a closed interval","Bijective","Constant"], answer:"B"},
-      {q:"If f(1) = -3 and f(3) = 5, by the IVT, f(c) = 0 for some c in:", options:["(1, 3)","(-3, 5)","(0, 1)","(3, 5)"], answer:"A"},
-      {q:"The Extreme Value Theorem guarantees that a continuous function on a closed interval:", options:["Has no maximum or minimum","Attains both a maximum and a minimum value","Is always increasing","Has an inverse"], answer:"B"},
-      {q:"The Extreme Value Theorem requires the interval to be:", options:["Open","Closed and bounded","Infinite","A single point"], answer:"B"},
-      {q:"The derivative f'(a) is defined as the limit as h → 0 of:", options:["[f(a+h) + f(a)]/h","[f(a+h) − f(a)]/h","f(a+h) × f(a)","f(a)/h"], answer:"B"},
-      {q:"Geometrically, f'(a) represents the slope of the:", options:["Secant line","Tangent line at (a, f(a))","x-axis","y-axis"], answer:"B"},
-      {q:"If s(t) is the position of a particle, then s'(t) represents:", options:["Displacement","Velocity","Acceleration","Time"], answer:"B"},
-      {q:"The second derivative of displacement with respect to time represents:", options:["Velocity","Acceleration","Position","Distance"], answer:"B"},
-      {q:"Differentiability at a point implies:", options:["The function is discontinuous there","The function is continuous there","The function is unbounded","Nothing about continuity"], answer:"B"},
-      {q:"The derivative of a constant is:", options:["1","The constant itself","0","Undefined"], answer:"C"},
-      {q:"Using the power rule, d/dx(x⁷) equals:", options:["7x⁶","x⁶","6x⁷","7x⁸"], answer:"A"},
-      {q:"d/dx(4x³) equals:", options:["4x²","12x²","12x³","4x⁴"], answer:"B"},
-      {q:"The Product Rule states that if y = uv, then dy/dx equals:", options:["u'v'","u(dv/dx) + v(du/dx)","u(dv/dx) − v(du/dx)","(u dv/dx)/(v du/dx)"], answer:"B"},
-      {q:"The Quotient Rule for y = u/v gives dy/dx equal to:", options:["(u'v + uv')/v²","(v·u' − u·v')/v²","u'v'","(u' − v')/v"], answer:"B"},
-      {q:"The Chain Rule is used to differentiate:", options:["A sum of two functions","A composite function","A constant","An inverse function only"], answer:"B"},
-      {q:"Using the chain rule, d/dx (3x+1)⁵ equals:", options:["5(3x+1)⁴","15(3x+1)⁴","5(3x+1)⁵","3(3x+1)⁴"], answer:"B"},
-      {q:"Implicit differentiation is used when:", options:["y is explicitly given in terms of x","y is not isolated on one side of the equation","The function is a constant","The function has no derivative"], answer:"B"},
-      {q:"Logarithmic differentiation is especially useful for functions of the form:", options:["y = mx + c","y = xˣ","y = x²","y = c"], answer:"B"},
-      {q:"For parametric equations x = f(t), y = g(t), dy/dx is computed as:", options:["(dy/dt) × (dx/dt)","(dy/dt)/(dx/dt)","(dx/dt)/(dy/dt)","dy/dt + dx/dt"], answer:"B"},
-      {q:"If x = t² and y = t³, then dy/dx equals:", options:["3t/2","2t/3","3t²","2t"], answer:"A"},
-      {q:"A critical point of a function occurs where:", options:["f(x) = 0","f'(x) = 0 or f'(x) does not exist","f''(x) = 0","f is undefined everywhere"], answer:"B"},
-      {q:"For f(x) = x² − 4x + 3, the critical point occurs at:", options:["x = 1","x = 2","x = 3","x = 4"], answer:"B"},
-      {q:"Integration is the inverse process of:", options:["Addition","Differentiation","Multiplication","Limits"], answer:"B"},
-      {q:"∫3x² dx equals:", options:["x³","x³ + C","3x + C","x² + C"], answer:"B"},
-      {q:"The technique used for ∫2x(x²+1)³ dx by letting u = x²+1 is called:", options:["Integration by parts","Substitution method","Partial fractions","Trigonometric substitution"], answer:"B"},
-      {q:"Integration by parts is based on the formula:", options:["∫u dv = uv − ∫v du","∫u dv = uv + ∫v du","∫u dv = u/v","∫u dv = u + v"], answer:"A"},
-      {q:"The method of partial fractions is mainly used for integrating:", options:["Trigonometric functions","Rational functions","Exponential functions","Constant functions"], answer:"B"},
-      {q:"∫sin x dx equals:", options:["cos x + C","−cos x + C","sin x + C","−sin x + C"], answer:"B"},
-      {q:"Trigonometric substitution is typically used when the integrand involves:", options:["Products of polynomials","Square roots of expressions like 1 − x²","Logarithms","Constants only"], answer:"B"},
-      {q:"The definite integral ∫[a to b] f(x) dx represents:", options:["The derivative of f at b","The area under the curve from a to b","The slope of f at a","The maximum value of f"], answer:"B"},
-      {q:"By the Fundamental Theorem of Calculus, ∫[a to b] f(x) dx equals:", options:["F(a) − F(b)","F(b) − F(a)","F(a) + F(b)","F(b) × F(a)"], answer:"B"},
-      {q:"∫[0 to 2] 3x² dx equals:", options:["6","8","4","12"], answer:"B"},
-      {q:"∫[a to a] f(x) dx equals:", options:["1","f(a)","0","Undefined"], answer:"C"},
-      {q:"Reversing the limits of a definite integral:", options:["Doubles its value","Changes its sign","Has no effect","Makes it zero"], answer:"B"},
-      {q:"The area between two curves f(x) and g(x), where f(x) ≥ g(x) on [a,b], is given by:", options:["∫[a to b] f(x)g(x) dx","∫[a to b] [f(x) − g(x)] dx","∫[a to b] [f(x)+g(x)] dx","f(b) − g(a)"], answer:"B"},
-      {q:"The Disk Method for volumes of revolution about the x-axis uses the formula:", options:["V = π∫[a to b] f(x) dx","V = π∫[a to b] [f(x)]² dx","V = ∫[a to b] f(x) dx","V = 2π∫[a to b] f(x) dx"], answer:"B"},
-      {q:"The area under y = x² from x = 0 to x = 2 is:", options:["4/3","8/3","2","4"], answer:"B"}
+      {q:"Which of the following is an irrational number?", options:["0.75", "7/5", "√3", "-3"], answer:"C"},
+      {q:"The real number system is the union of:", options:["Even and odd numbers", "Rational and irrational numbers", "Positive and negative numbers", "Integers and decimals"], answer:"B"},
+      {q:"Which property states that a + b = b + a for all real numbers a, b?", options:["Associative", "Distributive", "Commutative", "Closure"], answer:"C"},
+      {q:"If a > b and c > 0, then:", options:["ac < bc", "ac = bc", "ac > bc", "a/c < b/c"], answer:"C"},
+      {q:"The distributive law states that a(b + c) equals:", options:["ab + c", "a + bc", "ab + ac", "abc"], answer:"C"},
+      {q:"Which of the following is a rational number?", options:["π", "√2", "3/4", "e"], answer:"C"},
+      {q:"The closure property of real numbers states that:", options:["a + b is always irrational", "a + b ∈ ℝ and ab ∈ ℝ", "a + b is always rational", "ab is always irrational"], answer:"B"},
+      {q:"If a > b, then a + c > b + c for any real c. This illustrates:", options:["Commutative property", "Associative property", "Order property", "Closure property"], answer:"C"},
+      {q:"The absolute value |x| is defined as:", options:["Always positive", "x if x ≥ 0, -x if x < 0", "Always negative", "x²"], answer:"B"},
+      {q:"For any real number x, |x| ≥ 0. This is the:", options:["Zero property", "Non-negativity property", "Multiplicative property", "Triangle inequality"], answer:"B"},
+      {q:"The triangle inequality states that |a + b| is:", options:["Equal to |a| + |b|", "Less than or equal to |a| + |b|", "Greater than |a| + |b|", "Equal to |a| - |b|"], answer:"B"},
+      {q:"The reverse triangle inequality states that ||a| - |b|| is:", options:["Greater than |a - b|", "Less than or equal to |a - b|", "Equal to |a + b|", "Equal to |a| + |b|"], answer:"B"},
+      {q:"If |f(x)| = 0, then:", options:["f(x) = 1", "f(x) = 0", "f(x) = -1", "f(x) is undefined"], answer:"B"},
+      {q:"The property |f(x)g(x)| = |f(x)||g(x)| is called:", options:["Triangle inequality", "Multiplicative property", "Non-negativity", "Zero property"], answer:"B"},
+      {q:"Which number is NOT a real number?", options:["-5", "0.333...", "√(-1)", "π"], answer:"C"},
+      {q:"The associative law states that (a + b) + c equals:", options:["a + (b + c)", "(a + c) + b", "a + b + c + 1", "a(b + c)"], answer:"A"},
+      {q:"If a > b and c < 0, then ac is:", options:["Greater than bc", "Equal to bc", "Less than bc", "Undefined"], answer:"C"},
+      {q:"The set ℝ includes all EXCEPT:", options:["Integers", "Fractions", "Complex numbers", "Irrational numbers"], answer:"C"},
+      {q:"√2 is irrational because:", options:["It is negative", "It cannot be expressed as a ratio of integers", "It is a decimal", "It is greater than 1"], answer:"B"},
+      {q:"For the function f(x) = x² - 4, |f(x)| when -2 < x < 2 equals:", options:["x² - 4", "4 - x²", "x² + 4", "-(x² - 4)"], answer:"B"},
+      {q:"The order property a > b implies a - b is:", options:["Negative", "Zero", "Positive", "Undefined"], answer:"C"},
+      {q:"If |x - 3| < 2, then x lies in the interval:", options:["(1, 5)", "(3, 5)", "(1, 3)", "(-1, 5)"], answer:"A"},
+      {q:"The multiplicative identity in real numbers is:", options:["0", "1", "-1", "∞"], answer:"B"},
+      {q:"The additive identity in real numbers is:", options:["1", "0", "-1", "∞"], answer:"B"},
+      {q:"If a × b = 0 for real numbers a and b, then:", options:["a = 0 and b = 0", "a = 0 or b = 0", "a = b = 1", "a = b = -1"], answer:"B"},
+      {q:"A function f: A → B assigns to every element of A:", options:["At least one element of B", "Exactly one element of B", "No element of B", "All elements of B"], answer:"B"},
+      {q:"The domain of f(x) = 1/x is:", options:["All real numbers", "All real numbers except 0", "Only positive numbers", "Only negative numbers"], answer:"B"},
+      {q:"The range of f(x) = x² is:", options:["All real numbers", "(-∞, 0]", "[0, ∞)", "(0, ∞)"], answer:"C"},
+      {q:"The graph of f(x) = c (a constant) is:", options:["A vertical line", "A horizontal line", "A parabola", "A straight line through the origin"], answer:"B"},
+      {q:"A curve represents a function if and only if:", options:["Every horizontal line cuts it at most once", "Every vertical line cuts it at most once", "It passes through the origin", "It is symmetric about the y-axis"], answer:"B"},
+      {q:"The graph of f(x) = x³ is called a:", options:["Parabola", "Cubic curve", "Straight line", "Hyperbola"], answer:"B"},
+      {q:"The graph of f(x) = |x| has its vertex at:", options:["(1, 0)", "(0, 1)", "(0, 0)", "(-1, 0)"], answer:"C"},
+      {q:"Which function has a graph consisting of two separate branches?", options:["f(x) = x²", "f(x) = 1/x", "f(x) = x", "f(x) = |x|"], answer:"B"},
+      {q:"The domain of f(x) = ln(x) is:", options:["x > 0", "x ≥ 0", "All real numbers", "x < 0"], answer:"A"},
+      {q:"The range of f(x) = eˣ is:", options:["(0, ∞)", "[0, ∞)", "(-∞, ∞)", "(-∞, 0)"], answer:"A"},
+      {q:"The y-intercept of f(x) = 2x + 3 is:", options:["2", "3", "-3/2", "0"], answer:"B"},
+      {q:"The x-intercept of f(x) = 2x + 3 is:", options:["2", "3", "-3/2", "0"], answer:"C"},
+      {q:"The graph of f(x) = x² opens:", options:["Upward", "Downward", "To the right", "To the left"], answer:"A"},
+      {q:"The graph of f(x) = -x² opens:", options:["Upward", "Downward", "To the right", "To the left"], answer:"B"},
+      {q:"The exponential function f(x) = 2ˣ passes through the point:", options:["(0, 0)", "(0, 1)", "(1, 0)", "(-1, 1)"], answer:"B"},
+      {q:"The logarithmic function f(x) = ln(x) passes through:", options:["(0, 0)", "(1, 0)", "(0, 1)", "(e, 0)"], answer:"B"},
+      {q:"For f(x) = 1/x, the horizontal asymptote is:", options:["x = 0", "y = 0", "y = 1", "x = 1"], answer:"B"},
+      {q:"For f(x) = 1/x, the vertical asymptote is:", options:["x = 0", "y = 0", "y = 1", "x = 1"], answer:"A"},
+      {q:"The identity function f(x) = x has a slope of:", options:["0", "1", "-1", "Undefined"], answer:"B"},
+      {q:"A linear function f(x) = mx + c has slope:", options:["c", "m", "m + c", "1/m"], answer:"B"},
+      {q:"The quadratic function f(x) = ax² + bx + c has its vertex at x =:", options:["-b/2a", "-b/a", "b/2a", "-2b/a"], answer:"A"},
+      {q:"The axis of symmetry of f(x) = x² - 4x + 3 is:", options:["x = 1", "x = 2", "x = 3", "x = 4"], answer:"B"},
+      {q:"The function f(x) = x³ is symmetric about:", options:["The x-axis", "The y-axis", "The origin", "The line y = x"], answer:"C"},
+      {q:"The function f(x) = x² is symmetric about:", options:["The x-axis", "The y-axis", "The origin", "The line y = x"], answer:"B"},
+      {q:"The function f(x) = |x| is symmetric about:", options:["The x-axis", "The y-axis", "The origin", "The line y = x"], answer:"B"},
+      {q:"For f(x) = eˣ, as x → -∞, f(x) approaches:", options:["∞", "0", "1", "-∞"], answer:"B"},
+      {q:"For f(x) = ln(x), as x → 0⁺, f(x) approaches:", options:["0", "1", "-∞", "∞"], answer:"C"},
+      {q:"The function f(x) = 1/x is:", options:["Even", "Odd", "Neither", "Both"], answer:"B"},
+      {q:"The function f(x) = x² is:", options:["Even", "Odd", "Neither", "Both"], answer:"A"},
+      {q:"The function f(x) = x³ is:", options:["Even", "Odd", "Neither", "Both"], answer:"B"},
+      {q:"A function is injective if:", options:["f(x₁) = f(x₂) implies x₁ = x₂", "Every element of the codomain has a preimage", "The range equals the codomain", "It has two inverses"], answer:"A"},
+      {q:"The function f(x) = x² defined on all of ℝ is NOT injective because:", options:["It is not defined at x = 0", "f(2) = f(-2) but 2 ≠ -2", "Its graph is a straight line", "It has no derivative"], answer:"B"},
+      {q:"A function f: A → B is surjective if:", options:["f(A) = B", "f(A) is strictly smaller than B", "A = B", "f is one-to-one"], answer:"A"},
+      {q:"The horizontal line test is used to check whether a function is:", options:["Continuous", "Injective", "Surjective", "Differentiable"], answer:"B"},
+      {q:"A function that is both injective and surjective is called:", options:["Linear", "Bijective", "Constant", "Periodic"], answer:"B"},
+      {q:"Only a __________ function has an inverse that is also a function.", options:["constant", "linear", "bijective", "quadratic"], answer:"C"},
+      {q:"If f(x) = 2x + 1 and g(x) = x², then (g∘f)(x) equals:", options:["2x² + 1", "(2x+1)²", "2x² + 2x + 1", "4x² + 1"], answer:"B"},
+      {q:"Composition of functions is:", options:["Always commutative", "Generally not commutative", "The same as addition", "Only defined for linear functions"], answer:"B"},
+      {q:"The composite function g∘f is defined when:", options:["The domain of f equals the range of g", "The range of f is contained in the domain of g", "f and g have the same domain", "f is always linear"], answer:"B"},
+      {q:"If f(x) = x - 3 and g(x) = √x, then (g∘f)(x) is defined only when:", options:["x ≤ 3", "x ≥ 3", "x ≠ 3", "x is any real number"], answer:"B"},
+      {q:"A function has an inverse if and only if it is:", options:["Continuous", "Bijective", "Differentiable", "Defined on all of ℝ"], answer:"B"},
+      {q:"If f(x) = 2x + 3, then f⁻¹(x) equals:", options:["(x-3)/2", "2x - 3", "(x+3)/2", "x/2 - 3"], answer:"A"},
+      {q:"If f(x) = x³, then f⁻¹(x) equals:", options:["x²", "1/x³", "the cube root of x", "3x"], answer:"C"},
+      {q:"To find the inverse of a function, the first step after writing y = f(x) is to:", options:["Differentiate both sides", "Interchange x and y", "Integrate both sides", "Set y = 0"], answer:"B"},
+      {q:"If f: ℝ → ℝ defined by f(x) = 3x + 2 is:", options:["Only injective", "Only surjective", "Bijective", "Neither"], answer:"C"},
+      {q:"The function f(x) = x³ from ℝ to ℝ is:", options:["Only injective", "Only surjective", "Bijective", "Neither"], answer:"C"},
+      {q:"The function f(x) = x² from ℝ to [0, ∞) is:", options:["Injective but not surjective", "Surjective but not injective", "Bijective", "Neither"], answer:"B"},
+      {q:"If (f∘g)(x) = f(g(x)), then f is applied:", options:["First", "Second", "Simultaneously", "Not at all"], answer:"B"},
+      {q:"For f(x) = x² and g(x) = 3x + 4, (f∘g)(x) equals:", options:["3x² + 4", "(3x + 4)²", "9x² + 4", "3x² + 12x + 16"], answer:"B"},
+      {q:"For f(x) = x² and g(x) = 3x + 4, (g∘f)(x) equals:", options:["3x² + 4", "(3x + 4)²", "9x² + 4", "3x² + 12x + 16"], answer:"A"},
+      {q:"The condition for g∘f to exist is:", options:["Range of f ⊆ Domain of g", "Domain of f ⊆ Range of g", "f and g have same domain", "f and g have same range"], answer:"A"},
+      {q:"If f is bijective, then f⁻¹∘f equals:", options:["f", "f⁻¹", "Identity function", "Zero function"], answer:"C"},
+      {q:"If f is bijective, then f∘f⁻¹ equals:", options:["f", "f⁻¹", "Identity function", "Zero function"], answer:"C"},
+      {q:"The inverse of f(x) = (x-1)/(x+2) is:", options:["(x+1)/(x-2)", "-(1+2x)/(x-1)", "(1-x)/(x+2)", "(x+2)/(x-1)"], answer:"B"},
+      {q:"A function f: A → B is one-to-one if:", options:["f(A) = B", "f(x₁) ≠ f(x₂) whenever x₁ ≠ x₂", "B has one element", "A has one element"], answer:"B"},
+      {q:"The function f(x) = 2x - 3 from ℝ to ℝ is:", options:["Only injective", "Only surjective", "Bijective", "Neither"], answer:"C"},
+      {q:"For surjective functions, the range equals:", options:["The domain", "The codomain", "A subset of the codomain", "The empty set"], answer:"B"},
+      {q:"If f(x) = eˣ, then f⁻¹(x) =:", options:["eˣ", "ln(x)", "1/eˣ", "-eˣ"], answer:"B"},
+      {q:"If f(x) = ln(x), then f⁻¹(x) =:", options:["ln(x)", "eˣ", "1/x", "x/e"], answer:"B"},
+      {q:"A sequence {aₙ} converges to L if:", options:["aₙ = L for all n", "For every ε>0 there exists N such that |aₙ − L| < ε whenever n > N", "aₙ is always increasing", "aₙ is bounded above only"], answer:"B"},
+      {q:"The limit of the sequence aₙ = 1/n as n → ∞ is:", options:["1", "∞", "0", "Undefined"], answer:"C"},
+      {q:"A sequence is a function whose domain is:", options:["The real numbers", "The natural numbers", "The rational numbers", "The complex numbers"], answer:"B"},
+      {q:"lim(x→2) (3x + 1) equals:", options:["5", "6", "7", "8"], answer:"C"},
+      {q:"lim(x→1) (x² − 1)/(x − 1) equals:", options:["0", "1", "2", "Undefined"], answer:"C"},
+      {q:"According to the ε-δ definition, lim(x→a) f(x) = L means for every ε > 0 there exists δ > 0 such that whenever 0 < |x − a| < δ, then:", options:["|f(x)| < ε", "|f(x) − L| < ε", "|x − a| < ε", "f(x) = L"], answer:"B"},
+      {q:"The Sum Law of limits states that lim(x→a)[f(x) + g(x)] equals:", options:["L − M", "L × M", "L + M", "L/M"], answer:"C"},
+      {q:"The Quotient Law for limits requires that:", options:["M = 0", "M ≠ 0", "L = 0", "L = M"], answer:"B"},
+      {q:"lim(x→a) c, where c is a constant, equals:", options:["0", "a", "c", "Undefined"], answer:"C"},
+      {q:"lim(x→0) sin(x)/x equals:", options:["0", "1", "∞", "Undefined"], answer:"B"},
+      {q:"lim(x→∞) 1/x equals:", options:["0", "1", "∞", "Undefined"], answer:"A"},
+      {q:"lim(x→0) (1 - cos(x))/x equals:", options:["0", "1", "∞", "Undefined"], answer:"A"},
+      {q:"The sequence aₙ = (-1)ⁿ is:", options:["Convergent", "Divergent", "Monotonic", "Bounded and convergent"], answer:"B"},
+      {q:"The sequence aₙ = n/(n+1) converges to:", options:["0", "1", "∞", "1/2"], answer:"B"},
+      {q:"lim(x→3) (x² - 9)/(x - 3) equals:", options:["0", "3", "6", "Undefined"], answer:"C"},
+      {q:"lim(x→4) (2x² - 5x + 3) equals:", options:["15", "16", "17", "18"], answer:"A"},
+      {q:"lim(x→2) (x² + x - 6)/(x - 2) equals:", options:["0", "3", "5", "Undefined"], answer:"C"},
+      {q:"The Power Law states lim(x→a) [f(x)]ⁿ equals:", options:["L + n", "L × n", "Lⁿ", "nᴸ"], answer:"C"},
+      {q:"The Constant Multiple Law states lim(x→a) [cf(x)] equals:", options:["c + L", "c × L", "L/c", "c - L"], answer:"B"},
+      {q:"lim(x→0⁺) 1/x equals:", options:["0", "1", "∞", "-∞"], answer:"C"},
+      {q:"lim(x→0⁻) 1/x equals:", options:["0", "1", "∞", "-∞"], answer:"D"},
+      {q:"If lim(x→a) f(x) = L and lim(x→a) g(x) = M, then lim(x→a) [f(x) - g(x)] equals:", options:["L + M", "L - M", "L × M", "L/M"], answer:"B"},
+      {q:"The Product Law states lim(x→a) [f(x)g(x)] equals:", options:["L + M", "L - M", "L × M", "L/M"], answer:"C"},
+      {q:"lim(x→∞) (3x² + 2x - 1)/(x² + 5) equals:", options:["0", "1", "3", "∞"], answer:"C"},
+      {q:"lim(x→∞) (2x + 1)/(3x - 2) equals:", options:["0", "2/3", "1", "∞"], answer:"B"},
+      {q:"If a sequence is bounded and monotonic, then it is:", options:["Divergent", "Convergent", "Periodic", "Constant"], answer:"B"},
+      {q:"The sequence aₙ = 1 + 1/n converges to:", options:["0", "1", "2", "∞"], answer:"B"},
+      {q:"lim(x→0) (eˣ - 1)/x equals:", options:["0", "1", "e", "∞"], answer:"B"},
+      {q:"lim(x→0) (ln(1+x))/x equals:", options:["0", "1", "e", "∞"], answer:"B"},
+      {q:"A function f is continuous at a if:", options:["f(a) exists only", "lim(x→a) f(x) exists only", "lim(x→a) f(x) = f(a)", "f is differentiable at a"], answer:"C"},
+      {q:"A function with a 'hole' or 'jump' at a point is said to be:", options:["Continuous", "Differentiable", "Discontinuous", "Bijective"], answer:"C"},
+      {q:"Geometrically, a function is continuous at a point if its graph:", options:["Has a sharp corner there", "Can be drawn without lifting the pen at that point", "Crosses the x-axis there", "Is a straight line"], answer:"B"},
+      {q:"If f(2) = 5 but lim(x→2) f(x) = 4, then f is:", options:["Continuous at x = 2", "Discontinuous at x = 2", "Differentiable at x = 2", "Bijective at x = 2"], answer:"B"},
+      {q:"The Intermediate Value Theorem applies to functions that are:", options:["Differentiable on an open interval", "Continuous on a closed interval", "Bijective", "Constant"], answer:"B"},
+      {q:"If f(1) = -3 and f(3) = 5, by the IVT, f(c) = 0 for some c in:", options:["(1, 3)", "(-3, 5)", "(0, 1)", "(3, 5)"], answer:"A"},
+      {q:"The Extreme Value Theorem guarantees that a continuous function on a closed interval:", options:["Has no maximum or minimum", "Attains both a maximum and a minimum value", "Is always increasing", "Has an inverse"], answer:"B"},
+      {q:"The Extreme Value Theorem requires the interval to be:", options:["Open", "Closed and bounded", "Infinite", "A single point"], answer:"B"},
+      {q:"Differentiability at a point implies:", options:["The function is discontinuous there", "The function is continuous there", "The function is unbounded", "Nothing about continuity"], answer:"B"},
+      {q:"If f is continuous on [a,b] and f(a)f(b) < 0, then by IVT:", options:["f has no root in (a,b)", "f has at least one root in (a,b)", "f is constant", "f is not continuous"], answer:"B"},
+      {q:"The function f(x) = x² is continuous:", options:["Only at x = 0", "Only for x > 0", "For all x ∈ ℝ", "Only for rational x"], answer:"C"},
+      {q:"The function f(x) = 1/x is discontinuous at:", options:["x = 1", "x = 0", "x = -1", "All x"], answer:"B"},
+      {q:"A removable discontinuity occurs when:", options:["lim(x→a) f(x) does not exist", "lim(x→a) f(x) exists but ≠ f(a)", "f(a) does not exist and limit does not exist", "f is unbounded near a"], answer:"B"},
+      {q:"A jump discontinuity occurs when:", options:["Left and right limits exist and are equal", "Left and right limits exist but are different", "Limit is infinite", "Function is undefined"], answer:"B"},
+      {q:"The function f(x) = |x|/x for x ≠ 0 has a:", options:["Removable discontinuity at 0", "Jump discontinuity at 0", "Infinite discontinuity at 0", "Is continuous at 0"], answer:"B"},
+      {q:"If f is differentiable at x = a, then f is:", options:["Continuous at a", "Discontinuous at a", "Not defined at a", "Unbounded at a"], answer:"A"},
+      {q:"The converse 'continuous implies differentiable' is:", options:["Always true", "Sometimes true", "Never true", "True for polynomials only"], answer:"B"},
+      {q:"f(x) = |x| is continuous at x = 0 but:", options:["Differentiable at 0", "Not differentiable at 0", "Undefined at 0", "Has a removable discontinuity at 0"], answer:"B"},
+      {q:"For IVT, if f is continuous on [1,2] and f(1) = 1, f(2) = 8, then f attains:", options:["Only values 1 and 8", "All values between 1 and 8", "Only integer values", "No values between 1 and 8"], answer:"B"},
+      {q:"The function f(x) = x³ - x - 1 has a root between:", options:["0 and 1", "1 and 2", "2 and 3", "-1 and 0"], answer:"B"},
+      {q:"For EVT on [0, 2π], f(x) = sin(x) attains maximum at:", options:["x = 0", "x = π/2", "x = π", "x = 3π/2"], answer:"B"},
+      {q:"For EVT on [0, 2π], f(x) = sin(x) attains minimum at:", options:["x = 0", "x = π/2", "x = π", "x = 3π/2"], answer:"D"},
+      {q:"A polynomial function is continuous:", options:["Only on closed intervals", "Only on open intervals", "Everywhere on ℝ", "Only for positive x"], answer:"C"},
+      {q:"The composition of continuous functions is:", options:["Always discontinuous", "Always continuous", "Sometimes continuous", "Never continuous"], answer:"B"},
+      {q:"If f and g are continuous at a, then f + g is:", options:["Discontinuous at a", "Continuous at a", "Undefined at a", "Differentiable at a"], answer:"B"},
+      {q:"The derivative f'(a) is defined as the limit as h → 0 of:", options:["[f(a+h) + f(a)]/h", "[f(a+h) − f(a)]/h", "f(a+h) × f(a)", "f(a)/h"], answer:"B"},
+      {q:"Geometrically, f'(a) represents the slope of the:", options:["Secant line", "Tangent line at (a, f(a))", "x-axis", "y-axis"], answer:"B"},
+      {q:"If s(t) is the position of a particle, then s'(t) represents:", options:["Displacement", "Velocity", "Acceleration", "Time"], answer:"B"},
+      {q:"The second derivative of displacement with respect to time represents:", options:["Velocity", "Acceleration", "Position", "Distance"], answer:"B"},
+      {q:"The derivative of a constant is:", options:["1", "The constant itself", "0", "Undefined"], answer:"C"},
+      {q:"Using the power rule, d/dx(x⁷) equals:", options:["7x⁶", "x⁶", "6x⁷", "7x⁸"], answer:"A"},
+      {q:"d/dx(4x³) equals:", options:["4x²", "12x²", "12x³", "4x⁴"], answer:"B"},
+      {q:"The Product Rule states that if y = uv, then dy/dx equals:", options:["u'v'", "u(dv/dx) + v(du/dx)", "u(dv/dx) − v(du/dx)", "(u dv/dx)/(v du/dx)"], answer:"B"},
+      {q:"The Quotient Rule for y = u/v gives dy/dx equal to:", options:["(u'v + uv')/v²", "(v·u' − u·v')/v²", "u'v'", "(u' − v')/v"], answer:"B"},
+      {q:"The Chain Rule is used to differentiate:", options:["A sum of two functions", "A composite function", "A constant", "An inverse function only"], answer:"B"},
+      {q:"Using the chain rule, d/dx (3x+1)⁵ equals:", options:["5(3x+1)⁴", "15(3x+1)⁴", "5(3x+1)⁵", "3(3x+1)⁴"], answer:"B"},
+      {q:"Implicit differentiation is used when:", options:["y is explicitly given in terms of x", "y is not isolated on one side of the equation", "The function is a constant", "The function has no derivative"], answer:"B"},
+      {q:"Logarithmic differentiation is especially useful for functions of the form:", options:["y = mx + c", "y = xˣ", "y = x²", "y = c"], answer:"B"},
+      {q:"For parametric equations x = f(t), y = g(t), dy/dx is computed as:", options:["(dy/dt) × (dx/dt)", "(dy/dt)/(dx/dt)", "(dx/dt)/(dy/dt)", "dy/dt + dx/dt"], answer:"B"},
+      {q:"If x = t² and y = t³, then dy/dx equals:", options:["3t/2", "2t/3", "3t²", "2t"], answer:"A"},
+      {q:"A critical point of a function occurs where:", options:["f(x) = 0", "f'(x) = 0 or f'(x) does not exist", "f''(x) = 0", "f is undefined everywhere"], answer:"B"},
+      {q:"For f(x) = x² − 4x + 3, the critical point occurs at:", options:["x = 1", "x = 2", "x = 3", "x = 4"], answer:"B"},
+      {q:"d/dx(sin x) equals:", options:["cos x", "-cos x", "-sin x", "sin x"], answer:"A"},
+      {q:"d/dx(cos x) equals:", options:["sin x", "-sin x", "cos x", "-cos x"], answer:"B"},
+      {q:"d/dx(tan x) equals:", options:["sec² x", "-sec² x", "cot x", "-cot x"], answer:"A"},
+      {q:"d/dx(eˣ) equals:", options:["eˣ", "xeˣ⁻¹", "ln(x)", "1/eˣ"], answer:"A"},
+      {q:"d/dx(ln x) equals:", options:["1/x", "x", "eˣ", "ln(x)/x"], answer:"A"},
+      {q:"d/dx(aˣ) equals:", options:["aˣ", "aˣ ln(a)", "xaˣ⁻¹", "1/(aˣ ln a)"], answer:"B"},
+      {q:"If y = x²(x+1), using product rule, dy/dx equals:", options:["x² + 2x(x+1)", "3x² + 2x", "2x² + x", "x² + x"], answer:"B"},
+      {q:"If y = (x²+1)/x, using quotient rule, dy/dx equals:", options:["(x²-1)/x²", "(2x²-x²-1)/x²", "(x²+1)/x²", "2x/x²"], answer:"B"},
+      {q:"For x² + y² = 25, dy/dx equals:", options:["x/y", "-x/y", "y/x", "-y/x"], answer:"B"},
+      {q:"At point (3,4) on x² + y² = 25, dy/dx equals:", options:["3/4", "-3/4", "4/3", "-4/3"], answer:"B"},
+      {q:"For y = xˣ, dy/dx equals:", options:["xˣ", "xˣ(1 + ln x)", "xˣ⁻¹", "xˣ ln x"], answer:"B"},
+      {q:"For parametric x = cos t, y = sin t, dy/dx equals:", options:["tan t", "-tan t", "cot t", "-cot t"], answer:"D"},
+      {q:"For parametric x = eᵗ, y = t²+1, dy/dx equals:", options:["2t/eᵗ", "2t·eᵗ", "eᵗ/2t", "t²/eᵗ"], answer:"A"},
+      {q:"The second derivative d²y/dx² for parametric x = t², y = t³ equals:", options:["3/4t", "3t/2", "3/2", "3t²/4"], answer:"A"},
+      {q:"If s(t) = t³ - 6t² + 9t, the velocity v(t) equals:", options:["3t² - 12t + 9", "t³ - 6t² + 9", "6t - 12", "3t² - 6t"], answer:"A"},
+      {q:"If s(t) = t³ - 6t² + 9t, the acceleration a(t) equals:", options:["3t² - 12t + 9", "6t - 12", "6", "t - 2"], answer:"B"},
+      {q:"The particle with s(t) = t³ - 6t² + 9t is at rest when:", options:["t = 0", "t = 1 and t = 3", "t = 2", "t = 0 and t = 3"], answer:"B"},
+      {q:"d/dx(sin⁻¹x) equals:", options:["1/√(1-x²)", "-1/√(1-x²)", "1/(1+x²)", "-1/(1+x²)"], answer:"A"},
+      {q:"d/dx(tan⁻¹x) equals:", options:["1/√(1-x²)", "1/(1+x²)", "-1/(1+x²)", "1/(1-x²)"], answer:"B"},
+      {q:"d/dx(cosh x) equals:", options:["sinh x", "-sinh x", "cosh x", "-cosh x"], answer:"A"},
+      {q:"d/dx(sinh x) equals:", options:["cosh x", "sinh x", "-cosh x", "-sinh x"], answer:"A"},
+      {q:"If f(x) = (2x+1)⁴, then f'(x) equals:", options:["4(2x+1)³", "8(2x+1)³", "4(2x+1)⁴", "8(2x+1)⁴"], answer:"B"},
+      {q:"If y = ln(x²+1), then dy/dx equals:", options:["1/(x²+1)", "2x/(x²+1)", "x/(x²+1)", "2/(x²+1)"], answer:"B"},
+      {q:"If y = e^(x²), then dy/dx equals:", options:["e^(x²)", "2x·e^(x²)", "x·e^(x²)", "2e^(x²)"], answer:"B"},
+      {q:"For f(x) = x³ - 3x² + 2, f''(x) equals:", options:["3x² - 6x", "6x - 6", "6", "3x - 3"], answer:"B"},
+      {q:"A function has a local maximum where f'(x) = 0 and:", options:["f''(x) > 0", "f''(x) < 0", "f''(x) = 0", "f''(x) is undefined"], answer:"B"},
+      {q:"A function has a local minimum where f'(x) = 0 and:", options:["f''(x) > 0", "f''(x) < 0", "f''(x) = 0", "f''(x) is undefined"], answer:"A"},
+      {q:"For f(x) = x³, x = 0 is a:", options:["Local maximum", "Local minimum", "Point of inflection", "Not a critical point"], answer:"C"},
+      {q:"The function f(x) = x⁴ has a:", options:["Local max at x=0", "Local min at x=0", "Point of inflection at x=0", "No critical point at x=0"], answer:"B"},
+      {q:"If f(x) = x³ - 3x, the local maximum occurs at:", options:["x = -1", "x = 0", "x = 1", "x = 2"], answer:"A"},
+      {q:"Integration is the inverse process of:", options:["Addition", "Differentiation", "Multiplication", "Limits"], answer:"B"},
+      {q:"∫3x² dx equals:", options:["x³", "x³ + C", "3x + C", "x² + C"], answer:"B"},
+      {q:"The technique used for ∫2x(x²+1)³ dx by letting u = x²+1 is called:", options:["Integration by parts", "Substitution method", "Partial fractions", "Trigonometric substitution"], answer:"B"},
+      {q:"Integration by parts is based on the formula:", options:["∫u dv = uv − ∫v du", "∫u dv = uv + ∫v du", "∫u dv = u/v", "∫u dv = u + v"], answer:"A"},
+      {q:"The method of partial fractions is mainly used for integrating:", options:["Trigonometric functions", "Rational functions", "Exponential functions", "Constant functions"], answer:"B"},
+      {q:"∫sin x dx equals:", options:["cos x + C", "−cos x + C", "sin x + C", "−sin x + C"], answer:"B"},
+      {q:"Trigonometric substitution is typically used when the integrand involves:", options:["Products of polynomials", "Square roots of expressions like 1 − x²", "Logarithms", "Constants only"], answer:"B"},
+      {q:"The definite integral ∫[a to b] f(x) dx represents:", options:["The derivative of f at b", "The area under the curve from a to b", "The slope of f at a", "The maximum value of f"], answer:"B"},
+      {q:"By the Fundamental Theorem of Calculus, ∫[a to b] f(x) dx equals:", options:["F(a) − F(b)", "F(b) − F(a)", "F(a) + F(b)", "F(b) × F(a)"], answer:"B"},
+      {q:"∫[0 to 2] 3x² dx equals:", options:["6", "8", "4", "12"], answer:"B"},
+      {q:"∫[a to a] f(x) dx equals:", options:["1", "f(a)", "0", "Undefined"], answer:"C"},
+      {q:"Reversing the limits of a definite integral:", options:["Doubles its value", "Changes its sign", "Has no effect", "Makes it zero"], answer:"B"},
+      {q:"The area between two curves f(x) and g(x), where f(x) ≥ g(x) on [a,b], is given by:", options:["∫[a to b] f(x)g(x) dx", "∫[a to b] [f(x) − g(x)] dx", "∫[a to b] [f(x)+g(x)] dx", "f(b) − g(a)"], answer:"B"},
+      {q:"The Disk Method for volumes of revolution about the x-axis uses the formula:", options:["V = π∫[a to b] f(x) dx", "V = π∫[a to b] [f(x)]² dx", "V = ∫[a to b] f(x) dx", "V = 2π∫[a to b] f(x) dx"], answer:"B"},
+      {q:"The area under y = x² from x = 0 to x = 2 is:", options:["4/3", "8/3", "2", "4"], answer:"B"}
     ],
     theory:[
       {q:"State the definition of a function and explain the difference between its domain and codomain."},
       {q:"Distinguish between injective, surjective and bijective functions, giving one example of each."},
       {q:"Given f(x) = 2x + 1 and g(x) = x² − 3, find (f∘g)(x) and (g∘f)(x), and state whether composition of functions is commutative."},
       {q:"Find the inverse of f(x) = (x − 1)/(x + 2), showing all steps."},
+      {q:"Explain the classification of real numbers and give two examples each of rational and irrational numbers."},
       {q:"Using the ε-δ definition, show that lim(x→2)(3x − 1) = 5."},
+      {q:"State and prove the Sum Law and Product Law of limits."},
+      {q:"Evaluate lim(x→3) (x² - 9)/(x - 3) and explain your method."},
+      {q:"Using the ε-δ definition, prove that lim(x→a) x = a."},
+      {q:"Evaluate lim(x→∞) (3x² + 2x - 1)/(x² + 5) and show all working."},
       {q:"Explain what it means for a function to be continuous at a point, and give an example of a function that is discontinuous at a point, clearly showing why."},
       {q:"State the Intermediate Value Theorem and use it to show that x³ − x − 1 = 0 has a root between x = 1 and x = 2."},
+      {q:"State and explain the Extreme Value Theorem, including the conditions required for it to hold."},
+      {q:"Prove that if f is differentiable at x = a, then f is continuous at x = a. Is the converse true? Justify your answer."},
+      {q:"Discuss the different types of discontinuities (removable, jump, infinite) with examples for each."},
       {q:"Differentiate y = x²(x + 1) using the product rule, showing all working."},
       {q:"Use the quotient rule to differentiate y = (x² + 1)/x."},
       {q:"Given x² + y² = 25, use implicit differentiation to find dy/dx, and evaluate it at the point (3, 4)."},
       {q:"Use logarithmic differentiation to find dy/dx for y = xˣ."},
+      {q:"Differentiate from first principles: f(x) = x². Show all steps clearly."},
       {q:"A particle moves such that its displacement is s(t) = t³ − 6t² + 9t. Find the velocity and acceleration functions, and determine the time(s) when the particle is at rest."},
+      {q:"For parametric equations x = t² and y = t³, find dy/dx and d²y/dx²."},
+      {q:"Find the critical points of f(x) = x³ - 3x² + 2 and classify each as a local maximum, local minimum, or point of inflection."},
+      {q:"A farmer wants to fence a rectangular field of area 100 m². Find the dimensions that minimize the amount of fencing needed."},
+      {q:"Find the equation of the tangent line to the curve y = x³ - 2x + 1 at the point where x = 1."},
       {q:"Evaluate ∫(x² + 2x) dx, and hence evaluate the definite integral from x = 0 to x = 1."},
-      {q:"Find the area enclosed between the curves y = x and y = x² on the interval [0, 1], showing all working."}
+      {q:"Find the area enclosed between the curves y = x and y = x² on the interval [0, 1], showing all working."},
+      {q:"Use integration by parts to evaluate ∫ x·eˣ dx."},
+      {q:"Find the volume of the solid obtained by revolving the region under y = x² from x = 0 to x = 2 about the x-axis, using the disk method."},
+      {q:"Evaluate ∫[0 to π] sin(x) dx and interpret the result geometrically as an area."}
     ]},
 
   "COS 102": { title:"COS 102 — Introduction to Problem Solving", eligible:["B.Sc. Computer Science"],
@@ -572,250 +750,15 @@ const COURSES = {
       {q:"Describe, with an equation, what happens during a neutralisation reaction."}
     ]},
   "AGG 112": { title:"AGG 112 — Introduction to Agriculture", eligible:"ALL",
-    drawObjective: 30, drawTheory: 5,
     objective:[
       {q:"Which of these is a primary branch of agriculture?", options:["Crop production","Banking","Tourism","Telecommunications"], answer:"A"},
       {q:"The practice of growing different crops on the same land in successive seasons is called:", options:["Monocropping","Crop rotation","Intercropping","Fallowing"], answer:"B"},
-      {q:"Which of these is a farm input?", options:["Fertiliser","Market price","Weather forecast","Farm produce"], answer:"A"},
-      {q:"Economics is defined as a social science which studies human behavior as a relationship between ends and scarce means which have:", options:["Fixed uses", "Alternative uses", "Single uses", "No uses"], answer:"B"},
-      {q:"According to Adam Smith, economics is the science of:", options:["Wealth", "Welfare", "Scarcity", "Growth"], answer:"A"},
-      {q:"Adam Smith wrote 'An Inquiry into Nature and Causes of Wealth of Nations' in the year:", options:["1776", "1890", "1932", "1948"], answer:"A"},
-      {q:"Alfred Marshall defined economics as 'the study of mankind in the ordinary business of life' in his book:", options:["Wealth of Nations", "Principles of Economics", "Essay on Economic Science", "Economic Growth"], answer:"B"},
-      {q:"According to Lionel Robbins, economics is a science which studies human behavior as a relationship between ends and:", options:["Abundant means", "Scarce means which have alternative uses", "Unlimited resources", "Fixed resources"], answer:"B"},
-      {q:"Lionel Robbins published his definition of economics in the book titled:", options:["Wealth of Nations", "Principles of Economics", "An Essay on the Nature and Significance of Economic Science", "Economic Development"], answer:"C"},
-      {q:"Paul Samuelson defined economics as the study of how men and society choose to employ scarce productive resources which could have:", options:["Fixed uses", "Alternative uses", "Single uses", "No alternative uses"], answer:"B"},
-      {q:"Paul Samuelson's definition of economics is also known as the:", options:["Wealth definition", "Welfare definition", "Scarcity definition", "Growth definition"], answer:"D"},
-      {q:"Which economist distinguished between material and immaterial things in economics?", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"B"},
-      {q:"Material things are those that can be seen, felt and touched. An example is:", options:["Skill", "Satisfaction", "Book", "Pleasure"], answer:"C"},
-      {q:"Immaterial things in economics include all EXCEPT:", options:["Skill", "Rice", "Satisfaction", "Comfort"], answer:"B"},
-      {q:"According to Robbins, 'ends' in economics refer to:", options:["Human resources", "Human wants", "Human labor", "Human capital"], answer:"B"},
-      {q:"Scarcity in economics occurs when:", options:["Supply exceeds demand", "Demand for a commodity is greater than its supply", "Price is very low", "Resources are unlimited"], answer:"B"},
-      {q:"The essential factors of production include land, labor, capital and:", options:["Money", "Entrepreneurship", "Technology", "Government"], answer:"B"},
-      {q:"Microeconomics is concerned with economic activities of:", options:["The entire economy", "Individual economic units", "Government only", "International trade only"], answer:"B"},
-      {q:"Macroeconomics focuses on aggregate indicators such as:", options:["Individual consumer behavior", "GDP, national income, inflation and unemployment", "Single firm production", "Household consumption only"], answer:"B"},
-      {q:"Which branch of economics studies the behavior of individuals and firms in making decisions regarding allocation of scarce resources?", options:["Macroeconomics", "Microeconomics", "Development economics", "International economics"], answer:"B"},
-      {q:"The study of the overall performance, structure and behavior of an economy is called:", options:["Microeconomics", "Macroeconomics", "Agricultural economics", "Managerial economics"], answer:"B"},
-      {q:"Economics is primarily concerned with how a society allocates its:", options:["Unlimited resources among unlimited wants", "Limited resources among unlimited wants", "Limited resources among limited wants", "Unlimited resources among limited wants"], answer:"B"},
-      {q:"Which of the following is NOT one of the definitions of economics discussed in the course material?", options:["Science of wealth", "Study of mankind in ordinary business of life", "Science of choice and scarcity", "Science of unlimited resources"], answer:"D"},
-      {q:"The year 1890 is associated with the publication of 'Principles of Economics' by:", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"B"},
-      {q:"The year 1932 is significant in economics because it marks the publication of:", options:["Wealth of Nations", "Principles of Economics", "An Essay on the Nature and Significance of Economic Science", "Economics textbook"], answer:"C"},
-      {q:"Human beings have an unlimited number of:", options:["Resources", "Wants", "Needs only", "Capital goods"], answer:"B"},
-      {q:"Resources or means in economics are:", options:["Unlimited in supply", "Limited or scarce in supply", "Freely available", "Not important"], answer:"B"},
-      {q:"The 'growth' definition of economics was stated by:", options:["Adam Smith", "Alfred Marshall", "Lionel Robbins", "Paul Samuelson"], answer:"D"},
-      {q:"Scarcity refers to the limited availability of resources relative to:", options:["Limited human wants", "Unlimited human wants", "Government policies", "Market prices"], answer:"B"},
-      {q:"Opportunity cost is defined as the value of the:", options:["Best alternative chosen", "Next best alternative forgone", "Total cost of production", "Marginal cost"], answer:"B"},
-      {q:"If you have $100 and choose to spend it on a new phone, the opportunity cost is:", options:["The phone itself", "The value of other things you could have bought", "$100", "Nothing"], answer:"B"},
-      {q:"Demand is the quantity of goods or services buyers are willing to purchase at a particular:", options:["Quality", "Price", "Time", "Location"], answer:"B"},
-      {q:"The law of demand states that the higher the price, the:", options:["Higher the quantity demanded", "Lower the quantity demanded", "Same quantity demanded", "Unlimited quantity demanded"], answer:"B"},
-      {q:"Supply is the quantity of a good sellers are willing to deliver at a particular:", options:["Quality", "Price", "Season", "Location"], answer:"B"},
-      {q:"The law of supply states that the higher the price, the:", options:["Lower the supply", "Higher the supply", "Same supply", "No supply"], answer:"B"},
-      {q:"Equilibrium price is the market price at which:", options:["Demand exceeds supply", "Supply exceeds demand", "Quantity demanded equals quantity supplied", "Price is highest"], answer:"C"},
-      {q:"At equilibrium price, the market is said to be in:", options:["Shortage", "Surplus", "Balance", "Crisis"], answer:"C"},
-      {q:"'Ends' in economics refers to:", options:["Resources", "Human wants or needs", "Production methods", "Distribution channels"], answer:"B"},
-      {q:"'Means' in economics are:", options:["Human wants", "Human and material resources available for satisfying wants", "Finished goods", "Consumer goods"], answer:"B"},
-      {q:"Needs are fundamental requirements necessary for survival such as:", options:["Luxury cars", "Food, water, shelter, clothing", "Entertainment", "Vacations"], answer:"B"},
-      {q:"Wants are desires for goods and services that are:", options:["Essential for survival", "Beyond basic needs", "Free of charge", "Government-provided"], answer:"B"},
-      {q:"Which of the following is a NEED rather than a want?", options:["Luxury items", "Entertainment subscriptions", "Food and water", "Latest technology"], answer:"C"},
-      {q:"Which of the following is a WANT rather than a need?", options:["Food", "Shelter", "Healthcare", "Vacations"], answer:"D"},
-      {q:"Utility is defined as the:", options:["Price of a good", "Satisfaction achieved from consuming a good/service", "Quantity of a good", "Cost of production"], answer:"B"},
-      {q:"Marginal utility is the extra satisfaction one gets from:", options:["The first unit consumed", "Each additional unit of a good", "The total consumption", "Free goods"], answer:"B"},
-      {q:"Choice in economics arises as a result of:", options:["Limited wants and abundant resources", "Numerous human wants and scarcity of resources", "Government policies", "Market equilibrium"], answer:"B"},
-      {q:"A scale of preference is a list of wants arranged in order of:", options:["Alphabetical order", "Priority/relative importance", "Price", "Size"], answer:"B"},
-      {q:"If a student has N20 and needs exercise book (N2), biro (N5), textbook (N5), sandals (N10), shirts (N15), trousers (N12), and shoes (N30), which items can the student afford?", options:["Shoes only", "Exercise book, biro and textbook", "Shirts and trousers", "All items"], answer:"B"},
-      {q:"A student who follows his scale of preference according to importance is said to behave:", options:["Irrationally", "Rationally", "Emotionally", "Randomly"], answer:"B"},
-      {q:"Which of the following is NOT an importance of scale of preference?", options:["Helps rank needs by importance", "Aids rational choices", "Leads to wastage of resources", "Shows needs at a glance"], answer:"C"},
-      {q:"Elasticity measures the degree of responsiveness of demand or supply to changes in:", options:["Income", "Price", "Taste", "Population"], answer:"B"},
-      {q:"If quantity of a good changes drastically with a change in price, it is said to be:", options:["Inelastic", "Elastic", "Fixed", "Stable"], answer:"B"},
-      {q:"Onions are said to have relatively inelastic demand because:", options:["They are luxury items", "They are basic necessities with no actual substitutes", "They are expensive", "They are not commonly used"], answer:"B"},
-      {q:"Rationality in economics refers to the assumption that economic agents make decisions aimed at:", options:["Minimizing satisfaction", "Maximizing satisfaction or profit", "Random selection", "Government compliance"], answer:"B"},
-      {q:"Production is the process of transforming inputs into:", options:["More inputs", "Goods and services", "Money only", "Raw materials"], answer:"B"},
-      {q:"Distribution in economics describes the way goods, services and income are allocated among:", options:["Government agencies only", "Factors of production such as labor, land and capital", "Consumers only", "Producers only"], answer:"B"},
-      {q:"Consumption is the act of using goods and services to:", options:["Produce more goods", "Derive satisfaction or utility", "Store for future use", "Export to other countries"], answer:"B"},
-      {q:"Which of the following is a factor of production?", options:["Money", "Land", "Bank credit", "Government subsidy"], answer:"B"},
-      {q:"The distinction between needs and wants is that needs are:", options:["Desires that enhance life", "Essential for survival or well-being", "Luxury items", "Entertainment-related"], answer:"B"},
-      {q:"A scale of preference helps an individual to forgo wants he cannot satisfy due to:", options:["Excessive resources", "Limited available resources", "Government restrictions", "Market surplus"], answer:"B"},
-      {q:"The problem of choice and opportunity cost arises because of:", options:["Unlimited resources", "Limited resources relative to unlimited wants", "Government planning", "Market failure"], answer:"B"},
-      {q:"Economic rationality involves individuals making choices by weighing:", options:["Only costs", "Only benefits", "Costs and benefits", "Neither costs nor benefits"], answer:"C"},
-      {q:"Production characteristics in agriculture refer to the ways agricultural activities are organized and managed including:", options:["Only resources and inputs", "Resources, inputs, methods, scale of operation and efficiency", "Only climate and weather", "Only market prices"], answer:"B"},
-      {q:"Which of the following is NOT listed as a characteristic feature of agricultural production?", options:["Smallness of farm holdings", "Biological limits of farm production", "Unlimited farm production", "Susceptibility to climate"], answer:"C"},
-      {q:"Many agricultural production activities occur on relatively small plots of land, especially in:", options:["Commercial farming systems", "Peasant and subsistence systems", "Mechanized farming", "Plantation agriculture"], answer:"B"},
-      {q:"The smallness of farm holdings can limit:", options:["Labor availability", "Mechanization and large-scale operations", "Soil fertility", "Rainfall"], answer:"B"},
-      {q:"The smallness of farm holdings is a result of all EXCEPT:", options:["Historical land distribution patterns", "Inheritance laws", "Labor-intensive nature of farming", "Government subsidies"], answer:"D"},
-      {q:"Agricultural production is constrained by biological limits because:", options:["Machines are expensive", "Plants and animals have growth rates and biological cycles", "Land is scarce", "Labor is unskilled"], answer:"B"},
-      {q:"Production in agriculture cannot be expanded instantly like industrial production because of:", options:["Lack of capital", "Biological limits and growth cycles", "Government policies", "Market demand"], answer:"B"},
-      {q:"Agricultural production is highly susceptible to:", options:["Government policies only", "Climatic conditions", "Market prices only", "Labor laws only"], answer:"B"},
-      {q:"Unpredictable weather patterns that affect agriculture include:", options:["Only sunshine", "Droughts, floods and extreme temperatures", "Only rainfall", "Only wind"], answer:"B"},
-      {q:"Climate change has heightened risks in agricultural production by making it:", options:["More certain and predictable", "More uncertain and risky", "Completely independent of weather", "Only dependent on technology"], answer:"B"},
-      {q:"The seasonality of agricultural production means that planting, cultivating and harvesting:", options:["Occur throughout the year equally", "Follow natural cycles and occur during specific times", "Are done randomly", "Depend only on labor availability"], answer:"B"},
-      {q:"Seasonality of farm production poses challenges in terms of:", options:["Only seed quality", "Labor availability, storage and market supply", "Only soil fertility", "Only government policies"], answer:"B"},
-      {q:"During harvest seasons, abundance of certain crops can lead to:", options:["Permanent shortage", "Temporary oversupply and reduced prices", "No change in prices", "Increased demand"], answer:"B"},
-      {q:"Price elasticity in agriculture refers to the responsiveness of demand and supply to changes in:", options:["Quality", "Prices", "Seasons", "Location"], answer:"B"},
-      {q:"Staple crops like wheat and rice tend to have relatively:", options:["Elastic demand", "Inelastic demand", "No demand", "Perfectly elastic demand"], answer:"B"},
-      {q:"Staple crops have inelastic demand because they are:", options:["Luxury items", "Necessities with few substitutes", "Expensive goods", "Imported products"], answer:"B"},
-      {q:"Luxury fruits might have more elastic demand due to:", options:["Being necessities", "Availability of substitutes", "Government subsidies", "Low prices"], answer:"B"},
-      {q:"The biological limits of farm production are subject to the growth rates of:", options:["Only crops", "Only animals", "Plants and animals", "Only microorganisms"], answer:"C"},
-      {q:"Which characteristic feature of agricultural production is a result of historical land distribution patterns and inheritance laws?", options:["Biological limits", "Smallness of farm holdings", "Susceptibility to climate", "Seasonality"], answer:"B"},
-      {q:"Farm production characteristics reflect the sustainability of production systems and their ability to meet:", options:["Only food demands", "Food, fiber and fuel demands", "Only fuel demands", "Only export demands"], answer:"B"},
-      {q:"The time required for crops to grow sets a natural limit on:", options:["The speed of production increases", "The price of crops", "The demand for crops", "The export of crops"], answer:"A"},
-      {q:"Agricultural production systems must conserve natural resources while meeting demands for:", options:["Only food", "Food, fiber and fuel", "Only fiber", "Only fuel"], answer:"B"},
-      {q:"Which of the following is a challenge posed by the seasonality of agricultural production?", options:["Only seed germination", "Labor availability, storage and market supply", "Only soil erosion", "Only pest control"], answer:"B"},
-      {q:"The susceptibility of farm production to climate makes it dependent on:", options:["Government policies", "Weather patterns", "International trade", "Bank loans"], answer:"B"},
-      {q:"Price elasticity in demand and supply of agricultural produce varies due to factors such as:", options:["Only government policies", "Consumer preferences, substitution possibilities and availability", "Only soil type", "Only labor costs"], answer:"B"},
-      {q:"Which characteristic makes agricultural production different from industrial production?", options:["Ability to expand instantly", "Subject to biological limits and growth cycles", "Not dependent on weather", "Unlimited production capacity"], answer:"B"},
-      {q:"The labor-intensive nature of farming contributes to:", options:["Large farm holdings", "Smallness of farm holdings", "Mechanization", "Industrialization"], answer:"B"},
-      {q:"Which of the following best describes the relationship between agricultural production and climate?", options:["Completely independent", "Highly susceptible and dependent", "Slightly related", "Not important"], answer:"B"},
-      {q:"The conservation of natural resources is part of which aspect of agricultural production characteristics?", options:["Only economic", "Sustainability of production systems", "Only social", "Only political"], answer:"B"},
-      {q:"Farm surveying is defined as the process of measuring and mapping out the position, topography, height, size and:", options:["Color of farmland", "Boundary of an area of farmland", "Ownership of farmland", "Price of farmland"], answer:"B"},
-      {q:"Farm surveying involves plotting measurements to suitable scales forming a:", options:["Contract", "Map, plan or section", "Budget", "Invoice"], answer:"B"},
-      {q:"Farm surveying shows natural and man-made features such as streams, lakes, rivers, hills, valleys, rocks, roads and:", options:["Only animals", "Buildings", "Only crops", "Only soil types"], answer:"B"},
-      {q:"How many types of farm survey are discussed in the course material?", options:["Three", "Four", "Five", "Six"], answer:"C"},
-      {q:"Chain survey is described as the:", options:["Most complex form of survey", "Simplest and oldest form of survey", "Most expensive form", "Most modern form"], answer:"B"},
-      {q:"Chain survey involves the use of:", options:["Only GPS", "Chains or measuring tapes", "Only aircraft", "Only computers"], answer:"B"},
-      {q:"Geodetic or Traverse survey determines the size and shape of an area using:", options:["Only chains", "Prismatic compass", "Only GPS", "Only theodolite"], answer:"B"},
-      {q:"Soil survey is concerned with the examination, classification and systematic mapping of:", options:["Only water", "The soil", "Only crops", "Only animals"], answer:"B"},
-      {q:"Topographical survey identifies physical features of an area such as:", options:["Only soil fertility", "Flatness, steepness, valley, rivers", "Only crop yields", "Only farm income"], answer:"B"},
-      {q:"Aerial survey uses aircraft to observe:", options:["Only small gardens", "A large area of land showing different features", "Only buildings", "Only roads"], answer:"B"},
-      {q:"Which of the following is NOT a technique used in farm survey?", options:["Distance measurement", "Angle measurement", "Color measurement", "Leveling"], answer:"C"},
-      {q:"Distance measurement is the process of determining the horizontal distance between:", options:["Three points", "Two points on the ground", "Four points", "Multiple random points"], answer:"B"},
-      {q:"An odometer is a device that counts the revolutions of a:", options:["Chain", "Wheel rolled along the line to be measured", "Compass", "Tape"], answer:"B"},
-      {q:"Pacing is a method of estimating distance by:", options:["Using GPS", "Counting steps", "Using a wheel", "Using a chain only"], answer:"B"},
-      {q:"Stadia is a surveying method used to measure distance indirectly by using a:", options:["Only chain", "Theodolite telescope fitted with stadia hairs and a graduated rod", "Only compass", "Only GPS"], answer:"B"},
-      {q:"Taping or chaining involves using a survey chain or steel tape to obtain:", options:["Rough estimates", "Accurate measurements", "Random measurements", "No measurements"], answer:"B"},
-      {q:"GPS in surveying determines distances and coordinates using:", options:["Only ground stations", "Satellites", "Only aircraft", "Only maps"], answer:"B"},
-      {q:"Angle measurement involves determining horizontal or vertical angles between two survey lines using instruments such as:", options:["Only chains", "Compass, theodolite and total station", "Only tapes", "Only GPS"], answer:"B"},
-      {q:"A total station combines an electronic transit theodolite with:", options:["Only a compass", "An Electronic Distance Measurement (EDM) device, microprocessor, electronic data collector and internal memory", "Only a chain", "Only a tape"], answer:"B"},
-      {q:"Leveling is the process of determining the relative:", options:["Distances between points", "Heights or elevations of different points", "Soil types", "Crop yields"], answer:"B"},
-      {q:"Determining position in surveying establishes the exact location of a point using:", options:["Only visual estimation", "Coordinates or reference points", "Only guesswork", "Only maps"], answer:"B"},
-      {q:"A reference network in surveying is also known as:", options:["A farm map", "A survey control network", "A crop plan", "A budget sheet"], answer:"B"},
-      {q:"A reference network serves as the framework for:", options:["Only crop planting", "All subsequent survey measurements", "Only harvesting", "Only marketing"], answer:"B"},
-      {q:"A distance of 100ft in survey is called a:", options:["Plus station", "Full station", "Half station", "Quarter station"], answer:"B"},
-      {q:"A distance of 100ft is written in survey notation as:", options:["100ft", "1+00", "0+100", "100+0"], answer:"B"},
-      {q:"A fractional part of a distance between full stations is called a:", options:["Full station", "Plus station", "Minus station", "Zero station"], answer:"B"},
-      {q:"The survey distance 216.8ft is written as:", options:["21+68", "2+16.8", "216+8", "2+168"], answer:"B"},
-      {q:"Which of the following is NOT listed as common surveying equipment on the farm?", options:["Ranging pole", "Measuring tape", "Tractor", "Prismatic compass"], answer:"C"},
-      {q:"A ranging pole is used in farm surveying for:", options:["Measuring soil fertility", "Marking survey points and lines", "Planting crops", "Harvesting"], answer:"B"},
-      {q:"A dumpy level is used in farm surveying for:", options:["Only measuring distances", "Leveling and determining heights", "Only measuring angles", "Only planting"], answer:"B"},
-      {q:"A theodolite is used in surveying for:", options:["Only measuring distances", "Measuring horizontal and vertical angles", "Only soil testing", "Only crop counting"], answer:"B"},
-      {q:"Farm surveying helps to know the size of a farmstead and the arrangement of land for:", options:["Random usage", "Proper usage without the risk of land degradation", "Wasteful usage", "Illegal usage"], answer:"B"},
-      {q:"Farm surveying helps in determining the boundaries and:", options:["Only crop types", "Main features and location of the farm", "Only animal breeds", "Only market prices"], answer:"B"},
-      {q:"Results of farm survey can be used as collateral for:", options:["Government grants only", "Security loan from financial institutions", "Free gifts", "Only scholarships"], answer:"B"},
-      {q:"Farm surveying enables the farmer to lay his farm into:", options:["Only one large field", "Plots", "Only storage areas", "Only residential areas"], answer:"B"},
-      {q:"The topography or gradient of farmland can be determined through:", options:["Only visual inspection", "Farm surveying", "Only guessing", "Only soil testing"], answer:"B"},
-      {q:"Farm surveying helps the farmer know about the:", options:["Only crop prices", "Hydrology of the land", "Only animal health", "Only labor costs"], answer:"B"},
-      {q:"Which of the following helps in identifying various soils and their characteristics?", options:["Only farm records", "Farm surveying", "Only crop rotation", "Only irrigation"], answer:"B"},
-      {q:"Absolute and relative positions of points on the farm can be determined through:", options:["Only guessing", "Farm surveying", "Only planting", "Only harvesting"], answer:"B"},
-      {q:"A farmstead is defined as a farm house and all its:", options:["Only residential buildings", "Production and processing structures", "Only storage facilities", "Only animal pens"], answer:"B"},
-      {q:"Farmstead planning is the drawing or outlining of a farmstead and the arrangements of land for:", options:["Random usage", "Proper usage without the risk of land degradation", "Wasteful usage", "Only residential purposes"], answer:"B"},
-      {q:"The objectives of farmstead planning may include all EXCEPT:", options:["Expansion", "Improved performance", "Higher capacity", "Reduced productivity"], answer:"D"},
-      {q:"Planning a farmstead allows for proper utilization of resources:", options:["With wastage", "Without wastage", "Only for crops", "Only for animals"], answer:"B"},
-      {q:"Farmstead planning makes the farmer more responsive to:", options:["Only government policies", "Market demand", "Only weather", "Only soil type"], answer:"B"},
-      {q:"Which of the following is a reason for planning a farmstead?", options:["To encourage wastage", "To encourage efficiency of farm activities", "To reduce coordination", "To avoid control"], answer:"B"},
-      {q:"According to the principles of farmstead layout, crops should be planted on the:", options:["Poorest soil", "Best soil within the farm", "Only rocky areas", "Only waterlogged areas"], answer:"B"},
-      {q:"Livestock buildings should be located on the:", options:["Best soil", "Poorest soil within the farm", "Only hilly areas", "Only river banks"], answer:"B"},
-      {q:"Farm buildings should be located in:", options:["Only remote areas", "Easily accessible areas", "Only steep slopes", "Only waterlogged areas"], answer:"B"},
-      {q:"Farm buildings should NOT be located on slopes to avoid:", options:["Only shade", "Erosion", "Only wind", "Only sunshine"], answer:"B"},
-      {q:"Residential and office buildings should be located far away from livestock buildings to avoid:", options:["Only heat", "Noise and unpleasant odour from farm animals' wastes", "Only light", "Only rain"], answer:"B"},
-      {q:"Topography determines the location of:", options:["Only crops", "Farm buildings and structures", "Only roads", "Only markets"], answer:"B"},
-      {q:"Farm buildings or living quarters are usually located on:", options:["Low elevations", "High elevations for proper viewing of the farm", "Only flat areas", "Only valleys"], answer:"B"},
-      {q:"Animal quarters should be located:", options:["Close to staff living quarters", "Far from the staff living quarters", "Only indoors", "Only underground"], answer:"B"},
-      {q:"Crops such as vegetables should be located on:", options:["High elevations", "Low lying areas where moisture content is high", "Only sandy soils", "Only rocky areas"], answer:"B"},
-      {q:"Fish ponds are best located on:", options:["Flat grounds", "Sloppy grounds", "Only high elevations", "Only deserts"], answer:"B"},
-      {q:"Irrigation farms are best sited on:", options:["Steep slopes", "Flat lands", "Only hilly areas", "Only rocky areas"], answer:"B"},
-      {q:"Crop farms are sited on soils that are:", options:["Poor", "Fertile", "Only sandy", "Only clayey"], answer:"B"},
-      {q:"Pastures are sited on:", options:["Most fertile soils", "Less fertile soils", "Only waterlogged areas", "Only rocky areas"], answer:"B"},
-      {q:"Farm roads are best constructed on:", options:["Waterlogged areas", "Well drained poor soils", "Only fertile soils", "Only steep slopes"], answer:"B"},
-      {q:"In planning a farmstead, facilities should be located:", options:["Only in remote areas", "Within walking distance", "Only in cities", "Only underground"], answer:"B"},
-      {q:"Good roads in farmstead planning facilitate:", options:["Only recreation", "Transportation of farm inputs and evacuation of farm produce", "Only tourism", "Only residential movement"], answer:"B"},
-      {q:"Adequate water supply is needed for:", options:["Only crop irrigation", "Human and animal use", "Only industrial use", "Only recreational use"], answer:"B"},
-      {q:"Livestock structures should be located close to source of water supply for:", options:["Only drinking", "Easy cleaning", "Only decoration", "Only heating"], answer:"B"},
-      {q:"Livestock units should be erected:", options:["With wind direction", "Against wind direction", "Only indoors", "Only underground"], answer:"B"},
-      {q:"Animal units should be located far away from human residential houses to avoid:", options:["Only noise", "Health hazards", "Only light", "Only shade"], answer:"B"},
-      {q:"Nearness to market reduces:", options:["Only labor costs", "Distribution or transport cost", "Only seed costs", "Only fertilizer costs"], answer:"B"},
-      {q:"Adequate drainage is important to avoid:", options:["Only drought", "Water-logging", "Only erosion", "Only wind damage"], answer:"B"},
-      {q:"Gentle slope facilitates:", options:["Only planting", "Proper drainage", "Only harvesting", "Only storage"], answer:"B"},
-      {q:"Off-farmstead factors include all EXCEPT:", options:["Zoning and land-use permissions", "Building and housing code requirements", "Only internal farm decisions", "Environmental protection rules"], answer:"C"},
-      {q:"Simple farm tools are hand-operated tools that are NOT powered by:", options:["Human hands", "Engines or motor", "Only wind", "Only water"], answer:"B"},
-      {q:"Simple farm tools are typically made of metal with:", options:["Only plastic handles", "Wooden or plastic handles", "Only rubber handles", "Only metal handles"], answer:"B"},
-      {q:"A cutlass is sometimes called a:", options:["Spade", "Machete", "Hoe", "Rake"], answer:"B"},
-      {q:"How many main types of cutlass are discussed?", options:["One", "Two", "Three", "Four"], answer:"B"},
-      {q:"One type of cutlass has a slightly curved blade with a:", options:["Long metal handle", "Short wooden handle", "No handle", "Only plastic handle"], answer:"B"},
-      {q:"The other type of cutlass has a straight metal blade and a:", options:["Long metal handle", "Short wooden handle", "No handle", "Only rubber handle"], answer:"B"},
-      {q:"One edge of the cutlass metal blade is sharp and the other is:", options:["Also sharp", "Blunt", "Curved", "Broken"], answer:"B"},
-      {q:"A machete typically has a:", options:["Shorter blade than a cutlass", "Longer blade and is used for heavier tasks", "Same blade length as cutlass", "Only wooden blade"], answer:"B"},
-      {q:"A cutlass is used for clearing of:", options:["Only houses", "Bush, tree and farmland", "Only roads", "Only water"], answer:"B"},
-      {q:"Which of the following is NOT a use of a cutlass?", options:["Digging holes", "Transplanting seedlings", "Planting operation and harvesting crops", "Measuring soil pH"], answer:"D"},
-      {q:"Maintenance of a cutlass includes all EXCEPT:", options:["Cleaning after use", "Sharpening regularly", "Oiling to prevent rust", "Leaving it on the ground"], answer:"D"},
-      {q:"A hoe consists of a metal blade which may be rounded or:", options:["Only circular", "Slightly rectangular in shape", "Only triangular", "Only oval"], answer:"B"},
-      {q:"The West African hoe has a:", options:["Long wooden handle and rectangular blade", "Short wooden handle and round metal blade", "No handle", "Only metal handle"], answer:"B"},
-      {q:"The West Indian hoe has a:", options:["Short wooden handle and round blade", "Long wooden handle and rectangular metal blade", "No handle", "Only plastic handle"], answer:"B"},
-      {q:"The metal blade of the West African hoe is attached to the wooden handle with a:", options:["Only glue", "Socket", "Only tape", "Only rope"], answer:"B"},
-      {q:"The West Indian hoe metal blade has a loop around its:", options:["Tip", "Neck", "Base", "Edge"], answer:"B"},
-      {q:"A hoe is used for loosening and turning the:", options:["Only air", "Soil surface", "Only water", "Only stones"], answer:"B"},
-      {q:"Which of the following is NOT a use of a hoe?", options:["Making ridges and heaps", "Planting or transplanting some crops", "Harvesting some crops", "Measuring rainfall"], answer:"D"},
-      {q:"Maintenance of a hoe includes all EXCEPT:", options:["Regular cleaning", "Sharpening", "Oiling", "Leaving it in damp areas"], answer:"D"},
-      {q:"A spade has a long wooden handle and a broad:", options:["Plastic blade", "Metal blade", "Rubber blade", "Glass blade"], answer:"B"},
-      {q:"The edge of a spade's metal blade is sharp so that it can easily be driven into the:", options:["Only water", "Soil", "Only air", "Only stones"], answer:"B"},
-      {q:"A spade is used for lifting the soil and:", options:["Only throwing it away", "Completely turning it over", "Only leaving it", "Only mixing with water"], answer:"B"},
-      {q:"A spade is used for mixing cement/concrete for:", options:["Only cooking", "Farm structures", "Only decoration", "Only clothing"], answer:"B"},
-      {q:"Maintenance of a spade includes storing in a:", options:["Wet and hot place", "Dry and cool place", "Only sunny place", "Only waterlogged area"], answer:"B"},
-      {q:"A shovel is similar to a spade but its blade is:", options:["Solid and narrow", "Hollow and broad", "Only wooden", "Only plastic"], answer:"B"},
-      {q:"A shovel is used for lifting or transferring soil from:", options:["Only one fixed place", "One place to another", "Only underground", "Only above ground"], answer:"B"},
-      {q:"A shovel is used to load materials from ground level into a:", options:["Only truck", "Wheelbarrow", "Only airplane", "Only ship"], answer:"B"},
-      {q:"A garden fork usually has how many prongs or teeth?", options:["Two", "Three", "Four", "Five"], answer:"C"},
-      {q:"The prongs of a garden fork are made of:", options:["Only wood", "Hard metal", "Only plastic", "Only rubber"], answer:"B"},
-      {q:"The prongs of a garden fork are about:", options:["10cm long", "20cm long", "50cm long", "100cm long"], answer:"B"},
-      {q:"A garden fork is mounted on a long wooden handle of about:", options:["30-40cm", "70-80cm", "150-200cm", "300-400cm"], answer:"B"},
-      {q:"A garden fork is used for turning manure during:", options:["Only planting", "Compost making", "Only harvesting", "Only storage"], answer:"B"},
-      {q:"A hand fork consists of a piece of metal with:", options:["One or two prongs", "Three or four short flat prongs", "Ten prongs", "No prongs"], answer:"B"},
-      {q:"A hand fork is mainly used in:", options:["Standing position", "Squatting position", "Only lying position", "Only running position"], answer:"B"},
-      {q:"A hand trowel has a short metal blade that is:", options:["Only flat", "Scoop-shaped", "Only triangular", "Only square"], answer:"B"},
-      {q:"The curved metal blade of a hand trowel makes it possible to carry a small ball of earth with the:", options:["Only water", "Seedling during transplanting", "Only fertilizer", "Only stones"], answer:"B"},
-      {q:"A rake consists of a long wooden handle and a strong metal head with several:", options:["Smooth surfaces", "Stout prongs", "Only holes", "Only blades"], answer:"B"},
-      {q:"A rake is used for leveling or spreading soil surface after:", options:["Only planting", "Hoeing", "Only watering", "Only fertilizing"], answer:"B"},
-      {q:"A wheelbarrow is a simple tool with a tray, usually one front wheel, two handles and:", options:["Three legs", "Two legs/stands", "Four legs", "No legs"], answer:"B"},
-      {q:"A wheelbarrow is designed to move heavy or bulky materials with:", options:["Maximum effort", "Minimal effort", "No effort", "Only manual pulling"], answer:"B"},
-      {q:"A wheelbarrow uses a second-class lever where the wheel acts as the:", options:["Load", "Fulcrum", "Effort", "Resistance"], answer:"B"},
-      {q:"In a wheelbarrow, the load sits between the wheel and:", options:["The ground", "The handles", "The air", "The sky"], answer:"B"},
-      {q:"Maintenance of a wheelbarrow includes all EXCEPT:", options:["Cleaning regularly", "Checking tire pressure", "Inspecting for damage", "Leaving it exposed to rain always"], answer:"D"}
+      {q:"Which of these is a farm input?", options:["Fertiliser","Market price","Weather forecast","Farm produce"], answer:"A"}
     ],
     theory:[
-      {q:"Define Economics and explain the four definitions given by Adam Smith, Alfred Marshall, Lionel Robbins and Paul Samuelson."},
-      {q:"Distinguish between material and immaterial things in economics, giving two examples of each."},
-      {q:"Explain the concept of 'scarcity' as discussed by Lionel Robbins in his definition of economics."},
-      {q:"Differentiate between Microeconomics and Macroeconomics, giving two areas of focus for each."},
-      {q:"Why is Paul Samuelson's definition of economics regarded as the 'growth definition'?"},
-      {q:"Define scarcity and explain how it relates to unlimited human wants and limited resources."},
-      {q:"Explain the concept of opportunity cost with a practical example from agriculture."},
-      {q:"State and explain the law of demand and the law of supply."},
-      {q:"What is equilibrium price? Explain the conditions that exist at equilibrium price in a market."},
-      {q:"Differentiate between needs and wants, giving three examples of each."},
-      {q:"List and explain five characteristic features of agricultural production."},
-      {q:"Explain how the smallness of farm holdings affects mechanization and large-scale operations in agriculture."},
-      {q:"Discuss the biological limits of farm production and how they differ from industrial production."},
-      {q:"Explain how seasonality of farm production poses challenges in terms of labor availability, storage and market supply."},
-      {q:"Discuss the susceptibility of agricultural production to climate and the impact of climate change on farming."},
-      {q:"Define farm surveying and explain five techniques used in farm survey."},
-      {q:"List and describe the five types of farm survey discussed in the course material."},
-      {q:"Explain the concept of 'station' in survey and express the following distances in full and plus stations: (i) 1081.5ft (ii) 65.7ft (iii) 927.0ft (iv) 230.0ft."},
-      {q:"Describe five common surveying equipment used on the farm and state their uses."},
-      {q:"Discuss ten importance of farm surveying in agricultural development."},
-      {q:"Define farmstead and farmstead planning, and explain five reasons for planning a farmstead."},
-      {q:"State and explain five principles of farmstead layout."},
-      {q:"Discuss eight factors influencing the siting of farms or farmsteads."},
-      {q:"Explain how topography influences the location of farm buildings, crop farms, fish ponds and irrigation farms."},
-      {q:"Discuss the role of soil type, accessibility, water supply and health/hygiene in farmstead planning."},
-      {q:"Define simple farm tools and describe the two main types of cutlass, including their uses and maintenance."},
-      {q:"Differentiate between the West African hoe and the West Indian hoe, stating their uses and maintenance practices."},
-      {q:"Explain the difference between a cutlass and a machete."},
-      {q:"Describe a spade and a shovel, highlighting their similarities and differences in structure and use."},
-      {q:"Discuss the uses and maintenance practices of the garden fork and hand fork."},
-      {q:"Describe a hand trowel and explain its uses in nursery practices and transplanting."},
-      {q:"Explain the uses and maintenance of a rake in farm operations."},
-      {q:"Describe a wheelbarrow, explain how it function as a second-class lever, and discuss its uses and maintenance."},
-      {q:"Compare and contrast any five simple farm tools discussed in the course material, stating their uses and maintenance practices."},
-      {q:"Discuss the importance of proper maintenance of simple farm tools and the consequences of neglecting maintenance."}
+      {q:"Define agriculture and list five branches of agriculture."},
+      {q:"Explain the importance of crop rotation in sustainable farming."}
     ]},
-
   "PHY 102": { title:"PHY 102 — General Physics II", eligible:"ALL",
     objective:[
       {q:"The SI unit of electric current is the:", options:["Volt","Ohm","Ampere","Watt"], answer:"C"},
@@ -828,246 +771,15 @@ const COURSES = {
     ]},
   "WMA 142": { title:"WMA 142 — Introduction to Water Resources Management and Agrometeorology",
     eligible:["B.Sc. Water Resources Management and Agro-Meteorology"],
-    drawObjective: 30, drawTheory: 5,
     objective:[
       {q:"An instrument used to measure atmospheric pressure is called a:", options:["Rain gauge","Barometer","Anemometer","Hygrometer"], answer:"B"},
       {q:"The main source of freshwater on Earth is:", options:["Oceans","Glaciers and groundwater","Seawater","Salt lakes"], answer:"B"},
-      {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"},
-      {q:"Which of the following best defines 'Water Resources'?", options:["Only rivers and lakes","Sources of water that are useful to humans and ecosystems","Only groundwater sources","Water used exclusively for irrigation"], answer:"B"},
-      {q:"Which of the following is NOT listed among the types of water resources?", options:["Surface water","Groundwater","Reclaimed and recycled water","Seawater ice caps"], answer:"D"},
-      {q:"Water Resources Management (WRM) is defined as the coordinated development and management of:", options:["Land and water only","Land, water and related resources","Only groundwater resources","Rainfall records"], answer:"B"},
-      {q:"The main goal of WRM is to maximize economic and social welfare without:", options:["Increasing water prices","Compromising the sustainability of vital ecosystems","Reducing population growth","Affecting weather patterns"], answer:"B"},
-      {q:"Which of the following is an objective of Water Resources Management?", options:["Maximizing flood occurrence","Sustainable water supply","Reducing agricultural output","Encouraging water disputes"], answer:"B"},
-      {q:"'Effective water use', as an objective of WRM, promotes:", options:["Maximum benefits from available water resources","Wastage in industry only","Groundwater depletion","Unregulated water abstraction"], answer:"A"},
-      {q:"Which WRM objective directly addresses disputes among water users?", options:["Disaster risk reduction","Conflict reduction","Public health improvement","Economic development"], answer:"B"},
-      {q:"Disaster risk reduction, as an objective of WRM, focuses on minimizing the impacts of:", options:["Floods and droughts","Urbanization and industrialization","Population growth","Pollution"], answer:"A"},
-      {q:"Which of the following is a SOCIAL benefit of WRM?", options:["Enhances agricultural productivity","Improves public health","Conserves biodiversity","Enhances drought preparedness"], answer:"B"},
-      {q:"Which of the following is classified as an ECONOMIC benefit of WRM?", options:["Supports industries","Conserves biodiversity","Reduces flood impacts","Improves public health"], answer:"A"},
-      {q:"Which of the following is an ENVIRONMENTAL benefit of WRM?", options:["Enhances drought preparedness","Promotes rivers and wetlands","Supports community development","Promotes energy generation"], answer:"B"},
-      {q:"Improved resilience to climate change is classified under which benefit category of WRM?", options:["Social","Economic","Environmental","Climatic"], answer:"D"},
-      {q:"Which of the following is a challenge facing Water Resources Management?", options:["Declining population","Pollution","Excess funding","Abundant hydrological data"], answer:"B"},
-      {q:"Poor governance, as a challenge to WRM, results mainly from:", options:["Strong institutional frameworks","Weak policies and institutional frameworks","Excess water supply","High rainfall"], answer:"B"},
-      {q:"A lack of reliable hydrological and water quality data is best described as:", options:["Financial constraint","Data limitation","Poor governance","Urbanization pressure"], answer:"B"},
-      {q:"Which federal institution is primarily responsible for water resources in Nigeria?", options:["Federal Ministry of Water Resources and Sanitation","Federal Ministry of Agriculture","National Population Commission","Federal Ministry of Environment"], answer:"A"},
-      {q:"River Basin Development Authorities (RBDAs) in Nigeria are examples of:", options:["State Water Agencies","Key institutions of water resources management","NGOs","International bodies"], answer:"B"},
-      {q:"Which Nigerian agency is responsible for hydrological services?", options:["NIHSA","NAFDAC","NIMET","NEMA"], answer:"A"},
-      {q:"NWRI stands for:", options:["National Water Regulatory Institute","National Water Resources Institute","Nigerian Water Research Institute","National Watershed Research Institute"], answer:"B"},
-      {q:"The continuous movement and circulation of water between the earth's surface, atmosphere and subsurface is called the:", options:["Nitrogen cycle","Water (hydrological) cycle","Carbon cycle","Rock cycle"], answer:"B"},
-      {q:"Which of the following is NOT one of the importance of the water cycle?", options:["Maintains the earth's water balance","Purifies water naturally","Increases atmospheric carbon dioxide","Sustains ecosystems and biodiversity"], answer:"C"},
-      {q:"The process by which liquid water changes into water vapour due to heat from the sun is called:", options:["Condensation","Evaporation","Infiltration","Percolation"], answer:"B"},
-      {q:"The release of water vapour from plant leaves into the atmosphere is known as:", options:["Transpiration","Evaporation","Precipitation","Interception"], answer:"A"},
-      {q:"The combined process of evaporation and transpiration is called:", options:["Percolation","Evapotranspiration","Infiltration","Condensation"], answer:"B"},
-      {q:"Water vapour cooling and changing into liquid droplets, forming clouds, is called:", options:["Precipitation","Condensation","Runoff","Percolation"], answer:"B"},
-      {q:"Which of the following is NOT a form of precipitation?", options:["Rain","Hail","Sleet","Evaporation"], answer:"D"},
-      {q:"When precipitation is captured by vegetation before reaching the ground, this process is called:", options:["Interception","Infiltration","Percolation","Runoff"], answer:"A"},
-      {q:"The movement of water from the ground surface into the soil is called:", options:["Percolation","Infiltration","Runoff","Interception"], answer:"B"},
-      {q:"Infiltration helps to:", options:["Increase surface runoff only","Recharge groundwater and reduce flooding","Prevent evaporation","Increase atmospheric pressure"], answer:"B"},
-      {q:"The downward movement of infiltrated water through soil layers towards groundwater reservoirs is:", options:["Percolation","Interception","Transpiration","Runoff"], answer:"A"},
-      {q:"The portion of precipitation that flows over the land surface toward rivers, lakes and oceans is called:", options:["Infiltration","Surface runoff","Percolation","Groundwater flow"], answer:"B"},
-      {q:"Surface runoff is usually caused by:", options:["Low rainfall and dry soil","Heavy rainfall, impermeable surfaces, and saturated soil","High infiltration rates","Dense forest cover"], answer:"B"},
-      {q:"The movement of water through underground aquifers that supplies wells and springs is:", options:["Groundwater flow","Surface runoff","Interception","Evapotranspiration"], answer:"A"},
-      {q:"In the water balance equation P = ET + Q + ΔS, 'Q' represents:", options:["Precipitation","Evapotranspiration","Runoff","Change in storage"], answer:"C"},
-      {q:"In the water balance equation, ΔS represents:", options:["Precipitation","Change in storage","Evapotranspiration","Runoff"], answer:"B"},
-      {q:"Which factor affecting the water cycle relates to soil permeability and rock structure?", options:["Climatic factors","Topographical factors","Geological factors","Vegetation factors"], answer:"C"},
-      {q:"Which of the following is a topographical factor affecting the water cycle?", options:["Humidity","Elevation and slope","Forest cover","Deforestation"], answer:"B"},
-      {q:"Urbanization, deforestation, irrigation and dam construction are examples of which factor affecting the water cycle?", options:["Climatic factors","Geological factors","Human activities","Vegetation factors"], answer:"C"},
-      {q:"Which of the following is a climatic factor influencing the water cycle?", options:["Soil permeability","Temperature and wind speed","Forest cover","Dam construction"], answer:"B"},
-      {q:"Fresh water is renewable primarily through the:", options:["Carbon cycle","Hydrological cycle","Nitrogen cycle","Rock cycle"], answer:"B"},
-      {q:"Hydrological measurements are crucial mainly for:", options:["Predicting stock market trends","Understanding and managing water resources","Measuring air quality","Determining soil fertility only"], answer:"B"},
-      {q:"Which type of hydrological measurement quantifies the volume of water flowing through a specific point over time?", options:["Discharge measurement","Flow measurement","Water level measurement","Water quality measurement"], answer:"B"},
-      {q:"Discharge measurements are commonly taken using:", options:["Thermometers","Discharge gauges or weirs","Rain gauges","Hygrometers"], answer:"B"},
-      {q:"Water level measurements determine the:", options:["Rate at which water flows out of a lake","Height of the water surface in a water body","Chemical composition of water","Volume of dissolved oxygen"], answer:"B"},
-      {q:"Which instrument is used to measure turbidity in water quality assessment?", options:["Spectrophotometer","Turbidimeter","Anemometer","Barometer"], answer:"B"},
-      {q:"Hydrometry refers to the measurement of:", options:["Soil composition","Volume and flow rate of water","Air temperature","Wind direction"], answer:"B"},
-      {q:"Sediment trapping is used to determine:", options:["The temperature of a water body","The composition and properties of sediment samples","The pH of rainwater","Wind speed over a river"], answer:"B"},
-      {q:"Which of the following is NOT a common technique for measuring hydrological variables?", options:["Hydrometry","Water sampling","Sediment trapping","Seismography"], answer:"D"},
-      {q:"Data collection in hydrology involves gathering information from:", options:["Field measurements only","Field measurements, remote sensing, and literature reviews","Only satellite images","Only questionnaires"], answer:"B"},
-      {q:"Which data source involves direct measurement of water resources using instruments such as rain gauges and flowmeters?", options:["Remote sensing","Field measurements","Literature reviews","Surveys and questionnaires"], answer:"B"},
-      {q:"Remote sensing in hydrology primarily uses:", options:["Rain gauges and flowmeters","Satellite and aerial imagery","Interviews with farmers","Historical archives only"], answer:"B"},
-      {q:"Remote sensing is especially useful for estimating:", options:["Evapotranspiration and soil moisture","Groundwater pH only","Sediment colour","Discharge gauge calibration"], answer:"A"},
-      {q:"Literature reviews in hydrological data collection help to:", options:["Collect new field samples","Provide context and understanding of hydrological phenomena","Replace field measurements entirely","Measure river discharge directly"], answer:"B"},
-      {q:"Surveys and questionnaires in hydrological data collection are typically used to gather data from:", options:["Satellites","Stakeholders such as farmers and community members","Rain gauges","Groundwater aquifers"], answer:"B"},
-      {q:"Data analysis in hydrology involves the use of:", options:["Statistical and computational techniques","Only visual inspection","Guesswork","Manual counting only"], answer:"A"},
-      {q:"Descriptive statistics describe basic characteristics of data such as:", options:["Mean, median, and standard deviation","Satellite imagery resolution","Sediment colour","Cloud cover percentage"], answer:"A"},
-      {q:"Which type of statistics is used to make inferences about a population based on sample data?", options:["Descriptive statistics","Inferential statistics","Signal processing","Qualitative analysis"], answer:"B"},
-      {q:"Signal processing techniques such as filtering and spectral analysis are used to:", options:["Extract patterns from time-series data","Collect rainfall samples","Measure atmospheric pressure","Determine soil texture"], answer:"A"},
-      {q:"Data interpretation involves:", options:["Collecting raw data only","Understanding the meaning of results and applying them to real-world problems","Installing rain gauges","Calibrating anemometers"], answer:"B"},
-      {q:"Quantitative analysis in data interpretation focuses on:", options:["Non-numerical data such as text","Numerical values and statistical relationships","Only qualitative descriptions","Photographic images"], answer:"B"},
-      {q:"Qualitative analysis in data interpretation focuses mainly on:", options:["Numerical values","Statistical relationships only","Non-numerical data such as text and images","River discharge"], answer:"C"},
-      {q:"Combining multiple datasets and models to generate new insights is called:", options:["Descriptive statistics","Synthesis","Hydrometry","Sediment trapping"], answer:"B"},
-      {q:"Analyzing the relationship between precipitation and runoff mainly helps to:", options:["Predict flood events and inform water management","Determine soil colour","Estimate air pressure","Measure sunshine duration"], answer:"A"},
-      {q:"Analyzing groundwater recharge rates helps inform:", options:["Aquifer management and water supply planning","Cloud classification","Wind pattern analysis","Sediment trapping techniques"], answer:"A"},
-      {q:"Analyzing surface water flow patterns can inform:", options:["River management and habitat restoration","Solar radiation measurement","Atmospheric pressure trends","Soil fertility testing"], answer:"A"},
-      {q:"Errors in measurement or data collection that lead to inaccurate results are classified under:", options:["Modeling uncertainties","Data quality issues","Spatial variability","Emerging technologies"], answer:"B"},
-      {q:"The challenge where hydrological systems vary across location and time, making generalization difficult, is called:", options:["Data quality issues","Spatial and temporal variability","Modeling uncertainties","Signal processing limitation"], answer:"B"},
-      {q:"Modeling uncertainties in hydrology arise mainly due to:", options:["Excess field data","Non-linear relationships between variables","Too many rain gauges","Simple, linear systems"], answer:"B"},
-      {q:"Which of the following is identified as a future direction for hydrological measurement and data analysis?", options:["Elimination of remote sensing","Integration of IoT sensors, drones, and machine learning","Removal of statistical techniques","Reduction of field data collection"], answer:"B"},
-      {q:"Improving data quality and interoperability in hydrology involves developing:", options:["Standards for data sharing and using AI to reduce errors","More manual data entry","Fewer monitoring stations","Less collaboration between agencies"], answer:"A"},
-      {q:"Enhancing model complexity and resolution in hydrology aims to:", options:["Simplify all hydrological models","Capture the full range of hydrological phenomena","Eliminate the need for data","Reduce computational requirements to zero"], answer:"B"},
-      {q:"Which of the following best measures the physical, chemical and biological characteristics of water?", options:["Flow measurement","Water quality measurement","Discharge measurement","Water level measurement"], answer:"B"},
-      {q:"A DO meter is used to measure:", options:["pH","Turbidity","Dissolved oxygen levels","Temperature only"], answer:"C"},
-      {q:"Water sampling as a hydrological technique involves:", options:["Only visual observation of a river","Collection and analysis of water samples","Measuring wind speed","Estimating cloud cover"], answer:"B"},
-      {q:"Which of the following instruments would most likely be used in field measurements of hydrological data?", options:["Rain gauges, flowmeters, water level meters","Satellites only","Questionnaires only","Literature databases"], answer:"A"},
-      {q:"Emerging technologies being integrated into hydrological measurement include:", options:["IoT sensors, drones, and machine learning","Typewriters and paper maps only","Manual river wading only","Sundials"], answer:"A"},
-      {q:"The primary purpose of interpreting precipitation-runoff relationships is to:", options:["Predict floods and inform water management strategies","Measure sunshine duration","Classify soil types","Determine building material strength"], answer:"A"},
-      {q:"Which of the following data analysis techniques would be most appropriate for detecting patterns in a long-term streamflow time-series?", options:["Signal processing","Literature review","Water sampling","Sediment trapping"], answer:"A"},
-      {q:"A major limitation of hydrological data collection in developing regions is often:", options:["Excess funding","Data quality and availability issues","Too many monitoring stations","Overly simple hydrological systems"], answer:"B"},
-      {q:"The overall purpose of hydrological measurement, data collection, and analysis is to support:", options:["Agricultural export pricing only","Water resources management, flood/drought prediction, and ecosystem health","Urban housing design only","Political campaigning"], answer:"B"},
-      {q:"Integrated Water Resources Management (IWRM) is best defined as:", options:["A process focused solely on building dams","Coordinated development and management of water, land and related resources to maximize welfare without compromising ecosystems","A method for measuring rainfall only","A private industry water pricing scheme"], answer:"B"},
-      {q:"The Dublin Principles were adopted in:", options:["1977 in Mar del Plata","1992 in Rio de Janeiro","2000 in New York","2015 in Paris"], answer:"B"},
-      {q:"Which Dublin Principle states that fresh water is essential for sustaining life, development, and the environment?", options:["Freshwater is a finite and vulnerable resource","Participatory approach","Women's central role","Water as an economic good"], answer:"A"},
-      {q:"According to the Dublin Principles, water development should be based on a:", options:["Top-down, government-only approach","Participatory approach involving all stakeholders","Purely private-sector approach","Military-controlled approach"], answer:"B"},
-      {q:"The Dublin Principle on women's role states that:", options:["Women should be excluded from water governance","Women play a central part in providing, managing, and safeguarding water","Only men should manage water resources","Women's roles are irrelevant to water management"], answer:"B"},
-      {q:"Recognizing water as an economic good implies that:", options:["Water should never be priced","Water has economic value in all its competing uses","Only industries should pay for water","Basic human needs should not be protected"], answer:"B"},
-      {q:"Which of the following is a core element of IWRM under 'Enabling Environment'?", options:["River basin organisations","National water policies","Water audits","Public education campaigns"], answer:"B"},
-      {q:"Cross-sectoral coordination mechanisms such as inter-ministerial committees fall under which IWRM core element?", options:["Enabling Environment","Institutional Roles","Management Instruments","Water Regulation"], answer:"B"},
-      {q:"Water resources assessment, demand management tools, and conflict resolution mechanisms fall under which IWRM core element?", options:["Enabling Environment","Institutional Roles","Management Instruments","None of the above"], answer:"C"},
-      {q:"Traditional water management primarily focuses on:", options:["Demand reduction","Supply augmentation such as building dams and drilling wells","Water pricing only","Wastewater recycling only"], answer:"B"},
-      {q:"Water demand management encompasses actions that:", options:["Increase wasteful consumption","Improve efficiency of water use and reduce wasteful consumption","Focus only on building new dams","Eliminate agricultural water use"], answer:"B"},
-      {q:"Progressive water tariffs are designed to:", options:["Charge less per unit as consumption rises","Charge more per unit as consumption rises, incentivizing efficiency","Eliminate water charges entirely","Apply only to industrial users"], answer:"B"},
-      {q:"Lifeline tariffs are intended to:", options:["Increase cost for low-income users","Protect access to a basic water allocation","Eliminate metering","Encourage water wastage"], answer:"B"},
-      {q:"The single most effective urban water demand reduction tool, according to the material, is:", options:["Graywater recycling","Universal metering with accurate billing","Rainwater harvesting","Desalination"], answer:"B"},
-      {q:"Dual flush toilets can reduce per-flush water use by approximately:", options:["5-10%","20-30%","50-67%","90-100%"], answer:"C"},
-      {q:"Graywater recycling involves the reuse of:", options:["Water from toilets only","Lightly contaminated household water from sinks and showers","Seawater","Industrial wastewater only"], answer:"B"},
-      {q:"Agriculture accounts for approximately what percentage of global freshwater withdrawals?", options:["30%","50%","70%","90%"], answer:"C"},
-      {q:"Drip/trickle irrigation reduces water losses by approximately:", options:["10-20%","40-70%","80-90%","100%"], answer:"B"},
-      {q:"Deficit irrigation involves:", options:["Applying more water than the crop needs","Deliberately applying less water than full evapotranspiration demand at tolerant growth stages","Eliminating irrigation entirely","Only irrigating during the rainy season"], answer:"B"},
-      {q:"Water harvesting for agriculture involves:", options:["Capturing rainfall in ponds, check dams, or soil conservation structures","Drilling deep boreholes only","Desalinating seawater","Building large interbasin transfer canals"], answer:"A"},
-      {q:"Irrigation scheduling uses which of the following to determine when and where to apply water?", options:["Soil moisture sensors, evapotranspiration data, and weather forecasts","Random guessing","Fixed calendar dates only","Market prices of crops"], answer:"A"},
-      {q:"Reservoir storage as a water supply strategy is limited mainly by:", options:["Excess rainfall","Evaporation losses, especially in arid regions","Too much groundwater","Lack of dams"], answer:"B"},
-      {q:"Run-off river diversions differ from reservoir storage in that they:", options:["Involve large storage capacity","Directly abstract water without large storage, depending on seasonal flow","Only operate underground","Require desalination"], answer:"B"},
-      {q:"Interbasin transfers involve:", options:["Diverting water from water-rich to water-scarce basins","Storing water only within a single basin","Removing salts from seawater","Recharging aquifers artificially"], answer:"A"},
-      {q:"Managed Aquifer Recharge (MAR) involves:", options:["Draining aquifers permanently","Artificial injection or spreading of surface water into aquifers for later recovery","Building surface reservoirs only","Desalinating groundwater"], answer:"B"},
-      {q:"Conjunctive use in water supply management refers to:", options:["Using only groundwater sources","Coordinated surface and groundwater management, using each source when most available and cost-effective","Avoiding groundwater entirely","Interbasin transfer only"], answer:"B"},
-      {q:"Desalination is the process of:", options:["Adding salt to freshwater","Removing dissolved salts and impurities from saline water to produce freshwater","Filtering sediments from rivers","Increasing turbidity of water"], answer:"B"},
-      {q:"Wastewater reuse can be applied to all of the following EXCEPT:", options:["Agricultural irrigation","Industrial cooling","Groundwater recharge","Direct human consumption without any treatment"], answer:"D"},
-      {q:"Which water quality parameter category includes pH, hardness, and heavy metals?", options:["Physical","Chemical Inorganic","Chemical Organic","Microbiological"], answer:"B"},
-      {q:"BOD, COD, and pesticides fall under which water quality parameter category?", options:["Physical","Chemical Inorganic","Chemical Organic","Radiological"], answer:"C"},
-      {q:"E. coli (fecal coliforms) is a parameter under which water quality category?", options:["Physical","Chemical","Microbiological","Radiological"], answer:"C"},
-      {q:"Radon and radium are examples of parameters under which water quality category?", options:["Physical","Chemical Organic","Microbiological","Radiological"], answer:"D"},
-      {q:"Pollution discharged from a single, identifiable location is called:", options:["Non-point source pollution","Point source pollution","Diffuse pollution","Atmospheric pollution"], answer:"B"},
-      {q:"Non-point source pollution is:", options:["Easier to regulate than point source","Generated across a broad area and harder to regulate than point source","Only found in urban areas","Not related to agriculture"], answer:"B"},
-      {q:"Source protection as a water quality management strategy includes:", options:["Delineating wellhead protection areas","Constructing more dams","Increasing industrial discharge","Reducing monitoring"], answer:"A"},
-      {q:"Coagulation, sedimentation, filtration, and disinfection are steps in:", options:["Wastewater treatment for discharge","Drinking water treatment","Sediment trapping","Aquifer recharge"], answer:"B"},
-      {q:"Access to clean drinking water is most directly linked to:", options:["Reduced illness and mortality among children under five","Increased industrial output only","Higher rainfall totals","Reduced solar radiation"], answer:"A"},
-      {q:"Which of the following is an environmental importance of good water quality?", options:["Increased eutrophication","Protection of aquatic ecosystems","Reduced biodiversity","Decomposition failure"], answer:"B"},
-      {q:"Controlling nutrient pollution to reduce excessive algal growth helps prevent:", options:["Eutrophication","Desalination","Deficit irrigation","Percolation"], answer:"A"},
-      {q:"Which of the following best summarizes the goal of IWRM?", options:["Prioritizing economic uses of water above all else","Balancing economic, social, and environmental water needs sustainably","Focusing only on urban water supply","Eliminating agricultural water use"], answer:"B"},
-      {q:"Water policy encompasses:", options:["Only engineering designs for dams","Principles, objectives, and strategies guiding water resources development and management","Only weather forecasting techniques","Private company profit strategies"], answer:"B"},
-      {q:"An effective water policy must bridge:", options:["Only technical knowledge","Technical, economic, social, environmental, and political considerations","Only political feasibility","Only environmental sustainability"], answer:"B"},
-      {q:"Which of the following is part of a national water policy framework?", options:["Vision and objectives","Football league schedules","Currency exchange rates","Population census only"], answer:"A"},
-      {q:"Allocation priorities in national water policy typically place first priority on:", options:["Industrial uses","Basic human needs","Tourism","Mining"], answer:"B"},
-      {q:"According to typical allocation priorities, after basic human needs the next priority is usually:", options:["Economic uses","Ecological flows","Mining","Tourism"], answer:"B"},
-      {q:"Financing mechanisms for water infrastructure may include:", options:["Cost recovery, subsidies, public investment, and private participation","Only foreign aid","Only taxation","Elimination of all funding"], answer:"A"},
-      {q:"The Mar del Plata Action Plan, held in 1977, is significant because it:", options:["Established the Dublin Principles","Called for national water assessments and established the 'Water Decade'","Created the SDGs","Established the UNECE Water Convention"], answer:"B"},
-      {q:"The Dublin Statement on Water and Sustainable Development (1992) is significant for establishing:", options:["The Millennium Development Goals","The four Dublin Principles, foundational to IWRM","The UN Resolution on the human right to water","The Johannesburg Plan of Implementation"], answer:"B"},
-      {q:"The Millennium Development Goals (MDGs), adopted in 2000, aimed to:", options:["Eliminate all water usage globally","Halve the proportion of people without access to safe water and sanitation by 2015","Establish desalination as the primary water source","End international water treaties"], answer:"B"},
-      {q:"The Johannesburg Plan of Implementation (2002) called for:", options:["IWRM and Water Efficiency Plans by 2006","Elimination of groundwater use","The first global water conference","The UNECE Water Convention"], answer:"A"},
-      {q:"SDG 6 focuses on:", options:["Clean Water and Sanitation","Climate Action","No Poverty","Gender Equality"], answer:"A"},
-      {q:"SDG 6 aims to achieve universal access to safe water and sanitation, implement IWRM, and protect water-related ecosystems by:", options:["2020","2025","2030","2050"], answer:"C"},
-      {q:"UN Resolution A/RES/64/292 (2010) is significant for:", options:["Recognizing the human right to safe drinking water and sanitation","Establishing desalination standards","Creating the Dublin Principles","Establishing the MDGs"], answer:"A"},
-      {q:"The UNECE Water Convention is significant as a:", options:["Non-binding voluntary agreement","Legally binding convention on transboundary watercourses, later expanded to global membership","Regional agreement limited to Europe only","Purely advisory framework with no legal standing"], answer:"B"},
-      {q:"A water use license or permit grants:", options:["Unlimited abstraction of water from any source","Legal authorization to abstract a specific volume of water from a specific source under defined conditions","Permission to discharge pollutants without limits","Automatic access to groundwater without regulation"], answer:"B"},
-      {q:"A discharge permit (consent to discharge) sets:", options:["Maximum concentration and loads of pollutants allowed for effluent discharge","The price of drinking water","The volume of rainfall permitted","The height of dams"], answer:"A"},
-      {q:"Breach of a discharge permit typically leads to:", options:["No consequence","Enforcement action","Automatic permit renewal","Increased water allocation"], answer:"B"},
-      {q:"An Environmental Flow Requirement is a regulatory mandate to:", options:["Maximize water abstraction for industry","Maintain a minimum flow in rivers to sustain ecological functions and downstream users","Eliminate all river flow for storage","Increase pollution discharge limits"], answer:"B"},
-      {q:"South Africa's National Water Act (1998) introduced the concept of the:", options:["Ecological reserve","Water Decade","Dublin Principles","MDG framework"], answer:"A"},
-      {q:"Under South Africa's ecological reserve concept, which needs must be met before any allocation to economic uses?", options:["Industrial needs only","Ecological and basic human needs","Mining needs only","Tourism needs only"], answer:"B"},
-      {q:"Water Quality Standards may be derived from:", options:["Health-based guidelines, ecological toxicity, or technology-based limits","Only market prices","Only political considerations","Random selection"], answer:"A"},
-      {q:"Emerging technologies in hydrological modelling are centered on:", options:["AI/ML, remote sensing, IoT sensor networks, and cloud/quantum computing","Manual paper record-keeping only","Traditional rain gauges exclusively","Sundials and water clocks"], answer:"A"},
-      {q:"AI, machine learning, and deep learning are particularly useful in hydrology for capturing:", options:["Linear relationships only","Nonlinear hydrological relationships such as rainfall-runoff","Static, unchanging data","Historical archives only"], answer:"B"},
-      {q:"Explainable AI and transfer learning are important because they:", options:["Reduce model transparency","Improve transparency and let models adapt across regions with limited local data","Eliminate the need for data","Only work in a single region"], answer:"B"},
-      {q:"Remote sensing and non-traditional data assimilation expand model inputs beyond:", options:["Satellite imagery","Ground gauges, especially for large or data-scarce basins","Machine learning algorithms","Cloud computing resources"], answer:"B"},
-      {q:"IoT and advanced environmental sensors are making which of the following more practical?", options:["Historical data destruction","Near-real-time monitoring for forecasting and risk assessment","Manual paper-based record keeping","Elimination of ground stations"], answer:"B"},
-      {q:"Cloud and quantum computing are being explored in hydrology mainly to:", options:["Reduce data availability","Handle the growing computational load of integrated hydrological models","Eliminate the need for remote sensing","Replace field measurements entirely"], answer:"B"},
-      {q:"Hydrological modelling assists in which of the following areas?", options:["Flood forecasting and real-time warning systems","Only tourism planning","Only mining exploration","Only stock market prediction"], answer:"A"},
-      {q:"Which of the following is NOT listed as an area where hydrological modelling helps?", options:["Streamflow prediction and drought monitoring","Groundwater and surface water interaction modelling","Political election forecasting","Integrated watershed planning and climate adaptation"], answer:"C"},
-      {q:"A key limitation of hydrological modelling mentioned in the material is:", options:["Excess computational resources","Data scarcity, limited interpretability, and high cost of training complex models","Too much available data","Overly simple models"], answer:"B"},
-      {q:"Which international instrument specifically addresses gender representation in water governance?", options:["Mar del Plata Action Plan","Dublin Statement (Dublin Principles)","SDG 6","UNECE Water Convention"], answer:"B"},
-      {q:"The vision and objectives component of a national water policy typically includes goals such as:", options:["Universal access, sustainability, food security, flood safety","Only tourism development","Only mining regulation","Only urban infrastructure"], answer:"A"},
-      {q:"Institutional arrangement in a national water policy defines:", options:["Which agencies are responsible for aspects of water management and how they coordinate","The price of bottled water","The design of dams only","The chemical composition of rainwater"], answer:"A"},
-      {q:"International commitments in a national water policy relate to how a country implements obligations under:", options:["International treaties and global frameworks such as the SDGs","Local farming customs only","Regional agreements unrelated to water","National currency policy"], answer:"A"},
-      {q:"Which policy principle relates to fairness in how water benefits and burdens are distributed?", options:["Equity","Efficiency only","Profit maximization","Urbanization"], answer:"A"},
-      {q:"Regulatory instruments such as abstraction licenses and pollution discharge permits fall under which IWRM management category?", options:["Enabling Environment","Institutional Roles","Management Instruments","Financing strategies"], answer:"C"},
-      {q:"Which of the following best distinguishes a legally binding water instrument from an advisory one?", options:["Legally binding instruments carry enforceable obligations, unlike advisory ones","Advisory instruments are always followed strictly","There is no difference","Only advisory instruments matter"], answer:"A"},
-      {q:"The WHO plays a role in setting water quality standards primarily through:", options:["Health-based guidelines","Football regulations","Mining permits","Currency policy"], answer:"A"},
-      {q:"A country's obligation to protect water-related ecosystems by 2030 is a target under:", options:["SDG 6","Mar del Plata Action Plan","MDGs","UNECE Water Convention"], answer:"A"},
-      {q:"Overall, water policy and regulation aim primarily to:", options:["Guide sustainable, equitable development, allocation, protection and management of water resources","Maximize private profit only","Eliminate all water regulation","Focus solely on dam construction"], answer:"A"},
-      {q:"Weather refers to:", options:["The long-term average atmospheric condition of a region","The short-term condition of the atmosphere at a particular place and time","The permanent classification of a region's vegetation","The total rainfall over 30 years"], answer:"B"},
-      {q:"According to the WMO, weather is described with respect to variables such as:", options:["Temperature, rainfall, humidity, wind, pressure, cloud cover","Soil type and mineral content","Population and land use","Ocean salinity"], answer:"A"},
-      {q:"Which of the following is an example of weather rather than climate?", options:["Tropical rainforest climate","Thunderstorm this afternoon","Desert climate zone","Polar climate"], answer:"B"},
-      {q:"Weather is generally:", options:["Long-term and stable","Short-term, changes rapidly, and localized","Unchanging over decades","Predictable only over 30 years"], answer:"B"},
-      {q:"Temperature is measured using a:", options:["Rain gauge","Thermometer","Anemometer","Barometer"], answer:"B"},
-      {q:"Rainfall (precipitation) is measured using a:", options:["Hygrometer","Rain gauge","Sunshine recorder","Wind vane"], answer:"B"},
-      {q:"Humidity is measured using a:", options:["Hygrometer","Barometer","Thermometer","Anemometer"], answer:"A"},
-      {q:"Wind speed is measured using a(n):", options:["Wind vane","Anemometer","Barometer","Hygrometer"], answer:"B"},
-      {q:"Wind direction is measured using a:", options:["Anemometer","Wind vane","Sunshine recorder","Rain gauge"], answer:"B"},
-      {q:"Atmospheric pressure is measured using a barometer, in units of:", options:["Millimetres and litres","Millibar and Pascal","Degrees Celsius and Kelvin","Percentage"], answer:"B"},
-      {q:"Sunshine duration is measured using a:", options:["Sunshine recorder","Barometer","Hygrometer","Rain gauge"], answer:"A"},
-      {q:"Cloud cover refers to:", options:["The amount of water vapour in the air","The proportion of the sky covered by clouds","The speed of wind at cloud level","The temperature inside clouds"], answer:"B"},
-      {q:"Climate refers to:", options:["The short-term state of the atmosphere","The average weather conditions of a place over a long period, usually 30 years or more","A single day's rainfall total","The daily temperature reading"], answer:"B"},
-      {q:"According to the WMO, climate is the statistical description of weather conditions over a period of at least:", options:["5 years","10 years","30 years","100 years"], answer:"C"},
-      {q:"Which of the following is a characteristic of climate rather than weather?", options:["Highly variable","Changes hourly","Relatively stable and covers large geographical areas","Difficult to predict over a long period"], answer:"C"},
-      {q:"Nigeria generally experiences which two broad seasons?", options:["Spring and autumn","Wet season and dry season","Summer and winter","Monsoon and blizzard"], answer:"B"},
-      {q:"The United Kingdom is generally described as having a:", options:["Hot desert climate","Temperate maritime climate","Tropical rainforest climate","Polar climate"], answer:"B"},
-      {q:"Antarctica's climate is characterized by:", options:["High temperatures and heavy rainfall year-round","Extremely low temperatures and ice cover throughout most of the year","Moderate rainfall and four seasons","Hot summers and cold winters only"], answer:"B"},
-      {q:"The environment refers to:", options:["Only the atmosphere","Everything surrounding living organisms that influences their growth, survival and development","Only human-built structures","Only rainfall and temperature"], answer:"B"},
-      {q:"The environment includes:", options:["Only biotic components","Only abiotic components","Living (biotic) and non-living (abiotic) components","Only industrial components"], answer:"C"},
-      {q:"Air, water, soil, rocks, climate and sunlight are components of the:", options:["Biological Environment","Physical Environment","Human/Built Environment","Political environment"], answer:"B"},
-      {q:"Plants, animals, microorganisms and humans are components of the:", options:["Physical Environment","Biological Environment","Human/Built Environment","None of the above"], answer:"B"},
-      {q:"Roads, buildings, dams, industries and cities are components of the:", options:["Physical Environment","Biological Environment","Human or Built Environment","Atmospheric environment"], answer:"C"},
-      {q:"The Köppen Climate Classification system classifies climates mainly using:", options:["Temperature and rainfall patterns","Population size and industrial output","Soil type and mineral composition","Ocean depth and salinity"], answer:"A"},
-      {q:"Which climate type has high temperature year-round, heavy rainfall and dense vegetation?", options:["Tropical Climate","Dry Climate","Polar Climate","Continental Climate"], answer:"A"},
-      {q:"Cocoa, oil palm, rubber, rice and cassava are crops suitable for which climate type, found in Southern Nigeria, Brazil, and Indonesia?", options:["Dry Climate","Tropical Climate","Temperate Climate","Polar Climate"], answer:"B"},
-      {q:"Which climate type is characterized by very little rainfall, high evaporation and water scarcity, e.g. the Sahara Desert?", options:["Tropical Climate","Dry (Arid and Semi-Arid) Climate","Temperate Climate","Polar Climate"], answer:"B"},
-      {q:"Moderate temperature, four seasons, and moderate rainfall (e.g. UK, France, Germany) describe which climate type?", options:["Tropical Climate","Dry Climate","Temperate Climate","Polar Climate"], answer:"C"},
-      {q:"Hot summers, cold winters and large temperature differences (e.g. Russia, Canada) describe which climate type?", options:["Tropical Climate","Continental Climate","Polar Climate","Dry Climate"], answer:"B"},
-      {q:"Extremely cold with snow throughout most of the year and very little vegetation (e.g. Antarctica, Greenland) describes which climate type?", options:["Tropical Climate","Continental Climate","Temperate Climate","Polar Climate"], answer:"D"},
-      {q:"Latitude, as a driver of climate, primarily determines:", options:["The angle at which sunlight reaches the Earth","The volume of groundwater","The type of soil","The rate of deforestation"], answer:"A"},
-      {q:"The environmental lapse rate describes an approximate temperature decrease of about ___ per 1,000 metres of elevation.", options:["1°C","6.5°C","15°C","25°C"], answer:"B"},
-      {q:"Areas close to oceans generally experience:", options:["Greater temperature extremes and lower humidity","Moderate temperatures, higher humidity and more rainfall","No rainfall at all","Colder temperatures than inland areas at the same latitude"], answer:"B"},
-      {q:"Warm ocean currents tend to:", options:["Reduce temperature, humidity and rainfall","Increase temperature, humidity and rainfall","Have no effect on climate","Only affect polar regions"], answer:"B"},
-      {q:"The South-West Monsoon Wind in West Africa is significant because it:", options:["Brings rain","Causes the Harmattan","Increases desertification","Has no seasonal effect"], answer:"A"},
-      {q:"The North-East Trade Wind in West Africa is associated with:", options:["Heavy rainfall","The Harmattan (dry, dusty wind)","Ocean currents","Tropical cyclones"], answer:"B"},
-      {q:"Mountains influence rainfall through the orographic effect, causing heavy rainfall on the ___ side and a rain shadow on the ___ side.", options:["Leeward; windward","Windward; leeward","Northern; southern","Eastern; western"], answer:"B"},
-      {q:"Deforestation tends to:", options:["Increase rainfall and reduce temperature","Reduce rainfall, increase temperature, and promote erosion","Have no effect on climate","Only affect ocean currents"], answer:"B"},
-      {q:"Warm, wet conditions associated with certain climates increase the transmission of:", options:["Malaria","Only respiratory disease","Only cholera","Only typhoid"], answer:"A"},
-      {q:"Nigeria's three broad climatic zones, from south to north, are:", options:["Tropical Rainforest, Guinea Savannah, and Sudan/Sahel Savannah","Desert, Temperate, and Polar","Continental, Tropical, and Arid","Mediterranean, Tundra, and Monsoon"], answer:"A"}
+      {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"}
     ],
     theory:[
       {q:"Define Water Resources Management and explain its main objectives."},
-      {q:"Discuss the social, economic, environmental and climatic benefits of Water Resources Management."},
-      {q:"Explain any five challenges facing Water Resources Management in Nigeria."},
-      {q:"List and briefly describe five key institutions responsible for water resources management in Nigeria."},
-      {q:"With the aid of the water balance equation, describe the main processes of the water cycle."},
-      {q:"Explain the factors that affect the water cycle, giving examples under each category."},
-      {q:"Explain the different types of hydrological measurements, giving the instruments used for each."},
-      {q:"Describe the main sources of hydrological data collection."},
-      {q:"Differentiate between descriptive statistics and inferential statistics in hydrological data analysis."},
-      {q:"Discuss any three examples of hydrological data interpretation and their practical significance."},
-      {q:"Discuss the major challenges and limitations of hydrological data collection and analysis."},
-      {q:"Explain the future directions in hydrological measurement and data analysis, highlighting the role of emerging technologies."},
-      {q:"Define IWRM and explain the four Dublin Principles with their implications for water management."},
-      {q:"Discuss the three core elements of IWRM."},
-      {q:"Compare and contrast water demand management strategies in the urban and agricultural sectors."},
-      {q:"Discuss the major approaches to water supply management, covering surface water, groundwater, and alternative sources."},
-      {q:"Describe the water quality parameter categories and give two examples of parameters under each."},
-      {q:"Explain the strategies used in water quality management and discuss the importance of water quality to human health and the environment."},
-      {q:"Discuss the key components of a national water policy framework."},
-      {q:"Discuss any four international water policy instruments, stating their year and significance."},
-      {q:"Explain the different types of water regulation instruments, using examples."},
-      {q:"Explain the concept of the 'ecological reserve' as introduced by South Africa's National Water Act (1998)."},
-      {q:"Discuss the emerging technologies being applied in hydrological modelling and their contributions."},
-      {q:"Highlight the key limitations of hydrological modelling and suggest ways they could be addressed."},
-      {q:"Define weather and climate, and state five differences between them."},
-      {q:"Explain the concept of the environment and describe its three major components with examples."},
-      {q:"Discuss the major types of climate under the Köppen classification, giving characteristics and examples of regions for each."},
-      {q:"Explain at least seven factors (drivers) that influence climate."},
-      {q:"Discuss the importance of climate to agriculture, water resources, and human health."},
-      {q:"Describe Nigeria's three broad climatic zones and their characteristics."}
-    ]
-  },
-
+      {q:"Discuss the social, economic, environmental and climatic benefits of Water Resources Management."}
+    ]},
   "GST 112": { title:"GST 112 — Nigerian Peoples and Culture", eligible:"ALL",
     objective:[
       {q:"Nigeria gained independence from Britain in:", options:["1957","1960","1963","1970"], answer:"B"},
@@ -1157,12 +869,14 @@ let state = {
   objAnswers:{}, objFlags:{}, objIndex:0,
   theoryAnswers:{}, theoryImages:{}, theoryIndex:0,
   objTimeLeft:0, theoryTimeLeft:0,
-  examStarted:false, warningCount:0, startedAt:0
+  examStarted:false, warningCount:0, startedAt:0,
+  objCount: CONFIG.defaultObjectiveDraw,
+  theoryCount: CONFIG.defaultTheoryDraw
 };
 let objInterval, theoryInterval;
 let activeObjectives = [], activeTheory = [];
 
-/* ===================== SHUFFLE (fresh order every login) ===================== */
+/* ===================== SHUFFLE ===================== */
 function shuffleArray(arr){
   const a = [...arr];
   for(let i=a.length-1; i>0; i--){
@@ -1178,14 +892,14 @@ function shuffleObjectiveQuestion(item){
   const newAnswerIndex = shuffled.findIndex(p => p.wasCorrect);
   return { q: item.q, options: shuffled.map(p => p.opt), answer: letters[newAnswerIndex] };
 }
-function buildShuffledSet(bank){
-  const objDraw = bank.drawObjective || CONFIG.defaultObjectiveDraw;
-  const theoryDraw = bank.drawTheory || CONFIG.defaultTheoryDraw;
+function buildShuffledSet(bank, objCount, theoryCount){
+  const objDraw = Math.min(objCount || CONFIG.defaultObjectiveDraw, bank.objective ? bank.objective.length : 0);
+  const theoryDraw = Math.min(theoryCount || CONFIG.defaultTheoryDraw, bank.theory ? bank.theory.length : 0);
   const shuffledObj = shuffleArray(bank.objective.map(shuffleObjectiveQuestion));
   const shuffledTheory = shuffleArray(bank.theory);
   return {
-    objective: shuffledObj.slice(0, Math.min(objDraw, shuffledObj.length)),
-    theory: shuffledTheory.slice(0, Math.min(theoryDraw, shuffledTheory.length))
+    objective: shuffledObj.slice(0, objDraw),
+    theory: shuffledTheory.slice(0, theoryDraw)
   };
 }
 
@@ -1219,7 +933,7 @@ function openModal({title, message, confirmText='OK', cancelText=null}){
 $('modal-confirm').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(true); });
 $('modal-cancel').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(false); });
 
-/* ===================== DEPARTMENT / COURSE SETUP (FIXED) ===================== */
+/* ===================== DEPARTMENT / COURSE SETUP ===================== */
 function populateDepartments(){
   const sel = $('in-dept');
   sel.innerHTML = '<option value="">Select your department</option>';
@@ -1270,6 +984,18 @@ $('in-dept').addEventListener('change', () => {
 });
 $('in-course').addEventListener('change', validateGate);
 
+/* ===================== QUESTION COUNT SLIDERS ===================== */
+$('range-obj-count').addEventListener('input', () => {
+  const val = $('range-obj-count').value;
+  $('display-obj-count').textContent = val;
+  state.objCount = parseInt(val, 10);
+});
+$('range-theory-count').addEventListener('input', () => {
+  const val = $('range-theory-count').value;
+  $('display-theory-count').textContent = val;
+  state.theoryCount = parseInt(val, 10);
+});
+
 /* ===================== GATE / VALIDATION ===================== */
 const REG_PATTERN = /^25\d{5}$/;
 function validateReg(){
@@ -1296,9 +1022,22 @@ $('btn-to-instructions').addEventListener('click', () => {
   state.course = $('in-course').value;
 
   const bank = COURSES[state.course];
-  const shuffled = buildShuffledSet(bank);
-  activeObjectives = shuffled.objective;
-  activeTheory = shuffled.theory;
+  // Update max slider values based on available questions
+  const maxObj = bank.objective ? bank.objective.length : 0;
+  const maxTheory = bank.theory ? bank.theory.length : 0;
+  $('range-obj-count').max = Math.min(CONFIG.maxObjective, maxObj);
+  $('range-theory-count').max = Math.min(CONFIG.maxTheory, maxTheory);
+  // Reset to defaults if current exceeds max
+  if(state.objCount > $('range-obj-count').max) {
+    state.objCount = Math.min(CONFIG.defaultObjectiveDraw, maxObj);
+    $('range-obj-count').value = state.objCount;
+    $('display-obj-count').textContent = state.objCount;
+  }
+  if(state.theoryCount > $('range-theory-count').max) {
+    state.theoryCount = Math.min(CONFIG.defaultTheoryDraw, maxTheory);
+    $('range-theory-count').value = state.theoryCount;
+    $('display-theory-count').textContent = state.theoryCount;
+  }
 
   $('instr-course-title').textContent = bank.title;
   $('instr-student-line').textContent = `${state.studentName} · ${state.studentReg} · ${state.department}`;
@@ -1306,9 +1045,10 @@ $('btn-to-instructions').addEventListener('click', () => {
 
   hide('screen-gate'); show('screen-instructions'); window.scrollTo({top:0});
 });
+
 function updatePlanCounts(){
-  $('plan-obj-count').textContent = `${activeObjectives.length} questions`;
-  $('plan-theory-count').textContent = `${activeTheory.length} questions`;
+  $('plan-obj-count').textContent = `${state.objCount} questions`;
+  $('plan-theory-count').textContent = `${state.theoryCount} questions`;
 }
 $('btn-back-to-gate').addEventListener('click', () => { hide('screen-instructions'); show('screen-gate'); });
 
@@ -1394,6 +1134,11 @@ $('btn-resume').addEventListener('click', () => {
 
 /* ===================== SECTION A: OBJECTIVES ===================== */
 $('btn-start-objectives').addEventListener('click', () => {
+  const bank = COURSES[state.course];
+  const shuffled = buildShuffledSet(bank, state.objCount, state.theoryCount);
+  activeObjectives = shuffled.objective;
+  activeTheory = shuffled.theory;
+
   hide('screen-instructions'); show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
   state.examStarted = true; state.section='objective'; state.objTimeLeft = parseInt($('sel-obj-time').value,10)*60;
   state.startedAt = Date.now();
@@ -1509,7 +1254,6 @@ function updateWordCount(){ const t = $('theory-answer').value.trim(); $('theory
 $('theory-answer').addEventListener('input', () => { saveTheoryDraft(); updateWordCount(); refreshTheoryNav(); });
 $('theory-answer').addEventListener('blur', autosave);
 
-/* ---- Photo attachment for theory answers ---- */
 function compressImage(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1579,7 +1323,7 @@ function runTheoryTicker(){
   theoryInterval = setInterval(() => {
     state.theoryTimeLeft--;
     $('theory-timer').textContent = fmtTime(state.theoryTimeLeft);
-    $('theory-timer').classList.toggle('low', state.theoryTimeLeft<=60);
+    $('theory-timer').classList.toggle('low', state.theTimeLeft<=60);
     if(state.theoryTimeLeft % 15 === 0){ saveTheoryDraft(); autosave(); }
     if(state.theoryTimeLeft<=0){ clearInterval(theoryInterval); finishTheory(); }
   },1000);
@@ -1611,7 +1355,7 @@ function showResults(){
     const sel = state.objAnswers[i];
     if(!sel) unanswered++; else if(sel===item.answer) correct++; else wrong++;
   });
-  const pct = Math.round((correct/activeObjectives.length)*100);
+  const pct = activeObjectives.length > 0 ? Math.round((correct/activeObjectives.length)*100) : 0;
   const passed = pct >= CONFIG.passMark;
 
   $('res-pct').textContent = pct+'%';
@@ -1707,6 +1451,39 @@ function queuePending(payload){
     pending.push(payload); localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(pending));
   }catch(e){}
 }
+
+/* ===================== NEW COURSE AFTER RESULTS ===================== */
+$('btn-new-course').addEventListener('click', () => {
+  // Reset state for new exam but keep student details
+  state = {
+    studentName: state.studentName,
+    studentReg: state.studentReg,
+    department: state.department,
+    course: '',
+    section: 'objective',
+    objAnswers: {}, objFlags: {}, objIndex: 0,
+    theoryAnswers: {}, theoryImages: {}, theoryIndex: 0,
+    objTimeLeft: 0, theoryTimeLeft: 0,
+    examStarted: false, warningCount: 0, startedAt: 0,
+    objCount: CONFIG.defaultObjectiveDraw,
+    theoryCount: CONFIG.defaultTheoryDraw
+  };
+  activeObjectives = [];
+  activeTheory = [];
+
+  // Reset UI
+  $('in-course').value = '';
+  $('range-obj-count').value = CONFIG.defaultObjectiveDraw;
+  $('display-obj-count').textContent = CONFIG.defaultObjectiveDraw;
+  $('range-theory-count').value = CONFIG.defaultTheoryDraw;
+  $('display-theory-count').textContent = CONFIG.defaultTheoryDraw;
+
+  // Hide results, show gate (with pre-filled details)
+  hide('screen-results');
+  show('screen-gate');
+  validateGate();
+  window.scrollTo({top:0});
+});
 
 /* ===================== INIT ===================== */
 populateDepartments();
