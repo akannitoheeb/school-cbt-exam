@@ -185,6 +185,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -333,10 +334,21 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div class="btn-row" style="margin-top:16px;"><button class="primary" id="btn-submit-objectives" style="width:100%;">Submit Section A</button></div>
     </div>
     <div class="qpanel">
+      <div class="top-actions" style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+        <button class="ghost" id="btn-skip-to-theory-top" style="font-size:12px; padding:8px 14px;">Skip to Theory →</button>
+        <button class="ghost" id="btn-end-exam-obj-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
       <div class="qmeta"><span class="idx" id="obj-qindex">Question 1 of —</span><button class="flagbtn" id="obj-flagbtn">Flag for review</button></div>
       <div class="qtext" id="obj-qtext">—</div>
       <div id="obj-options"></div>
-      <div class="qpanel-actions"><button class="ghost" id="obj-prev">← Previous</button><button class="ghost" id="obj-next">Next →</button></div>
+      <div class="qpanel-actions">
+        <button class="ghost" id="obj-prev">← Previous</button>
+        <button class="ghost" id="obj-next">Next →</button>
+      </div>
+      <div class="btn-row" style="margin-top:14px; justify-content:center; flex-wrap:wrap; gap:8px;">
+        <button class="ghost" id="btn-skip-to-theory" style="font-size:13px; padding:10px 16px;">Skip to Section B → Theory</button>
+        <button class="ghost" id="btn-end-exam-obj" style="font-size:13px; padding:10px 16px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
     </div>
   </div>
 </div>
@@ -384,6 +396,9 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div class="btn-row" style="margin-top:16px;"><button class="primary" id="btn-submit-theory" style="width:100%;">Submit Exam</button></div>
     </div>
     <div class="qpanel">
+      <div class="top-actions" style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+        <button class="ghost" id="btn-end-exam-theory-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
       <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span></div>
       <div class="qtext" id="theory-qtext">—</div>
       <textarea id="theory-answer" placeholder="Type your answer here... (or attach a photo of your written working below)"></textarea>
@@ -397,7 +412,13 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
         <div class="photo-status" id="theory-photo-status"></div>
         <img id="theory-photo-preview" class="photo-preview" style="display:none;">
       </div>
-      <div class="qpanel-actions"><button class="ghost" id="theory-prev">← Previous</button><button class="ghost" id="theory-next">Next →</button></div>
+      <div class="qpanel-actions">
+        <button class="ghost" id="theory-prev">← Previous</button>
+        <button class="ghost" id="theory-next">Next →</button>
+      </div>
+      <div class="btn-row" style="margin-top:14px; justify-content:center; flex-wrap:wrap; gap:8px;">
+        <button class="ghost" id="btn-end-exam-theory" style="font-size:13px; padding:10px 16px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1204,6 +1225,105 @@ $('btn-submit-objectives').addEventListener('click', async () => {
   const ok = await openModal({title:'Submit Section A?', message:'You cannot return to it afterward.', confirmText:'Submit', cancelText:'Keep working'});
   if(ok) finishObjectives();
 });
+
+/* ===================== SKIP TO THEORY & END EXAM HANDLERS ===================== */
+
+// Skip to Theory from Objectives (bottom button)
+$('btn-skip-to-theory').addEventListener('click', async () => {
+  const answered = Object.keys(state.objAnswers).length;
+  const total = activeObjectives.length;
+  const msg = answered < total
+    ? `You have answered ${answered} of ${total} objective questions. Section A will be submitted and you will move directly to Section B (Theory). You cannot return to Section A.`
+    : `You have answered all ${total} objective questions. Submit Section A and move to Section B (Theory)? You cannot return to Section A.`;
+  const ok = await openModal({title:'Skip to Section B — Theory?', message: msg, confirmText:'Skip to Theory', cancelText:'Keep working'});
+  if(ok) finishObjectives();
+});
+
+// Skip to Theory from Objectives (top button)
+$('btn-skip-to-theory-top').addEventListener('click', async () => {
+  const answered = Object.keys(state.objAnswers).length;
+  const total = activeObjectives.length;
+  const msg = answered < total
+    ? `You have answered ${answered} of ${total} objective questions. Section A will be submitted and you will move directly to Section B (Theory). You cannot return to Section A.`
+    : `You have answered all ${total} objective questions. Submit Section A and move to Section B (Theory)? You cannot return to Section A.`;
+  const ok = await openModal({title:'Skip to Section B — Theory?', message: msg, confirmText:'Skip to Theory', cancelText:'Keep working'});
+  if(ok) finishObjectives();
+});
+
+// End Exam from Objectives (bottom button)
+$('btn-end-exam-obj').addEventListener('click', async () => {
+  const answeredObj = Object.keys(state.objAnswers).length;
+  const totalObj = activeObjectives.length;
+  const msg = answeredObj < totalObj
+    ? `You have answered ${answeredObj} of ${totalObj} objective questions and have not reached Section B (Theory) yet. Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`
+    : `You have completed Section A but have not started Section B (Theory). Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`;
+  const ok = await openModal({title:'End Exam Early?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok){
+    clearInterval(objInterval);
+    document.getElementById('screen-objectives').style.display='none';
+    state.examStarted = false;
+    state.section = 'theory';
+    state.theoryTimeLeft = 0;
+    state.theoryAnswers = {};
+    state.theoryImages = {};
+    activeTheory = [];
+    localStorage.removeItem('fuadsi_cbt_progress');
+    if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+    showResults();
+  }
+});
+
+// End Exam from Objectives (top button)
+$('btn-end-exam-obj-top').addEventListener('click', async () => {
+  const answeredObj = Object.keys(state.objAnswers).length;
+  const totalObj = activeObjectives.length;
+  const msg = answeredObj < totalObj
+    ? `You have answered ${answeredObj} of ${totalObj} objective questions and have not reached Section B (Theory) yet. Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`
+    : `You have completed Section A but have not started Section B (Theory). Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`;
+  const ok = await openModal({title:'End Exam Early?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok){
+    clearInterval(objInterval);
+    document.getElementById('screen-objectives').style.display='none';
+    state.examStarted = false;
+    state.section = 'theory';
+    state.theoryTimeLeft = 0;
+    state.theoryAnswers = {};
+    state.theoryImages = {};
+    activeTheory = [];
+    localStorage.removeItem('fuadsi_cbt_progress');
+    if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+    showResults();
+  }
+});
+
+// End Exam from Theory (bottom button)
+$('btn-end-exam-theory').addEventListener('click', async () => {
+  saveTheoryDraft();
+  const answeredTheory = activeTheory.filter((_, i) =>
+    (state.theoryAnswers[i] && state.theoryAnswers[i].trim()) || (state.theoryImages && state.theoryImages[i])
+  ).length;
+  const totalTheory = activeTheory.length;
+  const msg = answeredTheory < totalTheory
+    ? `You have answered ${answeredTheory} of ${totalTheory} theory questions. Ending the exam now will submit whatever you have completed so far.`
+    : `You have answered all ${totalTheory} theory questions. End the exam now?`;
+  const ok = await openModal({title:'End Exam?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok) finishTheory();
+});
+
+// End Exam from Theory (top button)
+$('btn-end-exam-theory-top').addEventListener('click', async () => {
+  saveTheoryDraft();
+  const answeredTheory = activeTheory.filter((_, i) =>
+    (state.theoryAnswers[i] && state.theoryAnswers[i].trim()) || (state.theoryImages && state.theoryImages[i])
+  ).length;
+  const totalTheory = activeTheory.length;
+  const msg = answeredTheory < totalTheory
+    ? `You have answered ${answeredTheory} of ${totalTheory} theory questions. Ending the exam now will submit whatever you have completed so far.`
+    : `You have answered all ${totalTheory} theory questions. End the exam now?`;
+  const ok = await openModal({title:'End Exam?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok) finishTheory();
+});
+
 function finishObjectives(){
   clearInterval(objInterval);
   document.getElementById('screen-objectives').style.display='none';
@@ -1435,13 +1555,13 @@ async function sendResultsToSheet(payload){
     if(parsed && (parsed.status === 'ok' || parsed.status === 'success')){
       note.textContent = 'Your results have been sent to the department record sheet.';
     } else if(parsed && parsed.status === 'error'){
-      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device — please also screenshot this page.';
+      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device, please also screenshot this page.';
       queuePending(payload);
     } else {
       note.textContent = 'Sent, but got an unexpected response from the record sheet. Please also screenshot this page.';
     }
   }catch(err){
-    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device — please also screenshot this page.';
+    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device, please also screenshot this page.';
     queuePending(payload);
   }
 }
