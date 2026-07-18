@@ -938,6 +938,37 @@ function fmtDuration(ms){
 }
 function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c)); }
 
+/* ===================== STUDENT PROFILE STORAGE ===================== */
+function saveStudentProfile() {
+  const profile = {
+    name: state.studentName,
+    reg: state.studentReg,
+    department: state.department
+  };
+  try { localStorage.setItem('fuadsi_student_profile', JSON.stringify(profile)); } catch(e) {}
+}
+
+function loadStudentProfile() {
+  try {
+    const raw = localStorage.getItem('fuadsi_student_profile');
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function prefillGate() {
+  const profile = loadStudentProfile();
+  if (!profile) return;
+  if (profile.name) $('in-name').value = profile.name;
+  if (profile.reg) $('in-reg').value = profile.reg;
+  if (profile.department) {
+    $('in-dept').value = profile.department;
+    // Trigger change to populate courses dropdown
+    $('in-dept').dispatchEvent(new Event('change'));
+  }
+  validateGate();
+}
+
 /* ===================== CUSTOM MODAL ===================== */
 let modalResolve = null;
 function openModal({title, message, confirmText='OK', cancelText=null}){
@@ -1041,6 +1072,9 @@ $('btn-to-instructions').addEventListener('click', () => {
   state.studentReg = $('in-reg').value.trim();
   state.department = $('in-dept').value;
   state.course = $('in-course').value;
+
+  // Remember student details for next visit
+  saveStudentProfile();
 
   const bank = COURSES[state.course];
   // Update max slider values based on available questions
@@ -1555,13 +1589,13 @@ async function sendResultsToSheet(payload){
     if(parsed && (parsed.status === 'ok' || parsed.status === 'success')){
       note.textContent = 'Your results have been sent to the department record sheet.';
     } else if(parsed && parsed.status === 'error'){
-      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device, please also screenshot this page.';
+      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device — please also screenshot this page.';
       queuePending(payload);
     } else {
       note.textContent = 'Sent, but got an unexpected response from the record sheet. Please also screenshot this page.';
     }
   }catch(err){
-    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device, please also screenshot this page.';
+    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device — please also screenshot this page.';
     queuePending(payload);
   }
 }
@@ -1607,6 +1641,7 @@ $('btn-new-course').addEventListener('click', () => {
 
 /* ===================== INIT ===================== */
 populateDepartments();
+prefillGate();   // pre-fill name, matric, department if saved before
 checkForResume();
 </script>
 </body>
