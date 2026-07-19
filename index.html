@@ -1,1 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FUADSI CBT Examination Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#146C36; --forest-dark:#0B3D1F; --forest-tint:#E5F1E9;
+  --gold:#D6A419; --gold-tint:#FBF0D6;
+  --crimson:#A6241E; --crimson-tint:#F7E3E1;
+  --paper:#FAF8F2; --panel:#FFFFFF;
+  --ink:#1B231D; --stone:#6E7568; --line:#E1DCC9;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', Arial, sans-serif; -webkit-font-smoothing:antialiased;}
+h1,h2,h3{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; letter-spacing:-0.01em;}
+.mono{ font-family:'IBM Plex Mono', monospace; }
+.hidden{ display:none !important; }
 
+.letterhead{ background:linear-gradient(180deg, var(--forest) 0%, var(--forest-dark) 100%); color:#fff; padding:14px 20px; position:relative;}
+.letterhead::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg, var(--gold), var(--crimson) 50%, var(--gold));}
+.letterhead-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; gap:13px; }
+.crest{ width:44px; height:44px; border-radius:50%; flex-shrink:0; overflow:hidden; background:var(--gold); display:flex; align-items:center; justify-content:center; border:2px solid rgba(255,255,255,.55);}
+.crest img{ width:100%; height:100%; object-fit:cover; }
+.crest svg{ width:24px; height:24px; }
+.letterhead-text .school{ font-size:14.5px; font-weight:600; letter-spacing:.01em; line-height:1.25;}
+.letterhead-text .portal{ font-size:11px; opacity:.85; text-transform:uppercase; letter-spacing:.13em; margin-top:2px;}
+
+.wrap{ max-width:760px; margin:0 auto; padding:28px 18px 70px; }
+.card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:26px; margin-bottom:18px; box-shadow:0 1px 2px rgba(11,61,31,.05);}
+.eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; font-weight:600;}
+.card h2{ font-size:23px; margin-bottom:6px; }
+.card p.lead{ color:var(--stone); font-size:14.5px; line-height:1.55; margin:0 0 20px; }
+
+.resume-banner{ border:1px solid var(--gold); background:var(--gold-tint); border-radius:12px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap;}
+.resume-banner .txt{ font-size:13.5px; color:var(--forest-dark); }
+.resume-banner strong{ display:block; font-size:14.5px; margin-bottom:2px; }
+
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--forest-dark); }
+.field label .req{ color:var(--crimson); margin-left:2px; }
+.field input, .field select{ width:100%; padding:12px 13px; border:1px solid var(--line); border-radius:10px; font-size:15px; font-family:inherit; background:#fff; color:var(--ink); appearance:none; -webkit-appearance:none;}
+.field select:disabled{ color:var(--stone); background:var(--paper); }
+.field input.invalid{ border-color:var(--crimson); }
+.field-error{ color:var(--crimson); font-size:12px; margin-top:6px; display:none; }
+.field-error.show{ display:block; }
+.field-hint{ color:var(--stone); font-size:12px; margin-top:6px; }
+.field input:focus, .field select:focus, button:focus-visible{ outline:2px solid var(--forest); outline-offset:2px; }
+.field select{ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236E7568' d='M1 1l5 5 5-5' stroke='%236E7568' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:36px; cursor:pointer;}
+.checkline{ display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--stone); margin:18px 0; }
+.checkline input{ margin-top:3px; width:16px; height:16px; accent-color:var(--forest); cursor:pointer; }
+
+button{ font-family:'IBM Plex Sans', inherit; font-weight:600; font-size:15px; padding:13px 22px; border-radius:10px; border:none; cursor:pointer; transition:transform .12s ease, background .15s ease;}
+button.primary{ background:var(--forest); color:#fff; }
+button.primary:hover{ background:var(--forest-dark); }
+button.primary:disabled{ background:#B7C3BA; cursor:not-allowed; }
+button.ghost{ background:var(--forest-tint); color:var(--forest-dark); }
+button.ghost:hover{ background:#D9E7DB; }
+button:active{ transform:translateY(1px); }
+.btn-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+
+.rules{ list-style:none; margin:0 0 22px; padding:0; display:grid; gap:12px; }
+.rules li{ display:flex; gap:12px; padding:14px; border:1px solid var(--line); border-radius:10px; background:var(--paper); font-size:14px; line-height:1.5;}
+.rules li .num{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); flex-shrink:0; }
+.section-plan{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
+.plan-box{ border:1px solid var(--line); border-radius:10px; padding:14px; background:var(--forest-tint); }
+.plan-box .k{ font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--forest-dark); font-weight:600; }
+.plan-box .v{ font-family:'IBM Plex Mono', monospace; font-size:16px; margin:4px 0 10px; color:var(--forest-dark); }
+.plan-box select{ width:100%; padding:9px 10px; border:1px solid var(--gold); border-radius:8px; font-family:'IBM Plex Mono', monospace; font-size:13.5px; background:#fff; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236E7568' d='M1 1l5 5 5-5' stroke='%236E7568' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; padding-right:30px;}
+
+.count-selector{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px; }
+.count-selector input[type=range]{ flex:1; min-width:120px; accent-color:var(--forest); }
+.count-selector .count-display{ font-family:'IBM Plex Mono', monospace; font-size:18px; font-weight:600; color:var(--forest); min-width:40px; text-align:center; background:var(--forest-tint); padding:4px 10px; border-radius:8px; }
+.count-hint{ font-size:12px; color:var(--stone); margin-top:4px; }
+
+.examtop{ position:sticky; top:0; z-index:20; background:rgba(250,248,242,.97); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); padding:12px 18px;}
+.examtop-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+.examtop .who{ font-size:12.5px; color:var(--stone); }
+.examtop .who strong{ color:var(--ink); }
+.examtop .sec-label{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--stone); font-weight:600;}
+.examtop .sec-label span{ color:var(--forest); }
+.timer-pill{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:16px; background:var(--forest-dark); color:#fff; padding:7px 15px; border-radius:999px; display:flex; align-items:center; gap:8px;}
+.timer-pill.low{ background:var(--crimson); }
+.progress-line{ height:5px; background:var(--line); border-radius:99px; margin-top:10px; max-width:960px; margin-left:auto; margin-right:auto; overflow:hidden;}
+.progress-line i{ display:block; height:100%; width:0%; background:var(--gold); transition:width .25s; }
+
+.examgrid{ max-width:960px; margin:22px auto 0; padding:0 18px 70px; display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:start; }
+.navcard{ border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:16px; position:sticky; top:78px; }
+.navcard h3{ font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--stone); margin-bottom:10px; font-weight:700;}
+.qgrid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(32px,1fr)); gap:6px; }
+.qcell{ width:100%; aspect-ratio:1; border-radius:7px; border:1px solid var(--line); background:var(--paper); font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; color:var(--stone); display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative;}
+.qcell.answered{ background:var(--gold-tint); border-color:var(--gold); color:var(--forest-dark); }
+.qcell.current{ outline:2px solid var(--forest); outline-offset:1px; }
+.qcell.flagged::after{ content:''; position:absolute; top:-3px; right:-3px; width:8px; height:8px; border-radius:50%; background:var(--crimson); }
+.navlegend{ display:flex; flex-direction:column; gap:6px; margin-top:14px; font-size:11.5px; color:var(--stone); }
+.navlegend span{ display:flex; align-items:center; gap:7px; }
+.dot{ width:9px; height:9px; border-radius:3px; display:inline-block; }
+.dot.empty{ background:var(--paper); border:1px solid var(--line); }
+.dot.full{ background:var(--gold-tint); border:1px solid var(--gold); }
+.dot.flag{ background:var(--crimson); border-radius:50%; }
+
+.qpanel{ border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:26px; min-height:340px; display:flex; flex-direction:column;}
+.qpanel .qmeta{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.qpanel .qmeta .idx{ font-family:'IBM Plex Mono', monospace; color:var(--gold); font-weight:600; font-size:13px; }
+.flagbtn{ background:none; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--stone); cursor:pointer; font-family:inherit;}
+.flagbtn.on{ background:var(--crimson-tint); border-color:var(--crimson); color:var(--crimson); }
+.qtext{ font-size:18px; line-height:1.5; font-weight:500; margin-bottom:20px; }
+.option{ display:flex; align-items:center; gap:11px; padding:13px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:10px; cursor:pointer; background:var(--paper); font-size:15px;}
+.option:hover{ border-color:var(--forest); }
+.option.selected{ border-color:var(--forest); background:var(--forest-tint); }
+.option input{ accent-color:var(--forest); width:16px; height:16px; cursor:pointer; }
+.option .letter{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); }
+.qpanel-actions{ margin-top:auto; padding-top:20px; display:flex; justify-content:space-between; gap:10px; }
+
+textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-radius:10px; padding:14px; font-family:'IBM Plex Sans', inherit; font-size:15px; line-height:1.6; resize:vertical; color:var(--ink);}
+.wordcount{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--stone); margin-top:8px; text-align:right;}
+
+.photo-attach{ border:1px dashed var(--line); border-radius:10px; padding:14px; margin-top:14px; background:var(--paper);}
+.photo-label{ display:block; font-size:12.5px; font-weight:600; color:var(--forest-dark); margin-bottom:10px; }
+.photo-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.photo-row input[type=file]{ font-size:13px; max-width:100%; cursor:pointer; }
+.photo-status{ font-size:12px; color:var(--stone); margin-top:8px; }
+.photo-preview{ display:block; max-width:100%; max-height:320px; border-radius:8px; border:1px solid var(--line); margin-top:12px; object-fit:contain; }
+
+.result-hero{ text-align:center; padding:30px 20px 6px; }
+.result-hero .pct{ font-family:'Fraunces', serif; font-size:52px; color:var(--forest); font-weight:700; }
+.result-hero .pctlabel{ color:var(--stone); font-size:13px; text-transform:uppercase; letter-spacing:.1em; margin-top:2px;}
+.status-badge{ display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:700; padding:7px 14px; border-radius:99px; margin-top:10px; letter-spacing:.04em;}
+.status-badge.pass{ background:var(--forest-tint); color:var(--forest-dark); }
+.status-badge.fail{ background:var(--crimson-tint); color:var(--crimson); }
+.stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:22px 0; }
+.stat-box{ border:1px solid var(--line); border-radius:10px; padding:16px; text-align:center; background:var(--paper);}
+.stat-box .n{ font-family:'IBM Plex Mono', monospace; font-size:22px; font-weight:600; color:var(--forest-dark);}
+.stat-box .l{ font-size:11.5px; color:var(--stone); text-transform:uppercase; letter-spacing:.06em; margin-top:4px;}
+.summary-table{ width:100%; border-collapse:collapse; margin-top:6px; font-size:14px;}
+.summary-table td{ padding:9px 4px; border-bottom:1px solid var(--line); }
+.summary-table td:first-child{ color:var(--stone); width:40%; }
+.summary-table td:last-child{ font-weight:600; }
+.small-note{ font-size:12.5px; color:var(--stone); line-height:1.6; margin-top:10px; }
+
+.review-item{ border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:12px; }
+.review-item .qnum{ font-family:'IBM Plex Mono', monospace; color:var(--gold); font-size:12px; font-weight:600; margin-bottom:6px;}
+.review-item .qtext-sm{ font-size:15px; font-weight:500; margin-bottom:12px; line-height:1.5;}
+.review-status{ display:inline-block; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:99px; margin-bottom:10px; text-transform:uppercase; letter-spacing:.05em;}
+.review-status.correct{ background:var(--forest-tint); color:var(--forest-dark);}
+.review-status.wrong{ background:var(--crimson-tint); color:var(--crimson);}
+.review-status.unanswered{ background:var(--paper); color:var(--stone); border:1px solid var(--line);}
+.review-opt{ font-size:13.5px; padding:9px 11px; border-radius:8px; margin-bottom:5px; border:1px solid var(--line); background:var(--paper);}
+.review-opt .letter{ font-family:'IBM Plex Mono', monospace; font-weight:700; margin-right:6px; }
+.review-opt.correct-ans{ border-color:var(--forest); background:var(--forest-tint); font-weight:600;}
+.review-opt.wrong-selected{ border-color:var(--crimson); background:var(--crimson-tint); font-weight:600;}
+.answer-box{ background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:12px; font-size:14px; line-height:1.6; white-space:pre-wrap; color:var(--ink);}
+.answer-box.empty{ color:var(--stone); font-style:italic; }
+
+.autosave-toast{ position:fixed; top:16px; right:16px; background:var(--forest-dark); color:#fff; font-size:12.5px; padding:9px 15px; border-radius:9px; z-index:200; opacity:0; transition:opacity .3s; pointer-events:none; display:flex; align-items:center; gap:7px;}
+.autosave-toast.show{ opacity:1; }
+.autosave-toast .dotpulse{ width:7px; height:7px; border-radius:50%; background:var(--gold); }
+
+.modal-overlay{ position:fixed; inset:0; background:rgba(11,61,31,.55); z-index:300; display:flex; align-items:center; justify-content:center; padding:20px;}
+.modal{ background:#fff; border-radius:16px; padding:28px; max-width:380px; width:100%; text-align:center; border:1px solid var(--line);}
+.modal .micon{ width:42px; height:42px; border-radius:50%; background:var(--crimson-tint); color:var(--crimson); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-family:'IBM Plex Mono'; font-weight:700; font-size:18px;}
+.modal h3{ font-size:18px; margin-bottom:8px; }
+.modal p{ font-size:13.5px; color:var(--stone); line-height:1.55; margin-bottom:18px; }
+.modal .mbtns{ display:flex; gap:10px; }
+.modal .mbtns button{ flex:1; }
+
+.new-course-card{ background:var(--forest-tint); border:1px solid var(--forest); border-radius:var(--radius); padding:20px; margin-top:20px; text-align:center; }
+.new-course-card h3{ color:var(--forest-dark); font-size:18px; margin-bottom:8px; }
+.new-course-card p{ color:var(--stone); font-size:13.5px; margin-bottom:14px; }
+.new-course-card .btn-row{ justify-content:center; margin-top:0; }
+
+@media (max-width:720px){
+  .examgrid{ grid-template-columns:1fr; }
+  .navcard{ position:static; order:2; }
+  .section-plan{ grid-template-columns:1fr; }
+  .stat-row{ grid-template-columns:1fr 1fr; }
+  .qtext{ font-size:16.5px; }
+}
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<div class="letterhead">
+  <div class="letterhead-inner">
+    <div class="crest">
+      <img src="fuadsi-logo.png" alt="FUADSI crest" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <svg viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M12 2C9 6 4 8 4 13c0 4 3.5 7 8 7s8-3 8-7c0-5-5-7-8-11Z" fill="#fff"/><path d="M12 22V11" stroke="#146C36" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <div class="letterhead-text">
+      <div class="school">FEDERAL UNIVERSITY OF AGRICULTURE AND DEVELOPMENT STUDIES, IRAGBIJI</div>
+      <div class="portal">Computer-Based Pratices Questions Portal</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GATE ============ -->
+<div id="screen-gate" class="wrap">
+  <div id="resume-banner" class="resume-banner hidden">
+    <div class="txt"><strong>You have a session in progress.</strong>Pick up where you left off, or start over.</div>
+    <div style="display:flex; gap:8px;">
+      <button class="primary" id="btn-resume" style="padding:9px 16px; font-size:13.5px;">Resume</button>
+      <button class="ghost" id="btn-discard" style="padding:9px 16px; font-size:13.5px;">Discard</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Student Verification</div>
+    <h2>Begin your CBT session</h2>
+    <p class="lead">Enter your details exactly as registered. Your department decides which courses and questions you can see, you won't be able to change it once the test begins.</p>
+
+    <div class="field">
+      <label for="in-name">Full Name <span class="req">*</span></label>
+      <input id="in-name" type="text" placeholder="e.g. Akanni Toheeb" autocomplete="name" required>
+    </div>
+    <div class="field">
+      <label for="in-reg">Matric <span class="req">*</span></label>
+      <input id="in-reg" type="text" inputmode="numeric" maxlength="7" placeholder="e.g. 250****" class="mono" required>
+      <div class="field-hint">7 digits, starting with 25 — e.g. 250****</div>
+      <div class="field-error" id="reg-error">That doesn't match the required format (25 followed by 5 digits).</div>
+    </div>
+    <div class="field">
+      <label for="in-dept">Department <span class="req">*</span></label>
+      <select id="in-dept" required>
+        <option value="">Select your department</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="in-course">Course <span class="req">*</span></label>
+      <select id="in-course" disabled required>
+        <option value="">Select department first</option>
+      </select>
+    </div>
+
+    <label class="checkline">
+      <input type="checkbox" id="in-agree">
+      <span>I confirm the details above are correct. I understand this session is monitored, leaving the tab, exiting fullscreen, or attempting to copy questions may flag my attempt for review.</span>
+    </label>
+
+    <div class="btn-row"><button class="primary" id="btn-to-instructions" disabled>Continue to Instructions</button></div>
+  </div>
+</div>
+
+<!-- ============ INSTRUCTIONS ============ -->
+<div id="screen-instructions" class="wrap hidden">
+  <div class="card">
+    <div class="eyebrow">Before You Begin</div>
+    <h2 id="instr-course-title">—</h2>
+    <p class="lead" id="instr-student-line">—</p>
+    <div class="section-plan">
+      <div class="plan-box">
+        <div class="k">Section A · Objectives</div>
+        <div class="v" id="plan-obj-count">—</div>
+        <div class="field" style="margin-bottom:0;">
+          <label style="font-size:12px; margin-bottom:4px;">Number of questions (10–200)</label>
+          <div class="count-selector">
+            <input type="range" id="range-obj-count" min="10" max="200" value="30" step="1">
+            <span class="count-display" id="display-obj-count">30</span>
+          </div>
+          <div class="count-hint">Drag to select how many objective questions you want</div>
+        </div>
+        <div class="field" style="margin-top:10px; margin-bottom:0;">
+          <label for="sel-obj-time">Duration</label>
+          <select id="sel-obj-time">
+            <option value="15">15 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="45">45 minutes</option>
+            <option value="60">60 minutes</option>
+            <option value="90">90 minutes</option>
+            <option value="120">120 minutes</option>
+            <option value="150">150 minutes</option>
+            <option value="180">180 minutes</option>
+          </select>
+        </div>
+      </div>
+      <div class="plan-box">
+        <div class="k">Section B · Theory</div>
+        <div class="v" id="plan-theory-count">—</div>
+        <div class="field" style="margin-bottom:0;">
+          <label style="font-size:12px; margin-bottom:4px;">Number of questions (3–30)</label>
+          <div class="count-selector">
+            <input type="range" id="range-theory-count" min="3" max="30" value="5" step="1">
+            <span class="count-display" id="display-theory-count">5</span>
+          </div>
+          <div class="count-hint">Drag to select how many theory questions you want</div>
+        </div>
+        <div class="field-hint" style="margin-top:10px;">Duration is set on the next screen, right before Section B starts.</div>
+      </div>
+    </div>
+    <ul class="rules">
+      <li><span class="num">01</span><span>Section A and Section B each run on their own timer. Time does not carry over between sections.</span></li>
+      <li><span class="num">02</span><span>When a section's timer reaches zero, your answers for that section are submitted automatically.</span></li>
+      <li><span class="num">03</span><span>The exam runs in fullscreen where supported. Exiting fullscreen or switching tabs is logged; three warnings ends your session.</span></li>
+      <li><span class="num">04</span><span>Copy, paste, and right-click are disabled during the test. Use the numbered grid to move between questions.</span></li>
+      <li><span class="num">05</span><span>Objective questions are graded instantly and shown to you after submission. Theory answers are typed and reviewed manually by your lecturer.</span></li>
+      <li><span class="num">06</span><span>Your progress auto-saves as you go, so a dropped connection won't cost your answers.</span></li>
+    </ul>
+    <div class="btn-row">
+      <button class="ghost" id="btn-back-to-gate">Back</button>
+      <button class="primary" id="btn-start-objectives">Start Section A — Objectives</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OBJECTIVES ============ -->
+<div id="screen-objectives" class="hidden" style="display:none;">
+  <div class="examtop">
+    <div class="examtop-inner">
+      <div>
+        <div class="sec-label">Section A <span>· Objectives</span></div>
+        <div class="who"><strong id="obj-who-name">—</strong> · <span id="obj-who-dept">—</span></div>
+      </div>
+      <div class="timer-pill" id="obj-timer">30:00</div>
+    </div>
+    <div class="progress-line"><i id="obj-progress"></i></div>
+  </div>
+  <div class="examgrid">
+    <div class="navcard">
+      <h3>Questions</h3>
+      <div class="qgrid" id="obj-navgrid"></div>
+      <div class="navlegend">
+        <span><i class="dot empty"></i> Not answered</span>
+        <span><i class="dot full"></i> Answered</span>
+        <span><i class="dot flag"></i> Flagged</span>
+      </div>
+      <div class="btn-row" style="margin-top:16px;"><button class="primary" id="btn-submit-objectives" style="width:100%;">Submit Section A</button></div>
+    </div>
+    <div class="qpanel">
+      <div class="top-actions" style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+        <button class="ghost" id="btn-skip-to-theory-top" style="font-size:12px; padding:8px 14px;">Skip to Theory →</button>
+        <button class="ghost" id="btn-end-exam-obj-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
+      <div class="qmeta"><span class="idx" id="obj-qindex">Question 1 of —</span><button class="flagbtn" id="obj-flagbtn">Flag for review</button></div>
+      <div class="qtext" id="obj-qtext">—</div>
+      <div id="obj-options"></div>
+      <div class="qpanel-actions">
+        <button class="ghost" id="obj-prev">← Previous</button>
+        <button class="ghost" id="obj-next">Next →</button>
+      </div>
+      <div class="btn-row" style="margin-top:14px; justify-content:center; flex-wrap:wrap; gap:8px;">
+        <button class="ghost" id="btn-skip-to-theory" style="font-size:13px; padding:10px 16px;">Skip to Section B → Theory</button>
+        <button class="ghost" id="btn-end-exam-obj" style="font-size:13px; padding:10px 16px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TRANSITION ============ -->
+<div id="screen-transition" class="wrap hidden">
+  <div class="card" style="text-align:center;">
+    <div class="eyebrow">Section A Complete</div>
+    <h2>Nice work. Section B is next.</h2>
+    <p class="lead">Section A has been recorded. Once you continue, Section B's timer starts immediately and you won't be able to return to Section A.</p>
+    <div class="field" style="text-align:left; max-width:280px; margin:0 auto 6px;">
+      <label for="sel-theory-time">Section B Duration</label>
+      <select id="sel-theory-time">
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="45" selected>45 minutes</option>
+        <option value="60">60 minutes</option>
+        <option value="90">90 minutes</option>
+        <option value="120">120 minutes</option>
+        <option value="150">150 minutes</option>
+        <option value="180">180 minutes</option>
+      </select>
+    </div>
+    <div class="btn-row" style="justify-content:center;"><button class="primary" id="btn-start-theory">Start Section B — Theory</button></div>
+  </div>
+</div>
+
+<!-- ============ THEORY ============ -->
+<div id="screen-theory" class="hidden" style="display:none;">
+  <div class="examtop">
+    <div class="examtop-inner">
+      <div>
+        <div class="sec-label">Section B <span>· Theory</span></div>
+        <div class="who"><strong id="theory-who-name">—</strong> · <span id="theory-who-dept">—</span></div>
+      </div>
+      <div class="timer-pill" id="theory-timer">45:00</div>
+    </div>
+    <div class="progress-line"><i id="theory-progress"></i></div>
+  </div>
+  <div class="examgrid">
+    <div class="navcard">
+      <h3>Questions</h3>
+      <div class="qgrid" id="theory-navgrid"></div>
+      <div class="navlegend"><span><i class="dot empty"></i> Not started</span><span><i class="dot full"></i> Has an answer</span></div>
+      <div class="btn-row" style="margin-top:16px;"><button class="primary" id="btn-submit-theory" style="width:100%;">Submit Exam</button></div>
+    </div>
+    <div class="qpanel">
+      <div class="top-actions" style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+        <button class="ghost" id="btn-end-exam-theory-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
+      <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span></div>
+      <div class="qtext" id="theory-qtext">—</div>
+      <textarea id="theory-answer" placeholder="Type your answer here... (or attach a photo of your written working below)"></textarea>
+      <div class="wordcount"><span id="theory-wordcount">0</span> words</div>
+      <div class="photo-attach">
+        <label class="photo-label">Attach a photo of your working (optional, good for calculations)</label>
+        <div class="photo-row">
+          <input type="file" id="theory-photo-input" accept="image/*" capture="environment">
+          <button type="button" class="ghost" id="theory-photo-remove" style="display:none;">Remove photo</button>
+        </div>
+        <div class="photo-status" id="theory-photo-status"></div>
+        <img id="theory-photo-preview" class="photo-preview" style="display:none;">
+      </div>
+      <div class="qpanel-actions">
+        <button class="ghost" id="theory-prev">← Previous</button>
+        <button class="ghost" id="theory-next">Next →</button>
+      </div>
+      <div class="btn-row" style="margin-top:14px; justify-content:center; flex-wrap:wrap; gap:8px;">
+        <button class="ghost" id="btn-end-exam-theory" style="font-size:13px; padding:10px 16px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div id="screen-results" class="wrap hidden">
+  <div class="card">
+    <div class="result-hero">
+      <div class="pct" id="res-pct">—%</div>
+      <div class="pctlabel">Section A score (auto-graded)</div>
+      <div class="status-badge" id="res-badge">—</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="n" id="res-correct">0</div><div class="l">Correct</div></div>
+      <div class="stat-box"><div class="n" id="res-wrong">0</div><div class="l">Wrong</div></div>
+      <div class="stat-box"><div class="n" id="res-unanswered">0</div><div class="l">Unanswered</div></div>
+    </div>
+    <table class="summary-table">
+      <tr><td>Name</td><td id="res-name">—</td></tr>
+      <tr><td>Registration No.</td><td id="res-reg">—</td></tr>
+      <tr><td>Department</td><td id="res-dept">—</td></tr>
+      <tr><td>Course</td><td id="res-course">—</td></tr>
+      <tr><td>Section B (Theory)</td><td>Submitted, pending manual grading</td></tr>
+    </table>
+    <p class="small-note" id="sync-note">Saving your results to the practice database…</p>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Section A — Answer Review</div>
+    <h2 style="font-size:19px; margin-bottom:16px;">What you got right and wrong</h2>
+    <div id="review-objectives"></div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Section B — Your Theory Answers</div>
+    <h2 style="font-size:19px; margin-bottom:16px;">Submitted for manual grading</h2>
+    <div id="review-theory"></div>
+  </div>
+
+  <div class="new-course-card">
+    <h3>Take Another Course</h3>
+    <p>Want to practice another course? You can start a new exam session right away.</p>
+    <div class="btn-row" style="justify-content:center;">
+      <button class="primary" id="btn-new-course">Select New Course</button>
+    </div>
+  </div>
+</div>
+
+<div class="autosave-toast" id="autosave-toast"><span class="dotpulse"></span><span>Progress saved</span></div>
+
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="micon" id="modal-icon">!</div>
+    <h3 id="modal-title">Warning</h3>
+    <p id="modal-message">—</p>
+    <div class="mbtns">
+      <button class="ghost hidden" id="modal-cancel">Cancel</button>
+      <button class="primary" id="modal-confirm">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   CONFIG
+   ===================================================== */
+const CONFIG = {
+  passMark: 55,
+  defaultObjectiveDraw: 30,
+  defaultTheoryDraw: 5,
+  minObjective: 10,
+  maxObjective: 200,
+  minTheory: 3,
+  maxTheory: 30,
+  // Supabase configuration - REPLACE WITH YOUR ACTUAL ANON KEY
+  supabaseUrl: 'https://fuivbnmblhvnscaemkdh.supabase.co',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1aXZibm1ibGh2bnNjYWVta2RoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MDczMDYsImV4cCI6MjA5OTk4MzMwNn0.Nv5U9cpDcpH9AW8Rml59dlgMQGo-RnYz9AW21_iDdAc',
+  supabaseTable: 'FUADSI_practices_question_results'
+};
+
+/* ===================== FACULTIES / DEPARTMENTS ===================== */
+const FACULTIES = {
+  "Faculty of Agriculture and Renewable Natural Resources": [
+    "B.Sc. Food Science and Technology","B.Sc. Soil Science","B.Sc. Horticulture and Landscape Management",
+    "B.Sc. Agricultural Economics","B.Sc. Agricultural Extension","B.Sc. Agribusiness","B.Sc. Crop Science",
+    "B.Sc. Forestry and Wildlife Management","B.Sc. Family and Consumer Science",
+    "B.Sc. Water Resources Management and Agro-Meteorology","B.Sc. Fisheries and Aquaculture",
+    "B.Sc. Animal Science","B.Sc. Agriculture"
+  ],
+  "Faculty of Natural and Applied Sciences": [
+    "B.Sc. Computer Science","B.Sc. Mathematics","B.Sc. Physics with Electronics","B.Sc. Industrial Chemistry",
+    "B.Sc. Plant Science (Botany)","B.Sc. Animal and Environmental Biology (Zoology)","B.Sc. Chemistry",
+    "B.Sc. Biochemistry","B.Sc. Meteorology","B.Sc. Microbiology"
+  ]
+};
+
+/* ===================== COURSES ========================== */
+const COURSES = {
+  "MTH 102": { title:"MTH 102 — Elementary Mathematics II (Calculus)", eligible:"ALL",
+    objective:[
+      {q:"Which of the following is an irrational number?", options:["0.75", "7/5", "√3", "-3"], answer:"C"},
+      {q:"The real number system is the union of:", options:["Even and odd numbers", "Rational and irrational numbers", "Positive and negative numbers", "Integers and decimals"], answer:"B"},
+      {q:"Which property states that a + b = b + a for all real numbers a, b?", options:["Associative", "Distributive", "Commutative", "Closure"], answer:"C"},
+      {q:"If a > b and c > 0, then:", options:["ac < bc", "ac = bc", "ac > bc", "a/c < b/c"], answer:"C"},
+      {q:"The distributive law states that a(b + c) equals:", options:["ab + c", "a + bc", "ab + ac", "abc"], answer:"C"},
+      {q:"Which of the following is a rational number?", options:["π", "√2", "3/4", "e"], answer:"C"},
+      {q:"The closure property of real numbers states that:", options:["a + b is always irrational", "a + b ∈ ℝ and ab ∈ ℝ", "a + b is always rational", "ab is always irrational"], answer:"B"},
+      {q:"If a > b, then a + c > b + c for any real c. This illustrates:", options:["Commutative property", "Associative property", "Order property", "Closure property"], answer:"C"},
+      {q:"The absolute value |x| is defined as:", options:["Always positive", "x if x ≥ 0, -x if x < 0", "Always negative", "x²"], answer:"B"},
+      {q:"For any real number x, |x| ≥ 0. This is the:", options:["Zero property", "Non-negativity property", "Multiplicative property", "Triangle inequality"], answer:"B"},
+      {q:"The triangle inequality states that |a + b| is:", options:["Equal to |a| + |b|", "Less than or equal to |a| + |b|", "Greater than |a| + |b|", "Equal to |a| - |b|"], answer:"B"},
+      {q:"The reverse triangle inequality states that ||a| - |b|| is:", options:["Greater than |a - b|", "Less than or equal to |a - b|", "Equal to |a + b|", "Equal to |a| + |b|"], answer:"B"},
+      {q:"If |f(x)| = 0, then:", options:["f(x) = 1", "f(x) = 0", "f(x) = -1", "f(x) is undefined"], answer:"B"},
+      {q:"The property |f(x)g(x)| = |f(x)||g(x)| is called:", options:["Triangle inequality", "Multiplicative property", "Non-negativity", "Zero property"], answer:"B"},
+      {q:"Which number is NOT a real number?", options:["-5", "0.333...", "√(-1)", "π"], answer:"C"},
+      {q:"The associative law states that (a + b) + c equals:", options:["a + (b + c)", "(a + c) + b", "a + b + c + 1", "a(b + c)"], answer:"A"},
+      {q:"If a > b and c < 0, then ac is:", options:["Greater than bc", "Equal to bc", "Less than bc", "Undefined"], answer:"C"},
+      {q:"The set ℝ includes all EXCEPT:", options:["Integers", "Fractions", "Complex numbers", "Irrational numbers"], answer:"C"},
+      {q:"√2 is irrational because:", options:["It is negative", "It cannot be expressed as a ratio of integers", "It is a decimal", "It is greater than 1"], answer:"B"},
+      {q:"For the function f(x) = x² - 4, |f(x)| when -2 < x < 2 equals:", options:["x² - 4", "4 - x²", "x² + 4", "-(x² - 4)"], answer:"B"},
+      {q:"The order property a > b implies a - b is:", options:["Negative", "Zero", "Positive", "Undefined"], answer:"C"},
+      {q:"If |x - 3| < 2, then x lies in the interval:", options:["(1, 5)", "(3, 5)", "(1, 3)", "(-1, 5)"], answer:"A"},
+      {q:"The multiplicative identity in real numbers is:", options:["0", "1", "-1", "∞"], answer:"B"},
+      {q:"The additive identity in real numbers is:", options:["1", "0", "-1", "∞"], answer:"B"},
+      {q:"If a × b = 0 for real numbers a and b, then:", options:["a = 0 and b = 0", "a = 0 or b = 0", "a = b = 1", "a = b = -1"], answer:"B"},
+      {q:"A function f: A → B assigns to every element of A:", options:["At least one element of B", "Exactly one element of B", "No element of B", "All elements of B"], answer:"B"},
+      {q:"The domain of f(x) = 1/x is:", options:["All real numbers", "All real numbers except 0", "Only positive numbers", "Only negative numbers"], answer:"B"},
+      {q:"The range of f(x) = x² is:", options:["All real numbers", "(-∞, 0]", "[0, ∞)", "(0, ∞)"], answer:"C"},
+      {q:"The graph of f(x) = c (a constant) is:", options:["A vertical line", "A horizontal line", "A parabola", "A straight line through the origin"], answer:"B"},
+      {q:"A curve represents a function if and only if:", options:["Every horizontal line cuts it at most once", "Every vertical line cuts it at most once", "It passes through the origin", "It is symmetric about the y-axis"], answer:"B"},
+      {q:"The graph of f(x) = x³ is called a:", options:["Parabola", "Cubic curve", "Straight line", "Hyperbola"], answer:"B"},
+      {q:"The graph of f(x) = |x| has its vertex at:", options:["(1, 0)", "(0, 1)", "(0, 0)", "(-1, 0)"], answer:"C"},
+      {q:"Which function has a graph consisting of two separate branches?", options:["f(x) = x²", "f(x) = 1/x", "f(x) = x", "f(x) = |x|"], answer:"B"},
+      {q:"The domain of f(x) = ln(x) is:", options:["x > 0", "x ≥ 0", "All real numbers", "x < 0"], answer:"A"},
+      {q:"The range of f(x) = eˣ is:", options:["(0, ∞)", "[0, ∞)", "(-∞, ∞)", "(-∞, 0)"], answer:"A"},
+      {q:"The y-intercept of f(x) = 2x + 3 is:", options:["2", "3", "-3/2", "0"], answer:"B"},
+      {q:"The x-intercept of f(x) = 2x + 3 is:", options:["2", "3", "-3/2", "0"], answer:"C"},
+      {q:"The graph of f(x) = x² opens:", options:["Upward", "Downward", "To the right", "To the left"], answer:"A"},
+      {q:"The graph of f(x) = -x² opens:", options:["Upward", "Downward", "To the right", "To the left"], answer:"B"},
+      {q:"The exponential function f(x) = 2ˣ passes through the point:", options:["(0, 0)", "(0, 1)", "(1, 0)", "(-1, 1)"], answer:"B"},
+      {q:"The logarithmic function f(x) = ln(x) passes through:", options:["(0, 0)", "(1, 0)", "(0, 1)", "(e, 0)"], answer:"B"},
+      {q:"For f(x) = 1/x, the horizontal asymptote is:", options:["x = 0", "y = 0", "y = 1", "x = 1"], answer:"B"},
+      {q:"For f(x) = 1/x, the vertical asymptote is:", options:["x = 0", "y = 0", "y = 1", "x = 1"], answer:"A"},
+      {q:"The identity function f(x) = x has a slope of:", options:["0", "1", "-1", "Undefined"], answer:"B"},
+      {q:"A linear function f(x) = mx + c has slope:", options:["c", "m", "m + c", "1/m"], answer:"B"},
+      {q:"The quadratic function f(x) = ax² + bx + c has its vertex at x =:", options:["-b/2a", "-b/a", "b/2a", "-2b/a"], answer:"A"},
+      {q:"The axis of symmetry of f(x) = x² - 4x + 3 is:", options:["x = 1", "x = 2", "x = 3", "x = 4"], answer:"B"},
+      {q:"The function f(x) = x³ is symmetric about:", options:["The x-axis", "The y-axis", "The origin", "The line y = x"], answer:"C"},
+      {q:"The function f(x) = x² is symmetric about:", options:["The x-axis", "The y-axis", "The origin", "The line y = x"], answer:"B"},
+      {q:"The function f(x) = |x| is symmetric about:", options:["The x-axis", "The y-axis", "The origin", "The line y = x"], answer:"B"},
+      {q:"For f(x) = eˣ, as x → -∞, f(x) approaches:", options:["∞", "0", "1", "-∞"], answer:"B"},
+      {q:"For f(x) = ln(x), as x → 0⁺, f(x) approaches:", options:["0", "1", "-∞", "∞"], answer:"C"},
+      {q:"The function f(x) = 1/x is:", options:["Even", "Odd", "Neither", "Both"], answer:"B"},
+      {q:"The function f(x) = x² is:", options:["Even", "Odd", "Neither", "Both"], answer:"A"},
+      {q:"The function f(x) = x³ is:", options:["Even", "Odd", "Neither", "Both"], answer:"B"},
+      {q:"A function is injective if:", options:["f(x₁) = f(x₂) implies x₁ = x₂", "Every element of the codomain has a preimage", "The range equals the codomain", "It has two inverses"], answer:"A"},
+      {q:"The function f(x) = x² defined on all of ℝ is NOT injective because:", options:["It is not defined at x = 0", "f(2) = f(-2) but 2 ≠ -2", "Its graph is a straight line", "It has no derivative"], answer:"B"},
+      {q:"A function f: A → B is surjective if:", options:["f(A) = B", "f(A) is strictly smaller than B", "A = B", "f is one-to-one"], answer:"A"},
+      {q:"The horizontal line test is used to check whether a function is:", options:["Continuous", "Injective", "Surjective", "Differentiable"], answer:"B"},
+      {q:"A function that is both injective and surjective is called:", options:["Linear", "Bijective", "Constant", "Periodic"], answer:"B"},
+      {q:"Only a __________ function has an inverse that is also a function.", options:["constant", "linear", "bijective", "quadratic"], answer:"C"},
+      {q:"If f(x) = 2x + 1 and g(x) = x², then (g∘f)(x) equals:", options:["2x² + 1", "(2x+1)²", "2x² + 2x + 1", "4x² + 1"], answer:"B"},
+      {q:"Composition of functions is:", options:["Always commutative", "Generally not commutative", "The same as addition", "Only defined for linear functions"], answer:"B"},
+      {q:"The composite function g∘f is defined when:", options:["The domain of f equals the range of g", "The range of f is contained in the domain of g", "f and g have the same domain", "f is always linear"], answer:"B"},
+      {q:"If f(x) = x - 3 and g(x) = √x, then (g∘f)(x) is defined only when:", options:["x ≤ 3", "x ≥ 3", "x ≠ 3", "x is any real number"], answer:"B"},
+      {q:"A function has an inverse if and only if it is:", options:["Continuous", "Bijective", "Differentiable", "Defined on all of ℝ"], answer:"B"},
+      {q:"If f(x) = 2x + 3, then f⁻¹(x) equals:", options:["(x-3)/2", "2x - 3", "(x+3)/2", "x/2 - 3"], answer:"A"},
+      {q:"If f(x) = x³, then f⁻¹(x) equals:", options:["x²", "1/x³", "the cube root of x", "3x"], answer:"C"},
+      {q:"To find the inverse of a function, the first step after writing y = f(x) is to:", options:["Differentiate both sides", "Interchange x and y", "Integrate both sides", "Set y = 0"], answer:"B"},
+      {q:"If f: ℝ → ℝ defined by f(x) = 3x + 2 is:", options:["Only injective", "Only surjective", "Bijective", "Neither"], answer:"C"},
+      {q:"The function f(x) = x³ from ℝ to ℝ is:", options:["Only injective", "Only surjective", "Bijective", "Neither"], answer:"C"},
+      {q:"The function f(x) = x² from ℝ to [0, ∞) is:", options:["Injective but not surjective", "Surjective but not injective", "Bijective", "Neither"], answer:"B"},
+      {q:"If (f∘g)(x) = f(g(x)), then f is applied:", options:["First", "Second", "Simultaneously", "Not at all"], answer:"B"},
+      {q:"For f(x) = x² and g(x) = 3x + 4, (f∘g)(x) equals:", options:["3x² + 4", "(3x + 4)²", "9x² + 4", "3x² + 12x + 16"], answer:"B"},
+      {q:"For f(x) = x² and g(x) = 3x + 4, (g∘f)(x) equals:", options:["3x² + 4", "(3x + 4)²", "9x² + 4", "3x² + 12x + 16"], answer:"A"},
+      {q:"The condition for g∘f to exist is:", options:["Range of f ⊆ Domain of g", "Domain of f ⊆ Range of g", "f and g have same domain", "f and g have same range"], answer:"A"},
+      {q:"If f is bijective, then f⁻¹∘f equals:", options:["f", "f⁻¹", "Identity function", "Zero function"], answer:"C"},
+      {q:"If f is bijective, then f∘f⁻¹ equals:", options:["f", "f⁻¹", "Identity function", "Zero function"], answer:"C"},
+      {q:"The inverse of f(x) = (x-1)/(x+2) is:", options:["(x+1)/(x-2)", "-(1+2x)/(x-1)", "(1-x)/(x+2)", "(x+2)/(x-1)"], answer:"B"},
+      {q:"A function f: A → B is one-to-one if:", options:["f(A) = B", "f(x₁) ≠ f(x₂) whenever x₁ ≠ x₂", "B has one element", "A has one element"], answer:"B"},
+      {q:"The function f(x) = 2x - 3 from ℝ to ℝ is:", options:["Only injective", "Only surjective", "Bijective", "Neither"], answer:"C"},
+      {q:"For surjective functions, the range equals:", options:["The domain", "The codomain", "A subset of the codomain", "The empty set"], answer:"B"},
+      {q:"If f(x) = eˣ, then f⁻¹(x) =:", options:["eˣ", "ln(x)", "1/eˣ", "-eˣ"], answer:"B"},
+      {q:"If f(x) = ln(x), then f⁻¹(x) =:", options:["ln(x)", "eˣ", "1/x", "x/e"], answer:"B"},
+      {q:"A sequence {aₙ} converges to L if:", options:["aₙ = L for all n", "For every ε>0 there exists N such that |aₙ − L| < ε whenever n > N", "aₙ is always increasing", "aₙ is bounded above only"], answer:"B"},
+      {q:"The limit of the sequence aₙ = 1/n as n → ∞ is:", options:["1", "∞", "0", "Undefined"], answer:"C"},
+      {q:"A sequence is a function whose domain is:", options:["The real numbers", "The natural numbers", "The rational numbers", "The complex numbers"], answer:"B"},
+      {q:"lim(x→2) (3x + 1) equals:", options:["5", "6", "7", "8"], answer:"C"},
+      {q:"lim(x→1) (x² − 1)/(x − 1) equals:", options:["0", "1", "2", "Undefined"], answer:"C"},
+      {q:"According to the ε-δ definition, lim(x→a) f(x) = L means for every ε > 0 there exists δ > 0 such that whenever 0 < |x − a| < δ, then:", options:["|f(x)| < ε", "|f(x) − L| < ε", "|x − a| < ε", "f(x) = L"], answer:"B"},
+      {q:"The Sum Law of limits states that lim(x→a)[f(x) + g(x)] equals:", options:["L − M", "L × M", "L + M", "L/M"], answer:"C"},
+      {q:"The Quotient Law for limits requires that:", options:["M = 0", "M ≠ 0", "L = 0", "L = M"], answer:"B"},
+      {q:"lim(x→a) c, where c is a constant, equals:", options:["0", "a", "c", "Undefined"], answer:"C"},
+      {q:"lim(x→0) sin(x)/x equals:", options:["0", "1", "∞", "Undefined"], answer:"B"},
+      {q:"lim(x→∞) 1/x equals:", options:["0", "1", "∞", "Undefined"], answer:"A"},
+      {q:"lim(x→0) (1 - cos(x))/x equals:", options:["0", "1", "∞", "Undefined"], answer:"A"},
+      {q:"The sequence aₙ = (-1)ⁿ is:", options:["Convergent", "Divergent", "Monotonic", "Bounded and convergent"], answer:"B"},
+      {q:"The sequence aₙ = n/(n+1) converges to:", options:["0", "1", "∞", "1/2"], answer:"B"},
+      {q:"lim(x→3) (x² - 9)/(x - 3) equals:", options:["0", "3", "6", "Undefined"], answer:"C"},
+      {q:"lim(x→4) (2x² - 5x + 3) equals:", options:["15", "16", "17", "18"], answer:"A"},
+      {q:"lim(x→2) (x² + x - 6)/(x - 2) equals:", options:["0", "3", "5", "Undefined"], answer:"C"},
+      {q:"The Power Law states lim(x→a) [f(x)]ⁿ equals:", options:["L + n", "L × n", "Lⁿ", "nᴸ"], answer:"C"},
+      {q:"The Constant Multiple Law states lim(x→a) [cf(x)] equals:", options:["c + L", "c × L", "L/c", "c - L"], answer:"B"},
+      {q:"lim(x→0⁺) 1/x equals:", options:["0", "1", "∞", "-∞"], answer:"C"},
+      {q:"lim(x→0⁻) 1/x equals:", options:["0", "1", "∞", "-∞"], answer:"D"},
+      {q:"If lim(x→a) f(x) = L and lim(x→a) g(x) = M, then lim(x→a) [f(x) - g(x)] equals:", options:["L + M", "L - M", "L × M", "L/M"], answer:"B"},
+      {q:"The Product Law states lim(x→a) [f(x)g(x)] equals:", options:["L + M", "L - M", "L × M", "L/M"], answer:"C"},
+      {q:"lim(x→∞) (3x² + 2x - 1)/(x² + 5) equals:", options:["0", "1", "3", "∞"], answer:"C"},
+      {q:"lim(x→∞) (2x + 1)/(3x - 2) equals:", options:["0", "2/3", "1", "∞"], answer:"B"},
+      {q:"If a sequence is bounded and monotonic, then it is:", options:["Divergent", "Convergent", "Periodic", "Constant"], answer:"B"},
+      {q:"The sequence aₙ = 1 + 1/n converges to:", options:["0", "1", "2", "∞"], answer:"B"},
+      {q:"lim(x→0) (eˣ - 1)/x equals:", options:["0", "1", "e", "∞"], answer:"B"},
+      {q:"lim(x→0) (ln(1+x))/x equals:", options:["0", "1", "e", "∞"], answer:"B"},
+      {q:"A function f is continuous at a if:", options:["f(a) exists only", "lim(x→a) f(x) exists only", "lim(x→a) f(x) = f(a)", "f is differentiable at a"], answer:"C"},
+      {q:"A function with a 'hole' or 'jump' at a point is said to be:", options:["Continuous", "Differentiable", "Discontinuous", "Bijective"], answer:"C"},
+      {q:"Geometrically, a function is continuous at a point if its graph:", options:["Has a sharp corner there", "Can be drawn without lifting the pen at that point", "Crosses the x-axis there", "Is a straight line"], answer:"B"},
+      {q:"If f(2) = 5 but lim(x→2) f(x) = 4, then f is:", options:["Continuous at x = 2", "Discontinuous at x = 2", "Differentiable at x = 2", "Bijective at x = 2"], answer:"B"},
+      {q:"The Intermediate Value Theorem applies to functions that are:", options:["Differentiable on an open interval", "Continuous on a closed interval", "Bijective", "Constant"], answer:"B"},
+      {q:"If f(1) = -3 and f(3) = 5, by the IVT, f(c) = 0 for some c in:", options:["(1, 3)", "(-3, 5)", "(0, 1)", "(3, 5)"], answer:"A"},
+      {q:"The Extreme Value Theorem guarantees that a continuous function on a closed interval:", options:["Has no maximum or minimum", "Attains both a maximum and a minimum value", "Is always increasing", "Has an inverse"], answer:"B"},
+      {q:"The Extreme Value Theorem requires the interval to be:", options:["Open", "Closed and bounded", "Infinite", "A single point"], answer:"B"},
+      {q:"Differentiability at a point implies:", options:["The function is discontinuous there", "The function is continuous there", "The function is unbounded", "Nothing about continuity"], answer:"B"},
+      {q:"If f is continuous on [a,b] and f(a)f(b) < 0, then by IVT:", options:["f has no root in (a,b)", "f has at least one root in (a,b)", "f is constant", "f is not continuous"], answer:"B"},
+      {q:"The function f(x) = x² is continuous:", options:["Only at x = 0", "Only for x > 0", "For all x ∈ ℝ", "Only for rational x"], answer:"C"},
+      {q:"The function f(x) = 1/x is discontinuous at:", options:["x = 1", "x = 0", "x = -1", "All x"], answer:"B"},
+      {q:"A removable discontinuity occurs when:", options:["lim(x→a) f(x) does not exist", "lim(x→a) f(x) exists but ≠ f(a)", "f(a) does not exist and limit does not exist", "f is unbounded near a"], answer:"B"},
+      {q:"A jump discontinuity occurs when:", options:["Left and right limits exist and are equal", "Left and right limits exist but are different", "Limit is infinite", "Function is undefined"], answer:"B"},
+      {q:"The function f(x) = |x|/x for x ≠ 0 has a:", options:["Removable discontinuity at 0", "Jump discontinuity at 0", "Infinite discontinuity at 0", "Is continuous at 0"], answer:"B"},
+      {q:"If f is differentiable at x = a, then f is:", options:["Continuous at a", "Discontinuous at a", "Not defined at a", "Unbounded at a"], answer:"A"},
+      {q:"The converse 'continuous implies differentiable' is:", options:["Always true", "Sometimes true", "Never true", "True for polynomials only"], answer:"B"},
+      {q:"f(x) = |x| is continuous at x = 0 but:", options:["Differentiable at 0", "Not differentiable at 0", "Undefined at 0", "Has a removable discontinuity at 0"], answer:"B"},
+      {q:"For IVT, if f is continuous on [1,2] and f(1) = 1, f(2) = 8, then f attains:", options:["Only values 1 and 8", "All values between 1 and 8", "Only integer values", "No values between 1 and 8"], answer:"B"},
+      {q:"The function f(x) = x³ - x - 1 has a root between:", options:["0 and 1", "1 and 2", "2 and 3", "-1 and 0"], answer:"B"},
+      {q:"For EVT on [0, 2π], f(x) = sin(x) attains maximum at:", options:["x = 0", "x = π/2", "x = π", "x = 3π/2"], answer:"B"},
+      {q:"For EVT on [0, 2π], f(x) = sin(x) attains minimum at:", options:["x = 0", "x = π/2", "x = π", "x = 3π/2"], answer:"D"},
+      {q:"A polynomial function is continuous:", options:["Only on closed intervals", "Only on open intervals", "Everywhere on ℝ", "Only for positive x"], answer:"C"},
+      {q:"The composition of continuous functions is:", options:["Always discontinuous", "Always continuous", "Sometimes continuous", "Never continuous"], answer:"B"},
+      {q:"If f and g are continuous at a, then f + g is:", options:["Discontinuous at a", "Continuous at a", "Undefined at a", "Differentiable at a"], answer:"B"},
+      {q:"The derivative f'(a) is defined as the limit as h → 0 of:", options:["[f(a+h) + f(a)]/h", "[f(a+h) − f(a)]/h", "f(a+h) × f(a)", "f(a)/h"], answer:"B"},
+      {q:"Geometrically, f'(a) represents the slope of the:", options:["Secant line", "Tangent line at (a, f(a))", "x-axis", "y-axis"], answer:"B"},
+      {q:"If s(t) is the position of a particle, then s'(t) represents:", options:["Displacement", "Velocity", "Acceleration", "Time"], answer:"B"},
+      {q:"The second derivative of displacement with respect to time represents:", options:["Velocity", "Acceleration", "Position", "Distance"], answer:"B"},
+      {q:"The derivative of a constant is:", options:["1", "The constant itself", "0", "Undefined"], answer:"C"},
+      {q:"Using the power rule, d/dx(x⁷) equals:", options:["7x⁶", "x⁶", "6x⁷", "7x⁸"], answer:"A"},
+      {q:"d/dx(4x³) equals:", options:["4x²", "12x²", "12x³", "4x⁴"], answer:"B"},
+      {q:"The Product Rule states that if y = uv, then dy/dx equals:", options:["u'v'", "u(dv/dx) + v(du/dx)", "u(dv/dx) − v(du/dx)", "(u dv/dx)/(v du/dx)"], answer:"B"},
+      {q:"The Quotient Rule for y = u/v gives dy/dx equal to:", options:["(u'v + uv')/v²", "(v·u' − u·v')/v²", "u'v'", "(u' − v')/v"], answer:"B"},
+      {q:"The Chain Rule is used to differentiate:", options:["A sum of two functions", "A composite function", "A constant", "An inverse function only"], answer:"B"},
+      {q:"Using the chain rule, d/dx (3x+1)⁵ equals:", options:["5(3x+1)⁴", "15(3x+1)⁴", "5(3x+1)⁵", "3(3x+1)⁴"], answer:"B"},
+      {q:"Implicit differentiation is used when:", options:["y is explicitly given in terms of x", "y is not isolated on one side of the equation", "The function is a constant", "The function has no derivative"], answer:"B"},
+      {q:"Logarithmic differentiation is especially useful for functions of the form:", options:["y = mx + c", "y = xˣ", "y = x²", "y = c"], answer:"B"},
+      {q:"For parametric equations x = f(t), y = g(t), dy/dx is computed as:", options:["(dy/dt) × (dx/dt)", "(dy/dt)/(dx/dt)", "(dx/dt)/(dy/dt)", "dy/dt + dx/dt"], answer:"B"},
+      {q:"If x = t² and y = t³, then dy/dx equals:", options:["3t/2", "2t/3", "3t²", "2t"], answer:"A"},
+      {q:"A critical point of a function occurs where:", options:["f(x) = 0", "f'(x) = 0 or f'(x) does not exist", "f''(x) = 0", "f is undefined everywhere"], answer:"B"},
+      {q:"For f(x) = x² − 4x + 3, the critical point occurs at:", options:["x = 1", "x = 2", "x = 3", "x = 4"], answer:"B"},
+      {q:"d/dx(sin x) equals:", options:["cos x", "-cos x", "-sin x", "sin x"], answer:"A"},
+      {q:"d/dx(cos x) equals:", options:["sin x", "-sin x", "cos x", "-cos x"], answer:"B"},
+      {q:"d/dx(tan x) equals:", options:["sec² x", "-sec² x", "cot x", "-cot x"], answer:"A"},
+      {q:"d/dx(eˣ) equals:", options:["eˣ", "xeˣ⁻¹", "ln(x)", "1/eˣ"], answer:"A"},
+      {q:"d/dx(ln x) equals:", options:["1/x", "x", "eˣ", "ln(x)/x"], answer:"A"},
+      {q:"d/dx(aˣ) equals:", options:["aˣ", "aˣ ln(a)", "xaˣ⁻¹", "1/(aˣ ln a)"], answer:"B"},
+      {q:"If y = x²(x+1), using product rule, dy/dx equals:", options:["x² + 2x(x+1)", "3x² + 2x", "2x² + x", "x² + x"], answer:"B"},
+      {q:"If y = (x²+1)/x, using quotient rule, dy/dx equals:", options:["(x²-1)/x²", "(2x²-x²-1)/x²", "(x²+1)/x²", "2x/x²"], answer:"B"},
+      {q:"For x² + y² = 25, dy/dx equals:", options:["x/y", "-x/y", "y/x", "-y/x"], answer:"B"},
+      {q:"At point (3,4) on x² + y² = 25, dy/dx equals:", options:["3/4", "-3/4", "4/3", "-4/3"], answer:"B"},
+      {q:"For y = xˣ, dy/dx equals:", options:["xˣ", "xˣ(1 + ln x)", "xˣ⁻¹", "xˣ ln x"], answer:"B"},
+      {q:"For parametric x = cos t, y = sin t, dy/dx equals:", options:["tan t", "-tan t", "cot t", "-cot t"], answer:"D"},
+      {q:"For parametric x = eᵗ, y = t²+1, dy/dx equals:", options:["2t/eᵗ", "2t·eᵗ", "eᵗ/2t", "t²/eᵗ"], answer:"A"},
+      {q:"The second derivative d²y/dx² for parametric x = t², y = t³ equals:", options:["3/4t", "3t/2", "3/2", "3t²/4"], answer:"A"},
+      {q:"If s(t) = t³ - 6t² + 9t, the velocity v(t) equals:", options:["3t² - 12t + 9", "t³ - 6t² + 9", "6t - 12", "3t² - 6t"], answer:"A"},
+      {q:"If s(t) = t³ - 6t² + 9t, the acceleration a(t) equals:", options:["3t² - 12t + 9", "6t - 12", "6", "t - 2"], answer:"B"},
+      {q:"The particle with s(t) = t³ - 6t² + 9t is at rest when:", options:["t = 0", "t = 1 and t = 3", "t = 2", "t = 0 and t = 3"], answer:"B"},
+      {q:"d/dx(sin⁻¹x) equals:", options:["1/√(1-x²)", "-1/√(1-x²)", "1/(1+x²)", "-1/(1+x²)"], answer:"A"},
+      {q:"d/dx(tan⁻¹x) equals:", options:["1/√(1-x²)", "1/(1+x²)", "-1/(1+x²)", "1/(1-x²)"], answer:"B"},
+      {q:"d/dx(cosh x) equals:", options:["sinh x", "-sinh x", "cosh x", "-cosh x"], answer:"A"},
+      {q:"d/dx(sinh x) equals:", options:["cosh x", "sinh x", "-cosh x", "-sinh x"], answer:"A"},
+      {q:"If f(x) = (2x+1)⁴, then f'(x) equals:", options:["4(2x+1)³", "8(2x+1)³", "4(2x+1)⁴", "8(2x+1)⁴"], answer:"B"},
+      {q:"If y = ln(x²+1), then dy/dx equals:", options:["1/(x²+1)", "2x/(x²+1)", "x/(x²+1)", "2/(x²+1)"], answer:"B"},
+      {q:"If y = e^(x²), then dy/dx equals:", options:["e^(x²)", "2x·e^(x²)", "x·e^(x²)", "2e^(x²)"], answer:"B"},
+      {q:"For f(x) = x³ - 3x² + 2, f''(x) equals:", options:["3x² - 6x", "6x - 6", "6", "3x - 3"], answer:"B"},
+      {q:"A function has a local maximum where f'(x) = 0 and:", options:["f''(x) > 0", "f''(x) < 0", "f''(x) = 0", "f''(x) is undefined"], answer:"B"},
+      {q:"A function has a local minimum where f'(x) = 0 and:", options:["f''(x) > 0", "f''(x) < 0", "f''(x) = 0", "f''(x) is undefined"], answer:"A"},
+      {q:"For f(x) = x³, x = 0 is a:", options:["Local maximum", "Local minimum", "Point of inflection", "Not a critical point"], answer:"C"},
+      {q:"The function f(x) = x⁴ has a:", options:["Local max at x=0", "Local min at x=0", "Point of inflection at x=0", "No critical point at x=0"], answer:"B"},
+      {q:"If f(x) = x³ - 3x, the local maximum occurs at:", options:["x = -1", "x = 0", "x = 1", "x = 2"], answer:"A"},
+      {q:"Integration is the inverse process of:", options:["Addition", "Differentiation", "Multiplication", "Limits"], answer:"B"},
+      {q:"∫3x² dx equals:", options:["x³", "x³ + C", "3x + C", "x² + C"], answer:"B"},
+      {q:"The technique used for ∫2x(x²+1)³ dx by letting u = x²+1 is called:", options:["Integration by parts", "Substitution method", "Partial fractions", "Trigonometric substitution"], answer:"B"},
+      {q:"Integration by parts is based on the formula:", options:["∫u dv = uv − ∫v du", "∫u dv = uv + ∫v du", "∫u dv = u/v", "∫u dv = u + v"], answer:"A"},
+      {q:"The method of partial fractions is mainly used for integrating:", options:["Trigonometric functions", "Rational functions", "Exponential functions", "Constant functions"], answer:"B"},
+      {q:"∫sin x dx equals:", options:["cos x + C", "−cos x + C", "sin x + C", "−sin x + C"], answer:"B"},
+      {q:"Trigonometric substitution is typically used when the integrand involves:", options:["Products of polynomials", "Square roots of expressions like 1 − x²", "Logarithms", "Constants only"], answer:"B"},
+      {q:"The definite integral ∫[a to b] f(x) dx represents:", options:["The derivative of f at b", "The area under the curve from a to b", "The slope of f at a", "The maximum value of f"], answer:"B"},
+      {q:"By the Fundamental Theorem of Calculus, ∫[a to b] f(x) dx equals:", options:["F(a) − F(b)", "F(b) − F(a)", "F(a) + F(b)", "F(b) × F(a)"], answer:"B"},
+      {q:"∫[0 to 2] 3x² dx equals:", options:["6", "8", "4", "12"], answer:"B"},
+      {q:"∫[a to a] f(x) dx equals:", options:["1", "f(a)", "0", "Undefined"], answer:"C"},
+      {q:"Reversing the limits of a definite integral:", options:["Doubles its value", "Changes its sign", "Has no effect", "Makes it zero"], answer:"B"},
+      {q:"The area between two curves f(x) and g(x), where f(x) ≥ g(x) on [a,b], is given by:", options:["∫[a to b] f(x)g(x) dx", "∫[a to b] [f(x) − g(x)] dx", "∫[a to b] [f(x)+g(x)] dx", "f(b) − g(a)"], answer:"B"},
+      {q:"The Disk Method for volumes of revolution about the x-axis uses the formula:", options:["V = π∫[a to b] f(x) dx", "V = π∫[a to b] [f(x)]² dx", "V = ∫[a to b] f(x) dx", "V = 2π∫[a to b] f(x) dx"], answer:"B"},
+      {q:"The area under y = x² from x = 0 to x = 2 is:", options:["4/3", "8/3", "2", "4"], answer:"B"}
+    ],
+    theory:[
+      {q:"State the definition of a function and explain the difference between its domain and codomain."},
+      {q:"Distinguish between injective, surjective and bijective functions, giving one example of each."},
+      {q:"Given f(x) = 2x + 1 and g(x) = x² − 3, find (f∘g)(x) and (g∘f)(x), and state whether composition of functions is commutative."},
+      {q:"Find the inverse of f(x) = (x − 1)/(x + 2), showing all steps."},
+      {q:"Explain the classification of real numbers and give two examples each of rational and irrational numbers."},
+      {q:"Using the ε-δ definition, show that lim(x→2)(3x − 1) = 5."},
+      {q:"State and prove the Sum Law and Product Law of limits."},
+      {q:"Evaluate lim(x→3) (x² - 9)/(x - 3) and explain your method."},
+      {q:"Using the ε-δ definition, prove that lim(x→a) x = a."},
+      {q:"Evaluate lim(x→∞) (3x² + 2x - 1)/(x² + 5) and show all working."},
+      {q:"Explain what it means for a function to be continuous at a point, and give an example of a function that is discontinuous at a point, clearly showing why."},
+      {q:"State the Intermediate Value Theorem and use it to show that x³ − x − 1 = 0 has a root between x = 1 and x = 2."},
+      {q:"State and explain the Extreme Value Theorem, including the conditions required for it to hold."},
+      {q:"Prove that if f is differentiable at x = a, then f is continuous at x = a. Is the converse true? Justify your answer."},
+      {q:"Discuss the different types of discontinuities (removable, jump, infinite) with examples for each."},
+      {q:"Differentiate y = x²(x + 1) using the product rule, showing all working."},
+      {q:"Use the quotient rule to differentiate y = (x² + 1)/x."},
+      {q:"Given x² + y² = 25, use implicit differentiation to find dy/dx, and evaluate it at the point (3, 4)."},
+      {q:"Use logarithmic differentiation to find dy/dx for y = xˣ."},
+      {q:"Differentiate from first principles: f(x) = x². Show all steps clearly."},
+      {q:"A particle moves such that its displacement is s(t) = t³ − 6t² + 9t. Find the velocity and acceleration functions, and determine the time(s) when the particle is at rest."},
+      {q:"For parametric equations x = t² and y = t³, find dy/dx and d²y/dx²."},
+      {q:"Find the critical points of f(x) = x³ - 3x² + 2 and classify each as a local maximum, local minimum, or point of inflection."},
+      {q:"A farmer wants to fence a rectangular field of area 100 m². Find the dimensions that minimize the amount of fencing needed."},
+      {q:"Find the equation of the tangent line to the curve y = x³ - 2x + 1 at the point where x = 1."},
+      {q:"Evaluate ∫(x² + 2x) dx, and hence evaluate the definite integral from x = 0 to x = 1."},
+      {q:"Find the area enclosed between the curves y = x and y = x² on the interval [0, 1], showing all working."},
+      {q:"Use integration by parts to evaluate ∫ x·eˣ dx."},
+      {q:"Find the volume of the solid obtained by revolving the region under y = x² from x = 0 to x = 2 about the x-axis, using the disk method."},
+      {q:"Evaluate ∫[0 to π] sin(x) dx and interpret the result geometrically as an area."}
+    ]},
+
+  "COS 102": { title:"COS 102 — Introduction to Problem Solving", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"A flowchart is best described as:", options:["A programming language","A pictorial representation of an algorithm","A type of computer hardware","A database query"], answer:"B"},
+      {q:"Which symbol in a flowchart represents a decision?", options:["Rectangle","Oval","Diamond","Parallelogram"], answer:"C"},
+      {q:"Pseudocode is:", options:["Actual executable code","An informal way of describing an algorithm","A type of computer virus","A hardware component"], answer:"B"}
+    ],
+    theory:[
+      {q:"Write pseudocode to determine whether a number entered by a user is even or odd."},
+      {q:"Explain, with an example, why planning an algorithm before coding saves time."}
+    ]},
+  "CHM 102": { title:"CHM 102 — General Chemistry II", eligible:"ALL",
+    objective:[
+      {q:"The pH of a neutral solution at 25°C is:", options:["0","7","14","1"], answer:"B"},
+      {q:"Which of these is an example of an exothermic reaction?", options:["Photosynthesis","Melting ice","Combustion of fuel","Evaporation of water"], answer:"C"},
+      {q:"The atomic number of an element represents the number of:", options:["Neutrons","Protons","Electrons and neutrons","Isotopes"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the difference between an acid and a base, giving one example of each."},
+      {q:"Describe, with an equation, what happens during a neutralisation reaction."}
+    ]},
+  "AGG 112": { title:"AGG 112 — Introduction to Agriculture", eligible:"ALL",
+    objective:[
+      {q:"Which of these is a primary branch of agriculture?", options:["Crop production","Banking","Tourism","Telecommunications"], answer:"A"},
+      {q:"The practice of growing different crops on the same land in successive seasons is called:", options:["Monocropping","Crop rotation","Intercropping","Fallowing"], answer:"B"},
+      {q:"Which of these is a farm input?", options:["Fertiliser","Market price","Weather forecast","Farm produce"], answer:"A"}
+    ],
+    theory:[
+      {q:"Define agriculture and list five branches of agriculture."},
+      {q:"Explain the importance of crop rotation in sustainable farming."}
+    ]},
+  "PHY 102": { title:"PHY 102 — General Physics II", eligible:"ALL",
+    objective:[
+      {q:"The SI unit of electric current is the:", options:["Volt","Ohm","Ampere","Watt"], answer:"C"},
+      {q:"Ohm's Law states that V equals:", options:["I/R","I × R","R/I","I + R"], answer:"B"},
+      {q:"A concave mirror is also known as a:", options:["Diverging mirror","Converging mirror","Plane mirror","Convex mirror"], answer:"B"}
+    ],
+    theory:[
+      {q:"State Ohm's Law and use it to calculate the current flowing through a 10Ω resistor connected to a 20V source."},
+      {q:"Explain the difference between series and parallel circuits."}
+    ]},
+  "WMA 142": { title:"WMA 142 — Introduction to Water Resources Management and Agrometeorology",
+    eligible:["B.Sc. Water Resources Management and Agro-Meteorology"],
+    objective:[
+      {q:"An instrument used to measure atmospheric pressure is called a:", options:["Rain gauge","Barometer","Anemometer","Hygrometer"], answer:"B"},
+      {q:"The main source of freshwater on Earth is:", options:["Oceans","Glaciers and groundwater","Seawater","Salt lakes"], answer:"B"},
+      {q:"Evapotranspiration refers to:", options:["Evaporation from oceans only","Combined water loss from soil evaporation and plant transpiration","Rainfall over farmland","Groundwater recharge"], answer:"B"}
+    ],
+    theory:[
+      {q:"Define Water Resources Management and explain its main objectives."},
+      {q:"Discuss the social, economic, environmental and climatic benefits of Water Resources Management."}
+    ]},
+  "GST 112": { title:"GST 112 — Nigerian Peoples and Culture", eligible:"ALL",
+    objective:[
+      {q:"Nigeria gained independence from Britain in:", options:["1957","1960","1963","1970"], answer:"B"},
+      {q:"Which of these is one of Nigeria's three major ethnic groups?", options:["Zulu","Yoruba","Maasai","Ashanti"], answer:"B"},
+      {q:"Nigeria operates which system of government?", options:["Monarchy","Federal republic","Unitary state","Theocracy"], answer:"B"}
+    ],
+    theory:[
+      {q:"Discuss the importance of national unity in a culturally diverse country like Nigeria."},
+      {q:"Describe any two traditional institutions found in Nigerian society and their roles."}
+    ]},
+  "LIB 102": { title:"LIB 102 — Use of Library, Study Skills and ICT", eligible:"ALL",
+    objective:[
+      {q:"The system used to classify books in most academic libraries is called:", options:["Alphabetical order only","Dewey Decimal Classification","Random shelving","Colour coding"], answer:"B"},
+      {q:"A citation is used to:", options:["Make an essay longer","Acknowledge the source of information used","Confuse the reader","Replace the reference list"], answer:"B"},
+      {q:"Which of these is good practice for effective study?", options:["Cramming the night before an exam","Spaced, regular revision","Studying without breaks for 10 hours","Avoiding note-taking"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the steps you would take to locate a book in the university library using the catalogue."},
+      {q:"Discuss the importance of avoiding plagiarism in academic writing."}
+    ]},
+  "BIO 102": { title:"BIO 102 — General Biology II", eligible:"ALL",
+    objective:[
+      {q:"The basic unit of life is the:", options:["Tissue","Cell","Organ","Organism"], answer:"B"},
+      {q:"Photosynthesis takes place mainly in the:", options:["Roots","Leaves","Stem","Flower"], answer:"B"},
+      {q:"Which of these is a function of the human circulatory system?", options:["Digestion of food","Transport of oxygen and nutrients","Production of urine","Detection of light"], answer:"B"}
+    ],
+    theory:[
+      {q:"Describe the structure and function of a typical plant cell."},
+      {q:"Explain the process of respiration in living organisms."}
+    ]},
+  "ZOO 102": { title:"ZOO 102 — Invertebrate Zoology", eligible:["B.Sc. Animal and Environmental Biology (Zoology)"],
+    objective:[
+      {q:"Invertebrates are animals that:", options:["Have a backbone","Lack a backbone","Live only in water","Cannot reproduce"], answer:"B"},
+      {q:"Which phylum do insects belong to?", options:["Mollusca","Arthropoda","Annelida","Cnidaria"], answer:"B"},
+      {q:"Earthworms belong to which phylum?", options:["Arthropoda","Annelida","Mollusca","Porifera"], answer:"B"}
+    ],
+    theory:[
+      {q:"Describe the general characteristics of the phylum Arthropoda."},
+      {q:"Explain the economic importance of invertebrates to humans."}
+    ]},
+  "COS 104": { title:"COS 104 — Introduction to Computing Practice", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"Which of these is an example of an operating system?", options:["Microsoft Word","Windows","Google Chrome","Adobe Photoshop"], answer:"B"},
+      {q:"A file with the extension .docx is most likely created by:", options:["A spreadsheet application","A word processor","A web browser","An image editor"], answer:"B"},
+      {q:"Which key combination is commonly used to save a file?", options:["Ctrl + P","Ctrl + S","Ctrl + C","Ctrl + V"], answer:"B"}
+    ],
+    theory:[
+      {q:"List and explain three basic components of a computer system."},
+      {q:"Describe the steps involved in creating and saving a folder on a computer."}
+    ]},
+  "CSC 104": { title:"CSC 104 — Computer Programming I", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"Which of these is a valid variable name in most programming languages?", options:["2value","value_2","value 2","value-2"], answer:"B"},
+      {q:"A loop is used in programming to:", options:["Store a single value","Repeat a block of code","Delete a file","Draw a shape"], answer:"B"},
+      {q:"Which symbol is commonly used to end a statement in many programming languages?", options:["Comma","Semicolon","Colon","Hyphen"], answer:"B"}
+    ],
+    theory:[
+      {q:"Write pseudocode for a program that calculates the sum of the first 10 natural numbers."},
+      {q:"Explain the difference between a 'for' loop and a 'while' loop."}
+    ]},
+  "CSC 106": { title:"CSC 106 — Computer Programming II", eligible:["B.Sc. Computer Science"],
+    objective:[
+      {q:"A function that calls itself is described as:", options:["Iterative","Recursive","Static","Abstract"], answer:"B"},
+      {q:"An array is best described as:", options:["A single variable","A collection of elements of the same type stored together","A type of loop","A programming error"], answer:"B"},
+      {q:"Which of these best describes debugging?", options:["Writing new code","Finding and fixing errors in code","Deleting a program","Compiling code"], answer:"B"}
+    ],
+    theory:[
+      {q:"Explain the concept of recursion with a suitable example."},
+      {q:"Describe the difference between a compiler and an interpreter."}
+    ]},
+  "FAA 128": { title:"FAA 128 — Introduction to Fisheries and Aquaculture", eligible:["B.Sc. Fisheries and Aquaculture"],
+    objective:[
+      {q:"Aquaculture refers to:", options:["The study of birds","The farming of aquatic organisms","The study of soil","The farming of livestock only"], answer:"B"},
+      {q:"Which of these is a common freshwater fish farmed in Nigeria?", options:["Tilapia","Tuna","Shark","Salmon"], answer:"A"},
+      {q:"A fish pond's water quality is commonly tested for:", options:["Soil texture","Dissolved oxygen and pH","Wind speed","Air pressure"], answer:"B"}
+    ],
+    theory:[
+      {q:"Discuss the importance of aquaculture to food security in Nigeria."},
+      {q:"Describe two water quality parameters that must be monitored in fish farming and why they matter."}
+    ]}
+};
+
+/* ===================== STATE ===================== */
+let state = {
+  studentName:'', studentReg:'', department:'', course:'',
+  section:'objective',
+  objAnswers:{}, objFlags:{}, objIndex:0,
+  theoryAnswers:{}, theoryImages:{}, theoryIndex:0,
+  objTimeLeft:0, theoryTimeLeft:0,
+  examStarted:false, warningCount:0, startedAt:0,
+  objCount: CONFIG.defaultObjectiveDraw,
+  theoryCount: CONFIG.defaultTheoryDraw
+};
+let objInterval, theoryInterval;
+let activeObjectives = [], activeTheory = [];
+
+/* ===================== SHUFFLE ===================== */
+function shuffleArray(arr){
+  const a = [...arr];
+  for(let i=a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function shuffleObjectiveQuestion(item){
+  const letters = ['A','B','C','D'];
+  const pairs = item.options.map((opt,i) => ({opt, wasCorrect: letters[i]===item.answer}));
+  const shuffled = shuffleArray(pairs);
+  const newAnswerIndex = shuffled.findIndex(p => p.wasCorrect);
+  return { q: item.q, options: shuffled.map(p => p.opt), answer: letters[newAnswerIndex] };
+}
+function buildShuffledSet(bank, objCount, theoryCount){
+  const objDraw = Math.min(objCount || CONFIG.defaultObjectiveDraw, bank.objective ? bank.objective.length : 0);
+  const theoryDraw = Math.min(theoryCount || CONFIG.defaultTheoryDraw, bank.theory ? bank.theory.length : 0);
+  const shuffledObj = shuffleArray(bank.objective.map(shuffleObjectiveQuestion));
+  const shuffledTheory = shuffleArray(bank.theory);
+  return {
+    objective: shuffledObj.slice(0, objDraw),
+    theory: shuffledTheory.slice(0, theoryDraw)
+  };
+}
+
+/* ===================== HELPERS ===================== */
+const $ = id => document.getElementById(id);
+const show = id => { $(id).classList.remove('hidden'); };
+const hide = id => { $(id).classList.add('hidden'); };
+function fmtTime(s){ s=Math.max(0,s); const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+function fmtDuration(ms){
+  const totalSec = Math.max(0, Math.round(ms/1000));
+  const h = Math.floor(totalSec/3600), m = Math.floor((totalSec%3600)/60), s = totalSec%60;
+  if(h>0) return `${h}h ${m}m ${s}s`;
+  if(m>0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] || c)); }
+
+/* ===================== STUDENT PROFILE STORAGE ===================== */
+function saveStudentProfile() {
+  const profile = {
+    name: state.studentName,
+    reg: state.studentReg,
+    department: state.department
+  };
+  try { localStorage.setItem('fuadsi_student_profile', JSON.stringify(profile)); } catch(e) {}
+}
+
+function loadStudentProfile() {
+  try {
+    const raw = localStorage.getItem('fuadsi_student_profile');
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+function prefillGate() {
+  const profile = loadStudentProfile();
+  if (!profile) return;
+  if (profile.name) $('in-name').value = profile.name;
+  if (profile.reg) $('in-reg').value = profile.reg;
+  if (profile.department) {
+    $('in-dept').value = profile.department;
+    // Trigger change to populate courses dropdown
+    $('in-dept').dispatchEvent(new Event('change'));
+  }
+  validateGate();
+}
+
+/* ===================== CUSTOM MODAL ===================== */
+let modalResolve = null;
+function openModal({title, message, confirmText='OK', cancelText=null}){
+  return new Promise(resolve => {
+    $('modal-title').textContent = title;
+    $('modal-message').textContent = message;
+    $('modal-confirm').textContent = confirmText;
+    if(cancelText){ $('modal-cancel').textContent = cancelText; $('modal-cancel').classList.remove('hidden'); }
+    else { $('modal-cancel').classList.add('hidden'); }
+    $('modal-overlay').classList.remove('hidden');
+    modalResolve = resolve;
+  });
+}
+$('modal-confirm').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(true); });
+$('modal-cancel').addEventListener('click', () => { $('modal-overlay').classList.add('hidden'); if(modalResolve) modalResolve(false); });
+
+/* ===================== DEPARTMENT / COURSE SETUP ===================== */
+function populateDepartments(){
+  const sel = $('in-dept');
+  sel.innerHTML = '<option value="">Select your department</option>';
+  Object.keys(FACULTIES).forEach(fac => {
+    const group = document.createElement('optgroup');
+    group.label = fac;
+    FACULTIES[fac].forEach(dep => {
+      const opt = document.createElement('option');
+      opt.value = dep;
+      opt.textContent = dep;
+      group.appendChild(opt);
+    });
+    sel.appendChild(group);
+  });
+}
+
+function facultyOf(dep){
+  for(const fac in FACULTIES){ if(FACULTIES[fac].includes(dep)) return fac; }
+  return null;
+}
+
+function courseEligible(course, dep){
+  if(!course || !dep) return false;
+  if(course.eligible === 'ALL') return true;
+  if(typeof course.eligible === 'string' && course.eligible.startsWith('FACULTY:')){
+    return course.eligible.slice(8) === facultyOf(dep);
+  }
+  if(Array.isArray(course.eligible)) return course.eligible.includes(dep);
+  return false;
+}
+
+$('in-dept').addEventListener('change', () => {
+  const dep = $('in-dept').value;
+  const courseSel = $('in-course');
+  courseSel.innerHTML = '';
+  if(!dep){ courseSel.disabled = true; courseSel.innerHTML = '<option value="">Select department first</option>'; validateGate(); return; }
+  courseSel.disabled = false;
+  courseSel.innerHTML = '<option value="">Select a course</option>';
+  Object.keys(COURSES).forEach(code => {
+    if(courseEligible(COURSES[code], dep)){
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = COURSES[code].title;
+      courseSel.appendChild(opt);
+    }
+  });
+  validateGate();
+});
+$('in-course').addEventListener('change', validateGate);
+
+/* ===================== QUESTION COUNT SLIDERS ===================== */
+$('range-obj-count').addEventListener('input', () => {
+  const val = $('range-obj-count').value;
+  $('display-obj-count').textContent = val;
+  state.objCount = parseInt(val, 10);
+});
+$('range-theory-count').addEventListener('input', () => {
+  const val = $('range-theory-count').value;
+  $('display-theory-count').textContent = val;
+  state.theoryCount = parseInt(val, 10);
+});
+
+/* ===================== GATE / VALIDATION ===================== */
+const REG_PATTERN = /^25\d{5}$/;
+function validateReg(){
+  const val = $('in-reg').value.trim();
+  const ok = REG_PATTERN.test(val);
+  $('in-reg').classList.toggle('invalid', val.length>0 && !ok);
+  $('reg-error').classList.toggle('show', val.length>0 && !ok);
+  return ok;
+}
+$('in-reg').addEventListener('input', () => {
+  $('in-reg').value = $('in-reg').value.replace(/\D/g,'').slice(0,7);
+  validateReg(); validateGate();
+});
+function validateGate(){
+  const ok = $('in-name').value.trim() && validateReg() && $('in-dept').value && $('in-course').value && $('in-agree').checked;
+  $('btn-to-instructions').disabled = !ok;
+}
+['in-name','in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
+
+$('btn-to-instructions').addEventListener('click', () => {
+  state.studentName = $('in-name').value.trim();
+  state.studentReg = $('in-reg').value.trim();
+  state.department = $('in-dept').value;
+  state.course = $('in-course').value;
+
+  // Remember student details for next visit
+  saveStudentProfile();
+
+  const bank = COURSES[state.course];
+  // Update max slider values based on available questions
+  const maxObj = bank.objective ? bank.objective.length : 0;
+  const maxTheory = bank.theory ? bank.theory.length : 0;
+  $('range-obj-count').max = Math.min(CONFIG.maxObjective, maxObj);
+  $('range-theory-count').max = Math.min(CONFIG.maxTheory, maxTheory);
+  // Reset to defaults if current exceeds max
+  if(state.objCount > $('range-obj-count').max) {
+    state.objCount = Math.min(CONFIG.defaultObjectiveDraw, maxObj);
+    $('range-obj-count').value = state.objCount;
+    $('display-obj-count').textContent = state.objCount;
+  }
+  if(state.theoryCount > $('range-theory-count').max) {
+    state.theoryCount = Math.min(CONFIG.defaultTheoryDraw, maxTheory);
+    $('range-theory-count').value = state.theoryCount;
+    $('display-theory-count').textContent = state.theoryCount;
+  }
+
+  $('instr-course-title').textContent = bank.title;
+  $('instr-student-line').textContent = `${state.studentName} · ${state.studentReg} · ${state.department}`;
+  updatePlanCounts();
+
+  hide('screen-gate'); show('screen-instructions'); window.scrollTo({top:0});
+});
+
+function updatePlanCounts(){
+  $('plan-obj-count').textContent = `${state.objCount} questions`;
+  $('plan-theory-count').textContent = `${state.theoryCount} questions`;
+}
+$('btn-back-to-gate').addEventListener('click', () => { hide('screen-instructions'); show('screen-gate'); });
+
+/* ===================== FULLSCREEN + ANTI-CHEAT ===================== */
+function enterFullscreen(){
+  const el = document.documentElement;
+  try{
+    if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  }catch(e){}
+}
+function setupAntiCheat(){
+  if(setupAntiCheat._done) return;
+  setupAntiCheat._done = true;
+  document.addEventListener('contextmenu', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('copy', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('cut', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('paste', e => { if(state.examStarted) e.preventDefault(); });
+  document.addEventListener('keydown', e => {
+    if(!state.examStarted) return;
+    if(e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key)) || (e.ctrlKey && e.key.toLowerCase()==='u')){
+      e.preventDefault();
+      openModal({title:'Not allowed', message:'Developer tools are not allowed during the exam.', confirmText:'OK'});
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden && state.examStarted){
+      state.warningCount++;
+      if(state.warningCount >= 3){
+        openModal({title:'Session ended', message:'Your session has been ended after multiple tab-switch warnings. Submitting what you have so far.', confirmText:'Continue'})
+          .then(() => forceSubmitCurrentSection());
+      } else {
+        openModal({title:'Warning '+state.warningCount+'/3', message:'You left the exam tab. A third warning ends your session.', confirmText:'Return to Exam'});
+      }
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    if(state.examStarted && !document.fullscreenElement){
+      openModal({title:'Stay in fullscreen', message:'Please return to fullscreen to continue your exam.', confirmText:'Return to Exam'})
+        .then(() => enterFullscreen());
+    }
+  });
+}
+function forceSubmitCurrentSection(){
+  if(state.section === 'objective') finishObjectives(); else finishTheory();
+}
+
+/* ===================== AUTOSAVE / RESUME ===================== */
+function autosave(){
+  const payload = { state: {...state}, activeObjectives, activeTheory, savedAt: Date.now() };
+  try{ localStorage.setItem('fuadsi_cbt_progress', JSON.stringify(payload)); }catch(e){}
+  const toast = $('autosave-toast'); toast.classList.add('show');
+  clearTimeout(autosave._t); autosave._t = setTimeout(()=>toast.classList.remove('show'), 1400);
+}
+function checkForResume(){
+  let saved;
+  try{ saved = JSON.parse(localStorage.getItem('fuadsi_cbt_progress')); }catch(e){ return; }
+  if(saved && saved.state && saved.state.examStarted) show('resume-banner');
+}
+$('btn-discard').addEventListener('click', () => { localStorage.removeItem('fuadsi_cbt_progress'); hide('resume-banner'); });
+$('btn-resume').addEventListener('click', () => {
+  let saved;
+  try{ saved = JSON.parse(localStorage.getItem('fuadsi_cbt_progress')); }catch(e){ return; }
+  if(!saved || !saved.state) return;
+  state = saved.state; activeObjectives = saved.activeObjectives; activeTheory = saved.activeTheory;
+  const elapsed = Math.floor((Date.now() - saved.savedAt)/1000);
+  if(state.section === 'objective') state.objTimeLeft = Math.max(0, state.objTimeLeft - elapsed);
+  else state.theoryTimeLeft = Math.max(0, state.theoryTimeLeft - elapsed);
+
+  hide('screen-gate'); enterFullscreen(); setupAntiCheat();
+  if(state.section === 'objective'){
+    state.examStarted = true;
+    show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
+    $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
+    buildObjNav(); renderObjQuestion(); resumeObjTimer();
+  } else {
+    state.examStarted = true;
+    show('screen-theory'); document.getElementById('screen-theory').style.display='block';
+    $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
+    buildTheoryNav(); renderTheoryQuestion(); resumeTheoryTimer();
+  }
+});
+
+/* ===================== SECTION A: OBJECTIVES ===================== */
+$('btn-start-objectives').addEventListener('click', () => {
+  const bank = COURSES[state.course];
+  const shuffled = buildShuffledSet(bank, state.objCount, state.theoryCount);
+  activeObjectives = shuffled.objective;
+  activeTheory = shuffled.theory;
+
+  hide('screen-instructions'); show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
+  state.examStarted = true; state.section='objective'; state.objTimeLeft = parseInt($('sel-obj-time').value,10)*60;
+  state.startedAt = Date.now();
+  $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
+  enterFullscreen(); setupAntiCheat();
+  buildObjNav(); renderObjQuestion(); startObjTimer(); window.scrollTo({top:0});
+});
+function buildObjNav(){
+  const grid = $('obj-navgrid'); grid.innerHTML = '';
+  activeObjectives.forEach((_, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'qcell'; cell.textContent = i+1; cell.dataset.i = i;
+    cell.addEventListener('click', () => { state.objIndex = i; renderObjQuestion(); });
+    grid.appendChild(cell);
+  });
+}
+function refreshObjNav(){
+  document.querySelectorAll('#obj-navgrid .qcell').forEach((cell,i) => {
+    cell.classList.toggle('answered', !!state.objAnswers[i]);
+    cell.classList.toggle('current', i===state.objIndex);
+    cell.classList.toggle('flagged', !!state.objFlags[i]);
+  });
+  $('obj-progress').style.width = (Object.keys(state.objAnswers).length/activeObjectives.length*100)+'%';
+}
+function renderObjQuestion(){
+  const item = activeObjectives[state.objIndex];
+  $('obj-qindex').textContent = `Question ${state.objIndex+1} of ${activeObjectives.length}`;
+  $('obj-qtext').textContent = item.q;
+  $('obj-flagbtn').classList.toggle('on', !!state.objFlags[state.objIndex]);
+  $('obj-flagbtn').textContent = state.objFlags[state.objIndex] ? 'Flagged' : 'Flag for review';
+
+  const letters = ['A','B','C','D'];
+  $('obj-options').innerHTML = item.options.map((opt,j) => `
+    <label class="option ${state.objAnswers[state.objIndex]===letters[j] ? 'selected':''}" data-letter="${letters[j]}">
+      <input type="radio" name="objq" ${state.objAnswers[state.objIndex]===letters[j] ? 'checked':''}>
+      <span class="letter">${letters[j]}.</span> ${escapeHtml(opt)}
+    </label>`).join('');
+
+  document.querySelectorAll('#obj-options .option').forEach(label => {
+    label.addEventListener('click', () => { state.objAnswers[state.objIndex] = label.dataset.letter; renderObjQuestion(); refreshObjNav(); autosave(); });
+  });
+  $('obj-prev').disabled = state.objIndex===0;
+  $('obj-next').textContent = state.objIndex===activeObjectives.length-1 ? 'Last question' : 'Next →';
+  refreshObjNav();
+}
+$('obj-prev').addEventListener('click', () => { if(state.objIndex>0){ state.objIndex--; renderObjQuestion(); } });
+$('obj-next').addEventListener('click', () => { if(state.objIndex<activeObjectives.length-1){ state.objIndex++; renderObjQuestion(); } });
+$('obj-flagbtn').addEventListener('click', () => { state.objFlags[state.objIndex] = !state.objFlags[state.objIndex]; renderObjQuestion(); autosave(); });
+
+function startObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
+function resumeObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
+function runObjTicker(){
+  clearInterval(objInterval);
+  objInterval = setInterval(() => {
+    state.objTimeLeft--;
+    $('obj-timer').textContent = fmtTime(state.objTimeLeft);
+    $('obj-timer').classList.toggle('low', state.objTimeLeft<=60);
+    if(state.objTimeLeft % 15 === 0) autosave();
+    if(state.objTimeLeft<=0){ clearInterval(objInterval); finishObjectives(); }
+  },1000);
+}
+$('btn-submit-objectives').addEventListener('click', async () => {
+  const ok = await openModal({title:'Submit Section A?', message:'You cannot return to it afterward.', confirmText:'Submit', cancelText:'Keep working'});
+  if(ok) finishObjectives();
+});
+
+/* ===================== SKIP TO THEORY & END EXAM HANDLERS ===================== */
+
+// Skip to Theory from Objectives (bottom button)
+$('btn-skip-to-theory').addEventListener('click', async () => {
+  const answered = Object.keys(state.objAnswers).length;
+  const total = activeObjectives.length;
+  const msg = answered < total
+    ? `You have answered ${answered} of ${total} objective questions. Section A will be submitted and you will move directly to Section B (Theory). You cannot return to Section A.`
+    : `You have answered all ${total} objective questions. Submit Section A and move to Section B (Theory)? You cannot return to Section A.`;
+  const ok = await openModal({title:'Skip to Section B — Theory?', message: msg, confirmText:'Skip to Theory', cancelText:'Keep working'});
+  if(ok) finishObjectives();
+});
+
+// Skip to Theory from Objectives (top button)
+$('btn-skip-to-theory-top').addEventListener('click', async () => {
+  const answered = Object.keys(state.objAnswers).length;
+  const total = activeObjectives.length;
+  const msg = answered < total
+    ? `You have answered ${answered} of ${total} objective questions. Section A will be submitted and you will move directly to Section B (Theory). You cannot return to Section A.`
+    : `You have answered all ${total} objective questions. Submit Section A and move to Section B (Theory)? You cannot return to Section A.`;
+  const ok = await openModal({title:'Skip to Section B — Theory?', message: msg, confirmText:'Skip to Theory', cancelText:'Keep working'});
+  if(ok) finishObjectives();
+});
+
+// End Exam from Objectives (bottom button)
+$('btn-end-exam-obj').addEventListener('click', async () => {
+  const answeredObj = Object.keys(state.objAnswers).length;
+  const totalObj = activeObjectives.length;
+  const msg = answeredObj < totalObj
+    ? `You have answered ${answeredObj} of ${totalObj} objective questions and have not reached Section B (Theory) yet. Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`
+    : `You have completed Section A but have not started Section B (Theory). Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`;
+  const ok = await openModal({title:'End Exam Early?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok){
+    clearInterval(objInterval);
+    document.getElementById('screen-objectives').style.display='none';
+    state.examStarted = false;
+    state.section = 'theory';
+    state.theoryTimeLeft = 0;
+    state.theoryAnswers = {};
+    state.theoryImages = {};
+    activeTheory = [];
+    localStorage.removeItem('fuadsi_cbt_progress');
+    if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+    showResults();
+  }
+});
+
+// End Exam from Objectives (top button)
+$('btn-end-exam-obj-top').addEventListener('click', async () => {
+  const answeredObj = Object.keys(state.objAnswers).length;
+  const totalObj = activeObjectives.length;
+  const msg = answeredObj < totalObj
+    ? `You have answered ${answeredObj} of ${totalObj} objective questions and have not reached Section B (Theory) yet. Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`
+    : `You have completed Section A but have not started Section B (Theory). Ending now will submit only your objective answers. Your theory section will be marked as not attempted.`;
+  const ok = await openModal({title:'End Exam Early?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok){
+    clearInterval(objInterval);
+    document.getElementById('screen-objectives').style.display='none';
+    state.examStarted = false;
+    state.section = 'theory';
+    state.theoryTimeLeft = 0;
+    state.theoryAnswers = {};
+    state.theoryImages = {};
+    activeTheory = [];
+    localStorage.removeItem('fuadsi_cbt_progress');
+    if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+    showResults();
+  }
+});
+
+// End Exam from Theory (bottom button)
+$('btn-end-exam-theory').addEventListener('click', async () => {
+  saveTheoryDraft();
+  const answeredTheory = activeTheory.filter((_, i) =>
+    (state.theoryAnswers[i] && state.theoryAnswers[i].trim()) || (state.theoryImages && state.theoryImages[i])
+  ).length;
+  const totalTheory = activeTheory.length;
+  const msg = answeredTheory < totalTheory
+    ? `You have answered ${answeredTheory} of ${totalTheory} theory questions. Ending the exam now will submit whatever you have completed so far.`
+    : `You have answered all ${totalTheory} theory questions. End the exam now?`;
+  const ok = await openModal({title:'End Exam?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok) finishTheory();
+});
+
+// End Exam from Theory (top button)
+$('btn-end-exam-theory-top').addEventListener('click', async () => {
+  saveTheoryDraft();
+  const answeredTheory = activeTheory.filter((_, i) =>
+    (state.theoryAnswers[i] && state.theoryAnswers[i].trim()) || (state.theoryImages && state.theoryImages[i])
+  ).length;
+  const totalTheory = activeTheory.length;
+  const msg = answeredTheory < totalTheory
+    ? `You have answered ${answeredTheory} of ${totalTheory} theory questions. Ending the exam now will submit whatever you have completed so far.`
+    : `You have answered all ${totalTheory} theory questions. End the exam now?`;
+  const ok = await openModal({title:'End Exam?', message: msg, confirmText:'End Exam', cancelText:'Keep working'});
+  if(ok) finishTheory();
+});
+
+function finishObjectives(){
+  clearInterval(objInterval);
+  document.getElementById('screen-objectives').style.display='none';
+  state.section = 'theory';
+  state.examStarted = false;
+  autosave();
+  show('screen-transition'); window.scrollTo({top:0});
+}
+
+/* ===================== SECTION B: THEORY ===================== */
+$('btn-start-theory').addEventListener('click', () => {
+  hide('screen-transition'); show('screen-theory'); document.getElementById('screen-theory').style.display='block';
+  state.theoryTimeLeft = parseInt($('sel-theory-time').value,10)*60;
+  state.examStarted = true;
+  $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
+  buildTheoryNav(); renderTheoryQuestion(); startTheoryTimer(); window.scrollTo({top:0});
+});
+function buildTheoryNav(){
+  const grid = $('theory-navgrid'); grid.innerHTML = '';
+  activeTheory.forEach((_,i) => {
+    const cell = document.createElement('div');
+    cell.className = 'qcell'; cell.textContent = i+1; cell.dataset.i = i;
+    cell.addEventListener('click', () => { saveTheoryDraft(); state.theoryIndex = i; renderTheoryQuestion(); });
+    grid.appendChild(cell);
+  });
+}
+function refreshTheoryNav(){
+  document.querySelectorAll('#theory-navgrid .qcell').forEach((cell,i) => {
+    const hasText = !!(state.theoryAnswers[i] && state.theoryAnswers[i].trim());
+    const hasImage = !!(state.theoryImages && state.theoryImages[i]);
+    cell.classList.toggle('answered', hasText || hasImage);
+    cell.classList.toggle('current', i===state.theoryIndex);
+  });
+}
+function saveTheoryDraft(){ state.theoryAnswers[state.theoryIndex] = $('theory-answer').value; }
+function renderTheoryQuestion(){
+  const item = activeTheory[state.theoryIndex];
+  $('theory-qindex').textContent = `Question ${state.theoryIndex+1} of ${activeTheory.length}`;
+  $('theory-qtext').textContent = item.q;
+  $('theory-answer').value = state.theoryAnswers[state.theoryIndex] || '';
+  updateWordCount();
+  renderPhotoForCurrentQuestion();
+  $('theory-prev').disabled = state.theoryIndex===0;
+  $('theory-next').textContent = state.theoryIndex===activeTheory.length-1 ? 'Last question' : 'Next →';
+  refreshTheoryNav();
+}
+function updateWordCount(){ const t = $('theory-answer').value.trim(); $('theory-wordcount').textContent = t ? t.split(/\s+/).length : 0; }
+$('theory-answer').addEventListener('input', () => { saveTheoryDraft(); updateWordCount(); refreshTheoryNav(); });
+$('theory-answer').addEventListener('blur', autosave);
+
+function compressImage(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        const MAX = 1400;
+        let w = img.width, h = img.height;
+        if(w > MAX || h > MAX){
+          if(w > h){ h = Math.round(h * MAX / w); w = MAX; }
+          else { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.72));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function renderPhotoForCurrentQuestion(){
+  const img = state.theoryImages && state.theoryImages[state.theoryIndex];
+  $('theory-photo-input').value = '';
+  if(img){
+    $('theory-photo-preview').src = img;
+    $('theory-photo-preview').style.display = 'block';
+    $('theory-photo-remove').style.display = 'inline-block';
+    $('theory-photo-status').textContent = 'Photo attached for this question.';
+  } else {
+    $('theory-photo-preview').style.display = 'none';
+    $('theory-photo-remove').style.display = 'none';
+    $('theory-photo-status').textContent = '';
+  }
+}
+$('theory-photo-input').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  $('theory-photo-status').textContent = 'Processing photo…';
+  try{
+    const dataUrl = await compressImage(file);
+    if(!state.theoryImages) state.theoryImages = {};
+    state.theoryImages[state.theoryIndex] = dataUrl;
+    renderPhotoForCurrentQuestion();
+    refreshTheoryNav();
+    autosave();
+  }catch(err){
+    $('theory-photo-status').textContent = "Couldn't process that photo — please try again.";
+  }
+});
+$('theory-photo-remove').addEventListener('click', () => {
+  if(state.theoryImages) delete state.theoryImages[state.theoryIndex];
+  renderPhotoForCurrentQuestion();
+  refreshTheoryNav();
+  autosave();
+});
+$('theory-prev').addEventListener('click', () => { saveTheoryDraft(); if(state.theoryIndex>0){ state.theoryIndex--; renderTheoryQuestion(); } });
+$('theory-next').addEventListener('click', () => { saveTheoryDraft(); if(state.theoryIndex<activeTheory.length-1){ state.theoryIndex++; renderTheoryQuestion(); } });
+
+function startTheoryTimer(){ $('theory-timer').textContent = fmtTime(state.theoryTimeLeft); runTheoryTicker(); }
+function resumeTheoryTimer(){ $('theory-timer').textContent = fmtTime(state.theoryTimeLeft); runTheoryTicker(); }
+function runTheoryTicker(){
+  clearInterval(theoryInterval);
+  theoryInterval = setInterval(() => {
+    state.theoryTimeLeft--;
+    $('theory-timer').textContent = fmtTime(state.theoryTimeLeft);
+    $('theory-timer').classList.toggle('low', state.theTimeLeft<=60);
+    if(state.theoryTimeLeft % 15 === 0){ saveTheoryDraft(); autosave(); }
+    if(state.theoryTimeLeft<=0){ clearInterval(theoryInterval); finishTheory(); }
+  },1000);
+}
+$('btn-submit-theory').addEventListener('click', async () => {
+  const answered = activeTheory.filter((_, i) =>
+    (state.theoryAnswers[i] && state.theoryAnswers[i].trim()) || (state.theoryImages && state.theoryImages[i])
+  ).length;
+  if(answered < activeTheory.length){
+    const ok = await openModal({title:'Incomplete section', message:`You've answered ${answered} of ${activeTheory.length} theory questions. Submit anyway?`, confirmText:'Submit anyway', cancelText:'Keep working'});
+    if(!ok) return;
+  }
+  finishTheory();
+});
+function finishTheory(){
+  saveTheoryDraft();
+  clearInterval(theoryInterval);
+  document.getElementById('screen-theory').style.display='none';
+  state.examStarted = false;
+  if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+  localStorage.removeItem('fuadsi_cbt_progress');
+  showResults();
+}
+
+/* ===================== RESULTS + REVIEW + SYNC ===================== */
+function showResults(){
+  let correct=0, wrong=0, unanswered=0;
+  activeObjectives.forEach((item,i) => {
+    const sel = state.objAnswers[i];
+    if(!sel) unanswered++; else if(sel===item.answer) correct++; else wrong++;
+  });
+  const pct = activeObjectives.length > 0 ? Math.round((correct/activeObjectives.length)*100) : 0;
+  const passed = pct >= CONFIG.passMark;
+
+  $('res-pct').textContent = pct+'%';
+  $('res-correct').textContent = correct;
+  $('res-wrong').textContent = wrong;
+  $('res-unanswered').textContent = unanswered;
+  $('res-name').textContent = state.studentName;
+  $('res-reg').textContent = state.studentReg;
+  $('res-dept').textContent = state.department;
+  $('res-course').textContent = COURSES[state.course].title;
+  const badge = $('res-badge');
+  badge.textContent = passed ? 'Above pass mark' : 'Below pass mark';
+  badge.className = 'status-badge ' + (passed ? 'pass' : 'fail');
+
+  renderReview();
+
+  hide('screen-gate'); hide('screen-instructions'); hide('screen-transition');
+  show('screen-results'); window.scrollTo({top:0});
+
+  sendResultsToSupabase({
+    timestamp: new Date().toISOString(),
+    name: state.studentName, matric: state.studentReg,
+    department: state.department, course: COURSES[state.course].title,
+    objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
+    theorySubmitted: true,
+    totalScore: pct,
+    timeSpent: state.startedAt ? fmtDuration(Date.now() - state.startedAt) : '',
+    theoryAnswers: JSON.stringify(activeTheory.map((q,i) => ({
+      question: q.q, answer: state.theoryAnswers[i] || '',
+      hasImage: !!(state.theoryImages && state.theoryImages[i])
+    }))),
+    theoryImages: activeTheory.map((q,i) => (state.theoryImages && state.theoryImages[i])
+      ? { index: i, dataUrl: state.theoryImages[i] } : null).filter(Boolean)
+  });
+}
+
+function renderReview(){
+  const letters = ['A','B','C','D'];
+  $('review-objectives').innerHTML = activeObjectives.map((item,i) => {
+    const sel = state.objAnswers[i];
+    const status = !sel ? 'unanswered' : (sel===item.answer ? 'correct' : 'wrong');
+    const statusLabel = status==='unanswered' ? 'Unanswered' : (status==='correct' ? 'Correct' : 'Wrong');
+    const opts = item.options.map((opt,j) => {
+      const letter = letters[j];
+      let cls = 'review-opt';
+      if(letter === item.answer) cls += ' correct-ans';
+      else if(letter === sel) cls += ' wrong-selected';
+      return `<div class="${cls}"><span class="letter">${letter}.</span>${escapeHtml(opt)}</div>`;
+    }).join('');
+    return `<div class="review-item">
+      <div class="qnum">Question ${i+1}</div>
+      <div class="review-status ${status}">${statusLabel}</div>
+      <div class="qtext-sm">${escapeHtml(item.q)}</div>
+      ${opts}
+    </div>`;
+  }).join('');
+
+  $('review-theory').innerHTML = activeTheory.map((item,i) => {
+    const ans = (state.theoryAnswers[i] || '').trim();
+    const img = state.theoryImages && state.theoryImages[i];
+    const textBlock = ans ? `<div class="answer-box">${escapeHtml(ans)}</div>` : (img ? '' : `<div class="answer-box empty">No answer submitted.</div>`);
+    const imgBlock = img ? `<img class="photo-preview" style="margin-top:${ans ? '10px':'0'};" src="${img}">` : '';
+    return `<div class="review-item">
+      <div class="qnum">Question ${i+1}</div>
+      <div class="qtext-sm">${escapeHtml(item.q)}</div>
+      ${textBlock}${imgBlock}
+    </div>`;
+  }).join('');
+}
+
+async function sendResultsToSupabase(payload){
+  const note = $('sync-note');
+
+  // DEBUG: Log what we're about to send
+  console.log('[FUADSI DEBUG] Sending to Supabase:', {
+    url: `${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`,
+    table: CONFIG.supabaseTable,
+    payload: payload
+  });
+
+  try{
+    const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
+      method: 'POST',
+      headers: {
+        'apikey': CONFIG.supabaseKey,
+        'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        matric: payload.matric,
+        department: payload.department,
+        course: payload.course,
+        objective_score: payload.objectiveScore,
+        correct_answers: payload.correctAnswers,
+        total_questions: payload.totalQuestions,
+        theory_submitted: payload.theorySubmitted,
+        time_spent: payload.timeSpent,
+        submitted_at: payload.timestamp,
+        theory_answers: payload.theoryAnswers
+      })
+    });
+
+    // DEBUG: Log the response
+    console.log('[FUADSI DEBUG] Response status:', res.status, res.statusText);
+    console.log('[FUADSI DEBUG] Response ok:', res.ok);
+
+    if(res.ok){
+      note.textContent = '✅ Your results have been saved to the practice record database.';
+      note.style.color = 'var(--forest)';
+      try{ localStorage.removeItem('fuadsi_pending_submissions'); }catch(e){}
+      console.log('[FUADSI DEBUG] Save successful!');
+    } else {
+      const errText = await res.text().catch(() => 'unknown error');
+      console.error('[FUADSI DEBUG] Save failed:', res.status, errText);
+      note.innerHTML = '<span style="color:var(--crimson)">❌ Database error (' + res.status + '): ' + escapeHtml(errText.substring(0,200)) + '</span><br>Your results are kept on this device — screenshot this page.';
+      queuePending(payload);
+    }
+  }catch(err){
+    console.error('[FUADSI DEBUG] Network error:', err);
+    note.innerHTML = '<span style="color:var(--crimson)">❌ Network error: ' + escapeHtml(String(err).substring(0,100)) + '</span><br>Your results are kept on this device — screenshot this page.';
+    queuePending(payload);
+  }
+}
+function queuePending(payload){
+  try{
+    const pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]');
+    pending.push(payload); localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(pending));
+  }catch(e){}
+}
+
+// Retry sending pending submissions when connection returns
+async function retryPendingSubmissions(){
+  let pending;
+  try{ pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]'); }catch(e){ return; }
+  if(!pending.length) return;
+  console.log('[FUADSI DEBUG] Retrying', pending.length, 'pending submissions...');
+  const remaining = [];
+  for(const payload of pending){
+    try{
+      const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
+        method: 'POST',
+        headers: {
+          'apikey': CONFIG.supabaseKey,
+          'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          matric: payload.matric,
+          department: payload.department,
+          course: payload.course,
+          objective_score: payload.objectiveScore,
+          correct_answers: payload.correctAnswers,
+          total_questions: payload.totalQuestions,
+          theory_submitted: payload.theorySubmitted,
+          time_spent: payload.timeSpent,
+          submitted_at: payload.timestamp,
+          theory_answers: payload.theoryAnswers
+        })
+      });
+      if(!res.ok){
+        console.error('[FUADSI DEBUG] Retry failed for', payload.name, '- status:', res.status);
+        remaining.push(payload);
+      } else {
+        console.log('[FUADSI DEBUG] Retry succeeded for', payload.name);
+      }
+    }catch(e){ 
+      console.error('[FUADSI DEBUG] Retry network error for', payload.name, e);
+      remaining.push(payload); 
+    }
+  }
+  try{
+    if(remaining.length) localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(remaining));
+    else localStorage.removeItem('fuadsi_pending_submissions');
+  }catch(e){}
+}
+
+/* ===================== NEW COURSE AFTER RESULTS ===================== */
+$('btn-new-course').addEventListener('click', () => {
+  // Reset state for new exam but keep student details
+  state = {
+    studentName: state.studentName,
+    studentReg: state.studentReg,
+    department: state.department,
+    course: '',
+    section: 'objective',
+    objAnswers: {}, objFlags: {}, objIndex: 0,
+    theoryAnswers: {}, theoryImages: {}, theoryIndex: 0,
+    objTimeLeft: 0, theoryTimeLeft: 0,
+    examStarted: false, warningCount: 0, startedAt: 0,
+    objCount: CONFIG.defaultObjectiveDraw,
+    theoryCount: CONFIG.defaultTheoryDraw
+  };
+  activeObjectives = [];
+  activeTheory = [];
+
+  // Reset UI
+  $('in-course').value = '';
+  $('range-obj-count').value = CONFIG.defaultObjectiveDraw;
+  $('display-obj-count').textContent = CONFIG.defaultObjectiveDraw;
+  $('range-theory-count').value = CONFIG.defaultTheoryDraw;
+  $('display-theory-count').textContent = CONFIG.defaultTheoryDraw;
+
+  // Hide results, show gate (with pre-filled details)
+  hide('screen-results');
+  show('screen-gate');
+  validateGate();
+  window.scrollTo({top:0});
+});
+
+/* ===================== INIT ===================== */
+populateDepartments();
+prefillGate();   // pre-fill name, matric, department if saved before
+checkForResume();
+retryPendingSubmissions(); // try to send any queued results from previous sessions
+</script>
+</body>
+</html>
