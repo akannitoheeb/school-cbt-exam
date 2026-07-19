@@ -187,6 +187,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -1586,6 +1587,14 @@ function renderReview(){
 
 async function sendResultsToSupabase(payload){
   const note = $('sync-note');
+
+  // DEBUG: Log what we're about to send
+  console.log('[FUADSI DEBUG] Sending to Supabase:', {
+    url: `${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`,
+    table: CONFIG.supabaseTable,
+    payload: payload
+  });
+
   try{
     const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
       method: 'POST',
@@ -1609,17 +1618,25 @@ async function sendResultsToSupabase(payload){
         theory_answers: payload.theoryAnswers
       })
     });
-    if(res.ok || res.status === 201){
-      note.textContent = 'Your results have been saved to the practice record database.';
-      // Also clear any pending submissions since this one succeeded
+
+    // DEBUG: Log the response
+    console.log('[FUADSI DEBUG] Response status:', res.status, res.statusText);
+    console.log('[FUADSI DEBUG] Response ok:', res.ok);
+
+    if(res.ok){
+      note.textContent = '✅ Your results have been saved to the practice record database.';
+      note.style.color = 'var(--forest)';
       try{ localStorage.removeItem('fuadsi_pending_submissions'); }catch(e){}
+      console.log('[FUADSI DEBUG] Save successful!');
     } else {
       const errText = await res.text().catch(() => 'unknown error');
-      note.textContent = 'Database saved your result, but returned: ' + errText + '. Your results are safe — please also screenshot this page.';
+      console.error('[FUADSI DEBUG] Save failed:', res.status, errText);
+      note.innerHTML = '<span style="color:var(--crimson)">❌ Database error (' + res.status + '): ' + escapeHtml(errText.substring(0,200)) + '</span><br>Your results are kept on this device — screenshot this page.';
       queuePending(payload);
     }
   }catch(err){
-    note.textContent = 'Network issue — could not reach the database. Your results are kept on this device — please also screenshot this page.';
+    console.error('[FUADSI DEBUG] Network error:', err);
+    note.innerHTML = '<span style="color:var(--crimson)">❌ Network error: ' + escapeHtml(String(err).substring(0,100)) + '</span><br>Your results are kept on this device — screenshot this page.';
     queuePending(payload);
   }
 }
@@ -1635,6 +1652,7 @@ async function retryPendingSubmissions(){
   let pending;
   try{ pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]'); }catch(e){ return; }
   if(!pending.length) return;
+  console.log('[FUADSI DEBUG] Retrying', pending.length, 'pending submissions...');
   const remaining = [];
   for(const payload of pending){
     try{
@@ -1660,8 +1678,16 @@ async function retryPendingSubmissions(){
           theory_answers: payload.theoryAnswers
         })
       });
-      if(!res.ok && res.status !== 201) remaining.push(payload);
-    }catch(e){ remaining.push(payload); }
+      if(!res.ok){
+        console.error('[FUADSI DEBUG] Retry failed for', payload.name, '- status:', res.status);
+        remaining.push(payload);
+      } else {
+        console.log('[FUADSI DEBUG] Retry succeeded for', payload.name);
+      }
+    }catch(e){ 
+      console.error('[FUADSI DEBUG] Retry network error for', payload.name, e);
+      remaining.push(payload); 
+    }
   }
   try{
     if(remaining.length) localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(remaining));
