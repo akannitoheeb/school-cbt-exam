@@ -188,6 +188,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -495,10 +496,10 @@ const CONFIG = {
   maxObjective: 200,
   minTheory: 3,
   maxTheory: 30,
-  // Supabase configuration - REPLACE WITH YOUR ACTUAL ANON KEY
   supabaseUrl: 'https://fuivbnmblhvnscaemkdh.supabase.co',
   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1aXZibm1ibGh2bnNjYWVta2RoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MDczMDYsImV4cCI6MjA5OTk4MzMwNn0.Nv5U9cpDcpH9AW8Rml59dlgMQGo-RnYz9AW21_iDdAc',
-  supabaseTable: 'FUADSI_practices_question_results'
+  supabaseTable: 'FUADSI_practices_question_results',
+  supabaseBucket: 'theory-photos'
 };
 
 /* ===================== FACULTIES / DEPARTMENTS ===================== */
@@ -1585,17 +1586,84 @@ function renderReview(){
   }).join('');
 }
 
-async function sendResultsToSupabase(payload){
-  const note = $('sync-note');
 
-  // DEBUG: Log what we're about to send
-  console.log('[FUADSI DEBUG] Sending to Supabase:', {
-    url: `${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`,
-    table: CONFIG.supabaseTable,
-    payload: payload
+/* ===================== IMAGE UPLOAD TO SUPABASE STORAGE ===================== */
+async function uploadImageToStorage(base64Data, fileName) {
+  // Convert base64 to Blob
+  const byteString = atob(base64Data.split(',')[1]);
+  const mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const blob = new Blob([ab], { type: mimeString });
+
+  const res = await fetch(`${CONFIG.supabaseUrl}/storage/v1/object/${CONFIG.supabaseBucket}/${fileName}`, {
+    method: 'POST',
+    headers: {
+      'apikey': CONFIG.supabaseKey,
+      'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+      'Content-Type': mimeString,
+      'x-upsert': 'true'
+    },
+    body: blob
   });
 
+  if (!res.ok) {
+    const err = await res.text().catch(() => 'unknown');
+    throw new Error(`Upload failed: ${res.status} ${err}`);
+  }
+
+  // Return public URL
+  return `${CONFIG.supabaseUrl}/storage/v1/object/public/${CONFIG.supabaseBucket}/${fileName}`;
+}
+
+async function sendResultsToSupabase(payload){
+  const note = $('sync-note');
+  console.log('[FUADSI] Starting results submission...');
+
+  // Step 1: Upload all images to Storage first
+  const imageUrls = [];
+  if (state.theoryImages) {
+    for (let i = 0; i < activeTheory.length; i++) {
+      if (state.theoryImages[i]) {
+        const fileName = `${state.studentReg}_${Date.now()}_q${i + 1}.jpg`;
+        try {
+          console.log(`[FUADSI] Uploading image for question ${i + 1}...`);
+          const url = await uploadImageToStorage(state.theoryImages[i], fileName);
+          imageUrls.push({
+            questionIndex: i,
+            question: activeTheory[i].q,
+            url: url
+          });
+          console.log(`[FUADSI] Image ${i + 1} uploaded: ${url}`);
+        } catch (err) {
+          console.error(`[FUADSI] Failed to upload image ${i + 1}:`, err);
+        }
+      }
+    }
+  }
+
+  // Step 2: Save everything to database
   try{
+    const dbPayload = {
+      name: payload.name,
+      matric: payload.matric,
+      department: payload.department,
+      course: payload.course,
+      objective_score: payload.objectiveScore,
+      correct_answers: payload.correctAnswers,
+      total_questions: payload.totalQuestions,
+      theory_submitted: payload.theorySubmitted,
+      time_spent: payload.timeSpent,
+      submitted_at: payload.timestamp,
+      theory_answers: payload.theoryAnswers,
+      theory_image_urls: imageUrls.length > 0 ? JSON.stringify(imageUrls) : null
+    };
+
+    console.log('[FUADSI] Sending to database:', dbPayload);
+
     const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
       method: 'POST',
       headers: {
@@ -1604,40 +1672,26 @@ async function sendResultsToSupabase(payload){
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({
-        name: payload.name,
-        matric: payload.matric,
-        department: payload.department,
-        course: payload.course,
-        objective_score: payload.objectiveScore,
-        correct_answers: payload.correctAnswers,
-        total_questions: payload.totalQuestions,
-        theory_submitted: payload.theorySubmitted,
-        time_spent: payload.timeSpent,
-        submitted_at: payload.timestamp,
-        theory_answers: payload.theoryAnswers
-      })
+      body: JSON.stringify(dbPayload)
     });
 
-    // DEBUG: Log the response
-    console.log('[FUADSI DEBUG] Response status:', res.status, res.statusText);
-    console.log('[FUADSI DEBUG] Response ok:', res.ok);
+    console.log('[FUADSI] Database response:', res.status, res.statusText);
 
     if(res.ok){
-      note.textContent = '✅ Your results have been saved to the practice record database.';
+      note.textContent = '✅ Your results and photos have been saved.';
       note.style.color = 'var(--forest)';
       try{ localStorage.removeItem('fuadsi_pending_submissions'); }catch(e){}
-      console.log('[FUADSI DEBUG] Save successful!');
+      console.log('[FUADSI] Save successful!');
     } else {
       const errText = await res.text().catch(() => 'unknown error');
-      console.error('[FUADSI DEBUG] Save failed:', res.status, errText);
+      console.error('[FUADSI] Database error:', res.status, errText);
       note.innerHTML = '<span style="color:var(--crimson)">❌ Database error (' + res.status + '): ' + escapeHtml(errText.substring(0,200)) + '</span><br>Your results are kept on this device — screenshot this page.';
-      queuePending(payload);
+      queuePending({...payload, imageUrls});
     }
   }catch(err){
-    console.error('[FUADSI DEBUG] Network error:', err);
+    console.error('[FUADSI] Network error:', err);
     note.innerHTML = '<span style="color:var(--crimson)">❌ Network error: ' + escapeHtml(String(err).substring(0,100)) + '</span><br>Your results are kept on this device — screenshot this page.';
-    queuePending(payload);
+    queuePending({...payload, imageUrls});
   }
 }
 function queuePending(payload){
@@ -1652,9 +1706,24 @@ async function retryPendingSubmissions(){
   let pending;
   try{ pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]'); }catch(e){ return; }
   if(!pending.length) return;
-  console.log('[FUADSI DEBUG] Retrying', pending.length, 'pending submissions...');
+  console.log('[FUADSI] Retrying', pending.length, 'pending submissions...');
+
   const remaining = [];
   for(const payload of pending){
+    // Re-upload images if they exist
+    let imageUrls = payload.imageUrls || [];
+    if (payload.theoryImages && payload.theoryImages.length > 0 && imageUrls.length === 0) {
+      for (const img of payload.theoryImages) {
+        const fileName = `${payload.matric}_${Date.now()}_q${img.questionIndex + 1}.jpg`;
+        try {
+          const url = await uploadImageToStorage(img.imageBase64, fileName);
+          imageUrls.push({ questionIndex: img.questionIndex, question: img.question, url: url });
+        } catch (e) {
+          console.error('[FUADSI] Retry upload failed:', e);
+        }
+      }
+    }
+
     try{
       const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
         method: 'POST',
@@ -1675,18 +1744,19 @@ async function retryPendingSubmissions(){
           theory_submitted: payload.theorySubmitted,
           time_spent: payload.timeSpent,
           submitted_at: payload.timestamp,
-          theory_answers: payload.theoryAnswers
+          theory_answers: payload.theoryAnswers,
+          theory_image_urls: imageUrls.length > 0 ? JSON.stringify(imageUrls) : null
         })
       });
       if(!res.ok){
-        console.error('[FUADSI DEBUG] Retry failed for', payload.name, '- status:', res.status);
-        remaining.push(payload);
+        console.error('[FUADSI] Retry failed for', payload.name, '- status:', res.status);
+        remaining.push({...payload, imageUrls});
       } else {
-        console.log('[FUADSI DEBUG] Retry succeeded for', payload.name);
+        console.log('[FUADSI] Retry succeeded for', payload.name);
       }
     }catch(e){ 
-      console.error('[FUADSI DEBUG] Retry network error for', payload.name, e);
-      remaining.push(payload); 
+      console.error('[FUADSI] Retry network error for', payload.name, e);
+      remaining.push({...payload, imageUrls}); 
     }
   }
   try{
