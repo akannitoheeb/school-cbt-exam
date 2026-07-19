@@ -186,6 +186,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -443,7 +444,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <tr><td>Course</td><td id="res-course">—</td></tr>
       <tr><td>Section B (Theory)</td><td>Submitted, pending manual grading</td></tr>
     </table>
-    <p class="small-note" id="sync-note">Sending your results to the department record sheet…</p>
+    <p class="small-note" id="sync-note">Saving your results to the practice database…</p>
   </div>
 
   <div class="card">
@@ -493,7 +494,10 @@ const CONFIG = {
   maxObjective: 200,
   minTheory: 3,
   maxTheory: 30,
-  sheetWebhookUrl: 'https://script.google.com/macros/s/AKfycbykxSZz3DkDV6VwrHT-VQnEPMKIa67mXq2sqAuJbjg2P8cWOu_0NUyoaza7aACxO4X52g/exec'
+  // Supabase configuration - REPLACE WITH YOUR ACTUAL ANON KEY
+  supabaseUrl: 'https://fuivbnmblhvnscaemkdh.supabase.co',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1aXZibm1ibGh2bnNjYWVta2RoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MDczMDYsImV4cCI6MjA5OTk4MzMwNn0.Nv5U9cpDcpH9AW8Rml59dlgMQGo-RnYz9AW21_iDdAc',
+  supabaseTable: 'FUADSI_practices_question_results'
 };
 
 /* ===================== FACULTIES / DEPARTMENTS ===================== */
@@ -1529,7 +1533,7 @@ function showResults(){
   hide('screen-gate'); hide('screen-instructions'); hide('screen-transition');
   show('screen-results'); window.scrollTo({top:0});
 
-  sendResultsToSheet({
+  sendResultsToSupabase({
     timestamp: new Date().toISOString(),
     name: state.studentName, matric: state.studentReg,
     department: state.department, course: COURSES[state.course].title,
@@ -1580,22 +1584,42 @@ function renderReview(){
   }).join('');
 }
 
-async function sendResultsToSheet(payload){
+async function sendResultsToSupabase(payload){
   const note = $('sync-note');
   try{
-    const res = await fetch(CONFIG.sheetWebhookUrl, { method:'POST', body: JSON.stringify(payload) });
-    const text = await res.text();
-    let parsed; try{ parsed = JSON.parse(text); }catch(e){ parsed = null; }
-    if(parsed && (parsed.status === 'ok' || parsed.status === 'success')){
-      note.textContent = 'Your results have been sent to the department record sheet.';
-    } else if(parsed && parsed.status === 'error'){
-      note.textContent = 'The record sheet rejected this submission: ' + (parsed.message || 'unknown error') + '. Your results are saved on this device — please also screenshot this page.';
-      queuePending(payload);
+    const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
+      method: 'POST',
+      headers: {
+        'apikey': CONFIG.supabaseKey,
+        'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        matric: payload.matric,
+        department: payload.department,
+        course: payload.course,
+        objective_score: payload.objectiveScore,
+        correct_answers: payload.correctAnswers,
+        total_questions: payload.totalQuestions,
+        theory_submitted: payload.theorySubmitted,
+        time_spent: payload.timeSpent,
+        submitted_at: payload.timestamp,
+        theory_answers: payload.theoryAnswers
+      })
+    });
+    if(res.ok || res.status === 201){
+      note.textContent = 'Your results have been saved to the practice record database.';
+      // Also clear any pending submissions since this one succeeded
+      try{ localStorage.removeItem('fuadsi_pending_submissions'); }catch(e){}
     } else {
-      note.textContent = 'Sent, but got an unexpected response from the record sheet. Please also screenshot this page.';
+      const errText = await res.text().catch(() => 'unknown error');
+      note.textContent = 'Database saved your result, but returned: ' + errText + '. Your results are safe — please also screenshot this page.';
+      queuePending(payload);
     }
   }catch(err){
-    note.textContent = 'Could not confirm delivery to the record sheet (this can happen even when it actually saved). Your results are kept on this device — please also screenshot this page.';
+    note.textContent = 'Network issue — could not reach the database. Your results are kept on this device — please also screenshot this page.';
     queuePending(payload);
   }
 }
@@ -1603,6 +1627,45 @@ function queuePending(payload){
   try{
     const pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]');
     pending.push(payload); localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(pending));
+  }catch(e){}
+}
+
+// Retry sending pending submissions when connection returns
+async function retryPendingSubmissions(){
+  let pending;
+  try{ pending = JSON.parse(localStorage.getItem('fuadsi_pending_submissions') || '[]'); }catch(e){ return; }
+  if(!pending.length) return;
+  const remaining = [];
+  for(const payload of pending){
+    try{
+      const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
+        method: 'POST',
+        headers: {
+          'apikey': CONFIG.supabaseKey,
+          'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          matric: payload.matric,
+          department: payload.department,
+          course: payload.course,
+          objective_score: payload.objectiveScore,
+          correct_answers: payload.correctAnswers,
+          total_questions: payload.totalQuestions,
+          theory_submitted: payload.theorySubmitted,
+          time_spent: payload.timeSpent,
+          submitted_at: payload.timestamp,
+          theory_answers: payload.theoryAnswers
+        })
+      });
+      if(!res.ok && res.status !== 201) remaining.push(payload);
+    }catch(e){ remaining.push(payload); }
+  }
+  try{
+    if(remaining.length) localStorage.setItem('fuadsi_pending_submissions', JSON.stringify(remaining));
+    else localStorage.removeItem('fuadsi_pending_submissions');
   }catch(e){}
 }
 
@@ -1643,6 +1706,7 @@ $('btn-new-course').addEventListener('click', () => {
 populateDepartments();
 prefillGate();   // pre-fill name, matric, department if saved before
 checkForResume();
+retryPendingSubmissions(); // try to send any queued results from previous sessions
 </script>
 </body>
 </html>
