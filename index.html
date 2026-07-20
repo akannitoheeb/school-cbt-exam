@@ -109,6 +109,10 @@ button:active{ transform:translateY(1px); }
 .qpanel .qmeta .idx{ font-family:'IBM Plex Mono', monospace; color:var(--gold); font-weight:600; font-size:13px; }
 .flagbtn{ background:none; border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--stone); cursor:pointer; font-family:inherit;}
 .flagbtn.on{ background:var(--crimson-tint); border-color:var(--crimson); color:var(--crimson); }
+.hintbtn{ background:none; border:1px solid var(--gold); border-radius:8px; padding:6px 12px; font-size:12.5px; color:var(--forest-dark); cursor:pointer; font-family:inherit; margin-right:8px;}
+.hintbtn:hover{ background:var(--gold-tint); }
+.hintbox{ display:none; background:var(--gold-tint); border:1px solid var(--gold); border-radius:10px; padding:12px 14px; font-size:13.5px; color:var(--forest-dark); line-height:1.5; margin-bottom:16px; }
+.hintbox.show{ display:block; }
 .qtext{ font-size:18px; line-height:1.5; font-weight:500; margin-bottom:20px; }
 .option{ display:flex; align-items:center; gap:11px; padding:13px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:10px; cursor:pointer; background:var(--paper); font-size:15px;}
 .option:hover{ border-color:var(--forest); }
@@ -428,8 +432,9 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
         <button class="ghost" id="btn-skip-to-theory-top" style="font-size:12px; padding:8px 14px;">Skip to Theory →</button>
         <button class="ghost" id="btn-end-exam-obj-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
       </div>
-      <div class="qmeta"><span class="idx" id="obj-qindex">Question 1 of —</span><button class="flagbtn" id="obj-flagbtn">Flag for review</button></div>
+      <div class="qmeta"><span class="idx" id="obj-qindex">Question 1 of —</span><span><button class="hintbtn" id="obj-hintbtn" style="display:none;">Show hint</button><button class="flagbtn" id="obj-flagbtn">Flag for review</button></span></div>
       <div class="qtext" id="obj-qtext">—</div>
+      <div class="hintbox" id="obj-hintbox"></div>
       <div id="obj-options"></div>
       <div class="qpanel-actions">
         <button class="ghost" id="obj-prev">← Previous</button>
@@ -489,8 +494,9 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div class="top-actions" style="display:flex; justify-content:flex-end; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
         <button class="ghost" id="btn-end-exam-theory-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
       </div>
-      <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span></div>
+      <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span><button class="hintbtn" id="theory-hintbtn" style="display:none;">Show hint</button></div>
       <div class="qtext" id="theory-qtext">—</div>
+      <div class="hintbox" id="theory-hintbox"></div>
       <textarea id="theory-answer" placeholder="Type your answer here... (or attach a photo of your written working below)"></textarea>
       <div class="wordcount"><span id="theory-wordcount">0</span> words</div>
       <div class="photo-attach">
@@ -1551,8 +1557,8 @@ function releaseWakeLock() {
 let state = {
   studentName:'', studentReg:'', department:'', course:'',
   section:'objective',
-  objAnswers:{}, objFlags:{}, objIndex:0,
-  theoryAnswers:{}, theoryImages:{}, theoryIndex:0,
+  objAnswers:{}, objFlags:{}, objIndex:0, objHintShown:{},
+  theoryAnswers:{}, theoryImages:{}, theoryIndex:0, theoryHintShown:{},
   objTimeLeft:0, theoryTimeLeft:0,
   examStarted:false, warningCount:0, startedAt:0,
   objCount: CONFIG.defaultObjectiveDraw,
@@ -1893,6 +1899,18 @@ function renderObjQuestion(){
   $('obj-flagbtn').classList.toggle('on', !!state.objFlags[state.objIndex]);
   $('obj-flagbtn').textContent = state.objFlags[state.objIndex] ? 'Flagged' : 'Flag for review';
 
+  const objHintBtn = $('obj-hintbtn'), objHintBox = $('obj-hintbox');
+  if(item.hint){
+    objHintBtn.style.display = 'inline-block';
+    const isShown = !!state.objHintShown[state.objIndex];
+    objHintBox.textContent = item.hint;
+    objHintBox.classList.toggle('show', isShown);
+    objHintBtn.textContent = isShown ? 'Hide hint' : 'Show hint';
+  } else {
+    objHintBtn.style.display = 'none';
+    objHintBox.classList.remove('show');
+  }
+
   const letters = ['A','B','C','D'];
   $('obj-options').innerHTML = item.options.map((opt,j) => `
     <label class="option ${state.objAnswers[state.objIndex]===letters[j] ? 'selected':''}" data-letter="${letters[j]}">
@@ -1910,6 +1928,7 @@ function renderObjQuestion(){
 $('obj-prev').addEventListener('click', () => { if(state.objIndex>0){ state.objIndex--; renderObjQuestion(); } });
 $('obj-next').addEventListener('click', () => { if(state.objIndex<activeObjectives.length-1){ state.objIndex++; renderObjQuestion(); } });
 $('obj-flagbtn').addEventListener('click', () => { state.objFlags[state.objIndex] = !state.objFlags[state.objIndex]; renderObjQuestion(); autosave(); });
+$('obj-hintbtn').addEventListener('click', () => { state.objHintShown[state.objIndex] = !state.objHintShown[state.objIndex]; renderObjQuestion(); });
 
 function startObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
 function resumeObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
@@ -2067,6 +2086,19 @@ function renderTheoryQuestion(){
   const item = activeTheory[state.theoryIndex];
   $('theory-qindex').textContent = `Question ${state.theoryIndex+1} of ${activeTheory.length}`;
   $('theory-qtext').textContent = item.q;
+
+  const theoryHintBtn = $('theory-hintbtn'), theoryHintBox = $('theory-hintbox');
+  if(item.hint){
+    theoryHintBtn.style.display = 'inline-block';
+    const isShown = !!state.theoryHintShown[state.theoryIndex];
+    theoryHintBox.textContent = item.hint;
+    theoryHintBox.classList.toggle('show', isShown);
+    theoryHintBtn.textContent = isShown ? 'Hide hint' : 'Show hint';
+  } else {
+    theoryHintBtn.style.display = 'none';
+    theoryHintBox.classList.remove('show');
+  }
+
   $('theory-answer').value = state.theoryAnswers[state.theoryIndex] || '';
   updateWordCount();
   renderPhotoForCurrentQuestion();
@@ -2075,6 +2107,7 @@ function renderTheoryQuestion(){
   refreshTheoryNav();
 }
 function updateWordCount(){ const t = $('theory-answer').value.trim(); $('theory-wordcount').textContent = t ? t.split(/\s+/).length : 0; }
+$('theory-hintbtn').addEventListener('click', () => { state.theoryHintShown[state.theoryIndex] = !state.theoryHintShown[state.theoryIndex]; renderTheoryQuestion(); });
 $('theory-answer').addEventListener('input', () => { saveTheoryDraft(); updateWordCount(); refreshTheoryNav(); });
 $('theory-answer').addEventListener('blur', autosave);
 
@@ -2471,8 +2504,8 @@ $('btn-new-course').addEventListener('click', () => {
     department: state.department,
     course: '',
     section: 'objective',
-    objAnswers: {}, objFlags: {}, objIndex: 0,
-    theoryAnswers: {}, theoryImages: {}, theoryIndex: 0,
+    objAnswers: {}, objFlags: {}, objIndex: 0, objHintShown: {},
+    theoryAnswers: {}, theoryImages: {}, theoryIndex: 0, theoryHintShown: {},
     objTimeLeft: 0, theoryTimeLeft: 0,
     examStarted: false, warningCount: 0, startedAt: 0,
     objCount: CONFIG.defaultObjectiveDraw,
