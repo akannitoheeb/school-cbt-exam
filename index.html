@@ -1582,7 +1582,7 @@ function shuffleObjectiveQuestion(item){
   const pairs = item.options.map((opt,i) => ({opt, wasCorrect: letters[i]===item.answer}));
   const shuffled = shuffleArray(pairs);
   const newAnswerIndex = shuffled.findIndex(p => p.wasCorrect);
-  return { q: item.q, options: shuffled.map(p => p.opt), answer: letters[newAnswerIndex] };
+  return { q: item.q, options: shuffled.map(p => p.opt), answer: letters[newAnswerIndex], hint: item.hint };
 }
 function buildShuffledSet(bank, objCount, theoryCount){
   const objDraw = Math.min(objCount || CONFIG.defaultObjectiveDraw, bank.objective ? bank.objective.length : 0);
