@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Past Questions — FUADSI CBT Examination Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#146C36; --forest-dark:#0B3D1F; --forest-tint:#E5F1E9;
+  --gold:#D6A419; --gold-tint:#FBF0D6;
+  --crimson:#A6241E; --crimson-tint:#F7E3E1;
+  --paper:#FAF8F2; --panel:#FFFFFF;
+  --ink:#1B231D; --stone:#6E7568; --line:#E1DCC9;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', Arial, sans-serif; -webkit-font-smoothing:antialiased;}
+h1,h2,h3{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; letter-spacing:-0.01em;}
+.mono{ font-family:'IBM Plex Mono', monospace; }
+
+.letterhead{ background:linear-gradient(180deg, var(--forest) 0%, var(--forest-dark) 100%); color:#fff; padding:14px 20px; position:relative;}
+.letterhead::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg, var(--gold), var(--crimson) 50%, var(--gold));}
+.letterhead-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; gap:13px; }
+.crest{ width:44px; height:44px; border-radius:50%; flex-shrink:0; background:var(--gold); display:flex; align-items:center; justify-content:center; border:2px solid rgba(255,255,255,.55);}
+.crest svg{ width:24px; height:24px; }
+.letterhead-text .school{ font-size:14.5px; font-weight:600; letter-spacing:.01em; line-height:1.25;}
+.letterhead-text .portal{ font-size:11px; opacity:.85; text-transform:uppercase; letter-spacing:.13em; margin-top:2px;}
+
+.wrap{ max-width:900px; margin:0 auto; padding:30px 18px 80px; }
+
+.pagehead{ margin-bottom:24px; }
+.eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; font-weight:600;}
+.pagehead h1{ font-size:28px; margin-bottom:8px; }
+.pagehead p{ color:var(--stone); font-size:14.5px; line-height:1.55; max-width:60ch; margin:0; }
+
+.pioneer-note{ display:flex; gap:12px; align-items:flex-start; border:1px solid var(--gold); background:var(--gold-tint); border-radius:12px; padding:14px 16px; margin:20px 0 28px; }
+.pioneer-note .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold); margin-top:6px; flex-shrink:0; }
+.pioneer-note strong{ display:block; font-size:13.5px; color:var(--forest-dark); margin-bottom:3px; }
+.pioneer-note span{ font-size:13px; color:var(--stone); line-height:1.5; }
+
+.tabrow{ display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+.tab{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:600; padding:9px 16px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--stone); cursor:pointer; }
+.tab.active{ background:var(--forest); color:#fff; border-color:var(--forest); }
+.tab.locked{ color:#B7C0B9; cursor:not-allowed; background:var(--paper); }
+.tab.locked::after{ content:' 🔒'; font-size:10px; }
+
+.semrow{ display:flex; gap:10px; margin-bottom:24px; }
+.sem{ flex:1; border:1px solid var(--line); border-radius:10px; padding:12px 14px; background:#fff; cursor:pointer; }
+.sem.active{ border-color:var(--forest); background:var(--forest-tint); }
+.sem .k{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--stone); font-weight:600; }
+.sem .v{ font-family:'Fraunces', serif; font-size:16px; color:var(--forest-dark); margin-top:2px; }
+
+.coursegrid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:600px){ .coursegrid{ grid-template-columns:1fr; } }
+
+.ccard{ border:1px solid var(--line); border-radius:var(--radius); background:var(--panel); padding:16px 18px; cursor:pointer; transition:border-color .15s ease, box-shadow .15s ease; }
+.ccard:hover{ border-color:var(--forest); box-shadow:0 1px 2px rgba(11,61,31,.06); }
+.ccard-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
+.ccard .code{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--gold); font-size:13px; }
+.ccard .title{ font-size:15px; font-weight:500; line-height:1.35; margin-top:4px; }
+.badge{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; font-weight:600; padding:4px 9px; border-radius:999px; white-space:nowrap; flex-shrink:0; }
+.badge.available{ background:var(--gold-tint); color:var(--forest-dark); border:1px solid var(--gold); }
+.badge.pending{ background:var(--paper); color:var(--stone); border:1px solid var(--line); }
+.ccard-foot{ font-size:12px; color:var(--stone); margin-top:6px; }
+
+/* Detail view (shown when a course is opened) */
+.detail{ display:none; border:1px solid var(--line); border-radius:var(--radius); background:#fff; padding:22px; margin-top:22px; }
+.detail.show{ display:block; }
+.detail-back{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--forest); background:none; border:none; cursor:pointer; padding:0; margin-bottom:14px; }
+.detail h2{ font-size:20px; margin-bottom:2px; }
+.detail .sub{ color:var(--stone); font-size:13px; margin-bottom:18px; }
+.session-row{ display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); border-radius:10px; padding:13px 15px; margin-bottom:10px; }
+.session-row .s-label{ font-size:14px; font-weight:500; }
+.session-row .s-tag{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-top:2px; }
+.session-row button{ font-family:'IBM Plex Sans', inherit; font-weight:600; font-size:13px; padding:8px 16px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:#B7C0B9; cursor:not-allowed; }
+
+.empty{ text-align:center; padding:28px 14px; color:var(--stone); font-size:13.5px; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<div class="letterhead">
+  <div class="letterhead-inner">
+    <div class="crest"><svg viewBox="0 0 24 24" fill="none" stroke="#0B3D1F" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg></div>
+    <div class="letterhead-text">
+      <div class="school">Federal University of Agriculture and Development Studies, Iragbiji</div>
+      <div class="portal">CBT Examination Portal</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="pagehead">
+    <div class="eyebrow">Archive</div>
+    <h1>Past Questions</h1>
+    <p>Browse questions from previous CBT sessions, organised by level, semester and course.</p>
+  </div>
+
+  <div class="pioneer-note">
+    <div class="dot"></div>
+    <div>
+      <strong>This archive starts with the 2025/2026 pioneer set</strong>
+      <span>FUADSI's first cohort. As each session's questions are cleared for release, they're added here — so every set after this one inherits a growing bank instead of starting from zero.</span>
+    </div>
+  </div>
+
+  <div class="tabrow">
+    <div class="tab active">100L</div>
+    <div class="tab locked">200L</div>
+    <div class="tab locked">300L</div>
+    <div class="tab locked">400L</div>
+  </div>
+
+  <div class="semrow">
+    <div class="sem active">
+      <div class="k">First Semester</div>
+      <div class="v">Harmattan</div>
+    </div>
+    <div class="sem">
+      <div class="k">Second Semester</div>
+      <div class="v">Rain</div>
+    </div>
+  </div>
+
+  <div class="coursegrid" id="courseGrid">
+    <!-- cards injected by script -->
+  </div>
+
+  <div class="detail" id="detailView">
+    <button class="detail-back" onclick="closeDetail()">&larr; Back to courses</button>
+    <h2 id="detailTitle"></h2>
+    <div class="sub" id="detailCode"></div>
+    <div id="detailSessions"></div>
+  </div>
+</div>
+
+<script>
+const courses = [
+  { code: 'AGG102', title: 'Introduction to Agriculture I' },
+  { code: 'BIO101', title: 'General Biology I' },
+  { code: 'BIO107', title: 'General Biology Practical I' },
+  { code: 'CHM101', title: 'General Chemistry I' },
+  { code: 'CHM107', title: 'General Chemistry Practical I' },
+  { code: 'COS101', title: 'Introduction to Computing' },
+  { code: 'GST111', title: 'Communication in English' },
+  { code: 'MTH101', title: 'General Mathematics I' },
+  { code: 'PHY101', title: 'General Physics I' },
+  { code: 'PHY107', title: 'General Physics Practical I' },
+];
+
+const grid = document.getElementById('courseGrid');
+courses.forEach((c, i) => {
+  const card = document.createElement('div');
+  card.className = 'ccard';
+  card.onclick = () => openDetail(c);
+  card.innerHTML = `
+    <div class="ccard-top">
+      <div>
+        <div class="code">${c.code}</div>
+        <div class="title">${c.title}</div>
+      </div>
+      <div class="badge pending">Awaiting release</div>
+    </div>
+    <div class="ccard-foot">0 sessions archived</div>
+  `;
+  grid.appendChild(card);
+});
+
+function openDetail(c){
+  document.getElementById('detailTitle').textContent = c.title;
+  document.getElementById('detailCode').textContent = c.code + ' · 100 Level · Harmattan Semester';
+  document.getElementById('detailSessions').innerHTML = `
+    <div class="session-row">
+      <div>
+        <div class="s-label">2025/2026 Session</div>
+        <div class="s-tag">Pioneer Set</div>
+      </div>
+      <button disabled>Pending release</button>
+    </div>
+    <div class="empty">Questions for this course haven't been cleared for the archive yet.<br>They'll appear here once released.</div>
+  `;
+  document.getElementById('detailView').classList.add('show');
+  document.getElementById('detailView').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function closeDetail(){
+  document.getElementById('detailView').classList.remove('show');
+}
+</script>
+
+</body>
+</html>
