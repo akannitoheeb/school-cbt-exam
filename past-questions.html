@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Past Questions — FUADSI CBT Examination Portal</title>
+<title>Past Questions, FUADSI CBT Past Question Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -25,7 +25,8 @@ h1,h2,h3{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; let
 .letterhead{ background:linear-gradient(180deg, var(--forest) 0%, var(--forest-dark) 100%); color:#fff; padding:14px 20px; position:relative;}
 .letterhead::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:4px; background:linear-gradient(90deg, var(--gold), var(--crimson) 50%, var(--gold));}
 .letterhead-inner{ max-width:960px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:13px; }
-.crest{ width:44px; height:44px; border-radius:50%; flex-shrink:0; background:var(--gold); display:flex; align-items:center; justify-content:center; border:2px solid rgba(255,255,255,.55);}
+.crest{ width:44px; height:44px; border-radius:50%; flex-shrink:0; overflow:hidden; background:var(--gold); display:flex; align-items:center; justify-content:center; border:2px solid rgba(255,255,255,.55);}
+.crest img{ width:100%; height:100%; object-fit:cover; }
 .crest svg{ width:24px; height:24px; }
 .letterhead-text{ flex:1; }
 .letterhead-text .school{ font-size:14.5px; font-weight:600; letter-spacing:.01em; line-height:1.25;}
@@ -193,10 +194,13 @@ button:active{ transform:translateY(1px); }
 
 <div class="letterhead">
   <div class="letterhead-inner">
-    <div class="crest"><svg viewBox="0 0 24 24" fill="none" stroke="#0B3D1F" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/></svg></div>
+    <div class="crest">
+      <img src="fuadsi-logo.png" alt="FUADSI crest" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <svg viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M12 2C9 6 4 8 4 13c0 4 3.5 7 8 7s8-3 8-7c0-5-5-7-8-11Z" fill="#fff"/><path d="M12 22V11" stroke="#146C36" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
     <div class="letterhead-text">
-      <div class="school">Federal University of Agriculture and Development Studies, Iragbiji</div>
-      <div class="portal">CBT Examination Portal</div>
+      <div class="school">FEDERAL UNIVERSITY OF AGRICULTURE AND DEVELOPMENT STUDIES, IRAGBIJI</div>
+      <div class="portal">Past Questions Archive</div>
     </div>
     <a class="back-link" href="index.html">&larr; Practice Portal</a>
   </div>
@@ -225,7 +229,7 @@ button:active{ transform:translateY(1px); }
     <div class="tab locked" data-level="400">400L</div>
   </div>
 
-  <div class="semrow">
+  <div class="semrow" id="semRow">
     <div class="sem active" data-sem="harmattan">
       <div class="k">First Semester</div>
       <div class="v">Harmattan</div>
@@ -332,17 +336,33 @@ button:active{ transform:translateY(1px); }
 
 <script>
 const courses = [
-  { code: 'AGG102', title: 'Introduction to Agriculture I' },
-  { code: 'BIO101', title: 'General Biology I' },
-  { code: 'BIO107', title: 'General Biology Practical I' },
-  { code: 'CHM101', title: 'General Chemistry I' },
-  { code: 'CHM107', title: 'General Chemistry Practical I' },
-  { code: 'COS101', title: 'Introduction to Computing' },
-  { code: 'GST111', title: 'Communication in English' },
-  { code: 'MTH101', title: 'General Mathematics I' },
-  { code: 'PHY101', title: 'General Physics I' },
-  { code: 'PHY107', title: 'General Physics Practical I' },
+  { code: 'AGG102', title: 'Introduction to Agriculture I', semester: 'harmattan' },
+  { code: 'BIO101', title: 'General Biology I', semester: 'harmattan' },
+  { code: 'BIO107', title: 'General Biology Practical I', semester: 'harmattan' },
+  { code: 'CHM101', title: 'General Chemistry I', semester: 'harmattan' },
+  { code: 'CHM107', title: 'General Chemistry Practical I', semester: 'harmattan' },
+  { code: 'COS101', title: 'Introduction to Computing', semester: 'harmattan' },
+  { code: 'GST111', title: 'Communication in English', semester: 'harmattan' },
+  { code: 'MTH101', title: 'General Mathematics I', semester: 'harmattan' },
+  { code: 'PHY101', title: 'General Physics I', semester: 'harmattan' },
+  { code: 'PHY107', title: 'General Physics Practical I', semester: 'harmattan' },
+  { code: 'MTH102', title: 'Elementary Mathematics II (Calculus)', semester: 'rain' },
+  { code: 'COS102', title: 'Introduction to Problem Solving', semester: 'rain' },
+  { code: 'CHM102', title: 'General Chemistry II', semester: 'rain' },
+  { code: 'AGG112', title: 'Introduction to Agriculture', semester: 'rain' },
+  { code: 'PHY102', title: 'General Physics II', semester: 'rain' },
+  { code: 'WMA142', title: 'Introduction to Water Resources Management and Agrometeorology', semester: 'rain' },
+  { code: 'GST112', title: 'Nigerian Peoples and Culture', semester: 'rain' },
+  { code: 'LIB102', title: 'Use of Library, Study Skills and ICT', semester: 'rain' },
+  { code: 'BIO102', title: 'General Biology II', semester: 'rain' },
+  { code: 'ZOO102', title: 'Invertebrate Zoology', semester: 'rain' },
+  { code: 'COS104', title: 'Introduction to Computing Practice', semester: 'rain' },
+  { code: 'CSC104', title: 'Computer Programming I', semester: 'rain' },
+  { code: 'CSC106', title: 'Computer Programming II', semester: 'rain' },
+  { code: 'FAA128', title: 'Introduction to Fisheries and Aquaculture', semester: 'rain' },
+  { code: 'SDG104', title: 'Introduction to Circular Economy and Sustainable Development', semester: 'rain' },
 ];
+const SEMESTER_LABEL = { harmattan: 'Harmattan (First Semester)', rain: 'Rain (Second Semester)' };
 
 const PAST_QUESTIONS = {"AGG102": [{"q": "Which of the following is NOT a branch of agriculture?", "options": ["Crop production", "Banking", "Animal husbandry", "Fishery"], "answer": "B", "hint": "Banking is a financial service, not an agricultural activity."}, {"q": "The science of growing fruits, vegetables and ornamental plants is called?", "options": ["Agronomy", "Horticulture", "Forestry", "Soil science"], "answer": "B", "hint": "Horticulture deals with garden crops and ornamental plants."}, {"q": "Which farming system involves growing crops and raising animals together on the same farm?", "options": ["Monocropping", "Mixed farming", "Shifting cultivation", "Bush fallowing"], "answer": "B", "hint": "Mixed farming combines crop production with livestock rearing."}], "BIO101": [{"q": "The basic unit of life is the?", "options": ["Tissue", "Organ", "Cell", "System"], "answer": "C", "hint": "All living organisms are made up of cells."}, {"q": "Which organelle is known as the powerhouse of the cell?", "options": ["Nucleus", "Mitochondria", "Ribosome", "Golgi body"], "answer": "B", "hint": "Mitochondria produce ATP through cellular respiration."}, {"q": "Photosynthesis occurs primarily in which part of the plant cell?", "options": ["Mitochondria", "Chloroplast", "Vacuole", "Cytoplasm"], "answer": "B", "hint": "Chloroplasts contain chlorophyll which captures light energy."}], "BIO107": [{"q": "When using a microscope, which part is used to focus the image?", "options": ["Eyepiece", "Coarse adjustment knob", "Mirror", "Stage"], "answer": "B", "hint": "The coarse adjustment knob moves the stage up and down for initial focusing."}, {"q": "What is the correct order of magnification for a compound microscope?", "options": ["Eyepiece \u00d7 Objective", "Objective \u00d7 Eyepiece", "Eyepiece + Objective", "Objective only"], "answer": "A", "hint": "Total magnification = eyepiece magnification multiplied by objective magnification."}, {"q": "Which staining technique is commonly used to observe bacterial cells?", "options": ["Gram staining", "Feulgen staining", "Aceto-orcein staining", "Methylene blue only"], "answer": "A", "hint": "Gram staining differentiates bacteria into Gram-positive and Gram-negative."}], "CHM101": [{"q": "What is the chemical formula for water?", "options": ["HO", "H\u2082O", "H\u2082O\u2082", "OH"], "answer": "B", "hint": "Water consists of two hydrogen atoms and one oxygen atom."}, {"q": "Which of the following is a noble gas?", "options": ["Oxygen", "Nitrogen", "Argon", "Chlorine"], "answer": "C", "hint": "Noble gases are in Group 18 of the periodic table and are chemically inert."}, {"q": "The pH of a neutral solution at 25\u00b0C is?", "options": ["0", "7", "14", "1"], "answer": "B", "hint": "A pH of 7 indicates neutrality, below 7 is acidic, above 7 is basic."}], "CHM107": [{"q": "What is the primary purpose of a Bunsen burner in the laboratory?", "options": ["Measuring volume", "Heating substances", "Weighing samples", "Filtering solutions"], "answer": "B", "hint": "The Bunsen burner produces a flame for heating and sterilization."}, {"q": "Which piece of glassware is most accurate for measuring liquid volumes?", "options": ["Beaker", "Erlenmeyer flask", "Graduated cylinder", "Volumetric flask"], "answer": "D", "hint": "Volumetric flasks are calibrated to contain a precise volume at a specific temperature."}, {"q": "In titration, the point at which the indicator changes color is called the?", "options": ["Equivalence point", "End point", "Neutral point", "Starting point"], "answer": "B", "hint": "The end point is the observable color change; the equivalence point is the theoretical completion."}], "COS101": [{"q": "What does CPU stand for?", "options": ["Central Processing Unit", "Computer Personal Unit", "Central Process Utility", "Central Processor Unit"], "answer": "A", "hint": "The CPU is the brain of the computer that executes instructions."}, {"q": "Which of the following is NOT an input device?", "options": ["Keyboard", "Mouse", "Monitor", "Scanner"], "answer": "C", "hint": "A monitor displays output; input devices send data to the computer."}, {"q": "Binary number 1010 in decimal is?", "options": ["8", "10", "12", "14"], "answer": "B", "hint": "1\u00d72\u00b3 + 0\u00d72\u00b2 + 1\u00d72\u00b9 + 0\u00d72\u2070 = 8 + 0 + 2 + 0 = 10"}], "GST111": [{"q": "Which of the following is a formal channel of communication?", "options": ["Grapevine", "Memorandum", "Rumor", "Gossip"], "answer": "B", "hint": "A memorandum is an official written communication within an organization."}, {"q": "The process of encoding a message into symbols is called?", "options": ["Decoding", "Encoding", "Feedback", "Noise"], "answer": "B", "hint": "Encoding converts thoughts into communicable symbols like words or gestures."}, {"q": "In public speaking, the opening part of a speech is called the?", "options": ["Body", "Conclusion", "Introduction", "Transition"], "answer": "C", "hint": "The introduction captures attention and states the purpose of the speech."}], "MTH101": [{"q": "What is the derivative of x\u00b2 with respect to x?", "options": ["x", "2x", "x\u00b2", "2"], "answer": "B", "hint": "Using the power rule: d/dx(x\u207f) = nx\u207f\u207b\u00b9, so d/dx(x\u00b2) = 2x."}, {"q": "The solution to the equation 2x + 4 = 10 is?", "options": ["2", "3", "4", "5"], "answer": "B", "hint": "2x = 10 - 4 = 6, therefore x = 3."}, {"q": "What is the value of log\u2081\u2080(100)?", "options": ["1", "2", "10", "100"], "answer": "B", "hint": "log\u2081\u2080(100) = log\u2081\u2080(10\u00b2) = 2, since 10\u00b2 = 100."}], "PHY101": [{"q": "What is the SI unit of force?", "options": ["Watt", "Joule", "Newton", "Pascal"], "answer": "C", "hint": "The Newton (N) is defined as kg\u00b7m/s\u00b2."}, {"q": "Which of Newton's laws states that an object at rest stays at rest unless acted upon?", "options": ["First Law", "Second Law", "Third Law", "Law of Gravitation"], "answer": "A", "hint": "Newton's First Law is also called the Law of Inertia."}, {"q": "The speed of light in a vacuum is approximately?", "options": ["3 \u00d7 10\u2076 m/s", "3 \u00d7 10\u2077 m/s", "3 \u00d7 10\u2078 m/s", "3 \u00d7 10\u2079 m/s"], "answer": "C", "hint": "Light travels at approximately 299,792,458 m/s, often rounded to 3 \u00d7 10\u2078 m/s."}], "PHY107": [{"q": "Which instrument is used to measure electric current?", "options": ["Voltmeter", "Ammeter", "Ohmmeter", "Galvanometer"], "answer": "B", "hint": "An ammeter is connected in series to measure current in amperes."}, {"q": "In a simple pendulum experiment, which quantity is kept constant?", "options": ["Amplitude", "Length", "Mass of bob", "All of the above"], "answer": "D", "hint": "For determining g, length and mass are kept constant while measuring period."}, {"q": "The least count of a vernier caliper with 10 divisions on the vernier scale is?", "options": ["0.1 mm", "0.01 mm", "1 mm", "0.5 mm"], "answer": "A", "hint": "Least count = 1 main scale division / number of vernier divisions = 1mm/10 = 0.1mm."}]};
 
@@ -350,13 +370,14 @@ const $ = id => document.getElementById(id);
 function show(id){ $(id).classList.remove('hidden'); }
 function hide(id){ $(id).classList.add('hidden'); }
 const LETTERS = ['A','B','C','D'];
-let state = { courseCode: '', bank: null, answers: {}, current: 0 };
+let state = { semester: 'harmattan', courseCode: '', bank: null, answers: {}, current: 0 };
 
 function buildBrowse(){
   const grid = document.getElementById('courseGrid');
   grid.innerHTML = '';
-  courses.forEach(c => {
-    const hasQuestions = PAST_QUESTIONS[c.code] && PAST_QUESTIONS[c.code].length > 0;
+  courses.filter(c => c.semester === state.semester).forEach(c => {
+    const n = (PAST_QUESTIONS[c.code] || []).length;
+    const hasQuestions = n > 0;
     const card = document.createElement('div');
     card.className = 'ccard';
     card.onclick = () => openDetail(c);
@@ -366,25 +387,43 @@ function buildBrowse(){
           <div class="code">${c.code}</div>
           <div class="title">${c.title}</div>
         </div>
-        <div class="badge ${hasQuestions ? 'available' : 'pending'}">${hasQuestions ? '3 questions' : 'Awaiting release'}</div>
+        <div class="badge ${hasQuestions ? 'available' : 'pending'}">${hasQuestions ? n + (n===1?' question':' questions') : 'Awaiting release'}</div>
       </div>
-      <div class="ccard-foot">${hasQuestions ? '3 sessions archived' : '0 sessions archived'}</div>
+      <div class="ccard-foot">${hasQuestions ? '1 session archived' : '0 sessions archived'}</div>
     `;
     grid.appendChild(card);
   });
 }
 buildBrowse();
 
+document.querySelectorAll('#semRow .sem').forEach(el => {
+  el.addEventListener('click', () => {
+    state.semester = el.getAttribute('data-sem');
+    document.querySelectorAll('#semRow .sem').forEach(s => s.classList.toggle('active', s === el));
+    closeDetail();
+    buildBrowse();
+  });
+});
+
+document.querySelectorAll('.tab').forEach(el => {
+  el.addEventListener('click', () => {
+    if (el.classList.contains('locked')) return;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  });
+});
+
 function openDetail(c){
-  const hasQuestions = PAST_QUESTIONS[c.code] && PAST_QUESTIONS[c.code].length > 0;
+  const n = (PAST_QUESTIONS[c.code] || []).length;
+  const hasQuestions = n > 0;
   document.getElementById('detailTitle').textContent = c.title;
-  document.getElementById('detailCode').textContent = c.code + ' · 100 Level · Harmattan Semester';
+  document.getElementById('detailCode').textContent = c.code + ' · 100 Level · ' + SEMESTER_LABEL[c.semester];
   if (hasQuestions) {
     document.getElementById('detailSessions').innerHTML = `
       <div class="session-row">
         <div>
           <div class="s-label">2025/2026 Session</div>
-          <div class="s-tag">Pioneer Set · 3 Questions</div>
+          <div class="s-tag">Pioneer Set · ${n} Question${n===1?'':'s'}</div>
         </div>
         <button class="active-btn" onclick="showModeSelect('${c.code}')">Practice Now</button>
       </div>
@@ -546,7 +585,7 @@ function finishQuiz(){
   $('res-wrong').textContent = wrong;
   $('res-unanswered').textContent = unanswered;
   $('res-course').textContent = state.bank.title;
-  $('res-semester').textContent = 'Harmattan (First Semester)';
+  $('res-semester').textContent = SEMESTER_LABEL[state.semester];
   const badge = $('res-badge');
   if (pct >= 55) { badge.textContent = 'Pass'; badge.className = 'status-badge pass'; }
   else { badge.textContent = 'Needs Work'; badge.className = 'status-badge fail'; }
