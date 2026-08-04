@@ -302,9 +302,9 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
   </div>
 
   <div class="card">
-    <div class="eyebrow">Student Verification</div>
+    <div class="eyebrow">Session Setup</div>
     <h2>Begin your CBT session</h2>
-    <p class="lead">Enter your details exactly as registered. Your department decides which courses and questions you can see, you won't be able to change it once the test begins.</p>
+    <p class="lead">No personal details needed. Your department decides which courses and questions you can see, you won't be able to change it once the test begins.</p>
     <div style="border:1px solid var(--gold); background:var(--gold-tint); border-radius:10px; padding:12px 14px; margin:0 0 18px; display:flex; align-items:flex-start; gap:10px;">
       <span style="font-size:18px; flex-shrink:0; margin-top:1px;">&#x1F4DD;</span>
       <div style="font-size:13px; color:var(--forest-dark); line-height:1.5;">
@@ -313,16 +313,6 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       </div>
     </div>
 
-    <div class="field">
-      <label for="in-name">Full Name <span class="req">*</span></label>
-      <input id="in-name" type="text" placeholder="e.g. Akanni Toheeb" autocomplete="name" required>
-    </div>
-    <div class="field">
-      <label for="in-reg">Matric <span class="req">*</span></label>
-      <input id="in-reg" type="text" inputmode="numeric" maxlength="7" placeholder="e.g. 250****" class="mono" required>
-      <div class="field-hint">7 digits, starting with 25 — e.g. 250****</div>
-      <div class="field-error" id="reg-error">That doesn't match the required format (25 followed by 5 digits).</div>
-    </div>
     <div class="field">
       <label for="in-dept">Department <span class="req">*</span></label>
       <select id="in-dept" required>
@@ -400,7 +390,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <li><span class="num">02</span><span>When a section's timer reaches zero, your answers for that section are submitted automatically.</span></li>
       <li><span class="num">03</span><span>The exam runs in fullscreen where supported. Exiting fullscreen or switching tabs is logged; three warnings ends your session.</span></li>
       <li><span class="num">04</span><span>Copy, paste, and right-click are disabled during the test. Use the numbered grid to move between questions.</span></li>
-      <li><span class="num">05</span><span>Objective questions are graded instantly and shown to you after submission. Theory answers are typed and reviewed manually by your lecturer.</span></li>
+      <li><span class="num">05</span><span>Objective questions are graded instantly and shown to you after submission. Typed theory answers get an instant AI self-check with feedback — it's a strong guide, not an official score. Photo answers are held for manual review.</span></li>
       <li><span class="num">06</span><span>Your progress auto-saves as you go, so a dropped connection won't cost your answers.</span></li>
     </ul>
     <div class="btn-row">
@@ -539,11 +529,9 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div class="stat-box"><div class="n" id="res-unanswered">0</div><div class="l">Unanswered</div></div>
     </div>
     <table class="summary-table">
-      <tr><td>Name</td><td id="res-name">—</td></tr>
-      <tr><td>Registration No.</td><td id="res-reg">—</td></tr>
       <tr><td>Department</td><td id="res-dept">—</td></tr>
       <tr><td>Course</td><td id="res-course">—</td></tr>
-      <tr><td>Section B (Theory)</td><td>Submitted, pending manual grading</td></tr>
+      <tr><td>Section B (Theory)</td><td id="res-theory-status">Submitted, pending review</td></tr>
     </table>
     <p class="small-note" id="sync-note">Saving your results to the practice database…</p>
   </div>
@@ -556,7 +544,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
 
   <div class="card">
     <div class="eyebrow">Section B — Your Theory Answers</div>
-    <h2 style="font-size:19px; margin-bottom:16px;">Submitted for manual grading</h2>
+    <h2 style="font-size:19px; margin-bottom:16px;">AI self-check on your answers</h2>
     <div id="review-theory"></div>
   </div>
 
@@ -656,7 +644,8 @@ const CONFIG = {
   supabaseUrl: 'https://fuivbnmblhvnscaemkdh.supabase.co',
   supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1aXZibm1ibGh2bnNjYWVta2RoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ0MDczMDYsImV4cCI6MjA5OTk4MzMwNn0.Nv5U9cpDcpH9AW8Rml59dlgMQGo-RnYz9AW21_iDdAc',
   supabaseTable: 'FUADSI_practices_question_results',
-  supabaseBucket: 'theory-photos'
+  supabaseBucket: 'theory-photos',
+  gradeTheoryUrl: 'https://fuivbnmblhvnscaemkdh.supabase.co/functions/v1/grade-theory'
 };
 
 /* ===================== FACULTIES / DEPARTMENTS ===================== */
@@ -1799,10 +1788,10 @@ function releaseWakeLock() {
 
 /* ===================== STATE ===================== */
 let state = {
-  studentName:'', studentReg:'', department:'', course:'',
+  sessionId:'', department:'', course:'',
   section:'objective',
   objAnswers:{}, objFlags:{}, objIndex:0, objHintShown:{},
-  theoryAnswers:{}, theoryImages:{}, theoryIndex:0, theoryHintShown:{},
+  theoryAnswers:{}, theoryImages:{}, theoryIndex:0, theoryHintShown:{}, theoryGrades:{},
   objTimeLeft:0, theoryTimeLeft:0,
   examStarted:false, warningCount:0, startedAt:0,
   objCount: CONFIG.defaultObjectiveDraw,
@@ -1855,11 +1844,7 @@ function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&am
 
 /* ===================== STUDENT PROFILE STORAGE ===================== */
 function saveStudentProfile() {
-  const profile = {
-    name: state.studentName,
-    reg: state.studentReg,
-    department: state.department
-  };
+  const profile = { department: state.department };
   try { localStorage.setItem('fuadsi_student_profile', JSON.stringify(profile)); } catch(e) {}
 }
 
@@ -1874,14 +1859,22 @@ function loadStudentProfile() {
 function prefillGate() {
   const profile = loadStudentProfile();
   if (!profile) return;
-  if (profile.name) $('in-name').value = profile.name;
-  if (profile.reg) $('in-reg').value = profile.reg;
   if (profile.department) {
     $('in-dept').value = profile.department;
     // Trigger change to populate courses dropdown
     $('in-dept').dispatchEvent(new Event('change'));
   }
   validateGate();
+}
+
+/* Anonymous per-session identifier — used only to name uploaded photo files,
+   never tied to a student's real identity. */
+function getSessionId(){
+  if (state.sessionId) return state.sessionId;
+  let id;
+  try { id = crypto.randomUUID(); } catch(e) { id = 'sess-' + Date.now() + '-' + Math.random().toString(36).slice(2,8); }
+  state.sessionId = id;
+  return id;
 }
 
 /* ===================== CUSTOM MODAL ===================== */
@@ -1964,27 +1957,13 @@ $('range-theory-count').addEventListener('input', () => {
 });
 
 /* ===================== GATE / VALIDATION ===================== */
-const REG_PATTERN = /^25\d{5}$/;
-function validateReg(){
-  const val = $('in-reg').value.trim();
-  const ok = REG_PATTERN.test(val);
-  $('in-reg').classList.toggle('invalid', val.length>0 && !ok);
-  $('reg-error').classList.toggle('show', val.length>0 && !ok);
-  return ok;
-}
-$('in-reg').addEventListener('input', () => {
-  $('in-reg').value = $('in-reg').value.replace(/\D/g,'').slice(0,7);
-  validateReg(); validateGate();
-});
 function validateGate(){
-  const ok = $('in-name').value.trim() && validateReg() && $('in-dept').value && $('in-course').value && $('in-agree').checked;
+  const ok = $('in-dept').value && $('in-course').value && $('in-agree').checked;
   $('btn-to-instructions').disabled = !ok;
 }
-['in-name','in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
+['in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
 
 $('btn-to-instructions').addEventListener('click', () => {
-  state.studentName = $('in-name').value.trim();
-  state.studentReg = $('in-reg').value.trim();
   state.department = $('in-dept').value;
   state.course = $('in-course').value;
 
@@ -2010,7 +1989,7 @@ $('btn-to-instructions').addEventListener('click', () => {
   }
 
   $('instr-course-title').textContent = bank.title;
-  $('instr-student-line').textContent = `${state.studentName} · ${state.studentReg} · ${state.department}`;
+  $('instr-student-line').textContent = `${state.department} · ${bank.title}`;
   updatePlanCounts();
 
   hide('screen-gate'); show('screen-instructions'); window.scrollTo({top:0});
@@ -2094,13 +2073,13 @@ $('btn-resume').addEventListener('click', () => {
     state.examStarted = true;
     requestWakeLock();
     show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
-    $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
+    $('obj-who-name').textContent = state.course; $('obj-who-dept').textContent = state.department;
     buildObjNav(); renderObjQuestion(); resumeObjTimer();
   } else {
     state.examStarted = true;
     requestWakeLock();
     show('screen-theory'); document.getElementById('screen-theory').style.display='block';
-    $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
+    $('theory-who-name').textContent = state.course; $('theory-who-dept').textContent = state.department;
     buildTheoryNav(); renderTheoryQuestion(); resumeTheoryTimer();
   }
 });
@@ -2115,7 +2094,7 @@ $('btn-start-objectives').addEventListener('click', () => {
   hide('screen-instructions'); show('screen-objectives'); document.getElementById('screen-objectives').style.display='block';
   state.examStarted = true; state.section='objective'; state.objTimeLeft = parseInt($('sel-obj-time').value,10)*60;
   state.startedAt = Date.now();
-  $('obj-who-name').textContent = state.studentName; $('obj-who-dept').textContent = state.department;
+  $('obj-who-name').textContent = state.course; $('obj-who-dept').textContent = state.department;
   enterFullscreen(); setupAntiCheat(); requestWakeLock();
   buildObjNav(); renderObjQuestion(); startObjTimer(); window.scrollTo({top:0});
 });
@@ -2304,7 +2283,7 @@ $('btn-start-theory').addEventListener('click', () => {
   hide('screen-transition'); show('screen-theory'); document.getElementById('screen-theory').style.display='block';
   state.theoryTimeLeft = parseInt($('sel-theory-time').value,10)*60;
   state.examStarted = true;
-  $('theory-who-name').textContent = state.studentName; $('theory-who-dept').textContent = state.department;
+  $('theory-who-name').textContent = state.course; $('theory-who-dept').textContent = state.department;
   requestWakeLock();
   buildTheoryNav(); renderTheoryQuestion(); startTheoryTimer(); window.scrollTo({top:0});
 });
@@ -2468,8 +2447,47 @@ $('btn-submit-theory').addEventListener('click', async () => {
     const ok = await openModal({title:'Incomplete section', message:`You've answered ${answered} of ${activeTheory.length} theory questions. Submit anyway?`, confirmText:'Submit anyway', cancelText:'Keep working'});
     if(!ok) return;
   }
+  const btn = $('btn-submit-theory');
+  btn.disabled = true; const originalLabel = btn.textContent; btn.textContent = 'Grading your answers…';
+  await gradeTheoryAnswers();
+  btn.textContent = originalLabel; btn.disabled = false;
   finishTheory();
 });
+
+/* AI grading — sends typed theory answers to a Supabase Edge Function, which
+   calls Claude to score each one. Photo-only answers and blanks are skipped
+   here and stay flagged for manual review since handwriting isn't graded. */
+async function gradeTheoryAnswers(){
+  state.theoryGrades = state.theoryGrades || {};
+  const gradable = [];
+  activeTheory.forEach((item, i) => {
+    const ans = (state.theoryAnswers[i] || '').trim();
+    const hasImage = !!(state.theoryImages && state.theoryImages[i]);
+    if(ans && !hasImage) gradable.push({ i, question: item.q, answer: ans });
+  });
+  if(!gradable.length) return;
+
+  try{
+    const res = await fetch(CONFIG.gradeTheoryUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+        'apikey': CONFIG.supabaseKey
+      },
+      body: JSON.stringify({ items: gradable.map(x => ({ question: x.question, answer: x.answer })) })
+    });
+    if(!res.ok) throw new Error('grade-theory returned ' + res.status);
+    const data = await res.json();
+    (data.results || []).forEach((r, idx) => {
+      const item = gradable[idx];
+      if(item) state.theoryGrades[item.i] = r;
+    });
+  }catch(err){
+    console.error('[FUADSI] AI grading failed, leaving these for manual review:', err);
+  }
+}
+
 function finishTheory(){
   releaseWakeLock();
   saveTheoryDraft();
@@ -2492,14 +2510,27 @@ function showResults(){
   const pct = activeObjectives.length > 0 ? Math.round((correct/activeObjectives.length)*100) : 0;
   const passed = pct >= CONFIG.passMark;
 
+  const theoryScores = Object.values(state.theoryGrades || {}).map(g => g.score).filter(s => typeof s === 'number');
+  const theoryGraded = theoryScores.length;
+  const theoryTotal = activeTheory.length;
+  const theoryPct = theoryGraded ? Math.round(theoryScores.reduce((a,b) => a+b, 0) / theoryGraded) : null;
+
   $('res-pct').textContent = pct+'%';
   $('res-correct').textContent = correct;
   $('res-wrong').textContent = wrong;
   $('res-unanswered').textContent = unanswered;
-  $('res-name').textContent = state.studentName;
-  $('res-reg').textContent = state.studentReg;
   $('res-dept').textContent = state.department;
   $('res-course').textContent = COURSES[state.course].title;
+  const theoryCell = $('res-theory-status');
+  if (theoryCell) {
+    if (theoryGraded === theoryTotal && theoryTotal > 0) {
+      theoryCell.textContent = `AI-graded — avg. ${theoryPct}% (self-check, not a final score)`;
+    } else if (theoryGraded > 0) {
+      theoryCell.textContent = `${theoryGraded}/${theoryTotal} AI-graded (avg. ${theoryPct}%), rest pending review`;
+    } else {
+      theoryCell.textContent = 'Submitted, pending review';
+    }
+  }
   const badge = $('res-badge');
   badge.textContent = passed ? 'Above pass mark' : 'Below pass mark';
   badge.className = 'status-badge ' + (passed ? 'pass' : 'fail');
@@ -2511,7 +2542,7 @@ function showResults(){
 
   sendResultsToSupabase({
     timestamp: new Date().toISOString(),
-    name: state.studentName, matric: state.studentReg,
+    sessionId: getSessionId(),
     department: state.department, course: COURSES[state.course].title,
     objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
     theorySubmitted: true,
@@ -2521,6 +2552,8 @@ function showResults(){
       question: q.q, answer: state.theoryAnswers[i] || '',
       hasImage: !!(state.theoryImages && state.theoryImages[i])
     }))),
+    theoryGrades: JSON.stringify(state.theoryGrades || {}),
+    theoryScore: theoryPct,
     theoryImages: activeTheory.map((q,i) => (state.theoryImages && state.theoryImages[i])
       ? { index: i, dataUrl: state.theoryImages[i] } : null).filter(Boolean)
   });
@@ -2552,10 +2585,22 @@ function renderReview(){
     const img = state.theoryImages && state.theoryImages[i];
     const textBlock = ans ? `<div class="answer-box">${escapeHtml(ans)}</div>` : (img ? '' : `<div class="answer-box empty">No answer submitted.</div>`);
     const imgBlock = img ? `<img class="photo-preview" style="margin-top:${ans ? '10px':'0'};" src="${img}">` : '';
+    const grade = state.theoryGrades && state.theoryGrades[i];
+    let gradeBlock = '';
+    if (grade && typeof grade.score === 'number') {
+      const verdictLabel = grade.verdict === 'correct' ? 'Correct' : (grade.verdict === 'partial' ? 'Partial' : 'Needs work');
+      const status = grade.verdict === 'correct' ? 'correct' : (grade.verdict === 'partial' ? 'unanswered' : 'wrong');
+      gradeBlock = `<div class="review-status ${status}" style="margin-top:10px;">${verdictLabel} · ${grade.score}%</div>
+        <div class="qtext-sm" style="margin-top:6px; color:var(--stone);">${escapeHtml(grade.feedback || '')}</div>`;
+    } else if (img) {
+      gradeBlock = `<div class="review-status unanswered" style="margin-top:10px;">Photo answer — pending manual review</div>`;
+    } else if (ans) {
+      gradeBlock = `<div class="review-status unanswered" style="margin-top:10px;">Pending review</div>`;
+    }
     return `<div class="review-item">
       <div class="qnum">Question ${i+1}</div>
       <div class="qtext-sm">${escapeHtml(item.q)}</div>
-      ${textBlock}${imgBlock}
+      ${textBlock}${imgBlock}${gradeBlock}
     </div>`;
   }).join('');
 }
@@ -2602,7 +2647,7 @@ async function sendResultsToSupabase(payload){
   if (state.theoryImages) {
     for (let i = 0; i < activeTheory.length; i++) {
       if (state.theoryImages[i]) {
-        const fileName = `${state.studentReg}_${Date.now()}_q${i + 1}.jpg`;
+        const fileName = `${getSessionId()}_${Date.now()}_q${i + 1}.jpg`;
         try {
           console.log(`[FUADSI] Uploading image for question ${i + 1}...`);
           const url = await uploadImageToStorage(state.theoryImages[i], fileName);
@@ -2622,8 +2667,7 @@ async function sendResultsToSupabase(payload){
   // Step 2: Save everything to database
   try{
     const dbPayload = {
-      name: payload.name,
-      matric: payload.matric,
+      session_id: payload.sessionId,
       department: payload.department,
       course: payload.course,
       objective_score: payload.objectiveScore,
@@ -2633,6 +2677,8 @@ async function sendResultsToSupabase(payload){
       time_spent: payload.timeSpent,
       submitted_at: payload.timestamp,
       theory_answers: payload.theoryAnswers,
+      theory_grades: payload.theoryGrades,
+      theory_score: payload.theoryScore,
       theory_image_urls: imageUrls.length > 0 ? JSON.stringify(imageUrls) : null
     };
 
@@ -2688,7 +2734,7 @@ async function retryPendingSubmissions(){
     let imageUrls = payload.imageUrls || [];
     if (payload.theoryImages && payload.theoryImages.length > 0 && imageUrls.length === 0) {
       for (const img of payload.theoryImages) {
-        const fileName = `${payload.matric}_${Date.now()}_q${img.questionIndex + 1}.jpg`;
+        const fileName = `${payload.sessionId}_${Date.now()}_q${img.questionIndex + 1}.jpg`;
         try {
           const url = await uploadImageToStorage(img.imageBase64, fileName);
           imageUrls.push({ questionIndex: img.questionIndex, question: img.question, url: url });
@@ -2708,8 +2754,7 @@ async function retryPendingSubmissions(){
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({
-          name: payload.name,
-          matric: payload.matric,
+          session_id: payload.sessionId,
           department: payload.department,
           course: payload.course,
           objective_score: payload.objectiveScore,
@@ -2723,13 +2768,13 @@ async function retryPendingSubmissions(){
         })
       });
       if(!res.ok){
-        console.error('[FUADSI] Retry failed for', payload.name, '- status:', res.status);
+        console.error('[FUADSI] Retry failed for session', payload.sessionId, '- status:', res.status);
         remaining.push({...payload, imageUrls});
       } else {
-        console.log('[FUADSI] Retry succeeded for', payload.name);
+        console.log('[FUADSI] Retry succeeded for session', payload.sessionId);
       }
     }catch(e){ 
-      console.error('[FUADSI] Retry network error for', payload.name, e);
+      console.error('[FUADSI] Retry network error for session', payload.sessionId, e);
       remaining.push({...payload, imageUrls}); 
     }
   }
@@ -2741,15 +2786,14 @@ async function retryPendingSubmissions(){
 
 /* ===================== NEW COURSE AFTER RESULTS ===================== */
 $('btn-new-course').addEventListener('click', () => {
-  // Reset state for new exam but keep student details
+  // Reset state for new exam but keep department + anonymous session id
   state = {
-    studentName: state.studentName,
-    studentReg: state.studentReg,
+    sessionId: state.sessionId,
     department: state.department,
     course: '',
     section: 'objective',
     objAnswers: {}, objFlags: {}, objIndex: 0, objHintShown: {},
-    theoryAnswers: {}, theoryImages: {}, theoryIndex: 0, theoryHintShown: {},
+    theoryAnswers: {}, theoryImages: {}, theoryIndex: 0, theoryHintShown: {}, theoryGrades: {},
     objTimeLeft: 0, theoryTimeLeft: 0,
     examStarted: false, warningCount: 0, startedAt: 0,
     objCount: CONFIG.defaultObjectiveDraw,
@@ -2774,7 +2818,7 @@ $('btn-new-course').addEventListener('click', () => {
 
 /* ===================== INIT ===================== */
 populateDepartments();
-prefillGate();   // pre-fill name, matric, department if saved before
+prefillGate();   // pre-fill department if saved before
 checkForResume();
 retryPendingSubmissions(); // try to send any queued results from previous sessions
 
