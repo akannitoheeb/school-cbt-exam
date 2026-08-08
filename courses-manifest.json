@@ -1,0 +1,76 @@
+{
+ "MTH 102": {
+  "title": "MTH 102 — Elementary Mathematics II (Calculus)",
+  "eligible": "ALL"
+ },
+ "COS 102": {
+  "title": "COS 102 — Introduction to Problem Solving",
+  "eligible": [
+   "B.Sc. Computer Science"
+  ]
+ },
+ "CHM 102": {
+  "title": "CHM 102 — General Chemistry II",
+  "eligible": "ALL"
+ },
+ "AGG 112": {
+  "title": "AGG 112 — Introduction to Agriculture",
+  "eligible": "ALL"
+ },
+ "PHY 102": {
+  "title": "PHY 102 — General Physics II",
+  "eligible": "ALL"
+ },
+ "WMA 142": {
+  "title": "WMA 142 — Introduction to Water Resources Management and Agrometeorology",
+  "eligible": [
+   "B.Sc. Water Resources Management and Agro-Meteorology"
+  ]
+ },
+ "GST 112": {
+  "title": "GST 112 — Nigerian Peoples and Culture",
+  "eligible": "ALL"
+ },
+ "LIB 102": {
+  "title": "LIB 102 — Use of Library, Study Skills and ICT",
+  "eligible": "ALL"
+ },
+ "BIO 102": {
+  "title": "BIO 102 — General Biology II",
+  "eligible": "FACULTY:Faculty of Natural and Applied Sciences"
+ },
+ "ZOO 102": {
+  "title": "ZOO 102 — Invertebrate Zoology",
+  "eligible": [
+   "B.Sc. Animal and Environmental Biology (Zoology)"
+  ]
+ },
+ "COS 104": {
+  "title": "COS 104 — Introduction to Computing Practice",
+  "eligible": [
+   "B.Sc. Computer Science"
+  ]
+ },
+ "CSC 104": {
+  "title": "CSC 104 — Computer Programming I",
+  "eligible": [
+   "B.Sc. Computer Science"
+  ]
+ },
+ "CSC 106": {
+  "title": "CSC 106 — Computer Programming II",
+  "eligible": [
+   "B.Sc. Computer Science"
+  ]
+ },
+ "FAA 128": {
+  "title": "FAA 128 — Introduction to Fisheries and Aquaculture",
+  "eligible": [
+   "B.Sc. Fisheries and Aquaculture"
+  ]
+ },
+ "SDG 104": {
+  "title": "SDG 104 — Introduction to Circular Economy and Sustainable Development",
+  "eligible": "FACULTY:Faculty of Agriculture and Renewable Natural Resources"
+ }
+}
