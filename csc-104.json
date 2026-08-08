@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "Which of these is a valid variable name in most programming languages?",
+   "options": [
+    "2value",
+    "value_2",
+    "value 2",
+    "value-2"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "A loop is used in programming to:",
+   "options": [
+    "Store a single value",
+    "Repeat a block of code",
+    "Delete a file",
+    "Draw a shape"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which symbol is commonly used to end a statement in many programming languages?",
+   "options": [
+    "Comma",
+    "Semicolon",
+    "Colon",
+    "Hyphen"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Write pseudocode for a program that calculates the sum of the first 10 natural numbers."
+  },
+  {
+   "q": "Explain the difference between a 'for' loop and a 'while' loop."
+  }
+ ]
+}

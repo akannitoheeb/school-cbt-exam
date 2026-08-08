@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "Which of these is an example of an operating system?",
+   "options": [
+    "Microsoft Word",
+    "Windows",
+    "Google Chrome",
+    "Adobe Photoshop"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "A file with the extension .docx is most likely created by:",
+   "options": [
+    "A spreadsheet application",
+    "A word processor",
+    "A web browser",
+    "An image editor"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which key combination is commonly used to save a file?",
+   "options": [
+    "Ctrl + P",
+    "Ctrl + S",
+    "Ctrl + C",
+    "Ctrl + V"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "List and explain three basic components of a computer system."
+  },
+  {
+   "q": "Describe the steps involved in creating and saving a folder on a computer."
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "The pH of a neutral solution at 25°C is:",
+   "options": [
+    "0",
+    "7",
+    "14",
+    "1"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which of these is an example of an exothermic reaction?",
+   "options": [
+    "Photosynthesis",
+    "Melting ice",
+    "Combustion of fuel",
+    "Evaporation of water"
+   ],
+   "answer": "C"
+  },
+  {
+   "q": "The atomic number of an element represents the number of:",
+   "options": [
+    "Neutrons",
+    "Protons",
+    "Electrons and neutrons",
+    "Isotopes"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Explain the difference between an acid and a base, giving one example of each."
+  },
+  {
+   "q": "Describe, with an equation, what happens during a neutralisation reaction."
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "A flowchart is best described as:",
+   "options": [
+    "A programming language",
+    "A pictorial representation of an algorithm",
+    "A type of computer hardware",
+    "A database query"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which symbol in a flowchart represents a decision?",
+   "options": [
+    "Rectangle",
+    "Oval",
+    "Diamond",
+    "Parallelogram"
+   ],
+   "answer": "C"
+  },
+  {
+   "q": "Pseudocode is:",
+   "options": [
+    "Actual executable code",
+    "An informal way of describing an algorithm",
+    "A type of computer virus",
+    "A hardware component"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Write pseudocode to determine whether a number entered by a user is even or odd."
+  },
+  {
+   "q": "Explain, with an example, why planning an algorithm before coding saves time."
+  }
+ ]
+}

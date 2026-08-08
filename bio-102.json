@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "The basic unit of life is the:",
+   "options": [
+    "Tissue",
+    "Cell",
+    "Organ",
+    "Organism"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Photosynthesis takes place mainly in the:",
+   "options": [
+    "Roots",
+    "Leaves",
+    "Stem",
+    "Flower"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which of these is a function of the human circulatory system?",
+   "options": [
+    "Digestion of food",
+    "Transport of oxygen and nutrients",
+    "Production of urine",
+    "Detection of light"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Describe the structure and function of a typical plant cell."
+  },
+  {
+   "q": "Explain the process of respiration in living organisms."
+  }
+ ]
+}

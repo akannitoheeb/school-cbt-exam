@@ -1,0 +1,2326 @@
+{
+ "objective": [
+  {
+   "q": "Water resources include all EXCEPT:",
+   "options": [
+    "Surface water",
+    "Groundwater",
+    "Rainwater",
+    "Petroleum"
+   ],
+   "answer": "D",
+   "hint": "Petroleum is a fossil fuel, not a water source."
+  },
+  {
+   "q": "Which of the following is a surface water source?",
+   "options": [
+    "Aquifers",
+    "Springs",
+    "Rivers",
+    "Boreholes"
+   ],
+   "answer": "C",
+   "hint": "Rivers flow on the earth's surface."
+  },
+  {
+   "q": "Groundwater is stored in:",
+   "options": [
+    "Lakes",
+    "Aquifers",
+    "Oceans",
+    "Clouds"
+   ],
+   "answer": "B",
+   "hint": "Underground geological formations that hold water."
+  },
+  {
+   "q": "Water resources management aims to maximize economic and social welfare without compromising:",
+   "options": [
+    "Urban development",
+    "Ecosystem sustainability",
+    "Industrial growth",
+    "Population increase"
+   ],
+   "answer": "B",
+   "hint": "The definition emphasizes maintaining environmental integrity."
+  },
+  {
+   "q": "Which is NOT an objective of water resources management?",
+   "options": [
+    "Sustainable water supply",
+    "Environmental degradation",
+    "Public health improvement",
+    "Conflict reduction"
+   ],
+   "answer": "B",
+   "hint": "Environmental degradation is a problem, not an objective."
+  },
+  {
+   "q": "The water cycle is also called:",
+   "options": [
+    "Atmospheric cycle",
+    "Hydrological cycle",
+    "Geological cycle",
+    "Biological cycle"
+   ],
+   "answer": "B",
+   "hint": "The scientific term for water circulation in nature."
+  },
+  {
+   "q": "Evaporation transfers water from the earth's surface to the:",
+   "options": [
+    "Groundwater",
+    "Atmosphere",
+    "Ocean",
+    "Soil"
+   ],
+   "answer": "B",
+   "hint": "Water changes to vapor and rises into the air."
+  },
+  {
+   "q": "Transpiration releases water vapor from:",
+   "options": [
+    "Rivers",
+    "Plant leaves",
+    "Soil",
+    "Clouds"
+   ],
+   "answer": "B",
+   "hint": "Plants release water through stomata in leaves."
+  },
+  {
+   "q": "Evapotranspiration combines which two processes?",
+   "options": [
+    "Evaporation and condensation",
+    "Evaporation and transpiration",
+    "Precipitation and infiltration",
+    "Runoff and percolation"
+   ],
+   "answer": "B",
+   "hint": "The term itself combines these two water loss processes."
+  },
+  {
+   "q": "Condensation results in the formation of:",
+   "options": [
+    "Rivers",
+    "Clouds",
+    "Soil",
+    "Aquifers"
+   ],
+   "answer": "B",
+   "hint": "Water vapor cools to form visible water droplets in the sky."
+  },
+  {
+   "q": "Precipitation includes all EXCEPT:",
+   "options": [
+    "Rain",
+    "Snow",
+    "Hail",
+    "Evaporation"
+   ],
+   "answer": "D",
+   "hint": "Evaporation is the opposite process of water rising."
+  },
+  {
+   "q": "Interception occurs when precipitation is captured by:",
+   "options": [
+    "Rivers",
+    "Vegetation",
+    "Aquifers",
+    "Roads"
+   ],
+   "answer": "B",
+   "hint": "Tree canopies and grass catch rain before it reaches the ground."
+  },
+  {
+   "q": "Infiltration is the movement of water from the surface into the:",
+   "options": [
+    "Atmosphere",
+    "Soil",
+    "Rivers",
+    "Clouds"
+   ],
+   "answer": "B",
+   "hint": "Water seeps downward from the ground surface."
+  },
+  {
+   "q": "Percolation refers to water movement through soil layers towards:",
+   "options": [
+    "Rivers",
+    "Groundwater reservoirs",
+    "Atmosphere",
+    "Plants"
+   ],
+   "answer": "B",
+   "hint": "Deep downward movement replenishing underground water stores."
+  },
+  {
+   "q": "Surface runoff is the major source of:",
+   "options": [
+    "Groundwater",
+    "Streamflow",
+    "Clouds",
+    "Soil moisture"
+   ],
+   "answer": "B",
+   "hint": "Water flowing over land feeds rivers and streams."
+  },
+  {
+   "q": "In the water balance equation P = ET + Q + ΔS, Q represents:",
+   "options": [
+    "Precipitation",
+    "Evapotranspiration",
+    "Runoff",
+    "Change in storage"
+   ],
+   "answer": "C",
+   "hint": "The letter Q conventionally stands for runoff/discharge."
+  },
+  {
+   "q": "Which factor does NOT affect the water cycle?",
+   "options": [
+    "Temperature",
+    "Soil permeability",
+    "Population density",
+    "Vegetation cover"
+   ],
+   "answer": "C",
+   "hint": "Population density indirectly affects but is not a direct physical factor."
+  },
+  {
+   "q": "Which Nigerian institution is responsible for hydrological services?",
+   "options": [
+    "NIHSA",
+    "NIMET",
+    "NEMA",
+    "NCDC"
+   ],
+   "answer": "A",
+   "hint": "Nigeria Hydrological Services Agency monitors water resources."
+  },
+  {
+   "q": "River Basin Development Authorities (RBDAs) in Nigeria are responsible for:",
+   "options": [
+    "Weather forecasting",
+    "Water resources development",
+    "Road construction",
+    "Education"
+   ],
+   "answer": "B",
+   "hint": "They manage water within specific river basin areas."
+  },
+  {
+   "q": "Which challenge is associated with water resources management?",
+   "options": [
+    "Abundant clean water",
+    "Climate change",
+    "Decreasing population",
+    "Excess funding"
+   ],
+   "answer": "B",
+   "hint": "Changing rainfall patterns and extreme weather events."
+  },
+  {
+   "q": "The National Water Resources Institute (NWRI) in Nigeria focuses on:",
+   "options": [
+    "Agricultural research",
+    "Water resources training",
+    "Health services",
+    "Transportation"
+   ],
+   "answer": "B",
+   "hint": "Institute dedicated to water management capacity building."
+  },
+  {
+   "q": "Which process purifies water naturally in the water cycle?",
+   "options": [
+    "Evaporation",
+    "Percolation",
+    "Both A and B",
+    "Neither"
+   ],
+   "answer": "C",
+   "hint": "Both processes help filter and clean water."
+  },
+  {
+   "q": "Reclaimed water is classified as:",
+   "options": [
+    "Surface water",
+    "Groundwater",
+    "Recycled water",
+    "Rainwater"
+   ],
+   "answer": "C",
+   "hint": "Water that has been treated for reuse."
+  },
+  {
+   "q": "Which benefit of water resources management is social?",
+   "options": [
+    "Enhanced agricultural productivity",
+    "Improved public health",
+    "Energy generation",
+    "Biodiversity conservation"
+   ],
+   "answer": "B",
+   "hint": "Public health directly relates to human welfare and society."
+  },
+  {
+   "q": "Water resources provide water for all EXCEPT:",
+   "options": [
+    "Domestic use",
+    "Agricultural purposes",
+    "Space exploration",
+    "Hydropower generation"
+   ],
+   "answer": "C",
+   "hint": "Space exploration is not a typical water use category mentioned."
+  },
+  {
+   "q": "ΔS in the water balance equation stands for:",
+   "options": [
+    "Soil moisture",
+    "Change in storage",
+    "Solar radiation",
+    "Surface area"
+   ],
+   "answer": "B",
+   "hint": "Delta (Δ) indicates change in the variable that follows."
+  },
+  {
+   "q": "Urbanization affects the water cycle by:",
+   "options": [
+    "Increasing infiltration",
+    "Reducing runoff",
+    "Increasing impermeable surfaces",
+    "Enhancing groundwater recharge"
+   ],
+   "answer": "C",
+   "hint": "Cities have more concrete and less permeable ground."
+  },
+  {
+   "q": "Which is a climatic factor affecting the water cycle?",
+   "options": [
+    "Soil texture",
+    "Wind speed",
+    "Rock structure",
+    "Slope"
+   ],
+   "answer": "B",
+   "hint": "Wind speed is an atmospheric/climatic variable."
+  },
+  {
+   "q": "Glaciers and snowmelt are sources of:",
+   "options": [
+    "Petroleum",
+    "Water resources",
+    "Minerals",
+    "Natural gas"
+   ],
+   "answer": "B",
+   "hint": "Melting ice provides freshwater to rivers and streams."
+  },
+  {
+   "q": "The Federal Ministry of Water Resources and Sanitation in Nigeria is a:",
+   "options": [
+    "State agency",
+    "Federal institution",
+    "Private company",
+    "International body"
+   ],
+   "answer": "B",
+   "hint": "It operates at the national government level."
+  },
+  {
+   "q": "Which process sustains river flow during dry seasons?",
+   "options": [
+    "Surface runoff",
+    "Groundwater flow",
+    "Evaporation",
+    "Condensation"
+   ],
+   "answer": "B",
+   "hint": "Underground water feeds rivers when surface sources are low."
+  },
+  {
+   "q": "Water scarcity is primarily caused by:",
+   "options": [
+    "Growing population and pollution",
+    "Excess rainfall",
+    "Decreasing temperatures",
+    "Reduced evaporation"
+   ],
+   "answer": "A",
+   "hint": "More people and contamination reduce available clean water."
+  },
+  {
+   "q": "Which is an economic benefit of water resources management?",
+   "options": [
+    "Improved public health",
+    "Supports industries",
+    "Water security",
+    "Community development"
+   ],
+   "answer": "B",
+   "hint": "Industries rely on water for production processes."
+  },
+  {
+   "q": "The water cycle maintains the earth's:",
+   "options": [
+    "Population",
+    "Water balance",
+    "Temperature",
+    "Gravity"
+   ],
+   "answer": "B",
+   "hint": "It ensures continuous circulation and distribution of water."
+  },
+  {
+   "q": "Hydrometry is the measurement of:",
+   "options": [
+    "Soil moisture",
+    "Volume and flow rate of water",
+    "Air pressure",
+    "Wind speed"
+   ],
+   "answer": "B",
+   "hint": "The term specifically relates to water quantity measurement."
+  },
+  {
+   "q": "Which instrument measures the height of water surface in a reservoir?",
+   "options": [
+    "Flow meter",
+    "Water level meter",
+    "Spectrophotometer",
+    "Anemometer"
+   ],
+   "answer": "B",
+   "hint": "It measures the vertical position of the water surface."
+  },
+  {
+   "q": "Discharge is measured using:",
+   "options": [
+    "Rain gauge",
+    "Weirs or discharge gauges",
+    "Thermometer",
+    "Hygrometer"
+   ],
+   "answer": "B",
+   "hint": "Structures or devices that measure water flow rate."
+  },
+  {
+   "q": "Which is NOT a common technique for measuring hydrological variables?",
+   "options": [
+    "Hydrometry",
+    "Water sampling",
+    "Sediment trapping",
+    "Soil tilling"
+   ],
+   "answer": "D",
+   "hint": "Soil tilling is an agricultural practice, not a measurement technique."
+  },
+  {
+   "q": "Remote sensing uses satellite imagery to estimate:",
+   "options": [
+    "Soil pH",
+    "Evapotranspiration and soil moisture",
+    "Groundwater chemistry",
+    "River discharge directly"
+   ],
+   "answer": "B",
+   "hint": "Satellites detect land surface conditions and vegetation stress."
+  },
+  {
+   "q": "Which is a type of field measurement?",
+   "options": [
+    "Literature review",
+    "Rain gauge measurement",
+    "Remote sensing",
+    "Questionnaire survey"
+   ],
+   "answer": "B",
+   "hint": "Direct physical measurement using instruments in the field."
+  },
+  {
+   "q": "Descriptive statistics includes all EXCEPT:",
+   "options": [
+    "Mean",
+    "Median",
+    "Standard deviation",
+    "Hypothesis testing"
+   ],
+   "answer": "D",
+   "hint": "Hypothesis testing is part of inferential statistics."
+  },
+  {
+   "q": "Inferential statistics is used to:",
+   "options": [
+    "Describe data characteristics",
+    "Make inferences about populations from samples",
+    "Filter time-series data",
+    "Create visual charts"
+   ],
+   "answer": "B",
+   "hint": "It extends findings from sample data to larger populations."
+  },
+  {
+   "q": "Signal processing techniques include:",
+   "options": [
+    "Mean and median",
+    "Filtering and spectral analysis",
+    "Surveys and questionnaires",
+    "Water sampling"
+   ],
+   "answer": "B",
+   "hint": "Methods to extract patterns from time-series hydrological data."
+  },
+  {
+   "q": "Quantitative analysis focuses on:",
+   "options": [
+    "Text and images",
+    "Numerical values and statistical relationships",
+    "Stakeholder opinions",
+    "Historical records"
+   ],
+   "answer": "B",
+   "hint": "It deals with measurable, numerical data."
+  },
+  {
+   "q": "Qualitative analysis focuses on:",
+   "options": [
+    "Statistical relationships",
+    "Non-numerical data like text and images",
+    "Mathematical models",
+    "Flow rates"
+   ],
+   "answer": "B",
+   "hint": "It interprets descriptive, non-numeric information."
+  },
+  {
+   "q": "Analyzing precipitation-runoff relationships helps predict:",
+   "options": [
+    "Earthquakes",
+    "Flood events",
+    "Volcanic eruptions",
+    "Solar flares"
+   ],
+   "answer": "B",
+   "hint": "More rain typically leads to higher river flows and flooding."
+  },
+  {
+   "q": "Groundwater recharge rate analysis informs:",
+   "options": [
+    "Weather forecasting",
+    "Aquifer management and water supply planning",
+    "Air quality monitoring",
+    "Crop selection"
+   ],
+   "answer": "B",
+   "hint": "Understanding how fast aquifers refill helps sustainable extraction."
+  },
+  {
+   "q": "Which is a major challenge in hydrological data collection?",
+   "options": [
+    "Excess data availability",
+    "Data quality issues",
+    "Too many instruments",
+    "Uniform climate conditions"
+   ],
+   "answer": "B",
+   "hint": "Measurement errors can lead to inaccurate hydrological assessments."
+  },
+  {
+   "q": "Spatial and temporal variability makes hydrological systems:",
+   "options": [
+    "Easy to generalize",
+    "Difficult to generalize results",
+    "Constant over time",
+    "Uniform across regions"
+   ],
+   "answer": "B",
+   "hint": "Conditions change across space and time, complicating analysis."
+  },
+  {
+   "q": "Modeling uncertainties arise from:",
+   "options": [
+    "Linear relationships between variables",
+    "Non-linear relationships between variables",
+    "Constant rainfall patterns",
+    "Uniform topography"
+   ],
+   "answer": "B",
+   "hint": "Hydrological processes often involve complex, non-linear interactions."
+  },
+  {
+   "q": "Which emerging technology is being integrated into hydrological measurement?",
+   "options": [
+    "Typewriters",
+    "IoT sensors",
+    "Abacus",
+    "Manual logbooks"
+   ],
+   "answer": "B",
+   "hint": "Internet of Things devices enable automated, real-time monitoring."
+  },
+  {
+   "q": "Machine learning is mentioned as a future direction for:",
+   "options": [
+    "Improving data quality and reducing errors",
+    "Replacing all field measurements",
+    "Eliminating the need for water",
+    "Building physical dams"
+   ],
+   "answer": "A",
+   "hint": "AI can detect anomalies and improve data processing accuracy."
+  },
+  {
+   "q": "Which instrument measures water quality parameters like pH and dissolved oxygen?",
+   "options": [
+    "Rain gauge",
+    "DO meter and spectrophotometer",
+    "Anemometer",
+    "Barometer"
+   ],
+   "answer": "B",
+   "hint": "Specialized instruments for chemical and biological water analysis."
+  },
+  {
+   "q": "Sediment trapping is used to determine:",
+   "options": [
+    "Air quality",
+    "Sediment composition and properties",
+    "Soil fertility",
+    "Wind patterns"
+   ],
+   "answer": "B",
+   "hint": "Collecting and analyzing suspended particles in water."
+  },
+  {
+   "q": "Data synthesis involves:",
+   "options": [
+    "Using only one dataset",
+    "Combining multiple datasets and models",
+    "Deleting old data",
+    "Ignoring field measurements"
+   ],
+   "answer": "B",
+   "hint": "Integration of various data sources for comprehensive insights."
+  },
+  {
+   "q": "Which is a source of hydrological data?",
+   "options": [
+    "Social media posts",
+    "Field measurements, remote sensing, and literature reviews",
+    "Political speeches",
+    "Shopping receipts"
+   ],
+   "answer": "B",
+   "hint": "Scientific and systematic methods of gathering hydrological information."
+  },
+  {
+   "q": "A flow meter measures:",
+   "options": [
+    "Water temperature",
+    "Volume of water flowing through a point",
+    "Air humidity",
+    "Soil nutrients"
+   ],
+   "answer": "B",
+   "hint": "It quantifies the rate of water movement."
+  },
+  {
+   "q": "Surface water flow pattern analysis informs:",
+   "options": [
+    "River management and habitat restoration",
+    "Stock market predictions",
+    "Fashion trends",
+    "Political campaigns"
+   ],
+   "answer": "A",
+   "hint": "Understanding flow helps manage aquatic ecosystems."
+  },
+  {
+   "q": "Which future direction aims to capture the full range of hydrological phenomena?",
+   "options": [
+    "Simpler models",
+    "More complex and high-resolution models",
+    "Fewer data points",
+    "Manual calculations"
+   ],
+   "answer": "B",
+   "hint": "Advanced modeling with finer detail and greater complexity."
+  },
+  {
+   "q": "Data interoperability refers to:",
+   "options": [
+    "Data that cannot be shared",
+    "Standards for data sharing between systems",
+    "Data kept in secret",
+    "Data that only one person can use"
+   ],
+   "answer": "B",
+   "hint": "Ability of different systems to exchange and use information."
+  },
+  {
+   "q": "Drones are mentioned as emerging technology for:",
+   "options": [
+    "Hydrological measurement",
+    "Food preparation",
+    "Textile manufacturing",
+    "Music production"
+   ],
+   "answer": "A",
+   "hint": "Unmanned aerial vehicles can survey water bodies and catchments."
+  },
+  {
+   "q": "Which describes the process of gathering information from various sources in hydrology?",
+   "options": [
+    "Data analysis",
+    "Data collection",
+    "Data interpretation",
+    "Data synthesis"
+   ],
+   "answer": "B",
+   "hint": "The initial phase of obtaining hydrological information."
+  },
+  {
+   "q": "Time-series data in hydrology requires which type of analysis?",
+   "options": [
+    "Signal processing",
+    "Qualitative analysis only",
+    "Historical narrative",
+    "Political analysis"
+   ],
+   "answer": "A",
+   "hint": "Techniques to identify patterns in sequential measurements over time."
+  },
+  {
+   "q": "Which factor contributes to modeling uncertainties?",
+   "options": [
+    "Perfect linear relationships",
+    "Complex non-linear hydrological processes",
+    "Constant climate",
+    "Uniform land use"
+   ],
+   "answer": "B",
+   "hint": "Real-world water systems have intricate, unpredictable interactions."
+  },
+  {
+   "q": "Stakeholder surveys in hydrology collect data from:",
+   "options": [
+    "Only government officials",
+    "Farmers, community members, and researchers",
+    "Only university professors",
+    "Only international organizations"
+   ],
+   "answer": "B",
+   "hint": "Broad participation from various water users and affected groups."
+  },
+  {
+   "q": "Enhancing model resolution means:",
+   "options": [
+    "Using lower quality data",
+    "Increasing detail and precision of models",
+    "Reducing computational power",
+    "Simplifying equations"
+   ],
+   "answer": "B",
+   "hint": "Finer spatial and temporal grids for more accurate representation."
+  },
+  {
+   "q": "IWRM promotes coordinated development of water, land and:",
+   "options": [
+    "Air resources",
+    "Related resources",
+    "Mineral resources",
+    "Human resources only"
+   ],
+   "answer": "B",
+   "hint": "The definition includes all resources connected to water management."
+  },
+  {
+   "q": "The Dublin Principles were established in:",
+   "options": [
+    "1987",
+    "1992",
+    "2000",
+    "2015"
+   ],
+   "answer": "B",
+   "hint": "They were formulated at the International Conference on Water and Environment."
+  },
+  {
+   "q": "According to Dublin Principle 1, freshwater is:",
+   "options": [
+    "Infinite and invulnerable",
+    "Finite and vulnerable",
+    "Abundant everywhere",
+    "Only for human use"
+   ],
+   "answer": "B",
+   "hint": "The principle emphasizes scarcity and the need for protection."
+  },
+  {
+   "q": "Dublin Principle 2 emphasizes:",
+   "options": [
+    "Government-only decisions",
+    "Participatory approach involving users and planners",
+    "Exclusion of women",
+    "Top-down management only"
+   ],
+   "answer": "B",
+   "hint": "Stakeholder involvement at all levels of water governance."
+  },
+  {
+   "q": "Dublin Principle 3 states that women play a:",
+   "options": [
+    "Minor role in water management",
+    "Central role in providing, managing, and safeguarding water",
+    "No role in water management",
+    "Role only in domestic use"
+   ],
+   "answer": "B",
+   "hint": "Recognizes women's critical contribution to water security."
+  },
+  {
+   "q": "Dublin Principle 4 recognizes water as:",
+   "options": [
+    "A free unlimited resource",
+    "An economic good in all competing uses",
+    "Only a social good",
+    "A religious symbol"
+   ],
+   "answer": "B",
+   "hint": "Economic value must be recognized while protecting basic needs."
+  },
+  {
+   "q": "The enabling environment in IWRM includes all EXCEPT:",
+   "options": [
+    "Policies",
+    "Legislative framework",
+    "Military strategy",
+    "Financing strategies"
+   ],
+   "answer": "C",
+   "hint": "Military strategy is not part of water governance framework."
+  },
+  {
+   "q": "Which is part of the institutional roles in IWRM?",
+   "options": [
+    "Creating organizational frameworks",
+    "Banning all water use",
+    "Eliminating stakeholder participation",
+    "Ignoring cross-sectoral coordination"
+   ],
+   "answer": "A",
+   "hint": "Structures like river basin organizations and inter-ministerial committees."
+  },
+  {
+   "q": "Water resources assessment involves:",
+   "options": [
+    "Random guessing of water availability",
+    "Systematic collection and analysis of water data",
+    "Ignoring water quality",
+    "Only measuring rainfall"
+   ],
+   "answer": "B",
+   "hint": "Comprehensive data gathering on both quantity and quality."
+  },
+  {
+   "q": "Demand management tools include:",
+   "options": [
+    "Building more dams only",
+    "Pricing, metering, and efficiency standards",
+    "Ignoring water wastage",
+    "Unlimited free water"
+   ],
+   "answer": "B",
+   "hint": "Strategies to reduce consumption rather than increase supply."
+  },
+  {
+   "q": "Progressive water tariffs charge:",
+   "options": [
+    "Same rate for all users",
+    "More per unit as consumption rises",
+    "Less for higher consumption",
+    "Nothing for industrial users"
+   ],
+   "answer": "B",
+   "hint": "Higher rates for excessive use to encourage conservation."
+  },
+  {
+   "q": "Lifeline tariffs are designed to:",
+   "options": [
+    "Penalize all users",
+    "Protect access to basic water allocation for low-income users",
+    "Eliminate subsidies",
+    "Charge maximum rates"
+   ],
+   "answer": "B",
+   "hint": "Ensure affordable basic water for essential needs."
+  },
+  {
+   "q": "Agriculture accounts for approximately what percentage of global freshwater withdrawals?",
+   "options": [
+    "30%",
+    "50%",
+    "70%",
+    "90%"
+   ],
+   "answer": "C",
+   "hint": "Farming is the largest water-consuming sector globally."
+  },
+  {
+   "q": "Drip irrigation reduces water losses by:",
+   "options": [
+    "10-20%",
+    "20-30%",
+    "40-70%",
+    "90-100%"
+   ],
+   "answer": "C",
+   "hint": "Direct delivery to plant roots minimizes evaporation and runoff."
+  },
+  {
+   "q": "Which is a limitation of drip irrigation adoption?",
+   "options": [
+    "Too simple to install",
+    "High capital cost and maintenance requirements",
+    "Excessive water use",
+    "No water savings"
+   ],
+   "answer": "B",
+   "hint": "Advanced systems require significant investment and upkeep."
+  },
+  {
+   "q": "Deficit irrigation involves:",
+   "options": [
+    "Applying excess water",
+    "Applying less water than full demand at tolerant growth stages",
+    "Stopping irrigation completely",
+    "Using only rainwater"
+   ],
+   "answer": "B",
+   "hint": "Strategic water reduction with minimal yield impact."
+  },
+  {
+   "q": "Water harvesting captures rainfall in:",
+   "options": [
+    "Only large reservoirs",
+    "Small ponds, check dams, or soil conservation structures",
+    "Underground caves only",
+    "Plastic bottles only"
+   ],
+   "answer": "B",
+   "hint": "Small-scale collection systems for supplementary irrigation."
+  },
+  {
+   "q": "Conjunctive use refers to:",
+   "options": [
+    "Using only groundwater",
+    "Coordinated surface and groundwater management",
+    "Ignoring surface water",
+    "Separate management of all sources"
+   ],
+   "answer": "B",
+   "hint": "Optimizing both sources together for efficiency."
+  },
+  {
+   "q": "Managed Aquifer Recharge involves:",
+   "options": [
+    "Extracting all groundwater",
+    "Artificial injection of surface water into aquifers",
+    "Preventing all infiltration",
+    "Damming rivers permanently"
+   ],
+   "answer": "B",
+   "hint": "Storing surface water underground for later recovery."
+  },
+  {
+   "q": "Desalination produces freshwater from:",
+   "options": [
+    "Fresh rivers",
+    "Saline water",
+    "Rainwater",
+    "Distilled air"
+   ],
+   "answer": "B",
+   "hint": "Removing salts from seawater or brackish water."
+  },
+  {
+   "q": "Reverse osmosis is a:",
+   "options": [
+    "Type of dam",
+    "Desalination process",
+    "Irrigation method",
+    "Flood control technique"
+   ],
+   "answer": "B",
+   "hint": "Membrane-based technology for salt removal."
+  },
+  {
+   "q": "Graywater recycling reuses water from:",
+   "options": [
+    "Toilets",
+    "Sinks and showers for toilet flushing or garden irrigation",
+    "Industrial chemical waste",
+    "Sewage treatment plants"
+   ],
+   "answer": "B",
+   "hint": "Lightly contaminated household water for non-potable purposes."
+  },
+  {
+   "q": "Which is a physical water quality parameter?",
+   "options": [
+    "pH",
+    "Temperature, turbidity, and colour",
+    "BOD",
+    "Pesticides"
+   ],
+   "answer": "B",
+   "hint": "Observable physical characteristics of water."
+  },
+  {
+   "q": "BOD stands for:",
+   "options": [
+    "Basic Oxygen Demand",
+    "Biochemical Oxygen Demand",
+    "Biological Oxygen Deficit",
+    "Base Organic Deposit"
+   ],
+   "answer": "B",
+   "hint": "Measures oxygen consumed by microorganisms decomposing organic matter."
+  },
+  {
+   "q": "E. coli in water indicates:",
+   "options": [
+    "Good water quality",
+    "Fecal contamination and waterborne disease risk",
+    "High mineral content",
+    "Optimal pH levels"
+   ],
+   "answer": "B",
+   "hint": "Presence of this bacterium suggests sewage contamination."
+  },
+  {
+   "q": "Point source pollution comes from:",
+   "options": [
+    "A broad agricultural area",
+    "A single identifiable location",
+    "Atmospheric deposition",
+    "Urban runoff across a city"
+   ],
+   "answer": "B",
+   "hint": "Specific, discrete discharge points like factory pipes."
+  },
+  {
+   "q": "Non-point source pollution is:",
+   "options": [
+    "Easy to regulate",
+    "Generated across a broad area and transported by runoff",
+    "From a single pipe",
+    "Only from industries"
+   ],
+   "answer": "B",
+   "hint": "Diffuse pollution from widespread activities like farming."
+  },
+  {
+   "q": "Eutrophication is caused by excess:",
+   "options": [
+    "Oxygen",
+    "Nutrients like nitrogen and phosphorus",
+    "Sand",
+    "Salt"
+   ],
+   "answer": "B",
+   "hint": "Nutrient overload causes excessive algal growth."
+  },
+  {
+   "q": "Wellhead protection areas are delineated to:",
+   "options": [
+    "Increase pollution",
+    "Protect drinking water sources from contamination",
+    "Allow industrial waste dumping",
+    "Prevent rainfall"
+   ],
+   "answer": "B",
+   "hint": "Zones around wells where land use is restricted."
+  },
+  {
+   "q": "Which disease is NOT waterborne?",
+   "options": [
+    "Cholera",
+    "Typhoid",
+    "Malaria",
+    "Hepatitis A"
+   ],
+   "answer": "C",
+   "hint": "Malaria is transmitted by mosquitoes, not directly through water."
+  },
+  {
+   "q": "Interbasin transfers move water from:",
+   "options": [
+    "Cities to cities",
+    "Water-rich to water-scarce basins",
+    "Underground to surface",
+    "Clouds to ground"
+   ],
+   "answer": "B",
+   "hint": "Large-scale water redistribution between river basins."
+  },
+  {
+   "q": "Dual flush toilets reduce per-flush water use by:",
+   "options": [
+    "10-20%",
+    "30-40%",
+    "50-67%",
+    "80-90%"
+   ],
+   "answer": "C",
+   "hint": "Two flush options for liquid and solid waste."
+  },
+  {
+   "q": "Which is an alternative water supply source?",
+   "options": [
+    "Only rivers",
+    "Rainwater harvesting, desalination, and wastewater reuse",
+    "Only groundwater",
+    "Only lakes"
+   ],
+   "answer": "B",
+   "hint": "Non-conventional sources beyond traditional surface and groundwater."
+  },
+  {
+   "q": "Water quality management includes all EXCEPT:",
+   "options": [
+    "Monitoring",
+    "Protection",
+    "Remediation",
+    "Pollution encouragement"
+   ],
+   "answer": "D",
+   "hint": "Management aims to maintain or restore quality, not degrade it."
+  },
+  {
+   "q": "Which chemical parameter indicates water acidity or alkalinity?",
+   "options": [
+    "Turbidity",
+    "pH",
+    "Conductivity",
+    "Colour"
+   ],
+   "answer": "B",
+   "hint": "Scale from 0 (acidic) to 14 (alkaline) with 7 as neutral."
+  },
+  {
+   "q": "Heavy metals of concern in water include all EXCEPT:",
+   "options": [
+    "Arsenic",
+    "Lead",
+    "Mercury",
+    "Sodium"
+   ],
+   "answer": "D",
+   "hint": "Sodium is not classified as a toxic heavy metal of primary concern."
+  },
+  {
+   "q": "Water policy encompasses principles, objectives and strategies adopted by:",
+   "options": [
+    "Only private companies",
+    "Governments and intergovernmental bodies",
+    "Only local communities",
+    "Only scientists"
+   ],
+   "answer": "B",
+   "hint": "Policy is set by public authorities and international organizations."
+  },
+  {
+   "q": "A national water policy should articulate all EXCEPT:",
+   "options": [
+    "Vision and objectives",
+    "Institutional arrangements",
+    "Allocation priorities",
+    "Celebrity endorsements"
+   ],
+   "answer": "D",
+   "hint": "Celebrity endorsements are not part of formal water policy frameworks."
+  },
+  {
+   "q": "When water is scarce, which use typically takes precedence?",
+   "options": [
+    "Industrial use",
+    "Basic human needs",
+    "Agricultural irrigation",
+    "Recreational use"
+   ],
+   "answer": "B",
+   "hint": "Human survival needs are prioritized over economic uses."
+  },
+  {
+   "q": "The Mar del Plata Action Plan was established in:",
+   "options": [
+    "1972",
+    "1977",
+    "1982",
+    "1987"
+   ],
+   "answer": "B",
+   "hint": "The first global water conference held in Argentina."
+  },
+  {
+   "q": "The Dublin Statement on Water and Sustainable Development was made in:",
+   "options": [
+    "1987",
+    "1992",
+    "1997",
+    "2002"
+   ],
+   "answer": "B",
+   "hint": "Established the four principles foundational to IWRM."
+  },
+  {
+   "q": "The Millennium Development Goals aimed to halve the proportion of people without access to safe water by:",
+   "options": [
+    "2010",
+    "2015",
+    "2020",
+    "2025"
+   ],
+   "answer": "B",
+   "hint": "The target year for the MDGs water and sanitation goal."
+  },
+  {
+   "q": "SDG 6 aims to achieve universal access to safe water and sanitation by:",
+   "options": [
+    "2020",
+    "2025",
+    "2030",
+    "2050"
+   ],
+   "answer": "C",
+   "hint": "The Sustainable Development Goals target year."
+  },
+  {
+   "q": "The human right to safe drinking water was recognized by UN Resolution in:",
+   "options": [
+    "2005",
+    "2010",
+    "2015",
+    "2020"
+   ],
+   "answer": "B",
+   "hint": "UN General Assembly Resolution A/RES/64/292."
+  },
+  {
+   "q": "The UNECE Water Convention became legally binding in:",
+   "options": [
+    "1990",
+    "1992/1996",
+    "2000",
+    "2005"
+   ],
+   "answer": "B",
+   "hint": "Adopted in 1992, entered into force in 1996."
+  },
+  {
+   "q": "A water use license specifies all EXCEPT:",
+   "options": [
+    "Abstraction rate",
+    "Point of abstraction",
+    "Permitted use",
+    "User's favorite color"
+   ],
+   "answer": "D",
+   "hint": "Personal preferences are irrelevant to legal water abstraction permits."
+  },
+  {
+   "q": "Discharge permits set maximum:",
+   "options": [
+    "Water temperature only",
+    "Concentration and loads of pollutants",
+    "Number of employees",
+    "Building height"
+   ],
+   "answer": "B",
+   "hint": "Regulatory limits on effluent quality from point sources."
+  },
+  {
+   "q": "Environmental flow requirements mandate:",
+   "options": [
+    "Maximum river flow",
+    "Minimum flow to sustain ecological functions",
+    "Zero flow in rivers",
+    "Flow only during floods"
+   ],
+   "answer": "B",
+   "hint": "Ensuring rivers maintain ecological health."
+  },
+  {
+   "q": "South Africa's ecological reserve concept requires that:",
+   "options": [
+    "Economic uses come first",
+    "Ecological and basic human needs be met before economic allocation",
+    "All water be diverted for industry",
+    "No water be left in rivers"
+   ],
+   "answer": "B",
+   "hint": "The National Water Act prioritizes environmental and human needs."
+  },
+  {
+   "q": "Water quality standards may be derived from:",
+   "options": [
+    "Only WHO guidelines",
+    "Health-based guidelines, ecological toxicity, or technology-based limits",
+    "Only industry preferences",
+    "Only government opinions"
+   ],
+   "answer": "B",
+   "hint": "Multiple scientific and regulatory bases for setting standards."
+  },
+  {
+   "q": "Which is NOT mentioned as an emerging technology in hydrological modeling?",
+   "options": [
+    "AI/ML",
+    "Remote sensing",
+    "IoT sensors",
+    "Steam engines"
+   ],
+   "answer": "D",
+   "hint": "Steam engines are historical, not emerging technology."
+  },
+  {
+   "q": "AI/ML in hydrology is particularly useful for:",
+   "options": [
+    "Only linear relationships",
+    "Nonlinear hydrological relationships",
+    "Ignoring extreme events",
+    "Eliminating data needs"
+   ],
+   "answer": "B",
+   "hint": "Machine learning excels at complex, non-linear pattern recognition."
+  },
+  {
+   "q": "Explainable AI is important in hydrology because it improves:",
+   "options": [
+    "Model speed only",
+    "Transparency and interpretability",
+    "Data deletion",
+    "Hardware costs"
+   ],
+   "answer": "B",
+   "hint": "Understanding why models make predictions builds trust."
+  },
+  {
+   "q": "Transfer learning allows models to:",
+   "options": [
+    "Only work in one region",
+    "Adapt across regions with limited local data",
+    "Ignore all data",
+    "Work without computers"
+   ],
+   "answer": "B",
+   "hint": "Applying knowledge from data-rich to data-scarce areas."
+  },
+  {
+   "q": "Remote sensing expands model inputs beyond:",
+   "options": [
+    "Satellite data",
+    "Ground gauges",
+    "Computer models",
+    "Historical records"
+   ],
+   "answer": "B",
+   "hint": "Satellite observations supplement traditional ground-based monitoring."
+  },
+  {
+   "q": "IoT sensors enable:",
+   "options": [
+    "Delayed manual monitoring",
+    "Near-real-time monitoring for forecasting",
+    "Only historical analysis",
+    "Elimination of all data"
+   ],
+   "answer": "B",
+   "hint": "Connected devices provide continuous, immediate data streams."
+  },
+  {
+   "q": "Cloud computing is explored for hydrological models to handle:",
+   "options": [
+    "Reduced computational needs",
+    "Growing computational load",
+    "Less data",
+    "Simpler equations"
+   ],
+   "answer": "B",
+   "hint": "Distributed computing for complex, large-scale simulations."
+  },
+  {
+   "q": "Which is a key limitation of hydrological modeling?",
+   "options": [
+    "Too much data",
+    "Data scarcity",
+    "Perfect accuracy",
+    "Universal applicability"
+   ],
+   "answer": "B",
+   "hint": "Many regions lack sufficient monitoring infrastructure."
+  },
+  {
+   "q": "Quantum computing is mentioned as being explored for:",
+   "options": [
+    "Simple calculations",
+    "Handling computational load of integrated models",
+    "Replacing all field work",
+    "Water treatment"
+   ],
+   "answer": "B",
+   "hint": "Advanced computing for complex hydrological simulations."
+  },
+  {
+   "q": "Flood forecasting is an application of:",
+   "options": [
+    "Only traditional methods",
+    "Hydrological modeling with emerging technologies",
+    "Guesswork",
+    "Political decisions"
+   ],
+   "answer": "B",
+   "hint": "Modern modeling improves prediction accuracy for flood events."
+  },
+  {
+   "q": "Drought monitoring uses hydrological modeling for:",
+   "options": [
+    "Streamflow prediction",
+    "Only rainfall measurement",
+    "Soil sampling",
+    "Tree counting"
+   ],
+   "answer": "A",
+   "hint": "Analyzing water availability to identify drought conditions."
+  },
+  {
+   "q": "Groundwater and surface water interaction modeling helps:",
+   "options": [
+    "Understand connections between aquifers and rivers",
+    "Ignore groundwater",
+    "Only measure rainfall",
+    "Build roads"
+   ],
+   "answer": "A",
+   "hint": "Integrated understanding of connected water systems."
+  },
+  {
+   "q": "Integrated watershed planning requires:",
+   "options": [
+    "Only local data",
+    "Comprehensive modeling of all water processes",
+    "Ignoring climate",
+    "Single-sector focus"
+   ],
+   "answer": "B",
+   "hint": "Holistic approach considering all hydrological components."
+  },
+  {
+   "q": "The cost of training and running complex models is a:",
+   "options": [
+    "Benefit",
+    "Limitation",
+    "Solution",
+    "Requirement"
+   ],
+   "answer": "B",
+   "hint": "Financial and computational constraints on model deployment."
+  },
+  {
+   "q": "Climate adaptation in water management uses modeling to:",
+   "options": [
+    "Ignore climate change",
+    "Plan for changing conditions",
+    "Prevent all rainfall",
+    "Stop evaporation"
+   ],
+   "answer": "B",
+   "hint": "Preparing water systems for future climate scenarios."
+  },
+  {
+   "q": "Which international instrument called for IWRM and Water Efficiency Plans by 2006?",
+   "options": [
+    "MDGs",
+    "Johannesburg Plan of Implementation",
+    "SDG 6",
+    "Dublin Statement"
+   ],
+   "answer": "B",
+   "hint": "The 2002 World Summit on Sustainable Development outcome."
+  },
+  {
+   "q": "Water policy bridges all EXCEPT:",
+   "options": [
+    "Technical knowledge",
+    "Economic considerations",
+    "Social equity",
+    "Celebrity opinions"
+   ],
+   "answer": "D",
+   "hint": "Policy integrates technical, economic, social, environmental, and political factors."
+  },
+  {
+   "q": "Which financing mechanism is mentioned for water infrastructure?",
+   "options": [
+    "Only private funding",
+    "Cost recovery, subsidies, public investment, and private participation",
+    "Only foreign aid",
+    "Only user fees"
+   ],
+   "answer": "B",
+   "hint": "Multiple funding sources for sustainable water management."
+  },
+  {
+   "q": "International commitments in national water policy relate to:",
+   "options": [
+    "Only local treaties",
+    "Implementation of obligations under international treaties and SDGs",
+    "Ignoring global frameworks",
+    "Only bilateral agreements"
+   ],
+   "answer": "B",
+   "hint": "Aligning national policy with global water governance frameworks."
+  },
+  {
+   "q": "Weather refers to atmospheric conditions over:",
+   "options": [
+    "30 years or more",
+    "Short-term periods",
+    "Centuries",
+    "Millennia"
+   ],
+   "answer": "B",
+   "hint": "Weather describes day-to-day, short-term atmospheric states."
+  },
+  {
+   "q": "According to WMO, weather is described with respect to all EXCEPT:",
+   "options": [
+    "Temperature",
+    "Rainfall",
+    "Soil fertility",
+    "Wind"
+   ],
+   "answer": "C",
+   "hint": "Soil fertility is an agricultural, not atmospheric, variable."
+  },
+  {
+   "q": "Temperature is measured using a:",
+   "options": [
+    "Rain gauge",
+    "Thermometer",
+    "Anemometer",
+    "Barometer"
+   ],
+   "answer": "B",
+   "hint": "Instrument specifically designed for measuring heat/cold."
+  },
+  {
+   "q": "Rainfall is measured in:",
+   "options": [
+    "Degrees Celsius",
+    "Millimetres",
+    "Millibars",
+    "Kilometres per hour"
+   ],
+   "answer": "B",
+   "hint": "Depth of water collected in a standard container."
+  },
+  {
+   "q": "Humidity is measured using a:",
+   "options": [
+    "Thermometer",
+    "Hygrometer",
+    "Anemometer",
+    "Sunshine recorder"
+   ],
+   "answer": "B",
+   "hint": "Instrument for measuring atmospheric moisture content."
+  },
+  {
+   "q": "Wind speed is measured using an:",
+   "options": [
+    "Barometer",
+    "Anemometer",
+    "Hygrometer",
+    "Rain gauge"
+   ],
+   "answer": "B",
+   "hint": "Device with rotating cups that measures air movement speed."
+  },
+  {
+   "q": "Wind direction is determined using a:",
+   "options": [
+    "Compass only",
+    "Wind vane",
+    "Thermometer",
+    "Rain gauge"
+   ],
+   "answer": "B",
+   "hint": "Arrow-shaped device that points into the wind."
+  },
+  {
+   "q": "Atmospheric pressure is measured in:",
+   "options": [
+    "Degrees Celsius",
+    "Millibars or Pascals",
+    "Millimetres",
+    "Percentages"
+   ],
+   "answer": "B",
+   "hint": "Units of force per unit area exerted by air weight."
+  },
+  {
+   "q": "Sunshine duration is measured using a:",
+   "options": [
+    "Rain gauge",
+    "Sunshine recorder",
+    "Barometer",
+    "Hygrometer"
+   ],
+   "answer": "B",
+   "hint": "Device that tracks hours of bright sunshine."
+  },
+  {
+   "q": "Climate is the statistical description of weather over at least:",
+   "options": [
+    "1 year",
+    "10 years",
+    "30 years",
+    "100 years"
+   ],
+   "answer": "C",
+   "hint": "WMO standard period for defining climate normals."
+  },
+  {
+   "q": "Which is an example of climate, not weather?",
+   "options": [
+    "Rain today",
+    "Sunny afternoon",
+    "Tropical rainforest climate",
+    "Thunderstorm this afternoon"
+   ],
+   "answer": "C",
+   "hint": "Climate describes long-term patterns, not daily conditions."
+  },
+  {
+   "q": "Nigeria generally has:",
+   "options": [
+    "Four seasons",
+    "Wet and dry seasons",
+    "Polar conditions",
+    "Mediterranean climate"
+   ],
+   "answer": "B",
+   "hint": "Tropical climate with distinct rainy and dry periods."
+  },
+  {
+   "q": "The Köppen Climate Classification is based on:",
+   "options": [
+    "Only temperature",
+    "Only rainfall",
+    "Temperature and rainfall patterns",
+    "Only altitude"
+   ],
+   "answer": "C",
+   "hint": "Combined thermal and precipitation criteria for classification."
+  },
+  {
+   "q": "Tropical climate is characterized by:",
+   "options": [
+    "Low temperatures year-round",
+    "High temperatures and heavy rainfall",
+    "Four distinct seasons",
+    "Snow throughout the year"
+   ],
+   "answer": "B",
+   "hint": "Equatorial regions with consistently warm, wet conditions."
+  },
+  {
+   "q": "Which crop is suitable for tropical climate?",
+   "options": [
+    "Wheat",
+    "Oil palm",
+    "Barley",
+    "Potatoes"
+   ],
+   "answer": "B",
+   "hint": "Tropical tree crop requiring high rainfall and temperature."
+  },
+  {
+   "q": "The Sahara Desert has which climate type?",
+   "options": [
+    "Tropical",
+    "Dry (Arid)",
+    "Temperate",
+    "Polar"
+   ],
+   "answer": "B",
+   "hint": "Extremely low rainfall and high evaporation characterize deserts."
+  },
+  {
+   "q": "Temperate climate is found in:",
+   "options": [
+    "Nigeria",
+    "United Kingdom",
+    "Sahara Desert",
+    "Antarctica"
+   ],
+   "answer": "B",
+   "hint": "Moderate temperatures with four distinct seasons."
+  },
+  {
+   "q": "Polar climate is characterized by:",
+   "options": [
+    "High temperatures",
+    "Extremely cold and ice cover",
+    "Heavy rainfall",
+    "Dense forests"
+   ],
+   "answer": "B",
+   "hint": "Regions near poles with permanent cold conditions."
+  },
+  {
+   "q": "Latitude determines:",
+   "options": [
+    "Only longitude",
+    "Angle of sunlight and temperature",
+    "Soil type only",
+    "Ocean depth"
+   ],
+   "answer": "B",
+   "hint": "Distance from equator affects solar energy received."
+  },
+  {
+   "q": "Temperature decreases with altitude at approximately:",
+   "options": [
+    "1°C per 100m",
+    "3°C per 500m",
+    "6.5°C per 1000m",
+    "10°C per 2000m"
+   ],
+   "answer": "C",
+   "hint": "Environmental lapse rate standard value."
+  },
+  {
+   "q": "Jos Plateau is cooler than Lagos because of:",
+   "options": [
+    "Latitude",
+    "Altitude",
+    "Ocean currents",
+    "Wind patterns"
+   ],
+   "answer": "B",
+   "hint": "Higher elevation leads to lower temperatures."
+  },
+  {
+   "q": "Areas close to oceans experience:",
+   "options": [
+    "Greater temperature extremes",
+    "Moderate temperatures and higher humidity",
+    "Very low rainfall",
+    "Extreme cold"
+   ],
+   "answer": "B",
+   "hint": "Maritime influence moderates coastal climate."
+  },
+  {
+   "q": "Warm ocean currents:",
+   "options": [
+    "Reduce temperature and rainfall",
+    "Increase temperature, humidity, and rainfall",
+    "Cause drought",
+    "Create ice"
+   ],
+   "answer": "B",
+   "hint": "Warm water warms and moistens overlying air masses."
+  },
+  {
+   "q": "The South-West Monsoon Wind in West Africa:",
+   "options": [
+    "Brings dry conditions",
+    "Brings rain",
+    "Causes harmattan",
+    "Reduces humidity"
+   ],
+   "answer": "B",
+   "hint": "Moist wind from the Atlantic Ocean bringing precipitation."
+  },
+  {
+   "q": "The North-East Trade Wind (Harmattan) is:",
+   "options": [
+    "A warm moist wind",
+    "A dry dusty wind",
+    "A hurricane",
+    "A sea breeze"
+   ],
+   "answer": "B",
+   "hint": "Dry continental wind from the Sahara during dry season."
+  },
+  {
+   "q": "The windward side of a mountain receives:",
+   "options": [
+    "Dry conditions",
+    "Heavy rainfall",
+    "No wind",
+    "Extreme cold"
+   ],
+   "answer": "B",
+   "hint": "Orographic lifting causes precipitation on the facing side."
+  },
+  {
+   "q": "The leeward side of a mountain experiences:",
+   "options": [
+    "Heavy rainfall",
+    "Rain shadow and dry conditions",
+    "High humidity",
+    "Dense forests"
+   ],
+   "answer": "B",
+   "hint": "Air descends and warms, reducing precipitation."
+  },
+  {
+   "q": "Forests influence climate by:",
+   "options": [
+    "Reducing humidity",
+    "Increasing humidity and enhancing rainfall",
+    "Increasing temperature",
+    "Promoting erosion"
+   ],
+   "answer": "B",
+   "hint": "Transpiration and canopy effects on local microclimate."
+  },
+  {
+   "q": "Deforestation leads to:",
+   "options": [
+    "Increased rainfall",
+    "Reduced rainfall and increased temperature",
+    "Lower temperatures",
+    "Enhanced biodiversity"
+   ],
+   "answer": "B",
+   "hint": "Removal of trees disrupts local water and temperature cycles."
+  },
+  {
+   "q": "Burning fossil fuels increases:",
+   "options": [
+    "Oxygen levels",
+    "Greenhouse gases like CO2",
+    "Water vapor only",
+    "Nitrogen fixation"
+   ],
+   "answer": "B",
+   "hint": "Combustion releases carbon dioxide and other heat-trapping gases."
+  },
+  {
+   "q": "Climate determines all EXCEPT:",
+   "options": [
+    "Crops that can be grown",
+    "Planting dates",
+    "Stock market prices",
+    "Pest outbreaks"
+   ],
+   "answer": "C",
+   "hint": "Stock markets are economic, not climate-dependent agricultural factors."
+  },
+  {
+   "q": "Hydropower depends on:",
+   "options": [
+    "Only sunshine",
+    "Rainfall and river discharge",
+    "Only wind speed",
+    "Only temperature"
+   ],
+   "answer": "B",
+   "hint": "Water flow drives turbines for electricity generation."
+  },
+  {
+   "q": "Nigeria's Tropical Rainforest Climate is found in the:",
+   "options": [
+    "North",
+    "South",
+    "Middle Belt",
+    "All regions equally"
+   ],
+   "answer": "B",
+   "hint": "Southern Nigeria near the coast with heavy rainfall."
+  },
+  {
+   "q": "The Guinea Savannah Climate in Nigeria is suitable for:",
+   "options": [
+    "Only desert crops",
+    "Mixed farming",
+    "Only fishing",
+    "Only mining"
+   ],
+   "answer": "B",
+   "hint": "Moderate rainfall supports diverse agricultural activities."
+  },
+  {
+   "q": "The Sudan/Sahel Savannah in Nigeria is characterized by:",
+   "options": [
+    "Heavy rainfall",
+    "Low rainfall and frequent droughts",
+    "Dense forests",
+    "Cool temperatures"
+   ],
+   "answer": "B",
+   "hint": "Arid northern region with water scarcity challenges."
+  },
+  {
+   "q": "Climate is measured over a period of at least:",
+   "options": [
+    "5 years",
+    "10 years",
+    "30 years",
+    "50 years"
+   ],
+   "answer": "C",
+   "hint": "Standard WMO period for climate normals."
+  },
+  {
+   "q": "Areas close to the Equator receive:",
+   "options": [
+    "Less solar energy",
+    "More direct sunlight and are warmer",
+    "No sunlight",
+    "Only reflected light"
+   ],
+   "answer": "B",
+   "hint": "Solar radiation is most direct at the equator."
+  },
+  {
+   "q": "Large water bodies heat and cool more _____ than land.",
+   "options": [
+    "Quickly",
+    "Slowly",
+    "Equally",
+    "Not at all"
+   ],
+   "answer": "B",
+   "hint": "Water has higher specific heat capacity than land."
+  },
+  {
+   "q": "Coastal areas usually experience:",
+   "options": [
+    "Extreme temperature variations",
+    "Moderate temperatures and higher humidity",
+    "Very dry conditions",
+    "Extreme cold"
+   ],
+   "answer": "B",
+   "hint": "Maritime climate influence moderates temperature extremes."
+  },
+  {
+   "q": "Warm ocean currents along coasts:",
+   "options": [
+    "Reduce temperature and rainfall",
+    "Increase air temperature and rainfall",
+    "Cause drought",
+    "Create deserts"
+   ],
+   "answer": "B",
+   "hint": "Warm water evaporates, adding moisture and heat to air."
+  },
+  {
+   "q": "Moist winds from oceans encourage:",
+   "options": [
+    "Drought",
+    "Rainfall",
+    "Desertification",
+    "Temperature extremes"
+   ],
+   "answer": "B",
+   "hint": "Maritime air masses carry moisture that precipitates over land."
+  },
+  {
+   "q": "The orographic effect causes heavy rainfall on the:",
+   "options": [
+    "Leeward side",
+    "Windward side of mountains",
+    "Mountain peaks only",
+    "Valley floors only"
+   ],
+   "answer": "B",
+   "hint": "Air forced upward cools and condenses on the facing slope."
+  },
+  {
+   "q": "Vegetation regulates local climate by all EXCEPT:",
+   "options": [
+    "Providing shade",
+    "Reducing surface temperatures",
+    "Emitting greenhouse gases",
+    "Absorbing carbon dioxide"
+   ],
+   "answer": "C",
+   "hint": "Plants absorb CO2; they don't primarily emit greenhouse gases."
+  },
+  {
+   "q": "Human activities that alter environmental conditions include all EXCEPT:",
+   "options": [
+    "Deforestation",
+    "Urbanization",
+    "Afforestation",
+    "Burning fossil fuels"
+   ],
+   "answer": "C",
+   "hint": "Afforestation (planting trees) improves rather than degrades environment."
+  },
+  {
+   "q": "Which is NOT an element of climate?",
+   "options": [
+    "Temperature",
+    "Rainfall",
+    "Stock prices",
+    "Wind"
+   ],
+   "answer": "C",
+   "hint": "Stock prices are economic, not atmospheric variables."
+  },
+  {
+   "q": "Higher temperatures increase the rate of:",
+   "options": [
+    "Condensation",
+    "Evaporation from water bodies",
+    "Precipitation always",
+    "Groundwater recharge"
+   ],
+   "answer": "B",
+   "hint": "Warmer air can hold more moisture, increasing evaporation rates."
+  },
+  {
+   "q": "Irregular rainfall reduces:",
+   "options": [
+    "Flooding",
+    "Groundwater recharge",
+    "Evaporation",
+    "Cloud cover"
+   ],
+   "answer": "B",
+   "hint": "Less consistent infiltration lowers underground water replenishment."
+  },
+  {
+   "q": "More intense rainfall events increase:",
+   "options": [
+    "Only drought",
+    "Frequency and severity of floods",
+    "Groundwater levels uniformly",
+    "Water quality everywhere"
+   ],
+   "answer": "B",
+   "hint": "Extreme precipitation overwhelms drainage capacity."
+  },
+  {
+   "q": "Higher temperatures in water bodies encourage growth of:",
+   "options": [
+    "Fish populations only",
+    "Algae and harmful microorganisms",
+    "Only clean bacteria",
+    "Nothing"
+   ],
+   "answer": "B",
+   "hint": "Warm water promotes biological activity including harmful blooms."
+  },
+  {
+   "q": "Reduced river flow affects:",
+   "options": [
+    "Only fisheries",
+    "Hydropower generation and agriculture",
+    "Only recreation",
+    "Only navigation"
+   ],
+   "answer": "B",
+   "hint": "Multiple sectors depend on adequate river flow."
+  },
+  {
+   "q": "Which is a major environmental problem?",
+   "options": [
+    "Clean air",
+    "Air pollution",
+    "Fresh water",
+    "Healthy forests"
+   ],
+   "answer": "B",
+   "hint": "Contamination of atmosphere by harmful substances."
+  },
+  {
+   "q": "Major sources of air pollution include all EXCEPT:",
+   "options": [
+    "Industrial emissions",
+    "Vehicle exhaust",
+    "Tree planting",
+    "Bush burning"
+   ],
+   "answer": "C",
+   "hint": "Tree planting improves air quality rather than polluting."
+  },
+  {
+   "q": "Water pollution introduces harmful substances into:",
+   "options": [
+    "Only oceans",
+    "Rivers, lakes, groundwater, and oceans",
+    "Only swimming pools",
+    "Only bottled water"
+   ],
+   "answer": "B",
+   "hint": "All water bodies can be affected by contamination."
+  },
+  {
+   "q": "Land pollution is caused by accumulation of:",
+   "options": [
+    "Only natural soil",
+    "Solid waste, chemicals, plastics, and mining wastes",
+    "Only rainwater",
+    "Only tree leaves"
+   ],
+   "answer": "B",
+   "hint": "Human-generated contaminants degrade soil quality."
+  },
+  {
+   "q": "Noise pollution sources include all EXCEPT:",
+   "options": [
+    "Traffic",
+    "Industries",
+    "Whispering",
+    "Generators"
+   ],
+   "answer": "C",
+   "hint": "Whispering is too quiet to constitute pollution."
+  },
+  {
+   "q": "Deforestation commonly occurs due to:",
+   "options": [
+    "Only natural fires",
+    "Logging, agricultural expansion, and fuelwood collection",
+    "Only government policy",
+    "Only wildlife activity"
+   ],
+   "answer": "B",
+   "hint": "Human activities are primary drivers of forest removal."
+  },
+  {
+   "q": "Climate change is largely caused by:",
+   "options": [
+    "Only natural cycles",
+    "Increased greenhouse gases from human activities",
+    "Only solar flares",
+    "Only volcanic eruptions"
+   ],
+   "answer": "B",
+   "hint": "Anthropogenic emissions are the dominant modern cause."
+  },
+  {
+   "q": "Industrialization releases pollutants into:",
+   "options": [
+    "Only air",
+    "Air, water, and soil",
+    "Only water",
+    "Only soil"
+   ],
+   "answer": "B",
+   "hint": "Multiple environmental media affected by industrial waste."
+  },
+  {
+   "q": "Rapid population growth places pressure on:",
+   "options": [
+    "Only urban areas",
+    "Land, water, forests, and natural resources",
+    "Only coastal regions",
+    "Only mountainous areas"
+   ],
+   "answer": "B",
+   "hint": "Increased demand affects all natural resource systems."
+  },
+  {
+   "q": "Unsustainable agricultural practices include:",
+   "options": [
+    "Organic farming",
+    "Overuse of fertilizers and pesticides",
+    "Crop rotation",
+    "Agroforestry"
+   ],
+   "answer": "B",
+   "hint": "Excessive chemical inputs degrade soil and water quality."
+  },
+  {
+   "q": "Natural causes of environmental degradation include all EXCEPT:",
+   "options": [
+    "Floods",
+    "Drought",
+    "Industrial emissions",
+    "Volcanic eruptions"
+   ],
+   "answer": "C",
+   "hint": "Industrial emissions are human-caused, not natural."
+  },
+  {
+   "q": "Exposure to polluted air increases risk of:",
+   "options": [
+    "Only skin diseases",
+    "Respiratory and cardiovascular diseases",
+    "Only bone fractures",
+    "Only eye infections"
+   ],
+   "answer": "B",
+   "hint": "Particulate matter and gases affect lungs and heart."
+  },
+  {
+   "q": "Consumption of contaminated water causes:",
+   "options": [
+    "Only malaria",
+    "Cholera, typhoid, and dysentery",
+    "Only HIV/AIDS",
+    "Only diabetes"
+   ],
+   "answer": "B",
+   "hint": "Waterborne pathogens cause gastrointestinal diseases."
+  },
+  {
+   "q": "Stagnant water provides breeding grounds for:",
+   "options": [
+    "Only butterflies",
+    "Mosquitoes and flies",
+    "Only birds",
+    "Only fish"
+   ],
+   "answer": "B",
+   "hint": "Vector breeding in standing water spreads diseases."
+  },
+  {
+   "q": "Rising temperatures increase cases of:",
+   "options": [
+    "Only hypothermia",
+    "Dehydration and heat stroke",
+    "Only frostbite",
+    "Only pneumonia"
+   ],
+   "answer": "B",
+   "hint": "Heat-related illnesses increase with extreme temperatures."
+  }
+ ],
+ "theory": [
+  {
+   "q": "Define water resources management and explain five of its key objectives.",
+   "hint": "Start with the coordinated development definition, then list objectives like sustainable supply, environmental protection, and public health."
+  },
+  {
+   "q": "Describe the hydrological cycle and explain the importance of at least five of its main processes.",
+   "hint": "Begin with evaporation and end with groundwater flow, explaining how each maintains water balance."
+  },
+  {
+   "q": "Explain the water balance equation P = ET + Q + ΔS, identifying each component and its significance in watershed management.",
+   "hint": "Define each variable and explain how the equation helps quantify water movement."
+  },
+  {
+   "q": "Discuss five challenges facing water resources management in developing countries like Nigeria.",
+   "hint": "Consider population growth, pollution, climate change, governance, and financial constraints."
+  },
+  {
+   "q": "List and describe the key institutions responsible for water resources management in Nigeria and their respective roles.",
+   "hint": "Include Federal Ministry, RBDAs, NIHSA, and NWRI with their specific functions."
+  },
+  {
+   "q": "Describe the types of hydrological measurements and explain the instruments used for each.",
+   "hint": "Cover flow, discharge, water level, and water quality measurements with their respective instruments."
+  },
+  {
+   "q": "Discuss the types of data sources in hydrology and explain the advantages and limitations of each.",
+   "hint": "Compare field measurements, remote sensing, literature reviews, and surveys."
+  },
+  {
+   "q": "Explain the types of data analysis used in hydrology, giving examples of when each is applied.",
+   "hint": "Describe descriptive statistics, inferential statistics, and signal processing with practical examples."
+  },
+  {
+   "q": "Discuss the challenges and limitations facing hydrological measurements and data analysis, and suggest how emerging technologies can address them.",
+   "hint": "Address data quality, spatial variability, modeling uncertainty, and mention IoT, AI, and drones."
+  },
+  {
+   "q": "Explain how data interpretation in hydrology can be applied to real-world problems such as flood prediction and groundwater management.",
+   "hint": "Use precipitation-runoff and groundwater recharge examples to illustrate practical applications."
+  },
+  {
+   "q": "Explain the four Dublin Principles and their implications for integrated water resources management.",
+   "hint": "Discuss finiteness, participation, women's role, and economic value of water with management implications."
+  },
+  {
+   "q": "Describe the three core elements of IWRM (enabling environment, institutional roles, and management instruments) and give examples of each.",
+   "hint": "Cover policies/legislation, organizational frameworks, and tools like pricing and permits."
+  },
+  {
+   "q": "Compare and contrast water demand management and water supply management, giving specific strategies for each.",
+   "hint": "Contrast efficiency/reduction approaches with development/protection of sources."
+  },
+  {
+   "q": "Discuss five water demand management strategies for urban and agricultural sectors, including their advantages and limitations.",
+   "hint": "Include pricing, metering, drip irrigation, deficit irrigation, and crop selection."
+  },
+  {
+   "q": "Explain the importance of water quality management to human health and the environment, discussing key parameters and pollution sources.",
+   "hint": "Cover disease prevention, ecosystem health, physical/chemical/microbiological parameters, and point/non-point sources."
+  },
+  {
+   "q": "Describe the components of a national water policy framework and explain why each is essential for effective water governance.",
+   "hint": "Cover vision, principles, institutional arrangements, allocation priorities, financing, and international commitments."
+  },
+  {
+   "q": "Discuss five major international water policy instruments, stating their year of establishment and significance in global water governance.",
+   "hint": "Include Mar del Plata, Dublin Statement, MDGs, Johannesburg Plan, SDG 6, UN Resolution, and UNECE Water Convention."
+  },
+  {
+   "q": "Explain the four types of water regulation (water use licenses, discharge permits, environmental flows, and water quality standards) and their role in protecting water resources.",
+   "hint": "Define each regulation type and explain how they control abstraction, pollution, ecological health, and quality."
+  },
+  {
+   "q": "Discuss the emerging technologies in hydrological modeling, their applications, and the challenges associated with their implementation.",
+   "hint": "Cover AI/ML, remote sensing, IoT, cloud/quantum computing, and limitations like data scarcity and cost."
+  },
+  {
+   "q": "Explain how South Africa's ecological reserve concept in the National Water Act (1998) represents a landmark approach to water allocation.",
+   "hint": "Describe the priority given to ecological and basic human needs before economic uses."
+  },
+  {
+   "q": "Define weather, climate, and environment, and explain the differences between weather and climate with at least five distinguishing characteristics.",
+   "hint": "Start with short-term vs long-term, then cover temporal scale, spatial coverage, predictability, variability, and examples."
+  },
+  {
+   "q": "Describe the five major types of climate according to the Köppen classification, giving their characteristics and examples of regions where each occurs.",
+   "hint": "Cover Tropical, Dry, Temperate, Continental, and Polar climates with specific examples."
+  },
+  {
+   "q": "Explain seven factors that drive or influence climate, using Nigerian examples where applicable.",
+   "hint": "Discuss latitude, altitude, distance from sea, ocean currents, wind patterns, relief, vegetation, and human activities."
+  },
+  {
+   "q": "Discuss the importance of climate to agriculture, water resources, energy production, transportation, ecosystems, and human health.",
+   "hint": "Explain how climate influences each sector with specific examples like crop selection, river flow, hydropower, and disease transmission."
+  },
+  {
+   "q": "Describe the three broad climatic zones of Nigeria and explain how each influences agricultural practices and water availability.",
+   "hint": "Cover Tropical Rainforest (South), Guinea Savannah (Middle Belt), and Sudan/Sahel Savannah (North)."
+  },
+  {
+   "q": "Explain eight factors that affect climate and environment, describing how each influences local and regional conditions.",
+   "hint": "Cover latitude, altitude, distance from sea, ocean currents, prevailing winds, relief, vegetation cover, and human activities."
+  },
+  {
+   "q": "Describe the seven elements of climate and explain the instruments used to measure each.",
+   "hint": "Include temperature, rainfall, humidity, atmospheric pressure, wind, sunshine, and cloud cover with their measurement devices."
+  },
+  {
+   "q": "Discuss the impact of climate change on water resources, covering at least six specific effects.",
+   "hint": "Address rainfall patterns, evaporation, groundwater recharge, flooding, water quality, agriculture, hydropower, and aquatic ecosystems."
+  },
+  {
+   "q": "Describe five major environmental problems, their causes, and their effects on human health and the environment.",
+   "hint": "Cover air, water, land, noise pollution, and deforestation with specific health and ecological impacts."
+  },
+  {
+   "q": "Discuss the causes of environmental problems, distinguishing between human (anthropogenic) and natural causes with examples of each.",
+   "hint": "Cover industrialization, population growth, urbanization, deforestation, agriculture, mining, and natural events like floods and droughts."
+  }
+ ]
+}

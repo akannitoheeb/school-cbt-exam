@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "Invertebrates are animals that:",
+   "options": [
+    "Have a backbone",
+    "Lack a backbone",
+    "Live only in water",
+    "Cannot reproduce"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which phylum do insects belong to?",
+   "options": [
+    "Mollusca",
+    "Arthropoda",
+    "Annelida",
+    "Cnidaria"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Earthworms belong to which phylum?",
+   "options": [
+    "Arthropoda",
+    "Annelida",
+    "Mollusca",
+    "Porifera"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Describe the general characteristics of the phylum Arthropoda."
+  },
+  {
+   "q": "Explain the economic importance of invertebrates to humans."
+  }
+ ]
+}

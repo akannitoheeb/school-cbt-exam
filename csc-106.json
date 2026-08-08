@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "A function that calls itself is described as:",
+   "options": [
+    "Iterative",
+    "Recursive",
+    "Static",
+    "Abstract"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "An array is best described as:",
+   "options": [
+    "A single variable",
+    "A collection of elements of the same type stored together",
+    "A type of loop",
+    "A programming error"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which of these best describes debugging?",
+   "options": [
+    "Writing new code",
+    "Finding and fixing errors in code",
+    "Deleting a program",
+    "Compiling code"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Explain the concept of recursion with a suitable example."
+  },
+  {
+   "q": "Describe the difference between a compiler and an interpreter."
+  }
+ ]
+}

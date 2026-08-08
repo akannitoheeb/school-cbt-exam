@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "Nigeria gained independence from Britain in:",
+   "options": [
+    "1957",
+    "1960",
+    "1963",
+    "1970"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which of these is one of Nigeria's three major ethnic groups?",
+   "options": [
+    "Zulu",
+    "Yoruba",
+    "Maasai",
+    "Ashanti"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Nigeria operates which system of government?",
+   "options": [
+    "Monarchy",
+    "Federal republic",
+    "Unitary state",
+    "Theocracy"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Discuss the importance of national unity in a culturally diverse country like Nigeria."
+  },
+  {
+   "q": "Describe any two traditional institutions found in Nigerian society and their roles."
+  }
+ ]
+}

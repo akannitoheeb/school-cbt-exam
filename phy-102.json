@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "The SI unit of electric current is the:",
+   "options": [
+    "Volt",
+    "Ohm",
+    "Ampere",
+    "Watt"
+   ],
+   "answer": "C"
+  },
+  {
+   "q": "Ohm's Law states that V equals:",
+   "options": [
+    "I/R",
+    "I × R",
+    "R/I",
+    "I + R"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "A concave mirror is also known as a:",
+   "options": [
+    "Diverging mirror",
+    "Converging mirror",
+    "Plane mirror",
+    "Convex mirror"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "State Ohm's Law and use it to calculate the current flowing through a 10Ω resistor connected to a 20V source."
+  },
+  {
+   "q": "Explain the difference between series and parallel circuits."
+  }
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "Aquaculture refers to:",
+   "options": [
+    "The study of birds",
+    "The farming of aquatic organisms",
+    "The study of soil",
+    "The farming of livestock only"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which of these is a common freshwater fish farmed in Nigeria?",
+   "options": [
+    "Tilapia",
+    "Tuna",
+    "Shark",
+    "Salmon"
+   ],
+   "answer": "A"
+  },
+  {
+   "q": "A fish pond's water quality is commonly tested for:",
+   "options": [
+    "Soil texture",
+    "Dissolved oxygen and pH",
+    "Wind speed",
+    "Air pressure"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Discuss the importance of aquaculture to food security in Nigeria."
+  },
+  {
+   "q": "Describe two water quality parameters that must be monitored in fish farming and why they matter."
+  }
+ ]
+}

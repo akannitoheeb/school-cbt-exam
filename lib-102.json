@@ -1,0 +1,42 @@
+{
+ "objective": [
+  {
+   "q": "The system used to classify books in most academic libraries is called:",
+   "options": [
+    "Alphabetical order only",
+    "Dewey Decimal Classification",
+    "Random shelving",
+    "Colour coding"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "A citation is used to:",
+   "options": [
+    "Make an essay longer",
+    "Acknowledge the source of information used",
+    "Confuse the reader",
+    "Replace the reference list"
+   ],
+   "answer": "B"
+  },
+  {
+   "q": "Which of these is good practice for effective study?",
+   "options": [
+    "Cramming the night before an exam",
+    "Spaced, regular revision",
+    "Studying without breaks for 10 hours",
+    "Avoiding note-taking"
+   ],
+   "answer": "B"
+  }
+ ],
+ "theory": [
+  {
+   "q": "Explain the steps you would take to locate a book in the university library using the catalogue."
+  },
+  {
+   "q": "Discuss the importance of avoiding plagiarism in academic writing."
+  }
+ ]
+}
