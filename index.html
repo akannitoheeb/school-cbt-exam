@@ -545,6 +545,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
   <div class="card">
     <div class="eyebrow">Section B — Your Theory Answers</div>
     <h2 style="font-size:19px; margin-bottom:16px;">AI self-check on your answers</h2>
+    <div id="theory-grade-error" style="display:none; background:#fdecea; border:1px solid #f5b5ac; color:#8a2e21; border-radius:8px; padding:10px 12px; margin-bottom:14px; font-size:12.5px; font-family:monospace; word-break:break-word;"></div>
     <div id="review-theory"></div>
   </div>
 
@@ -1403,6 +1404,7 @@ $('btn-submit-theory').addEventListener('click', async () => {
    here and stay flagged for manual review since handwriting isn't graded. */
 async function gradeTheoryAnswers(){
   state.theoryGrades = state.theoryGrades || {};
+  state.theoryGradeError = '';
   const gradable = [];
   activeTheory.forEach((item, i) => {
     const ans = (state.theoryAnswers[i] || '').trim();
@@ -1429,6 +1431,7 @@ async function gradeTheoryAnswers(){
     });
   }catch(err){
     console.error('[FUADSI] AI grading failed, leaving these for manual review:', err);
+    state.theoryGradeError = String(err && err.message ? err.message : err);
   }
 }
 
@@ -1504,6 +1507,15 @@ function showResults(){
 }
 
 function renderReview(){
+  const errBox = $('theory-grade-error');
+  if (errBox) {
+    if (state.theoryGradeError) {
+      errBox.style.display = 'block';
+      errBox.textContent = 'AI grading error (send this to Toheeb): ' + state.theoryGradeError;
+    } else {
+      errBox.style.display = 'none';
+    }
+  }
   const letters = ['A','B','C','D'];
   $('review-objectives').innerHTML = activeObjectives.map((item,i) => {
     const sel = state.objAnswers[i];
