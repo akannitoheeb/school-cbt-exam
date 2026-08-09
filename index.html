@@ -117,6 +117,9 @@ button:active{ transform:translateY(1px); }
 .hintbox{ display:none; background:var(--gold-tint); border:1px solid var(--gold); border-radius:10px; padding:12px 14px; font-size:13.5px; color:var(--forest-dark); line-height:1.5; margin-bottom:16px; }
 .hintbox.show{ display:block; }
 .qtext{ font-size:18px; line-height:1.5; font-weight:500; margin-bottom:20px; }
+.speaker-btn{ flex-shrink:0; width:38px; height:38px; border-radius:50%; border:1px solid var(--line, #ddd); background:var(--paper, #fff); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; }
+.speaker-btn:hover{ background:var(--gold-tint); border-color:var(--gold); }
+.speaker-btn.speaking{ background:var(--gold); border-color:var(--gold); }
 .option{ display:flex; align-items:center; gap:11px; padding:13px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:10px; cursor:pointer; background:var(--paper); font-size:15px;}
 .option:hover{ border-color:var(--forest); }
 .option.selected{ border-color:var(--forest); background:var(--forest-tint); }
@@ -429,7 +432,10 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
         <button class="ghost" id="btn-end-exam-obj-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
       </div>
       <div class="qmeta"><span class="idx" id="obj-qindex">Question 1 of —</span><span><button class="hintbtn" id="obj-hintbtn" style="display:none;">Show hint</button><button class="flagbtn" id="obj-flagbtn">Flag for review</button></span></div>
-      <div class="qtext" id="obj-qtext">—</div>
+      <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:20px;">
+        <div class="qtext" id="obj-qtext" style="margin-bottom:0; flex:1;">—</div>
+        <button type="button" class="speaker-btn" id="obj-speak-btn" aria-label="Read question aloud" title="Read question aloud">&#128266;</button>
+      </div>
       <div class="hintbox" id="obj-hintbox"></div>
       <div id="obj-options"></div>
       <div class="qpanel-actions">
@@ -491,7 +497,10 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
         <button class="ghost" id="btn-end-exam-theory-top" style="font-size:12px; padding:8px 14px; color:var(--crimson); border-color:var(--crimson); background:var(--crimson-tint);">End Exam</button>
       </div>
       <div class="qmeta"><span class="idx" id="theory-qindex">Question 1 of —</span><button class="hintbtn" id="theory-hintbtn" style="display:none;">Show hint</button></div>
-      <div class="qtext" id="theory-qtext">—</div>
+      <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:20px;">
+        <div class="qtext" id="theory-qtext" style="margin-bottom:0; flex:1;">—</div>
+        <button type="button" class="speaker-btn" id="theory-speak-btn" aria-label="Read question aloud" title="Read question aloud">&#128266;</button>
+      </div>
       <div class="hintbox" id="theory-hintbox"></div>
       <textarea id="theory-answer" placeholder="Type your answer here... (or attach a photo of your written working below)"></textarea>
       <div class="wordcount"><span id="theory-wordcount">0</span> words</div>
@@ -1060,7 +1069,37 @@ function refreshObjNav(){
   });
   $('obj-progress').style.width = (Object.keys(state.objAnswers).length/activeObjectives.length*100)+'%';
 }
+/* ===================== READ QUESTION ALOUD ===================== */
+let currentSpeakBtn = null;
+function resetSpeakBtn(btn){ if(btn){ btn.innerHTML = '&#128266;'; btn.classList.remove('speaking'); } }
+function speakQuestion(text, btn){
+  if(!('speechSynthesis' in window)){
+    alert("Sorry, your browser doesn't support reading text aloud.");
+    return;
+  }
+  if(currentSpeakBtn === btn && speechSynthesis.speaking){
+    speechSynthesis.cancel();
+    resetSpeakBtn(btn);
+    currentSpeakBtn = null;
+    return;
+  }
+  speechSynthesis.cancel();
+  resetSpeakBtn(currentSpeakBtn);
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.95;
+  utter.onend = () => { resetSpeakBtn(btn); if(currentSpeakBtn===btn) currentSpeakBtn = null; };
+  utter.onerror = () => { resetSpeakBtn(btn); if(currentSpeakBtn===btn) currentSpeakBtn = null; };
+  btn.innerHTML = '&#9209;';
+  btn.classList.add('speaking');
+  currentSpeakBtn = btn;
+  speechSynthesis.speak(utter);
+}
+$('obj-speak-btn').addEventListener('click', () => speakQuestion($('obj-qtext').textContent, $('obj-speak-btn')));
+$('theory-speak-btn').addEventListener('click', () => speakQuestion($('theory-qtext').textContent, $('theory-speak-btn')));
+
 function renderObjQuestion(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  currentSpeakBtn = null;
   const item = activeObjectives[state.objIndex];
   $('obj-qindex').textContent = `Question ${state.objIndex+1} of ${activeObjectives.length}`;
   $('obj-qtext').textContent = item.q;
@@ -1251,6 +1290,8 @@ function refreshTheoryNav(){
 }
 function saveTheoryDraft(){ state.theoryAnswers[state.theoryIndex] = $('theory-answer').value; }
 function renderTheoryQuestion(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  currentSpeakBtn = null;
   const item = activeTheory[state.theoryIndex];
   $('theory-qindex').textContent = `Question ${state.theoryIndex+1} of ${activeTheory.length}`;
   $('theory-qtext').textContent = item.q;
