@@ -1546,8 +1546,14 @@ function renderReview(){
     if (grade && typeof grade.score === 'number') {
       const verdictLabel = grade.verdict === 'correct' ? 'Correct' : (grade.verdict === 'partial' ? 'Partial' : 'Needs work');
       const status = grade.verdict === 'correct' ? 'correct' : (grade.verdict === 'partial' ? 'unanswered' : 'wrong');
+      const correctAnswerBlock = grade.correct_answer
+        ? `<div style="margin-top:10px; background:var(--gold-tint); border:1px solid var(--gold); border-radius:8px; padding:10px 12px;">
+             <div style="font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--forest-dark); margin-bottom:4px;">Correct answer</div>
+             <div class="qtext-sm" style="color:var(--forest-dark);">${escapeHtml(grade.correct_answer)}</div>
+           </div>`
+        : '';
       gradeBlock = `<div class="review-status ${status}" style="margin-top:10px;">${verdictLabel} · ${grade.score}%</div>
-        <div class="qtext-sm" style="margin-top:6px; color:var(--stone);">${escapeHtml(grade.feedback || '')}</div>`;
+        <div class="qtext-sm" style="margin-top:6px; color:var(--stone);">${escapeHtml(grade.feedback || '')}</div>${correctAnswerBlock}`;
     } else if (img) {
       gradeBlock = `<div class="review-status unanswered" style="margin-top:10px;">Photo answer — pending manual review</div>`;
     } else if (ans) {
