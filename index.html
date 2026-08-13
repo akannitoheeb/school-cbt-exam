@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CBT PRACTICES QUESTIONS PORTAL </title>
+<title>FUADSI CBT Examination Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -287,7 +287,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <svg viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M12 2C9 6 4 8 4 13c0 4 3.5 7 8 7s8-3 8-7c0-5-5-7-8-11Z" fill="#fff"/><path d="M12 22V11" stroke="#146C36" stroke-width="1.4" stroke-linecap="round"/></svg>
     </div>
     <div class="letterhead-text">
-      <div class="school">AI PRACTICE QUESTION </div>
+      <div class="school">FEDERAL UNIVERSITY OF AGRICULTURE AND DEVELOPMENT STUDIES, IRAGBIJI</div>
       <div class="portal">Computer-Based Pratices Questions Portal</div>
     </div>
     <a class="back-link" href="past-questions.html">Past Questions &rarr;</a>
@@ -316,6 +316,25 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       </div>
     </div>
 
+    <div class="field">
+      <label for="in-level">Level <span class="req">*</span></label>
+      <select id="in-level" required>
+        <option value="">Select your level</option>
+        <option value="100">100 Level</option>
+        <option value="200">200 Level</option>
+        <option value="300">300 Level</option>
+        <option value="400">400 Level</option>
+        <option value="500">500 Level</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="in-semester">Semester <span class="req">*</span></label>
+      <select id="in-semester" required>
+        <option value="">Select semester</option>
+        <option value="Harmattan">Harmattan</option>
+        <option value="Rain">Rain</option>
+      </select>
+    </div>
     <div class="field">
       <label for="in-dept">Department <span class="req">*</span></label>
       <select id="in-dept" required>
@@ -538,6 +557,7 @@ textarea{ width:100%; min-height:220px; border:1px solid var(--line); border-rad
       <div class="stat-box"><div class="n" id="res-unanswered">0</div><div class="l">Unanswered</div></div>
     </div>
     <table class="summary-table">
+      <tr><td>Level / Semester</td><td id="res-level-sem">—</td></tr>
       <tr><td>Department</td><td id="res-dept">—</td></tr>
       <tr><td>Course</td><td id="res-course">—</td></tr>
       <tr><td>Section B (Theory)</td><td id="res-theory-status">Submitted, pending review</td></tr>
@@ -728,7 +748,7 @@ function releaseWakeLock() {
 
 /* ===================== STATE ===================== */
 let state = {
-  sessionId:'', department:'', course:'',
+  sessionId:'', level:'', semester:'', department:'', course:'',
   section:'objective',
   objAnswers:{}, objFlags:{}, objIndex:0, objHintShown:{},
   theoryAnswers:{}, theoryImages:{}, theoryIndex:0, theoryHintShown:{}, theoryGrades:{},
@@ -865,23 +885,39 @@ function courseEligible(course, dep){
   return false;
 }
 
-$('in-dept').addEventListener('change', () => {
+/* A course only needs to declare "level"/"semester" in courses-manifest.json
+   once you're ready to enforce it — courses without those fields still show
+   for everyone so nothing breaks while you tag the bank gradually. */
+function courseMatchesLevelSemester(course, level, semester){
+  if(course.level && String(course.level) !== String(level)) return false;
+  if(course.semester && course.semester !== semester) return false;
+  return true;
+}
+
+function refreshCourseOptions(){
   const dep = $('in-dept').value;
+  const level = $('in-level').value;
+  const semester = $('in-semester').value;
   const courseSel = $('in-course');
   courseSel.innerHTML = '';
   if(!dep){ courseSel.disabled = true; courseSel.innerHTML = '<option value="">Select department first</option>'; validateGate(); return; }
   courseSel.disabled = false;
   courseSel.innerHTML = '<option value="">Select a course</option>';
   Object.keys(COURSES_META).forEach(code => {
-    if(courseEligible(COURSES_META[code], dep)){
+    const course = COURSES_META[code];
+    if(courseEligible(course, dep) && courseMatchesLevelSemester(course, level, semester)){
       const opt = document.createElement('option');
       opt.value = code;
-      opt.textContent = COURSES_META[code].title;
+      opt.textContent = course.title;
       courseSel.appendChild(opt);
     }
   });
   validateGate();
-});
+}
+
+$('in-dept').addEventListener('change', refreshCourseOptions);
+$('in-level').addEventListener('change', refreshCourseOptions);
+$('in-semester').addEventListener('change', refreshCourseOptions);
 $('in-course').addEventListener('change', validateGate);
 
 /* ===================== QUESTION COUNT SLIDERS ===================== */
@@ -898,12 +934,14 @@ $('range-theory-count').addEventListener('input', () => {
 
 /* ===================== GATE / VALIDATION ===================== */
 function validateGate(){
-  const ok = $('in-dept').value && $('in-course').value && $('in-agree').checked;
+  const ok = $('in-level').value && $('in-semester').value && $('in-dept').value && $('in-course').value && $('in-agree').checked;
   $('btn-to-instructions').disabled = !ok;
 }
 ['in-agree'].forEach(id => $(id).addEventListener('input', validateGate));
 
 $('btn-to-instructions').addEventListener('click', async () => {
+  state.level = $('in-level').value;
+  state.semester = $('in-semester').value;
   state.department = $('in-dept').value;
   state.course = $('in-course').value;
 
@@ -943,7 +981,7 @@ $('btn-to-instructions').addEventListener('click', async () => {
   }
 
   $('instr-course-title').textContent = bank.title;
-  $('instr-student-line').textContent = `${state.department} · ${bank.title}`;
+  $('instr-student-line').textContent = `${state.level}L · ${state.semester} · ${state.department} · ${bank.title}`;
   updatePlanCounts();
 
   hide('screen-gate'); show('screen-instructions'); window.scrollTo({top:0});
@@ -1040,6 +1078,7 @@ $('btn-resume').addEventListener('click', () => {
 
 /* ===================== SECTION A: OBJECTIVES ===================== */
 $('btn-start-objectives').addEventListener('click', () => {
+  unlockAudio();
   const bank = COURSES[state.course];
   const shuffled = buildShuffledSet(bank, state.objCount, state.theoryCount);
   activeObjectives = shuffled.objective;
@@ -1137,6 +1176,34 @@ $('obj-next').addEventListener('click', () => { if(state.objIndex<activeObjectiv
 $('obj-flagbtn').addEventListener('click', () => { state.objFlags[state.objIndex] = !state.objFlags[state.objIndex]; renderObjQuestion(); autosave(); });
 $('obj-hintbtn').addEventListener('click', () => { state.objHintShown[state.objIndex] = !state.objHintShown[state.objIndex]; renderObjQuestion(); });
 
+/* ===================== TIME ALERT SOUND ===================== */
+let audioCtx = null;
+function unlockAudio(){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+  }catch(e){ /* Web Audio not supported — alerts will just be silent */ }
+}
+function playTimeAlert(){
+  if(!audioCtx) return;
+  try{
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    const beep = (t, freq) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.35, t+0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t+0.35);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(t); osc.stop(t+0.4);
+    };
+    const now = audioCtx.currentTime;
+    beep(now, 880);
+    beep(now+0.45, 880);
+  }catch(e){ console.warn('[FUADSI] Could not play time alert:', e); }
+}
+
 function startObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
 function resumeObjTimer(){ $('obj-timer').textContent = fmtTime(state.objTimeLeft); runObjTicker(); }
 function runObjTicker(){
@@ -1145,6 +1212,7 @@ function runObjTicker(){
     state.objTimeLeft--;
     $('obj-timer').textContent = fmtTime(state.objTimeLeft);
     $('obj-timer').classList.toggle('low', state.objTimeLeft<=60);
+    if(state.objTimeLeft === 300 || state.objTimeLeft === 120) playTimeAlert();
     if(state.objTimeLeft % 15 === 0) autosave();
     if(state.objTimeLeft<=0){ clearInterval(objInterval); finishObjectives(); }
   },1000);
@@ -1421,6 +1489,7 @@ function runTheoryTicker(){
     state.theoryTimeLeft--;
     $('theory-timer').textContent = fmtTime(state.theoryTimeLeft);
     $('theory-timer').classList.toggle('low', state.theTimeLeft<=60);
+    if(state.theoryTimeLeft === 300 || state.theoryTimeLeft === 120) playTimeAlert();
     if(state.theoryTimeLeft % 15 === 0){ saveTheoryDraft(); autosave(); }
     if(state.theoryTimeLeft<=0){ clearInterval(theoryInterval); finishTheory(); }
   },1000);
@@ -1507,6 +1576,7 @@ function showResults(){
   $('res-correct').textContent = correct;
   $('res-wrong').textContent = wrong;
   $('res-unanswered').textContent = unanswered;
+  $('res-level-sem').textContent = `${state.level}L · ${state.semester}`;
   $('res-dept').textContent = state.department;
   $('res-course').textContent = COURSES[state.course].title;
   const theoryCell = $('res-theory-status');
@@ -1532,6 +1602,7 @@ function showResults(){
     timestamp: new Date().toISOString(),
     sessionId: getSessionId(),
     department: state.department, course: COURSES[state.course].title,
+    level: state.level, semester: state.semester,
     objectiveScore: pct, correctAnswers: correct, totalQuestions: activeObjectives.length,
     theorySubmitted: true,
     totalScore: pct,
@@ -1671,6 +1742,8 @@ async function sendResultsToSupabase(payload){
   try{
     const dbPayload = {
       session_id: payload.sessionId,
+      level: payload.level,
+      semester: payload.semester,
       department: payload.department,
       course: payload.course,
       objective_score: payload.objectiveScore,
@@ -1758,6 +1831,8 @@ async function retryPendingSubmissions(){
         },
         body: JSON.stringify({
           session_id: payload.sessionId,
+          level: payload.level,
+          semester: payload.semester,
           department: payload.department,
           course: payload.course,
           objective_score: payload.objectiveScore,
@@ -1789,9 +1864,11 @@ async function retryPendingSubmissions(){
 
 /* ===================== NEW COURSE AFTER RESULTS ===================== */
 $('btn-new-course').addEventListener('click', () => {
-  // Reset state for new exam but keep department + anonymous session id
+  // Reset state for new exam but keep level, semester, department + anonymous session id
   state = {
     sessionId: state.sessionId,
+    level: state.level,
+    semester: state.semester,
     department: state.department,
     course: '',
     section: 'objective',
