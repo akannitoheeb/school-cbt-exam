@@ -1,76 +1,92 @@
 {
  "MTH 102": {
   "title": "MTH 102 — Elementary Mathematics II (Calculus)",
-  "eligible": "ALL"
+  "eligible": "ALL",
+  "level": "100",
+  "semester": "Rain"
  },
  "COS 102": {
   "title": "COS 102 — Introduction to Problem Solving",
-  "eligible": [
-   "B.Sc. Computer Science"
-  ]
+  "eligible": ["B.Sc. Computer Science"],
+  "level": "100",
+  "semester": "Rain"
  },
  "CHM 102": {
   "title": "CHM 102 — General Chemistry II",
-  "eligible": "ALL"
+  "eligible": "ALL",
+  "level": "100",
+  "semester": "Rain"
  },
  "AGG 112": {
   "title": "AGG 112 — Introduction to Agriculture",
-  "eligible": "ALL"
+  "eligible": "ALL",
+  "level": "100",
+  "semester": "Rain"
  },
  "PHY 102": {
   "title": "PHY 102 — General Physics II",
-  "eligible": "ALL"
+  "eligible": "ALL",
+  "level": "100",
+  "semester": "Rain"
  },
  "WMA 142": {
   "title": "WMA 142 — Introduction to Water Resources Management and Agrometeorology",
-  "eligible": [
-   "B.Sc. Water Resources Management and Agro-Meteorology"
-  ]
+  "eligible": ["B.Sc. Water Resources Management and Agro-Meteorology"],
+  "level": "100",
+  "semester": "Rain"
  },
  "GST 112": {
   "title": "GST 112 — Nigerian Peoples and Culture",
-  "eligible": "ALL"
+  "eligible": "ALL",
+  "level": "100",
+  "semester": "Rain"
  },
  "LIB 102": {
   "title": "LIB 102 — Use of Library, Study Skills and ICT",
-  "eligible": "ALL"
+  "eligible": "ALL",
+  "level": "100",
+  "semester": "Rain"
  },
  "BIO 102": {
   "title": "BIO 102 — General Biology II",
-  "eligible": "FACULTY:Faculty of Natural and Applied Sciences"
+  "eligible": "FACULTY:Faculty of Natural and Applied Sciences",
+  "level": "100",
+  "semester": "Rain"
  },
  "ZOO 102": {
   "title": "ZOO 102 — Invertebrate Zoology",
-  "eligible": [
-   "B.Sc. Animal and Environmental Biology (Zoology)"
-  ]
+  "eligible": ["B.Sc. Animal and Environmental Biology (Zoology)"],
+  "level": "100",
+  "semester": "Rain"
  },
  "COS 104": {
   "title": "COS 104 — Introduction to Computing Practice",
-  "eligible": [
-   "B.Sc. Computer Science"
-  ]
+  "eligible": ["B.Sc. Computer Science"],
+  "level": "100",
+  "semester": "Rain"
  },
  "CSC 104": {
   "title": "CSC 104 — Computer Programming I",
-  "eligible": [
-   "B.Sc. Computer Science"
-  ]
+  "eligible": ["B.Sc. Computer Science"]
+  "level": "100",
+  "semester": "Rain"
  },
  "CSC 106": {
   "title": "CSC 106 — Computer Programming II",
-  "eligible": [
-   "B.Sc. Computer Science"
-  ]
+  "eligible": ["B.Sc. Computer Science"]
+  "level": "100",
+ "semester": "Rain"
  },
  "FAA 128": {
   "title": "FAA 128 — Introduction to Fisheries and Aquaculture",
-  "eligible": [
-   "B.Sc. Fisheries and Aquaculture"
-  ]
+  "eligible": ["B.Sc. Fisheries and Aquaculture"],
+  "level": "100",
+  "semester": "Rain"
  },
  "SDG 104": {
   "title": "SDG 104 — Introduction to Circular Economy and Sustainable Development",
-  "eligible": "FACULTY:Faculty of Agriculture and Renewable Natural Resources"
+  "eligible": "FACULTY:Faculty of Agriculture and Renewable Natural Resources",
+  "level": "100",
+  "semester": "Rain"
  }
 }
