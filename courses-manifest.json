@@ -67,15 +67,15 @@
  },
  "CSC 104": {
   "title": "CSC 104 — Computer Programming I",
-  "eligible": ["B.Sc. Computer Science"]
+  "eligible": ["B.Sc. Computer Science"],
   "level": "100",
   "semester": "Rain"
  },
  "CSC 106": {
   "title": "CSC 106 — Computer Programming II",
-  "eligible": ["B.Sc. Computer Science"]
+  "eligible": ["B.Sc. Computer Science"],
   "level": "100",
- "semester": "Rain"
+  "semester": "Rain"
  },
  "FAA 128": {
   "title": "FAA 128 — Introduction to Fisheries and Aquaculture",
